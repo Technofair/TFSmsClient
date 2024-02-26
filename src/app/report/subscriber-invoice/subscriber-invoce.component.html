@@ -100,7 +100,7 @@
       <th class="vcenter text-center">{{'Descount' | translate}}</th>
       <th class="vcenter text-center">{{'TrxID' | translate}}</th>
       <th class="vcenter text-center">{{'PaymentMode' | translate}}</th>
-      
+      <th class="vcenter text-center">{{'ACTION' | translate}}</th>
     </tr>
     <tr>
       <!-- <div [hidden]="progressStatus" >
@@ -116,7 +116,7 @@
     <tr class="p-selectable-row">
       <td>{{i+1}}</td>
       <td>{{r.refNo}} </td>
-      <td>{{r.date}}</td>
+      <td>{{r.date | date:'dd/MM/YYYY'}}</td>
       <td>{{r.subscriberName}}</td>
       <td>{{r.contactNumber}}</td>      
       <td>{{r.email}}</td>
@@ -125,7 +125,11 @@
       <td>{{r.discount}}</td>
       <td>{{r.trxID}}</td>
       <td>{{r.paymentMode}}</td>
-     
+      <td class="vcenter text-center">
+        <p-button (onClick)="loadReportIn(r); _reportModal.maximized = true"
+            styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-print"
+            title="{{'Print' | translate}}"></p-button>
+    </td>
     </tr>
   </ng-template>
 
@@ -136,3 +140,19 @@
   </ng-template>
 
 </p-table>
+
+<!-- Report Modal -->
+<p-dialog #_reportModal header="Header" [(visible)]="reportModal" [modal]="true" [style]="{width: '250vw'}"
+  [style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
+  <ng-template pTemplate="header">
+    <h5>{{'REPORT' | translate}}</h5>
+  </ng-template>
+  <div class="modal-body">
+    <reportviewer></reportviewer>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="reportModal=false" label="{{'CLOSE' | translate}}"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+<!-- Report Modal -->

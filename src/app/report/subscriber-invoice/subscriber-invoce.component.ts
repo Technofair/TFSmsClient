@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { ExportService } from 'src/app/layout/service/export.service';
+import { ReportViewer } from 'src/app/reportviewer/reportviewer';
+import { ReportModel } from 'src/app/reportviewer/reportmodel';
 
 @Component({
   selector: 'app-add-subscriber',
@@ -132,4 +134,22 @@ export class SubscriberInvoceComponent implements OnInit {
     this.frmsrc.reset();
     this.frmsrc.markAsPristine();
   }
+
+  //Report Execution
+  @ViewChild(ReportViewer)
+  _rptViewer!: ReportViewer;
+  public reportModal: boolean = false;
+  public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
+  loadReportIn(data: any) {
+    debugger;
+    
+    var frm = { InvoiceId: data.id, companyId: this.auth.getCompany() };
+    this.reportModal = true;
+    var repFile = 'SubscriberBill.rdlc';
+    var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+    this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
+    var Models = JSON.stringify(frm);
+    this._rptViewer.reportInPage(this._getReportUrl, Models);
+  }
+  //Report Execution
 }
