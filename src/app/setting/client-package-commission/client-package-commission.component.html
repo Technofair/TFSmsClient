@@ -1,0 +1,75 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<form [formGroup]="frm" (ngSubmit)="save()">
+    <p-panel>
+        <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'CLIENTPACKAGE' |
+                translate}}</span></ng-template>
+
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CLIENT'|translate}}</label><span class="text-danger">*</span>
+                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id" (onChange)="getPackagelByClientId()"></p-dropdown>
+                <span *ngIf="frm.controls['cmnCompanyId'].invalid && frm.controls['cmnCompanyId'].touched"
+                    class="text-danger">
+                    {{'CLIENT' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            <!--  <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COMMISSIONAMOUNT'|translate}}</label><span class="text-danger">*</span>
+                <input type="number" class="p-2  w-full" formControlName="amount" pInputText />
+                <span *ngIf="frm.controls['amount'].invalid && frm.controls['amount'].touched " class="text-danger">
+                    {{'COMMISSIONAMOUNT'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>-->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EFFECTDATE'|translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="effectDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="effectDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'EFFECTDATE'|translate}}"></p-calendar> -->
+                <!-- <span *ngIf="frm.controls['effectDate'].invalid && frm.controls['effectDate'].touched " class="text-danger">
+                    {{'EFFECTDATE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+        </div>
+
+        <p-table [value]="packages" [(selection)]="selectedPackages" [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                    <th style="min-width:200px">{{'PACKAGE' | translate}}</th>
+                    <th style="min-width:200px">{{'PRICE' | translate}}</th>
+                    <th style="min-width:200px">{{'COMMISSIONAMOUNT' | translate}}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-permission>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="permission"></p-tableCheckbox>
+                    </td>
+                    <td>{{permission.name}}</td>
+                    <td>{{permission.price}}</td>
+                    <td>
+                        <input type="text" [(ngModel)]="permission.commissionAmount"
+                            [ngModelOptions]="{standalone: true}" [value]="permission.commissionAmount">
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <ng-template pTemplate="footer">
+            <div class="formgrid grid">
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-32">
+                    <div class="card-footer">
+                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                            type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}">
+                        </p-button>&nbsp;
+                        <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-panel>
+</form>

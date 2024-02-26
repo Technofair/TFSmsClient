@@ -1,0 +1,197 @@
+<p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
+
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ItemCreate'|translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
+                    pInputText />
+                <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
+                    {{'NAME'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Category'|translate}}</label>
+                <p-dropdown [options]="categories" [style]="{'width':'100%'}" formControlName="prdProductId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id" ></p-dropdown>
+                <span *ngIf="frm.controls['prdProductId'].invalid && frm.controls['prdProductId'].touched "
+                    class="text-danger">
+                    {{'Category' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Brand'|translate}}</label>
+                <p-dropdown [options]="brands" [style]="{'width':'100%'}" formControlName="prdBrandId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id" ></p-dropdown>
+                <span *ngIf="frm.controls['prdBrandId'].invalid && frm.controls['prdBrandId'].touched "
+                    class="text-danger">
+                    {{'Brand' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 md:mt-5 sm:mt-2">
+                <label>&nbsp;</label>
+                <input class="form-check-input" type="checkbox" value="true" id="isActive"
+                    formControlName="isActive">
+                <label class="form-check-label" for="isActive"> {{'IsActive' | translate}} </label>
+            </div>
+
+            <!-- <div class="field col-2 md:col-2">
+                <label>&nbsp;</label><br><br>
+                <p-checkbox value="true" label="{{'ISCARD' | translate}}" formControlName="isCard"></p-checkbox>
+            </div> -->
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <!-- <p-checkbox value="true" label="{{'Is Warrantyable' | translate}}" formControlName="isWarrantyable"></p-checkbox> -->
+                <input class="form-check-input" type="checkbox" value="true" id="isWarrantyable"
+                    formControlName="isWarrantyable">
+                <label class="form-check-label" for="isWarrantyable"> {{'IsWarrantyable' | translate}} </label>
+            </div>
+        </div>
+
+        <p-divider align ="left">
+            <div class="inline-flex align-items-center">
+                <!-- <i class="pi pi-user mr-2"></i>
+                <b>Item Model Add</b> -->
+            </div>
+        </p-divider>
+        <div class="fromgrid grid" formGroupName="frmItemModel">
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'ITEMMODEL'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
+                    pInputText />
+            </div>            
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 mt-5" *ngIf="frm.controls['prdProductId'].value==1">
+                <label>&nbsp;</label>
+                <input class="form-check-input" type="checkbox" value="true" id="isCardbased"
+                    formControlName="isCardbased">
+                <label class="form-check-label" for="isCardbased"> {{'IsCardbased' | translate}} </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 mt-5  sm:mt-2">
+                <label>&nbsp;</label>
+                <!-- <p-checkbox value="true" label="{{'ISACTIVE' | translate}}" formControlName="isActive"></p-checkbox> -->
+                <input class="form-check-input" type="checkbox" value="true" id="isActive1"
+                    formControlName="isActive">
+                <label class="form-check-label" for="isActive1"> {{'IsModelActive' | translate}} </label>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 mt-4">
+                <label>&nbsp;</label>
+                <p-button label="{{'ADD' | translate}}" (click)="addRow()" styleClass="p-button-primary"></p-button>
+
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <p-table [value]="items" dataKey="id" [rowHover]="true"
+                    styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 70px !important;" >{{'ITEMMODEL'|translate}}</th>
+                            <th class="text-center" style="width: 10px !important;">{{'IsCardbased' | translate}}</th>
+                            <th class="text-center" style="width: 10px !important;">{{'IsModelActive' | translate}}</th>
+                            <th class="text-center" style="width: 10px !important;">{{'Action'|translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-index="rowIndex">
+                        <tr>
+
+                            <td style="width: 70px !important;">{{ rowData.name }}</td>
+                            <td class="text-center" style="width: 10px !important;">{{ rowData.isCardbased?'Yes':'No' }}</td>
+                            <td class="text-center" style="width: 10px !important;">{{ rowData.isActive?'Yes':'No'}}</td>
+
+                            <td class="text-center" style="width: 10px !important;"> <p-button class="p-button-sm" (click)="removeRow(index)"><i class="pi pi-minus"
+                                        style="color: red"></i></p-button></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+        </div>
+
+
+        <br />
+
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-7 lg:col-7 xl:col-7">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'SAVE'|translate}}"></p-button>
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+                        <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                            icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</p-panel>
+
+<p-table #dt [value]="productList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name', 'categoryName','brandName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SL#' | translate}}</th>
+            <th class="vcenter text-center">{{'NAME' | translate}}</th>
+            <th class="vcenter text-center">{{'Category' | translate}}</th>
+            <th class="vcenter text-center">{{'Brand' | translate}}</th>
+            <th class="vcenter text-center">{{'ISACTIVE' | translate}}</th>
+            <th class="vcenter text-center">{{'WARRANTYABLE' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r | let-i="rowIndex">
+        <tr class="p-selectable-row">
+            <td style="text-align: center;">{{i+1}}</td>
+            <td>{{r.name}}</td>
+            <td>{{r.categoryName}}</td>
+            <td>{{r.brandName}}</td>
+            <td style="text-align: center;">{{r.isActive?'Yes':'No'}}</td>
+            <td style="text-align: center;">{{r.isWarrantyable?'Yes':'No'}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
+                <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="7">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

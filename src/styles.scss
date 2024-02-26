@@ -1,0 +1,317 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+
+/* for primeflex grid system */
+$gutter: 1rem;
+//Boootstrap
+@import "~bootstrap/dist/css/bootstrap.css";
+//Bootstrap
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+// regular style toast
+@import 'ngx-toastr/toastr';
+
+// bootstrap style toast
+// or import a bootstrap 4 alert styled design (SASS ONLY)
+// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+// @import 'ngx-toastr/toastr-bs4-alert';
+
+// if you'd like to use it without importing all of bootstrap it requires
+// @import 'bootstrap/scss/functions';
+// @import 'bootstrap/scss/variables';
+// @import 'bootstrap/scss/mixins';
+// // bootstrap 4
+// @import 'ngx-toastr/toastr-bs4-alert';
+// // boostrap 5
+// @import 'ngx-toastr/toastr-bs5-alert';
+
+:host ::ng-deep .p-dropdown {
+  width: 18rem;
+}
+
+:host ::ng-deep .p-button {
+  margin: 0 .5rem 0 0;
+  min-width: 10rem;
+}
+
+p {
+  margin: 0;
+}
+
+.confirmation-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep .p-dialog .p-button {
+  min-width: 6rem;
+}
+
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42A948;
+  /* green */
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442;
+  /* red */
+}
+
+.text-danger {
+  color: red;
+}
+
+
+//----------------------Form_design_class---------------------------------
+.p-panel-header {
+  background-color: #0080c9 !important;
+  border-color: var(--teal-500);
+  color: #ffffff !important;
+  height: 50px !important;
+
+}
+
+.text-primary {
+  color: #ffffff !important;
+}
+
+.p-panel-content {
+  border-color: #F7921C !important;
+}
+
+// -------------------End--------------------------------
+
+.p-datatable .p-datatable-thead>tr>th {
+  text-align: left;
+
+  //background: rgb(255, 225, 225);
+  //background-image: linear-gradient(#0080c9, rgb(238, 147, 10));
+  // background-image: linear-gradient(#00a1ff, #479ccd, #176c69);
+  background-image: linear-gradient(#479ccd, #00a1ff, #176c69);
+  color: #ffffff;
+  transition: box-shadow 0.2s;
+}
+
+// .layout-sidebar {
+//  background-color: #a3c8de !important;// #F7921C !important;
+// }
+
+.field>label {
+
+  font-weight: bold;
+}
+
+input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+}
+
+.float_right {
+  display: flex;
+  justify-content: end;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  resize: none;
+}
+
+.flexBox {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 991px) {
+  .layout-wrapper .layout-main-container {
+    margin-left: 0;
+    padding-left: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .layout-wrapper.layout-static.layout-static-inactive .layout-main-container {
+    margin-left: 0;
+    padding-left: 1rem;
+  }
+}
+
+.p-panel .p-panel-header {
+  // background-image: linear-gradient(90deg, rgb(255, 230, 0) 12.5%, rgb(100, 139, 38) 25%, rgb(3, 255, 45) 37.5%, rgba(49,170,103,1) 50%, rgba(147,192,31,1) 62.5%, rgba(0,102,52,1) 75%, rgba(102,37,131,1) 87.5%, rgba(164,25,92,1) 100%);
+  // background-image: linear-gradient(180deg, rgb(214, 212, 53) 15%, rgb(56, 138, 206) 89%);
+  // background-image: linear-gradient(90deg, rgba(65,42,25,1) 12.5%, rgba(49,38,132,1) 25%, rgba(29,111,184,1) 37.5%, rgba(49,170,103,1) 50%, rgba(147,192,31,1) 62.5%, rgba(0,102,52,1) 75%, rgba(102,37,131,1) 87.5%, rgba(164,25,92,1) 100%);
+  // background-image: linear-gradient(180deg, rgb(250 109 41) 15%, rgb(82, 172, 230) 51%, rgb(0, 70, 166) 89%);
+  background-image: linear-gradient(180deg, rgb(171, 184, 253) 100%);
+
+}
+
+// .topLogo {
+//   margin-left: -1.25rem;
+// }
+
+// @media (min-width: 350px) {
+//   .topLogo {
+//     margin-left: -5.3rem;
+//   }
+// }
+
+// @media (min-width: 375px) {
+//   .topLogo {
+//     margin-left: -5rem;
+//   }
+// }
+
+// @media (min-width: 390px) {
+//   .topLogo {
+//     margin-left: -6.5rem;
+//   }
+// }
+
+// // @media (min-width: 500px) {
+// //   .topLogo {
+// //     margin-left: -3.5rem;
+// //   }
+// // }
+
+// @media (min-width: 1100px) {
+//   .topLogo {
+//     margin-left: -1.25rem;
+//   }
+// }
+
+// @media (min-width: 200px) and (max-with:) {
+//   .topLogo::after {
+//     margin-left: -1.35rem;
+//     line-break: auto;
+//   }
+// }
+
+@media only screen and (min-width: 960px) {
+  .topLogo {
+    margin-left: -1.35rem;
+  }
+
+  .topBalance {
+    margin-left: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .topLogo {
+    margin-left: -1.35rem;
+  }
+}
+
+@media only screen and (min-width: 2000px) {
+  .topLogo {
+    margin-left: -1.35rem;
+  }
+}
+
+@media only screen and (min-device-width: 350px) and (max-device-width: 479px) {
+  .topLogo {
+    margin-left: -1rem;
+  }
+}
+
+@media only screen and (max-device-width: 480px) {
+  .topLogo {
+    margin-left: -5.35rem;
+  }
+
+  .topBalance {
+    margin-left: -1rem;
+  }
+}
+
+@media only screen and (device-width: 768px) {
+  .topLogo {
+    margin-left: -1.35rem;
+  }
+}
+
+/* different techniques for iPad screening */
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+  .topLogo {
+    margin-left: -1.35rem;
+  }
+}
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+  .topLogo {
+    margin-left: -0.35rem;
+  }
+
+  .topBalance {
+    margin-left: 4rem;
+  }
+}
+
+.packageCardbackGround {
+  height: 350px;
+  background-image: url("./assets/img/package/1.png");
+  background-size: 100%;
+  background-size: cover;
+}
+
+#tabView .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #eee !important;
+  border-color: #cfcfcf !important;
+  color: #002bff !important;
+}
+
+#tabView .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  border: solid #dee2e6;
+  border-width: 0 0 2px 0;
+  border-color: transparent transparent #dee2e6 transparent;
+  background: #ffffff;
+  color: #122230;
+  padding: 1.25rem;
+  font-weight: 700;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  transition: box-shadow 0.2s;
+  margin: 0 0 -2px 0;
+}
+
+#tabView .p-tabview .p-tabview-nav {
+  background: #ffffff;
+  border: 1px solid #dee2e6;
+  border-width: 0 0 2px 0;
+}
+
+
+
+
+
+#topProfile .p-splitbutton.p-button-secondary.p-button-text>.p-button:enabled:hover,
+.p-splitbutton.p-button-secondary.p-button-text>.p-button:not(button):not(a):not(.p-disabled):hover {
+  background: rgba(100, 116, 139, 0.04);
+  border-color: transparent;
+  color: #ffffff;
+}
+
+#topProfile .p-splitbutton.p-button-secondary.p-button-text>.p-button {
+  background-color: transparent;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+#cMenu .layout-menu ul a.active-route {
+  font-weight: 7000;
+  background: #013038 !important;
+}

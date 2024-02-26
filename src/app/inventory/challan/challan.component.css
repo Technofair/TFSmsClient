@@ -1,0 +1,25 @@
+.order_section {
+  border: 2px solid #e3e3e3;
+  padding: 1%;
+}
+
+.col-4.import_excel {
+  padding: 38px 0px 30px 0px !important;
+}
+
+  .editable {
+    background-color: #eff3f8;
+  }
+  .float_right{
+    display: flex;
+    justify-content: end;
+  }
+  .floatRight{
+  float:right;
+  }
+
+  .highlight {
+    background-color: yellow!important;
+  }
+
+  

@@ -1,0 +1,149 @@
+<p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ROLEBASEMENU' |
+      translate}}</span></ng-template>
+  <form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id" value="0">
+    <div class="formgrid grid">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'MODULENAME' | translate}}</label><span class="text-danger"> *</span><br>
+        <p-dropdown [options]="modules" [style]="{'width':'100%'}" formControlName="moduleId" [filter]="true"
+          filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"
+          (onChange)="getMenuByModuleAndRole()"></p-dropdown><br>
+        <span *ngIf="frm.controls['moduleId'].invalid && frm.controls['moduleId'].touched " class="text-danger">
+          {{'MODULENAME' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'ROLENAME' | translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="roleId" [filter]="true"
+          filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"
+          (onChange)="getMenuByModuleAndRole()"></p-dropdown>
+        <span *ngIf="frm.controls['roleId'].invalid && frm.controls['roleId'].touched " class="text-danger">
+          {{'ROLENAME' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <div class="form-check sm:mt-2 md:mt-5">
+          <input class="form-check-input" type="checkbox" value="true" checked id="flexCheckDefault"
+            formControlName="isActive">
+          <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+        </div>
+      </div>
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="card-footer">
+          <div class="">
+            <p-button (click)="save()" [disabled]="frm.invalid"
+              styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+              label="{{'SAVE'|translate}}"></p-button>
+            <p-button type="reset" styleClass="p-button-warning p-button-sm ml-2"
+              icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-panel>
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+  [resizable]="false">
+  <ng-template pTemplate="header">
+    <h5>{{'ROLEBASEMENU' | translate}} {{'DETAILS' | translate}}</h5>
+  </ng-template>
+  <div class="modal-body">
+    <div class="formgrid grid">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'ROLENAME' | translate}} : </label>
+        <p>{{viewInfo.roleId}}</p>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'MENUNAME' | translate}} : </label>
+        <p>{{viewInfo.menuId}}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<form [formGroup]="menuPermissionsForm" (ngSubmit)="save()">
+  <p-table #dt [value]="roleBaseMenus" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['title']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+   <!-- <ng-template pTemplate="caption">
+      <div class="flex">
+        <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+          (click)="clear(dt)"></button>
+        <span class="p-input-icon-left ml-auto float-right">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Search keyword" />
+        </span>
+      </div>
+    </ng-template>-->
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="title" style="text-align: center">
+          <div class="vcenter text-center">
+            {{'MENUNAME' | translate}}
+            <p-sortIcon field="title"></p-sortIcon>
+            <p-columnFilter type="text" field="title" display="menu" class="ml-auto"></p-columnFilter>
+          </div>
+        </th>
+        <th class="vcenter text-center"(click)="clickReadCheck()"> <input type="checkbox">  {{'READ' | translate}}</th>
+        <th class="vcenter text-center"(click)="clickAddCheck()"><input type="checkbox"> {{'ADD' | translate}}</th>
+        <th class="vcenter text-center"(click)="clickEditCheck()"><input type="checkbox"> {{'EDIT' | translate}}</th>
+        <th class="vcenter text-center"(click)="clickDeleteCheck()"><input type="checkbox"> {{'DELETE' | translate}}</th>
+        <th class="vcenter text-center"(click)="clickPrintCheck()"><input type="checkbox"> {{'PRINT' | translate}}</th>
+        <th class="vcenter text-center" (click)="clickAllCheck()"><input type="checkbox"> {{'All' | translate}}</th>
+
+      </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-r>
+      <ng-container *ngIf="toMenuPermission(r); let r">
+        <tr class="p-selectable-row">
+          <td>{{r.title}}</td>
+          <td class="vcenter text-center">
+            <input type="checkbox" [(ngModel)]="r.read" [ngModelOptions]="{standalone: true}"/>
+          </td>
+          <td class="vcenter text-center">
+            <input type="checkbox" [(ngModel)]="r.add" [ngModelOptions]="{standalone: true}"/>
+          </td>
+          <td class="vcenter text-center">
+            <input type="checkbox" [(ngModel)]="r.edit" [ngModelOptions]="{standalone: true}"/>
+          </td>
+          <td class="vcenter text-center">
+            <input type="checkbox" [(ngModel)]="r.delete" [ngModelOptions]="{standalone: true}"/>
+          </td>
+          <td class="vcenter text-center">
+            <input type="checkbox" [(ngModel)]="r.print" [ngModelOptions]="{standalone: true}"/>
+          </td>
+          <td class="vcenter text-center" (click)="clickRowCheck(r)">
+            <div *ngIf="r.add==true && r.read==true && r.edit==true && r.delete==true && r.print==true ; else elseBlock">
+              <input type="checkbox" checked>
+            </div>
+            <ng-template #elseBlock>
+              <input type="checkbox" >
+            </ng-template>
+          </td>
+          
+        </tr>
+      </ng-container>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="9">No data found.</td>
+      </tr>
+    </ng-template>
+
+  </p-table>
+</form>

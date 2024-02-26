@@ -1,0 +1,65 @@
+<div class="card">
+  <h5>{{'CARDPAIRING' | translate}}</h5>
+  <p-tabView>
+    <p-tabPanel header="{{'PAIRCARD' | translate}}">
+      <p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+      <form [formGroup]="frm" (ngSubmit)="pair()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="">
+          <div class="formgrid grid">
+            <div class="field col-3 md:col-3">
+              <label>{{'CARDNUMBER' | translate}}</label>
+              <input type="text" class="p-2  w-full" placeholder="{{'CARDNUMBER' | translate}}"
+                formControlName="cardNumber" pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+              <label>{{'IRDNUMBER' | translate}}</label>
+              <input type="text" class="p-2  w-full" placeholder="{{'IRDNUMBER' | translate}}"
+                formControlName="irdnumber" pInputText />
+            </div>
+            <div class="field col-12 md-col:12">
+              <div class="card-footer">
+                <div class="">
+                  <p-button (click)="pair()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                    type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                  <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                    (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </p-tabPanel>
+    <p-tabPanel header="{{'UNPAIRCARD' | translate}}">
+      <p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+      <form [formGroup]="frm" (ngSubmit)="unpair()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="">
+          <div class="formgrid grid">
+            <div class="field col-3 md:col-3">
+              <label>{{'CARDNUMBER' | translate}}</label>
+              <input type="text" class="p-2  w-full" placeholder="{{'CARDNUMBER' | translate}}"
+                formControlName="cardNumber" pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+              <label>{{'IRDNUMBER' | translate}}</label>
+              <input type="text" class="p-2  w-full" placeholder="{{'IRDNUMBER' | translate}}"
+                formControlName="irdnumber" pInputText />
+            </div>
+            <div class="field col-12 md-col:12">
+              <div class="card-footer">
+                <div class="">
+                  <p-button (click)="unpair()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                    type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                  <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                    (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </p-tabPanel>
+  </p-tabView>
+</div>

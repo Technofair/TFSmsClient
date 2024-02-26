@@ -1,0 +1,14 @@
+<h1 class="m-5" style="text-align: center;">{{'Boxes'|translate}}</h1>
+<hr style="padding: 5px; border-color: blue; ">
+<div class="row featurette">
+  <div class="col-md-3 col-sm-6 " *ngFor="let stb of chields_stbs, let i=index"  >
+    <img class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto m-1" width="500"
+    height="500" style="height:250px;" src="{{url+stb.imageUrl}}" alt="Card image cap">
+    <div style="display: flex;flex-direction: column;justify-content: center; ">
+      <!-- <h5 class="featurette-heading fw-normal lh-1 fs-3" style=" text-align: center;">{{stb.title}}</h5>
+      <p class="lead" >{{stb.description}}</p> -->
+      <a href="/#/contact" class="btn btn-primary ml-5 mr-5">Book Now</a>
+    </div>
+    <br>
+  </div>
+</div>

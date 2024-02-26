@@ -1,0 +1,302 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'ChallanReturn' |
+            translate}}</span>
+    </ng-template>
+    <div class="card py-2" style="margin-top: 20px;">
+
+        <form [formGroup]="searchFrm" (ngSubmit)="search()">
+
+            <div class="formgrid grid mb-4 mt-4">
+
+                <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'CLIENT'|translate}}</label>
+                    <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="partyId"
+                        [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'From' | translate}}</label>
+                    <input type="date" class="p-2  w-full" formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
+                    <!-- <p-calendar [showIcon]="true" formControlName="fromDate" dateFormat="dd/mm/yy"
+                        placeholder="{{'DATEFROM' | translate}}"></p-calendar> -->
+                </div>
+                <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'To' | translate}}</label>
+                    <input type="date" class="p-2  w-full" formControlName="toDate" dateFormat="dd/mm/yy" pInputText />
+                    <!-- <p-calendar [showIcon]="true" formControlName="toDate" dateFormat="dd/mm/yy"
+                        placeholder="{{'To' | translate}}"></p-calendar> -->
+                </div>
+                <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'DeviceNumber' | translate}}</label>
+                    <textarea name="" id="" cols="10" rows="5" class="w-full h-5rem" formControlName="deviceNumber"
+                        placeholder="1234567,14324567,.."></textarea>
+                    <!--<input type="text" class="p-2  w-full" formControlName="fromDate" pInputText /> -->
+                </div>
+                <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                    <div class="mt-1">
+                        <p-button (click)="search()" [disabled]="frm.invalid" styleClass="p-button-primary p-button-sm"
+                            type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
+                        <p-button styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p-table #dt [value]="challanMasterList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['refNo','customerName','stbSerialNo']"
+        styleClass="p-datatable-sm p-datatable-gridlines pt-0" [tableStyle]="{'min-width': '50rem'}">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th class="vcenter text-center">{{'DATE' | translate}}</th>
+                <th class="vcenter">{{'ChallenNo' | translate}}</th>
+                <th class="vcenter">{{'CUSTOMER' | translate}}</th>
+                <th class="vcenter">{{'PRODUCT' | translate}}</th>
+                <th class="vcenter text-center">{{'TotalAmount' | translate}}</th>
+                <th class="vcenter">{{'Remarks' | translate}}</th>
+                <th class="vcenter text-center">{{'Action' | translate}}</th>
+            </tr>
+            <tr>
+                <div [hidden]="progressStatus">
+                    <p-progressSpinner></p-progressSpinner>
+                </div>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row" [class.highlight]="selectedRow === r.id" (click)="rowDetails(r)">
+                <td>{{i+1}}</td>
+                <td class="text-center">{{r.date | date:'dd/MM/yyyy'}}</td>
+                <td>{{r.refNo}}</td>
+                <td>{{r.customerName}}</td>
+                <td>{{r.productName}}</td>
+                <td class="text-right">{{r.totalAmount}}</td>
+                <td>{{r.remarks}}</td>
+                <td class="text-right">
+                    <button class="btn btn-warning">{{"Return"|translate}}</button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</p-panel>
+<!-- <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'ChallanDetails' |
+            translate}}</span>
+    </ng-template> -->
+<div class="card">
+    <!-- <div [hidden]="progressStatus" style="position: absolute; z-index: 10; "  >
+        <p-progressSpinner ></p-progressSpinner>
+   </div> -->
+    <form [formGroup]="frm" (ngSubmit)="save()">
+
+        <div class="formgrid grid m-0">
+            <div class="col-12 sm:col-12 md:col-12 pl-0 pr-0">
+                <p-table [value]="details" dataKey="id" [rowHover]="true"
+                    styleClass="p-datatable-sm p-datatable-gridlines pt-0" [tableStyle]="{'min-width': '50rem'}">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th class="w-5rem vcenter text-center">{{'SL#' | translate}}</th>
+                            <th class="w-14rem vcenter text-center">{{'ProductName' | translate}}</th>
+                            <th class="w-20rem vcenter text-center">{{'Store Name' | translate}}</th>
+                            <!-- <th class="w-60rem">{{'Unite' | translate}}</th> -->
+                            <th class="w-7rem vcenter text-center">{{'Rate' | translate}}</th>
+                            <th class="w-7rem vcenter text-center">{{'ChallanQty' | translate}}</th>
+                            <th class="w-7rem vcenter text-center">{{'ReturnQty' | translate}}</th>
+                            <th class="w-30rem vcenter text-center">{{'DEVICEID' | translate}}</th>
+                            <th class="w-7rem vcenter text-center">{{'Quantity' | translate}}</th>
+                            <th class="w-7rem vcenter text-center">{{'ReturnAmout' | translate}}</th>
+                            <th class="w-5rem vcenter text-center">{{'Action' | translate}}</th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-rowData let-index="rowIndex">
+
+                        <tr>
+
+                            <td class="vcenter text-center">{{ index+1 }}</td>
+                            <td class="vcenter text-center">{{ rowData.name }}</td>
+                            <td class="vcenter text-center">{{ rowData.store }}</td>
+                            <!-- <td>
+                                <textarea class="p-2 w-full h-5rem" [(ngModel)]="rowData.deviceNumber"
+                                    [ngModelOptions]="{standalone: true}" readonly [disabled]="true"
+                                    [ngModelOptions]="{standalone: true}" pInputTextarea> </textarea>
+                            </td> -->
+                            <!-- <td>{{ rowData.unit }}</td> -->
+                            <td class="vcenter text-center">{{ rowData.rate }}</td>
+                            <td class="vcenter text-center">{{ rowData.deliveredQuantity }}</td>
+                            <td class="vcenter text-center">{{ rowData.returnQuantity }}</td>
+                            <td class="vcenter text-center">
+                                <!-- <input type="text" min="1" class="p-2 w-full text-center"
+                                    [(ngModel)]="rowData.deviceNumber" [ngModelOptions]="{standalone: true}"
+                                    (keyup)="checkByDevice(rowData)" placeholder="Input device number" pInputText /> -->
+
+                                <textarea type="text" class="p-2 w-full h-5rem" [(ngModel)]="rowData.deviceNumber"
+                                    [ngModelOptions]="{standalone: true}" (blur)="checkByDevice(rowData)"
+                                    [disabled]="!rowData.hasDeviceID" placeholder="Input device number"
+                                    pInputTextarea> </textarea>
+                            </td>
+                            <td class="vcenter text-center">
+                                <input type="number" min="1" class="p-2 w-full text-right"
+                                    [(ngModel)]="rowData.quantity" [ngModelOptions]="{standalone: true}"
+                                    (change)="checkQtySetAmt(rowData)" [disabled]="rowData.hasDeviceID"
+                                    placeholder="Quantity" pInputText />
+                            </td>
+                            <td class="vcenter text-center">{{ rowData.total }}</td>
+
+                            <td class="vcenter text-center">
+                                <p-button type="button" styleClass="p-button-info p-button-sm mr-2 px-2 py-1"
+                                    icon="pi pi-eye" (click)="loadDeviceIds(rowData)" data-toggle="tooltip"
+                                    title="{{'DEVICEID' | translate}}"></p-button>
+                            </td>
+                            <!-- <td>
+                                <input style="border: none;" class="p-2 w-full h-5rem text-center"
+                                    [(ngModel)]="rowData.deliveredQuantity" (keyup)="totalSum(rowData,index)"
+                                    [ngModelOptions]="{standalone: true}">
+                            </td> -->
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+
+                <div class="formgrid grid mt-3">
+
+                    <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'ReturnType'|translate}}</label>
+                        <p-dropdown [options]="returnTypes" [style]="{'width':'100%'}" formControlName="invReturnTypeId"
+                            [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="name" optionValue="id"></p-dropdown><br>
+                        <span
+                            *ngIf="frm.controls['invReturnTypeId'].invalid && frm.controls['invReturnTypeId'].touched "
+                            class="text-danger">
+                            {{'ReturnType'|translate}} {{'REQUIRED'|translate}}
+                        </span>
+                        <!-- <p-dropdown [options]="returnTypes" [style]="{'width':'100%'}" formControlName="invReturnTypeId"
+                            [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="name" optionValue="id"></p-dropdown><br> -->
+                    </div>
+
+                    <div class="field col-12 sm:col-6  md:col-2">
+                        <label>{{'AdjustAmount'|translate}}</label>
+                        <input type="number" min="0" (change)="checkAdjustAmt()" class="p-2 w-full"
+                            formControlName="adjustAmount" pInputText>
+                    </div>
+
+                    <div class="field col-12 sm:col-6  md:col-6">
+                        <label>{{'Remarks'|translate}}</label>
+                        <textarea type="text" class="p-2 w-full h-5rem" formControlName="remarks"
+                            placeholder="{{'Please Note Damage'|translate}}" pInputTextarea> </textarea>
+                    </div>
+                </div>
+                <div class="formgrid grid mt-3">
+                    <div class="field col-12 md-col:12">
+                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                            type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                        <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '70vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'DEVICE NO' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <div class="formgrid grid mt-3">
+            <div class="field col-12 xl:col-3 lg:col-3 sm:col-3  md:col-3">
+                <label for="">Device Number (Challan)</label>
+                <textarea type="text" class="p-2 w-full h-25rem" [(ngModel)]="challanDeviceNumber" readonly
+                    pInputTextarea></textarea>
+            </div>
+            <div class="field col-12 xl:col-3 lg:col-3 sm:col-3  md:col-3">
+                <label for="">Device Number (Assign)</label>
+                <textarea type="text" class="p-2 w-full h-25rem" [(ngModel)]="assignedDeviceNumber" readonly
+                    pInputTextarea></textarea>
+            </div>
+            <div class="field col-12 xl:col-3 lg:col-3 sm:col-3  md:col-3">
+                <label for="">Device Number (Return)</label>
+                <textarea type="text" class="p-2 w-full h-25rem" [(ngModel)]="returnedDeviceNumber" readonly
+                    pInputTextarea></textarea>
+            </div>
+            <div class="field col-12 xl:col-3 lg:col-3 sm:col-3  md:col-3">
+                <label for="">Device Number (Remain)</label>
+                <textarea type="text" class="p-2 w-full h-25rem" [(ngModel)]="remainingDeviceNumber" readonly
+                    pInputTextarea></textarea>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'ChallanReturnHistory' |
+            translate}}</span>
+    </ng-template>
+
+    <p-table #dt [value]="challanReturnHistory" dataKey="id" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['refNo','customerName','stbSerialNo']"
+        styleClass="p-datatable-sm p-datatable-gridlines pt-0" [tableStyle]="{'min-width': '50rem'}">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th class="vcenter text-center">{{'DATE' | translate}}</th>
+                <th class="vcenter">{{'ChallenNo' | translate}}</th>
+                <th class="vcenter">{{'CUSTOMER' | translate}}</th>
+                <th class="vcenter">{{'PRODUCT' | translate}}</th>
+                <th class="vcenter text-center">{{'TotalAmount' | translate}}</th>
+                <th class="vcenter">{{'Remarks' | translate}}</th>
+                <th class="vcenter text-center">{{'Action' | translate}}</th>
+            </tr>
+            <tr>
+                <div [hidden]="chalanReturnStatus">
+                    <p-progressSpinner></p-progressSpinner>
+                </div>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row" (click)="rowDetails(r)">
+                <td>{{i+1}}</td>
+                <td class="text-center">{{r.date | date:'dd/MM/yyyy'}}</td>
+                <td>{{r.refNo}}</td>
+                <td>{{r.customerName}}</td>
+                <td>{{r.productName}}</td>
+                <td class="text-right">{{r.totalAmount}}</td>
+                <td>{{r.remarks}}</td>
+                <td class="text-right">
+                    <button class="btn btn-warning">{{"Return"|translate}}</button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</p-panel>

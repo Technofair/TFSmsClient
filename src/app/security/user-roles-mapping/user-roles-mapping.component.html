@@ -1,0 +1,112 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'UserRoleMapping' |
+      translate}}</span></ng-template>
+  <form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id" value="0">
+    <div class="formgrid grid">
+      <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'Role' | translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="role" (onChange)="userList()"
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+          optionValue="id"></p-dropdown>
+        <span *ngIf="frm.controls['role'].invalid && frm.controls['role'].touched " class="text-danger">
+          {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
+      <div class="field  col-12 sm:col-12 md:col-8 lg:col-8 xl:col-8">
+
+        <p-table #dt [value]="inActiveUserRoles" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+          [globalFilterFields]="['loginID','employeeName','companyName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+          [tableStyle]="{'min-width': '50rem'}">
+
+          <ng-template pTemplate="caption">
+            <div class="flex">
+              <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                  placeholder="Search keyword" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+              <th>{{'LoginID'|translate}}</th>
+              <th>{{'Name'|translate}}</th>
+              <th>{{'Company'|translate}}</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
+            <tr>
+               <td>
+                <input type="checkbox" [(ngModel)]="user.isActive" [ngModelOptions]="{standalone: true}" name="isChecked"
+                  id="isChecked">
+              </td> 
+             <!-- <td>
+                <p-tableCheckbox [value]="user.isActive"></p-tableCheckbox>
+              </td>-->
+              <td>{{ user.loginID }}</td>
+              <td>{{ user.employeeName}}</td>
+              <td>{{ user.companyName}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="card-footer">
+          <div class="">
+            <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="submit"
+              icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
+            <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+              label="{{'RESET'|translate}}"> </p-button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-panel>
+
+
+
+<p-table #dt [value]="activeUserRoles" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+  [globalFilterFields]="['loginID','employeeName','companyName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+  [tableStyle]="{'min-width': '50rem'}">
+
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="vcenter text-danger" style="text-align: right !important;" [width]="10">{{'SlNo'|translate}}</th>
+      
+      <th class="vcenter text-center">{{'LginId' | translate}}</th>
+      <th class="vcenter text-center">{{'UserName' | translate}}</th>
+      <th class="vcenter text-center">{{'Company' | translate}}</th>
+      
+      <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">
+    <tr class="p-selectable-row">
+      <td>{{rowIndex+1}}</td>
+      <td>{{r.loginID}}</td>
+      <td>{{r.employeeName}}</td>
+      <td>{{r.companyName}}</td>
+      <td class="vcenter text-center" *ngIf="r.secUserId != authUserId">
+        <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-trash"
+          (click)="remove(r)" data-toggle="tooltip" title="{{'Removed' | translate}}"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="9">No data found.</td>
+    </tr>
+  </ng-template>
+
+</p-table>

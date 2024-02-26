@@ -1,0 +1,257 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'DeviceAssign' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="assignDevice()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+            <div class="card col-12 md-col:12 ">
+                <div class="formgrid grid">
+                    <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'SUBSCRIBER'|translate}}</label>
+                        <input type="text" class="p-2  w-full" [value]="id"
+                            placeholder="{{subscriberDetails.firstName}} {{subscriberDetails.lastName}}({{subscriberDetails.customerNumber}})"
+                            [readonly]="true" formControlName="subscriberName" pInputText />
+                    </div>
+                    <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'DEVICE'|translate}}</label><span class="text-danger"> *</span>
+                        <p-dropdown [options]="devices" [style]="{'width':'100%'}" formControlName="prdDeviceNumberId"
+                            [filter]="true" filterBy="deviceNumber" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="deviceNumber" optionValue="id" (onChange)="checkIsCardBase(this.frm.controls['prdDeviceNumberId'].value)" ></p-dropdown><br>
+                    </div>
+                    <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3" [hidden]="isCardBase">
+                        <label>{{'CARD'|translate}}</label>
+                        <p-dropdown [options]="deviceCards" [style]="{'width':'100%'}" formControlName="prdCardNumberId"
+                            [filter]="true" filterBy="cardNumber" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="cardNumber" optionValue="id"></p-dropdown><br>
+                    </div>
+                  
+                    <!-- <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3 sm:mt-5 md:mt-5 lg:mt-5 xl:mt-5">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            formControlName="isActive">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                    </div> -->
+
+                </div>
+            </div>
+            <div class="card col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="formgrid grid">
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'PaymentMode'|translate}}</label><span class="text-danger"></span>
+                        <p-dropdown [options]="paymentMoodList" [style]="{'width':'100%'}"
+                            formControlName="anFPaymentMethodId" [filter]="true" filterBy="name" [showClear]="true"
+                            placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id" (onChange)="gateWayPermission($event)"></p-dropdown><br>
+                    </div>
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'Amount'|translate}}</label>
+                        <input type="number" class="p-2  w-full" placeholder="" [readonly]="false"
+                            formControlName="amount" pInputText  (blur)="checkGetterAmount()" />
+                    </div>
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'Discount'|translate}}</label>
+                        <input type="text" class="p-2  w-full" placeholder="" [readonly]="false"
+                            formControlName="discount" pInputText />
+                    </div>
+                   
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'PaidAmount'|translate}}</label>
+                        <input type="number" class="p-2  w-full" placeholder="" [readonly]="false"
+                            formControlName="paidAmount" pInputText (blur)="checkGetterAmount()" />
+                    </div>
+                    
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" [hidden]="checkGetter">
+                        <div class="form-check mt-5 ml-3 mb-5">
+                            <input class="form-check-input" type="checkbox" value="true" id="PaymentSchedule"
+                                formControlName="isPayWithSubscription">
+                            <label class="form-check-label" for="PaymentSchedule"> {{'IsPayWithSubscribtion' |
+                                translate}} </label>
+                        </div>
+                    </div>
+                    <div *ngIf="frm.controls['isPayWithSubscription'].value==true?true:false" [hidden]="checkGetter"
+                        class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'PaymentSchedule'|translate}}</label>
+                        <input type="text" class="p-2  w-full" placeholder="" [readonly]="false"
+                            formControlName="paymentSchedule" pInputText />
+                    </div>
+                </div>
+            </div>
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="assignDevice()" [disabled]="frm.invalid"
+                            styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
+                            label="{{'Process' | translate}}"></p-button>
+                        <p-button (click)="reset()" styleClass="p-button-warning p-button-sm mr-2" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>
+                        <p-button *ngIf="devices[0]==null" routerLink="/home/inventory/purchase"
+                            styleClass="p-button-info p-button-sm mr-2" icon="pi pi-add"
+                            label="{{'AddDevice'|translate}}"> </p-button>
+                        <p-button routerLink="/home/subscription/addSubscriber" type="button"
+                            styleClass="p-button-primary p-button-sm" icon="pi pi-arrow-left"
+                            title="{{'ReturnList' | translate}}" label="Return List"></p-button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+   
+</p-panel>
+<div class="card row" >
+    <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" [hidden]="paymentAction" >     
+        <div class="container-fluid">
+              <ul class="nav justify-content-center">
+                <li class="nav-item" *ngFor="let value of getArray">
+                   <button (click)="getWayaLists(value.id)" class="btn btn-primary">{{value.name}}</button>
+                   <span class="nav-link active" aria-current="page" ></span>
+                </li>
+              </ul>
+        </div>
+        <div class="row featurette">
+        <div class="col-sm-2 col-md-1" *ngFor="let getWay of getWayaList, let i=index">
+          <div style="display: flex;flex-direction: column;justify-content: center;">
+            <a href="{{getWay.redirectGatewayURL}}">
+                <img class="img-fluid mx-auto m-1"  src="{{getWay.logo}}" alt="Card image cap">
+            </a>
+          </div>
+        </div>
+       </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <h4>{{'Bill History' | translate}}:{{subscriberDetails.firstName}}
+        {{subscriberDetails.lastName}}({{subscriberDetails.customerNumber}})</h4>
+    <p-table #dt [value]="diviceInvoices" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['subscriberId','customerNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+                <span class="p-input-icon-left ml-auto float-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'BillNo' | translate}}
+                    </div>
+                </th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'Device' | translate}}
+                    </div>
+                </th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'Date' | translate}}
+                    </div>
+                </th>
+                <th class="vcenter text-center">{{'Amount' | translate}}</th>
+                <th class="vcenter text-center">{{'Discount' | translate}}</th>
+                <th class="vcenter text-center">{{'PaymentStatus' | translate}}</th>
+                <th class="vcenter text-center">{{'Action' | translate}}</th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>{{i+1}}</td>
+                <td>{{r.refNo}}</td>
+                <td>{{r.deviceNumber}}</td>
+                <td>{{r.date|date:"dd-MM-YYYY | hh-mm-ss"}}</td>
+                <td>{{r.amount}}</td>
+                <td>{{r.discount}}</td>
+                <td>{{r.description}}</td>
+                <td class="vcenter text-center">
+                    <!--  <p-button (onClick)="edit(r)"
+          styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+          title="{{'EDIT' | translate}}"></p-button> -->
+                    <p-button (click)="goToUrl('devicereturn', r.id)" type="button"
+                        styleClass=" p-button-warning rounded-0 px-2 py-1 mr-2" icon="pi pi-undo"
+                        title="{{'DEVICERETURN' | translate}}"></p-button>
+                    <p-button (click)="goToUrl('packageassign', r.id)" type="button"
+                        styleClass="rounded-0 px-2 py-1 mr-2" icon="pi  pi-inbox"
+                        title="{{'PACKAGEASSIGN' | translate}}"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No data found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>
+
+<div class="card mt-3">
+    <h4>{{'DeviceAssign' | translate}}:{{subscriberDetails.firstName}}
+        {{subscriberDetails.lastName}}({{subscriberDetails.customerNumber}})</h4>
+    <p-table #dt [value]="assignHistories" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['subscriberId','customerNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+                <span class="p-input-icon-left ml-auto float-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'DeviceId' | translate}}
+                    </div>
+                </th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'Card' | translate}}
+                    </div>
+                </th>
+                <th class="vcenter text-center">{{'Date' | translate}}</th>
+                <th class="vcenter text-center">{{'Status' | translate}}</th>
+                <th class="vcenter text-center">{{'Description' | translate}}</th>
+
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>{{i+1}}</td>
+                <td>{{r.deviceNumber}}</td>
+                <td>{{r.cardNumber}}</td>
+                <td>{{r.doneDate |date:"dd-MM-YYYY | hh-mm-ss"}}</td>
+                <td>{{r.statusType}}</td>
+                <td>{{r.description}}</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No data found.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+</div>

@@ -1,0 +1,249 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'EmployeCreate' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="companyList" formControlName="cmnCompanyId"
+                    placeholder="{{'COMPANY' | translate}}" [showClear]="true" [filter]="true" filterBy="name"
+                    [showClear]="true" [style]="{'width':'100%'}" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown>
+                <!--<span *ngIf="frm.controls['CmnCompanyId'].invalid && frm.controls['CmnCompanyId'].touched "
+                    class="text-danger">
+                    {{'COMPANYID'|translate}} {{'REQUIRED'|translate}}
+                </span>-->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EMPLOYEID'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="employeeId" pInputText />
+                <span *ngIf="frm.controls['employeeId'].invalid && frm.controls['employeeId'].touched "
+                    class="text-danger">
+                    {{'EMPLOYEID'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="name" pInputText />
+                <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
+                    {{'NAME'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'MOBILE'|translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="mobile" pInputText />
+                <!-- <span *ngIf="frm.controls['Mobile'].invalid && frm.controls['Mobile'].touched " class="text-danger">
+                    {{'MOBILE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'OFFICIALEMAIL'|translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="officialEmail" pInputText />
+                <!-- <span *ngIf="frm.controls['OfficialEmail'].invalid && frm.controls['OfficialEmail'].touched " class="text-danger">
+                    {{'OFFICIALEMAIL'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'GENDER'|translate}}</label>
+                <p-dropdown [options]="genderList" [style]="{'width':'100%'}" formControlName="sex" [filter]="true"
+                    filterBy="name" [showClear]="true" placeholder="" optionLabel="name"
+                    optionValue="id"></p-dropdown><br>
+            </div>
+
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DESIGNATION'|translate}}</label><br>
+                <p-dropdown [options]="designationList" [style]="{'width':'100%'}" formControlName="hrmDesignationId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DEPARTMENT'|translate}}</label><br>
+                <p-dropdown [options]="depertmentList" [style]="{'width':'100%'}" formControlName="hrmDepartmentId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SECTION'|translate}}</label><br>
+                <p-dropdown [options]="sectionList" [style]="{'width':'100%'}" formControlName="hrmSectionId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+                   -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'JOININGDATE'|translate}}</label>
+                <input type="date" class="p-2  w-full" placeholder="" formControlName="joiningDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="joiningDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'Joining Date' | translate}}"></p-calendar> -->
+
+                <!-- <span *ngIf="frm.controls['JoiningDate'].invalid && frm.controls['JoiningDate'].touched " class="text-danger">
+                    {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+
+            <!-- Added By Asad On 12.02.2024 -->
+            <!-- Asad Added -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Photo' | translate}}</label>
+
+                <input hidden id="attachedSingleFile" (change)="onFileChange()" #fileInput type="file">
+                <div>
+                    <img [src]="fileSrc || '../../../assets/img/default-user.jpg'" alt="Please click to upload file"
+                        (click)="clickOnBtnFile()" alt="image" class="msr-3 h-25 w-25" width="50%">
+                </div>
+            </div>
+
+            <!-- Commented By Asad On 12.02.2024 -->
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'PHOTOURL'|translate}}</label>
+                <input type="file" class="p-2  w-full" placeholder="" formControlName="photoUrl" pInputText />
+            </div> -->
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SIGNATUREURL'|translate}}</label>
+                <input type="file" class="p-2  w-full" placeholder="" formControlName="signatureUrl" pInputText />
+                <!-- <span *ngIf="frm.controls['JoiningDate'].invalid && frm.controls['JoiningDate'].touched " class="text-danger">
+                    {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+
+            <!--  <div class="field col-12 md:col-12">
+                <div class="formgrid grid order_section">
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'USERID'|translate}}</label>
+                        <input type="text" class="p-2  w-full" placeholder="{{'USERID'|translate}}"
+                            formControlName="userId" pInputText />
+                        <span *ngIf="frm.controls['userId'].invalid && frm.controls['userId'].touched " class="text-danger">
+                        {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                    </span> 
+                    </div>
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'PASSWORD'|translate}}</label>
+                        <input type="password" class="p-2  w-full" placeholder="{{'PASSWORD'|translate}}"
+                            formControlName="password" pInputText />
+                        <span *ngIf="frm.controls['password'].invalid && frm.controls['password'].touched " class="text-danger">
+                        {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                    </span> 
+                    </div>
+                </div>
+            </div>-->
+
+            <div class="form-check col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 sm:mt-5 md:mt-5">
+                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                    [defaultChecked]="true" checked formControlName="isActive">
+                <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0||formId==1"
+                        styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                        label="{{'SAVE'|translate}}">
+                    </p-button>&nbsp;
+                    <!-- <p-button (click)="delete()" [disabled]="frm.invalid" *ngIf="formId==1"
+                        styleClass="p-button-danger p-button-sm" type="submit" icon="pi pi-times-circle"
+                        label="{{'DELETE'|translate}}">
+                    </p-button>&nbsp; -->
+                    <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                        icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'ITEM' | translate}} {{'DETAILS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NAME'|translate}} : </label>
+                <p>{{viewInfo.name}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EMPLOYEID'|translate}} : </label>
+                <p>{{viewInfo.employeeId}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'MOBILE'|translate}} : </label>
+                <p>{{viewInfo.mobile}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'OFFICIALEMAIL'|translate}} : </label>
+                <p>{{viewInfo.officialEmail}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-table #dt [value]="employeeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[20,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','employeeId','mobile','officialEmail']"
+    styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <div class="ml-3">
+                <p-button type="button" label="{{'ExportToExcel'|translate}}" (click)="exportToExcel()"
+                    class="export-button"></p-button>
+            </div>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SLNo'|translate}}</th>
+            <th pSortableColumn="itemName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'NAME'|translate}}
+                    <p-sortIcon field="itemName"></p-sortIcon>
+                    <p-columnFilter type="text" field="itemName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'EMPOLYEID'|translate}}</th>
+            <th class="vcenter text-center">{{'MOBILE'|translate}}</th>
+            <th class="vcenter text-center">{{'OFFICIALEMAIL'|translate}}</th>
+            <th class="vcenter text-center">{{'ROLE'|translate}}</th>
+            <th class="vcenter text-center">{{'ACTION'|translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{rowIndex+1}}</td>
+            <td>{{r.name}}</td>
+            <td>{{r.employeeId}}</td>
+            <td>{{r.mobile}}</td>
+            <td>{{r.officialEmail}}</td>
+            <td>{{r.roleName}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>

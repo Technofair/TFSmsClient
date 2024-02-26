@@ -1,0 +1,292 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'OSDMessage' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frmsrc">
+
+        <div class="formgrid grid">
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Client'|translate}}</label>
+                <p-dropdown [options]="organizations" [style]="{'width':'100%'}" formControlName="clientId"
+                    [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SubscriberID' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SubscriberName' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="name" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Phone' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
+            </div>
+
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DISTRICT'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="districtList" [style]="{'width':'100%'}" formControlName="cmnDistrictId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUnionByUpazillaId()"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UNION'|translate}}</label>
+                <p-dropdown [options]="unionList" [style]="{'width':'100%'}" formControlName="cmnUnionId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value"></p-dropdown><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <div class="card-footer">
+                    <div class="" style="padding-top: 30px;">
+                        <p-button (click)="search()" [disabled]="frmsrc.invalid"
+                            styleClass="p-button-primary p-button-sm" type="submit" icon="pi pi-search"
+                            label="{{'Search' | translate}}"></p-button>&nbsp;
+                        <p-button (onClick)="searchReset()" styleClass="p-button-warning p-button-sm"
+                            icon="pi pi-refresh" label="{{'RESET'|translate}}"> </p-button>&nbsp;
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <br>
+    <br>
+
+    <form [formGroup]="frm" (ngSubmit)="send()">
+        <input type="hidden" formControlName="id" value="0">
+
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <label>{{'Subscribers'|translate}}</label>
+                <p-table [value]="subscribers" [(selection)]="selectedSubscribers"
+                    [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                            <th>{{'Company'|translate}}</th>
+                            <th>{{'SubscriberID'|translate}}</th>
+                            <th>{{'SubscriberName'|translate}}</th>
+                            <th>{{'Phone'|translate}}</th>
+                            <th>{{'DeviceNo'|translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                        <tr>
+                            <td><p-tableCheckbox [value]="item"></p-tableCheckbox></td>
+                            <td>{{ item.companyName}}</td>
+                            <td>{{ item.customerNumber}}</td>
+                            <td>{{ item.firstName}} {{ item.lastName}}</td>
+                            <td>{{ item.contactNumber }}</td>
+                            <td>{{ item.deviceNumber }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+
+            <div class="card formgrid grid">
+
+
+                <div class="field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12">
+                    <label>{{'Message' | translate}}</label><span class="text-danger"> *</span>
+                    <textarea rows="3" cols="25" pInputTextarea formControlName="message"></textarea>
+                </div>
+
+                <br />
+                <div class=" grid">
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'OSDType'|translate}}</label><span class="text-danger"> *</span>
+                        <p-dropdown [options]="osdTypes" [style]="{'width':'100%'}" formControlName="oSDType"
+                            [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="name" optionValue="id" (onChange)="osdTypeChange()"></p-dropdown><br>
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'DVBEncoding'|translate}}</label>
+                        <p-dropdown [options]="dvbEncodings" [style]="{'width':'100%'}" formControlName="dVBEncoding"
+                            [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="name" optionValue="name"></p-dropdown><br>
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'Duration (sec)' | translate}}</label>
+                        <input type="number" class="p-2  w-full" formControlName="duration" pInputText />
+                    </div>
+                </div>
+                <hr />
+
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" [hidden]="simpleOsd">
+                    <div class=" grid">
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                                    [defaultChecked]="false" formControlName="recurrent">
+                                <label class="form-check-label" for="flexCheckDefault"> {{'Recurrent' | translate}}
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'Repetition' | translate}}</label>
+                            <input type="number" class="p-2  w-full" formControlName="repetition" pInputText />
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'Interval' | translate}}</label>
+                            <input type="number" class="p-2  w-full" formControlName="interval" pInputText />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" [hidden]="longOsd">
+                    <div class=" grid">
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'StartDate' | translate}}</label>
+                            <input type="date" class="p-2  w-full" formControlName="startDate" dateFormat="dd/mm/yy" pInputText />
+                            <!-- <p-calendar [showIcon]="true" formControlName="startDate" dateFormat="dd/mm/yy"
+                                placeholder="{{'StartDate'|translate}}"></p-calendar> -->
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'StartTime' | translate}}</label>
+                            <input type="time" class="p-2  w-full" formControlName="startTime" pInputText />
+                        </div>
+
+                        <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'StartDate' | translate}}</label>
+                        <p-calendar [(ngModel)]="date" [showTime]="true" dateFormat="yy-mm-dd" [showSeconds]="true" formControlName="date"></p-calendar>
+                    </div> -->
+
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                                    [defaultChecked]="false" formControlName="forced">
+                                <label class="form-check-label" for="flexCheckDefault"> {{'Forced' | translate}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" [hidden]="scrollOsd">
+                    <div class=" grid">
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'NoOfRepetition' | translate}}</label>
+                            <input type="number" class="p-2  w-full" formControlName="repetition" pInputText />
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'RepeatInterval(min)' | translate}}</label>
+                            <input type="number" class="p-2  w-full" formControlName="interval" pInputText />
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'Color'|translate}}</label>
+                            <p-dropdown [options]="colors" [style]="{'width':'100%'}" formControlName="color"
+                                [filter]="true" filterBy="number" [showClear]="true"
+                                placeholder="{{'SELECT'|translate}}" optionLabel="name"
+                                optionValue="id"></p-dropdown><br>
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'BackgroundColor'|translate}}</label>
+                            <p-dropdown [options]="bgColors" [style]="{'width':'100%'}"
+                                formControlName="backgroundColor" [filter]="true" filterBy="name" [showClear]="true"
+                                placeholder="{{'SELECT'|translate}}" optionLabel="name"
+                                optionValue="id"></p-dropdown><br>
+                        </div>
+
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <label>{{'ScrollSpeed(ms)' | translate}}</label>
+                            <input type="number" class="p-2  w-full" formControlName="scrollSpeed" pInputText />
+                        </div>
+                        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                            <div class="form-check mt-4">
+                                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                                    [defaultChecked]="false" formControlName="forced">
+                                <label class="form-check-label" for="flexCheckDefault"> {{'Forced' | translate}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+            <div class="card-footer">
+                <div class="">
+                    <p-button (click)="send()" [disabled]="frm.invalid" styleClass="p-button-primary p-button-sm"
+                        type="submit" icon="pi pi-send" label="{{'SEND' | translate}}"></p-button>&nbsp;
+                    <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                        (click)="reset()" label="{{'RESET'|translate}}"> </p-button>&nbsp;
+
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </form>
+</p-panel>
+
+<h4>{{'OSDMessageList' | translate}}</h4>
+
+<p-table #dt [value]="osdMessages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['message','osdType','startDate','startTime']"
+    styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'SL#' | translate}}</th>
+            <th pSortableColumn="startDate" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Date' | translate}}
+
+                </div>
+            </th>
+            <th pSortableColumn="message" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Message' | translate}}
+
+                </div>
+            </th>
+            <th pSortableColumn="osdType" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'OSDType' | translate}}
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+    S
+    <ng-template pTemplate="body" let-r let-i="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{i+1}}</td>
+            <td>{{r.createdDate}}</td>
+            <td>{{r.message}}</td>
+            <td>{{r.osdTypeString}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" routerLink="home/subscriber/viewSubscriber/{{r.id}}"
+                    styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-eye" data-toggle="tooltip"
+                    title="{{'Cancle' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

@@ -1,0 +1,135 @@
+<p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id" value="0">
+    <div class="card">
+        <h5>{{'LcoBalanceRecharge'|translate}}</h5>
+        <div class="formgrid grid">
+            
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Client'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'CurrentAmount' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text"CurrentAmount class="p-2  w-full" placeholder="{{'CurrentAmount' | translate}}"
+                    formControlName="balance" pInputText readonly />
+                <span *ngIf="frm.controls['balance'].invalid && frm.controls['balance'].touched " class="text-danger">
+                    {{'CurrentAmount' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'Amount' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="{{'Amount' | translate}}"
+                    formControlName="amount" pInputText />
+                <span *ngIf="frm.controls['amount'].invalid && frm.controls['amount'].touched " class="text-danger">
+                    {{'Amount' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'PayMode'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="paymentMoode" [style]="{'width':'100%'}" formControlName="anFPaymentMethodId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'Bank' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}" formControlName="remarks"
+                    pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'Branch' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}" formControlName="remarks"
+                    pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'BankAccount'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="bankAccount"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'BankAccount'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-3 md:col-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                        formControlName="isActive">
+                    <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'REMARKS' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}" formControlName="remarks"
+                    pInputText />
+            </div>
+            <div class="field col-12 md-col:12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'SAVE'|translate}}"></p-button>
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+                        <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                            icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+   
+
+<p-table #dt [value]="rechargeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['headName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="headName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'TrxDateTime' | translate}}
+                    <p-sortIcon field="headName"></p-sortIcon>
+                    <p-columnFilter type="text" field="headName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'COMPANY'|translate}}</th>
+            <th class="vcenter text-center"> {{'Amount' | translate}}</th>
+            <th class="vcenter text-center">{{'Bank'|translate}}</th>
+            <th class="vcenter text-center"> {{'Branch' | translate}}</th>
+            <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r>
+        <tr class="p-selectable-row">
+            
+            <td>{{r.date}}</td>
+            <td>{{r.headType}}</td>
+            <td>{{r.remarks}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>

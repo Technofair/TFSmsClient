@@ -1,0 +1,30 @@
+<form [formGroup]="frm" enctype="multipart/form-data" (ngSubmit)="submitForm()">
+  <div class="card">
+    <div class="formgrid grid order_section">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'orderNo'|translate}}</label><span class="text-danger"> *</span><br>
+        <input type="text" class="p-2 w-full" placeholder="{{'orderNo'|translate}}" formControlName="orderNo" pInputText />
+        </div>
+        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+          <label>{{'supplier'|translate}}</label><span class="text-danger"> *</span><br>
+          <input type="text" class="p-2 w-full" placeholder="{{'supplier'|translate}}" formControlName="supplier" pInputText />
+          </div>
+          <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <label>{{'UploadFiles'|translate}}</label><span class="text-danger"> *</span><br>
+            <input formControlName="orderfile" type="file" id="orderfile" name="orderfile" (change)="handleFileInput($event)">
+          </div>
+        </div>
+
+        <div class="field col-12 md-col:12">
+          <div class="card-footer" style="float: right;">
+            <div class="">
+              <p-button  type="submit" styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check" label="Save"></p-button>            
+            </div>
+          </div>
+        </div>
+  
+</div>
+</form>
+
+
+<input type="hidden" formControlName="id" value="0">

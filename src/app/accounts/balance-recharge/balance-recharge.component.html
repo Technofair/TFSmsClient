@@ -1,0 +1,210 @@
+<p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'LcoBalanceRecharge' |
+            translate}}</span></ng-template>
+
+    <form [formGroup]="frm">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="card">
+            <div class="formgrid grid">
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="isMso">
+                    <label>{{'COMPANY'|translate}}</label><span class="text-danger"> </span><br>
+                    <p-dropdown [options]="organizationList" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
+                        [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id" (onChange)="getRecharge()"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <label>{{'PayMode'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="paymentMoode" [style]="{'width':'100%'}" formControlName="anFPaymentMethodId"
+                        [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id" (onChange)="paymentModeChange()"></p-dropdown><br>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" [hidden]="bank">
+                    <label>{{'Bank' | translate}}</label>
+                    <input type="text" class="p-2  w-full" placeholder="{{'Bank' | translate}}" formControlName="bank"
+                        pInputText />
+                </div>
+
+                <!-- Bank -->
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" [hidden]="bank">
+                    <label>{{'ChequeNumber' | translate}}</label>
+                    <input type="text" class="p-2  w-full" placeholder="{{'ChequeNumber' | translate}}"
+                        formControlName="chequeNo" pInputText />
+                </div>
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" [hidden]="bank">
+                    <label>{{'CheqeDate' | translate}}</label>
+                    <input type="date" class="p-2  w-full" placeholder="{{'CheqeDate' | translate}}"
+                        formControlName="chequeDate" dateFormat="dd/mm/yy" pInputText />
+                    <!-- <p-calendar [showIcon]="true" formControlName="chequeDate" dateFormat="dd/mm/yy"
+                        placeholder="{{'CheqeDate' | translate}}"></p-calendar> -->
+                </div>
+
+                <!-- MFS -->
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" [hidden]="mfs">
+                    <label>{{'WalletNo' | translate}}</label>
+                    <input type="text" class="p-2  w-full" placeholder="{{'Wallet No' | translate}}"
+                        formControlName="walletNo" pInputText />
+                </div>
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" [hidden]="mfs">
+                    <label>{{'TransactionNo' | translate}}</label>
+                    <input type="text" class="p-2  w-full" placeholder="{{'Transaction No' | translate}}"
+                        formControlName="trxId" pInputText />
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <label>{{'Amount' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="number" class="p-2  w-full" placeholder="{{'Amount' | translate}}"
+                        formControlName="amount" pInputText />
+                    <span *ngIf="frm.controls['amount'].invalid && frm.controls['amount'].touched " class="text-danger">
+                        {{'Amount' | translate}} {{'REQUIRED' | translate}}
+                    </span>
+                </div>
+
+                <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <label>{{'balance' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" class="p-2  w-full" placeholder="{{'Amount' | translate}}"
+                        [(ngModel)]="balance" (change)="setBalance()" [ngModelOptions]="{standalone: true}" pInputText />
+                    <span *ngIf="frm.controls['amount'].invalid && frm.controls['amount'].touched " class="text-danger">
+                        {{'Amount' | translate}} {{'REQUIRED' | translate}}
+                    </span>
+                </div> -->
+
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <label>{{'REMARKS' | translate}}</label>
+                    <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}"
+                        formControlName="remarks" pInputText />
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <label>{{'PaymentDocument' | translate}}</label>
+
+                    <input hidden id="attachedSingleFile" (change)="onFileChange()" #fileInput type="file">
+                    <img [src]="fileSrc || '../../../assets/img/default-user.jpg'" alt="Please click to upload file"
+                        (click)="clickOnBtnFile()" alt="image" class="msr-3" width="25%" height="40">
+                </div>
+
+                <div class="field col-12 md-col:12">
+                    <div class="card-footer">
+                        <div class="">
+                            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+                                styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                                label="{{'SAVE'|translate}}"></p-button>
+                            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
+                                styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                                label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+                            <p-button type="reset" *ngIf="formId==0||formId==1"
+                                styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+                                label="{{'RESET'|translate}}"></p-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+
+<p-table #dt [value]="rechargeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['headName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SL#'|translate}}</th>
+            <th pSortableColumn="headName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'TrxDateTime' | translate}}
+                    <p-sortIcon field="headName"></p-sortIcon>
+                    <p-columnFilter type="text" field="headName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center"> {{'Name' | translate}}</th>
+            <th class="vcenter text-center"> {{'Amount' | translate}}</th>
+            <th class="vcenter text-center">{{'PaymentMethod'|translate}}</th>
+            <th class="vcenter text-center">{{'Status'|translate}}</th>
+            <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+            <th class="vcenter text-center" *ngIf="isMso">{{'ACTION' | translate}}</th>
+        </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r let-index="rowIndex">
+        <tr class="p-selectable-row">
+            <td class="vcenter text-center">{{index+1}}</td>
+            <td class="vcenter text-center">{{r.date | date :'dd-MMM-yyyy HH:mm'}}</td>
+            <td class="vcenter text-center">{{r.clientName}}</td>
+            <td class="vcenter text-center">{{r.amount}}</td>
+            <td class="vcenter text-center">{{r.paymentMethod}}</td>
+            <td class="vcenter text-center">{{r.status}}</td>
+            <td class="vcenter text-center">{{r.remarks}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" *ngIf="isMso"
+                    styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil" (click)="edit(r)"
+                    data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+
+                <!-- <p-button type="button" styleClass="p-button-info p-button-sm mr-2 px-2 py-1" icon="pi pi-eye"
+                    (click)="loadHistory(r)" data-toggle="tooltip" title="{{'HISTORY' | translate}}"></p-button> -->
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<!-- <p-dialog header="Header" [(visible)]="displayModalHistory" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [maximizable]="true" [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'RECHARGE' | translate}} {{'HISTORY' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <p-table #dt [value]="approveHistories" dataKey="id" [rowHover]="true" [rows]="10"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['headName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+            [tableStyle]="{'min-width': '50rem'}">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th class="vcenter text-center">{{'SL#'|translate}}</th>
+                    <th class="vcenter text-center">{{'DATE' | translate}}</th>
+                    <th class="vcenter text-center"> {{'TRANBY' | translate}}</th>
+                    <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+                    <th class="vcenter text-center">{{'STATUS'|translate}}</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-r let-index="rowIndex">
+                <tr class="p-selectable-row">
+                    <td class="vcenter text-center">{{index+1}}</td>
+                    <td class="vcenter text-center">{{r.date | date :'dd-MMM-yyyy HH:mm'}}</td>
+                    <td class="vcenter text-center">{{r.doneByName}}</td>
+                    <td> <textarea type="text" class="p-2 w-full h-3rem" [(ngModel)]="r.comments" readonly
+                            [disabled]="true" [ngModelOptions]="{standalone: true}" pInputTextarea> </textarea></td>
+                    <td style="text-align: center;">{{r.statusOfApproval}}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="9">No data found.</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModalHistory=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog> -->

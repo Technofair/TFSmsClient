@@ -1,0 +1,252 @@
+<p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'Payment Voucher' |
+            translate}}</span></ng-template>
+
+    <form [formGroup]="frm">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="card">
+            <div class="formgrid grid">
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'VOUCHARDATE' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="date" class="p-2  w-full" placeholder="{{'VOUCHARDATE' | translate}}"
+                        formControlName="date" dateFormat="dd/mm/yy" pInputText />
+
+                    <!-- <p-calendar [showIcon]="true" formControlName="date" dateFormat="dd/mm/yy"
+                        placeholder="{{'VOUCHARDATE' | translate}}"></p-calendar> -->
+                </div>
+
+                <div class="field col-12 sm:col-4 md:col-4 lg:col-4 xl:col-4" *ngIf="false">
+                    <label>{{'BUSINESS'|translate}}</label><span class="text-danger"> *</span>
+                    <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnBusinessId"
+                        [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'VOUCHERNO' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" class="p-2  w-full" placeholder="{{'VOUCHERNO' | translate}}"
+                        formControlName="voucherNumber" pInputText />
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+                    <label>{{'NARRATION' | translate}}</label><span class="text-danger"> *</span>
+                    <textarea cols="6" rows="1" class="p-2  w-full h-5rem" placeholder="{{'NARRATION' | translate}}"
+                        formControlName="naration" pInputTextarea></textarea>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <input type="checkbox" formControlName="isInternalTransaction" name="isInternalTransaction"
+                        id="isInternalTransaction">
+                    <label class="form-check-label" for="isInternalTransaction">{{'Is Internal Transaction' |
+                        translate}}</label>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <form [formGroup]="frmDetail">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="card">
+            <div class="formgrid grid">
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Debit Account'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="debitHeadList" [style]="{'width':'100%'}"
+                        (onChange)="resetAnother('dr', $event)" formControlName="drAnFChartOfAccountId" [filter]="true"
+                        filterBy="particular" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="particular" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Credit Account'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="creditHeadList" [style]="{'width':'100%'}"
+                        (onChange)="resetAnother('cr', $event)" formControlName="crAnFChartOfAccountId" [filter]="true"
+                        filterBy="particular" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="particular" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="false">
+                    <label>{{'Account Code' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" class="p-2  w-full" readonly [disabled]="true"
+                        placeholder="{{'Account Code' | translate}}" formControlName="code" pInputText />
+
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Short Narration' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" class="p-2  w-full" placeholder="{{'Short Narration' | translate}}"
+                        formControlName="shortNarration" pInputText />
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Amount' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="number" class="p-2  w-full" placeholder="{{'Amount' | translate}}"
+                        formControlName="amount" pInputText />
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="field col-12 md-col:12">
+        <div class="card-footer">
+            <div class="">
+                <p-button (click)="addDetail()" [disabled]="frm.invalid || frmDetail.invalid"
+                    styleClass="p-button-primary p-button-sm" type="submit" icon="pi pi-plus"
+                    label="{{'ADD'|translate}}"></p-button>&nbsp;
+                <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                    icon="pi pi-refresh" (click)="resetMaster()" label="{{'RESET'|translate}}"></p-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="formgrid grid m-0">
+        <div class="col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 pl-0 pr-0">
+            <p-table [value]="voucherDetailList" dataKey="id" [rowHover]="true" [filterDelay]="0"
+                styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="w-10rem">{{'Account Name' | translate}}</th>
+                        <th class="w-10rem">{{'Account Code' | translate}}</th>
+                        <th class="w-60rem">{{'Short Narration' | translate}}</th>
+                        <th class="w-20rem text-center" colspan="2">{{'Amount' | translate}}</th>
+                        <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-index="rowIndex">
+                    <tr>
+                        <td>{{rowData.particular}}</td>
+                        <td>{{rowData.code}}</td>
+                        <td>{{rowData.shortNarration}}</td>
+                        <td class="text-right">Dr: {{rowData.debit}}</td>
+                        <td class="text-right">Cr: {{rowData.credit}}</td>
+                        <td class="vcenter text-center">
+                            <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1"
+                                icon="pi pi-pencil" (click)="editDtl(rowData)" data-toggle="tooltip"
+                                title="{{'EDIT' | translate}}"></p-button>
+                            <!-- <p-button type="button" styleClass="p-button-warning p-button-sm px-2 py-1" icon="pi pi-trash"
+                                (click)="DeleteDtl(rowData)" data-toggle="tooltip" title="{{'Delete' | translate}}"></p-button> -->
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="footer">
+                    <tr>
+                        <th colspan="4" class="text-right">{{frm.controls['debit'].value}}</th>
+                        <th class="text-right">{{frm.controls['credit'].value}}</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+
+        </div>
+
+    </div>
+
+    <div class="field col-12 md-col:12">
+        <div class="card-footer">
+            <div class="">
+                <p-button (click)="save()"
+                    [disabled]="frm.invalid || voucherDetailList.length==0 || (frm.controls['debit'].value==0 || frm.controls['credit'].value==0 || frm.controls['debit'].value!=frm.controls['credit'].value)"
+                    *ngIf="formId==0" styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                    label="{{'SAVE'|translate}}"></p-button>
+                <p-button (click)="save()" [disabled]="frm.invalid || voucherDetailList.length==0" *ngIf="formId==1"
+                    styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                    label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+                <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                    icon="pi pi-refresh" (click)="resetDetail()" label="{{'RESET'|translate}}"></p-button>
+            </div>
+        </div>
+    </div>
+</p-panel>
+
+<div class="card py-2" style="margin-top: 20px;">
+
+    <form [formGroup]="searchFrm">
+
+        <div class="formgrid grid mb-4 mt-4">
+
+
+            <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'From' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="dateFrom" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="dateFrom" dateFormat="dd/mm/yy"
+                        placeholder="{{'Date From' | translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'To' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="dateTo" dateFormat="dd/mm/yy" pInputText />
+
+                <!-- <p-calendar [showIcon]="true" formControlName="dateTo" dateFormat="dd/mm/yy"
+                        placeholder="{{'Date To' | translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-3 md:col-3 lg:col-3 xl:col-3">
+                <div class="card-footer">
+                    <div class="" style="padding-top: 30px;">
+                        <p-button (click)="getMasterVoucher()" [disabled]="frm.invalid"
+                            styleClass="p-button-primary p-button-sm" type="button" icon="pi pi-search"
+                            label="{{'Search' | translate}}"></p-button>&nbsp;
+                        <p-button styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<p-table #dt [value]="paymentVoucherList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['voucherNumber']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+                <i class="pi pi-search"></i>
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SL#'|translate}}</th>
+            <th style="text-align: center">{{'VoucherNumber'|translate}}</th>
+            <th class="vcenter text-center">{{'Date'|translate}}</th>
+            <th class="vcenter text-center">{{'Narration'|translate}}</th>
+            <th class="vcenter text-center">{{'Is Internal Transaction' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r let-index="rowIndex">
+        <tr class="p-selectable-row">
+            <td class="vcenter text-center">{{index+1}}</td>
+            <td class="vcenter text-center">{{r.voucherNumber}}</td>
+            <td class="vcenter text-center">{{r.date | date:'dd-MMM-yyyy'}}</td>
+
+            <td class="vcenter text-center">{{r.naration}}</td>
+            <td class="vcenter text-center">{{r.isInternalTransaction?'Yes':'No'}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+                <p-button type="button" styleClass="p-button-warning p-button-sm px-2 py-1" icon="pi pi-trash"
+                    (click)="Delete(r)" data-toggle="tooltip" title="{{'Delete' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

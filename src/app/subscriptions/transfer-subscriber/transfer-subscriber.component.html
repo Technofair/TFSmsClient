@@ -1,0 +1,153 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'SubscriberTransfer' |
+      translate}}</span></ng-template>
+  <div class="formgrid grid">
+    <div class="field col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
+      <form [formGroup]="frm">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+          <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+            <label>{{'From Company' | translate}}</label><span class="text-danger"> *</span>
+            <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId"
+              (onChange)="getSubscriberList()" [filter]="true" filterBy="name" [showClear]="true"
+              placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown>
+            <span *ngIf="frm.controls['companyId'].invalid && frm.controls['companyId'].touched " class="text-danger">
+              {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+            </span>
+          </div>
+
+          <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+
+            <p-table #dt [value]="fromSubscriberList" dataKey="id" [rowHover]="true" [rows]="10"
+              [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+              [globalFilterFields]="['loginID','employeeName','companyName']"
+              styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                  <span class="p-input-icon-left ml-auto pull-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                      placeholder="Search keyword" />
+                  </span>
+
+                  <p-button (click)="transfer()" [disabled]="frm.invalid"
+                    styleClass="p-button-info p-button-sm ml-4 pull-right" type="button" icon="pi pi-angle-double-right"
+                    label="{{'TRANSFER' | translate}}"> </p-button>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th class="w-2rem">
+                    <input type="checkbox" [(ngModel)]="isAllCheckedFrom" [ngModelOptions]="{standalone: true}"
+                      (click)="selectAll($event)" name="isAllCheckedFrom" id="isAllCheckedFrom">
+                  </th>
+                  <th>{{'Name'|translate}}</th>
+                  <th>{{'DEVICENUMBER'|translate}}</th>
+                  <th>{{'Phone'|translate}}</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-subs let-rowIndex="rowIndex">
+                <tr>
+                  <td>
+                    <input type="checkbox" [(ngModel)]="subs.isChecked" (click)="singleChecked($event, subs)"
+                      [ngModelOptions]="{standalone: true}" name="isCheckedFrom_{{rowIndex}}"
+                      id="isCheckedFrom_{{rowIndex}}">
+                  </td>
+                  <td>{{ subs.fullName }}</td>
+                  <td>{{ subs.deviceNumber}}</td>
+                  <td>{{ subs.contactNumber}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="field col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
+      <form [formGroup]="transferfrm">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+          <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+            <label>{{'To Company' | translate}}</label><span class="text-danger"> *</span>
+            <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="trasCompanyId"
+              [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+              optionValue="id"></p-dropdown>
+            <span
+              *ngIf="transferfrm.controls['trasCompanyId'].invalid && transferfrm.controls['trasCompanyId'].touched "
+              class="text-danger">
+              {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+            </span>
+          </div>
+          <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+            <p-table #dt [value]="toSubscriberList" dataKey="id" [rowHover]="true" [rows]="10"
+              [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+              [globalFilterFields]="['loginID','employeeName','companyName']"
+              styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+              <ng-template pTemplate="caption">
+                <div class="flex">
+                  <div class="flex">
+                    <!-- <p-button (click)="transfer('to-from')" [disabled]="frm.invalid"
+                      styleClass="p-button-info p-button-sm mr-4 pull-left" type="button" icon="pi pi-angle-double-left"
+                      label="{{'TRANSFER' | translate}}"></p-button> -->
+
+                    <span class="p-input-icon-left ml-auto pull-right">
+                      <i class="pi pi-search"></i>
+                      <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                    </span>
+                  </div>
+                </div>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <!-- <th class="w-2rem">
+                    <input type="checkbox" [(ngModel)]="isAllCheckedTo" [ngModelOptions]="{standalone: true}"
+                      (click)="selectAll($event, 'to')" name="isAllCheckedTo" id="isAllCheckedTo">
+                  </th> -->
+
+                  <th (click)="delAllTransferTo()" style="cursor: pointer; text-align: center;"><i
+                      *ngIf="toSubscriberList.length>0" class="pi pi-times-circle text-danger"></i> </th>
+
+                  <th>{{'Name'|translate}}</th>
+                  <th>{{'DEVICENUMBER'|translate}}</th>
+                  <th>{{'Phone'|translate}}</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-subs let-rowIndex="rowIndex">
+                <tr>
+                  <!-- <input type="checkbox" [(ngModel)]="subs.isChecked" (click)="singleChecked($event, subs, 'to')"
+                      [ngModelOptions]="{standalone: true}" name="isCheckedTo_{{rowIndex}}"
+                      id="isCheckedTo_{{rowIndex}}"> -->
+                  <td (click)="delTransferTo(rowIndex)" style="cursor: pointer; text-align: center;"><i
+                      class="pi pi-times text-danger"></i> </td>
+                  <td>{{ subs.fullName }}</td>
+                  <td>{{ subs.deviceNumber}}</td>
+                  <td>{{ subs.contactNumber}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+      <div class="card-footer">
+        <div class="">
+          <p-button (click)="save()" [disabled]="frm.invalid || transferfrm.invalid || toSubscriberList.length==0"
+            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+            label="{{'SAVE' | translate}}"></p-button>&nbsp;
+          <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+        </div>
+      </div>
+    </div>
+  </div>
+</p-panel>

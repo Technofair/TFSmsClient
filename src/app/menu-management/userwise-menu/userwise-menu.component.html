@@ -1,0 +1,124 @@
+<!-- <p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog> -->
+
+
+<form [formGroup]="checkboxForm">
+<div class="card">
+  <h5>{{'UserBaseMenu' | translate}}</h5>
+  
+  <div class="formgrid grid">
+    <div class="field col-3 md:col-3">
+      <label>{{'User' | translate}}</label><span class="text-danger"> *</span>
+      <input id="user" placeholder="{{'User' | translate}}"  type="text" pInputText
+        class="p-2  w-full" />
+      <!-- <span *ngIf="checkboxForm.controls['name'].invalid && checkboxForm.controls['name'].touched " class="text-danger">
+        {{'MODULENAME' | translate}} {{'REQUIRED' | translate}}
+      </span> -->
+    </div>
+  </div>
+
+  <div class="fromgrid grid">
+    <div class="field col-12 col-md-12 col-sm-12">
+
+      <!-- #dt [value]="checkboxes.controls" -->
+<p-table  dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+[rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+[globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+<ng-template pTemplate="caption">
+
+  <!-- (click)="clear(dt.filterGlobal($any($event.target).value, ''))"
+  (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+  -->
+  <div class="flex">
+    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+      ></button>
+    <span class="p-input-icon-left ml-auto float-right">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" 
+        placeholder="Search keyword" />
+    </span>
+  </div>
+</ng-template>
+
+<ng-template pTemplate="header">
+  <tr>
+    <th pSortableColumn="name" style="text-align: center">
+      <div class="vcenter text-center">
+        {{'MODULENAME' | translate}}
+        <p-sortIcon field="name"></p-sortIcon>
+        <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th pSortableColumn="name" style="text-align: center">
+      <div class="vcenter text-center">
+        {{'MenuName' | translate}}
+        <p-sortIcon field="name"></p-sortIcon>
+        <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+      </div>
+    </th>
+
+    <th class="vcenter text-center">{{'Add' | translate}}</th>
+    <th class="vcenter text-center">{{'Edit' | translate}}</th>
+    <th class="vcenter text-center">{{'Delete' | translate}}</th>
+  </tr>
+</ng-template>
+
+<ng-template pTemplate="body" let-r>
+  <tr class="p-selectable-row">
+    <td>Module name</td>
+    <td>Menu name</td>
+    <td><input type="checkbox"/></td>
+    <td><input type="checkbox"/></td>
+    <td><input type="checkbox"/></td>
+    <!-- <td class="vcenter text-center">
+      <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+        (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+      <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+        (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+    </td> -->
+  </tr>
+</ng-template>
+
+<ng-template pTemplate="emptymessage">
+
+  <tr class="p-selectable-row">
+    <td>Module name</td>
+    <td>Menu name</td>
+    <td><input type="checkbox" checked/></td>
+    <td><input type="checkbox"/></td>
+    <td><input type="checkbox"/></td>
+    <!-- <td class="vcenter text-center">
+      <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+        (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+      <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+        (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+    </td> -->
+  </tr>
+  <tr>
+    <td colspan="9">No data found.</td>
+  </tr>
+</ng-template>
+
+
+</p-table>
+
+    </div>
+
+  </div>
+
+
+
+</div>
+
+    <div formArrayName="checkboxes">
+      <div *ngFor="let checkbox of checkboxes.controls; let i = index">
+        <label>
+          <input type="checkbox" [formControlName]="i" />
+          {{ checkbox.value }}
+        </label>
+      </div>
+    </div>
+    <!-- <button (click)="getSelectedCheckboxes()">Get Selected Checkboxes</button> -->
+  </form>
