@@ -1,0 +1,46 @@
+ <!-- <div class="card"> -->
+  <h1 style="text-align: center;" *ngIf="packages.length>0" >{{'PackageList'|translate}}</h1>
+  <hr  *ngIf="packages.length > 0 " style="padding: 5px; ">
+  <div class=" row" style="display: flex; justify-content: center; " id="package">
+    <!-- mx-auto -->
+    <div class="col-sm-6 col-md-3  my-5"    *ngFor="let package of packages " >
+      <div class="" style="width: auto; padding-top: 10px; height: 450px; background: rgb(255, 221, 1);" *ngIf="package.id % 2==0">
+        <p class="card  p-3 m-3" style="text-align: center; background: black; color: gold;">{{package.name}}</p>
+        <p style="text-align: center;"> <span class="badge "  style="color: black;  margin-top: 100px;">Tk</span> <span style="font-size: 24px; color: black;">{{package.price}}</span> </p>
+        <hr style="color: black;">
+        <div class="card-body" style="display: flex; flex-direction: column;">
+          <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: black;"> {{package.numberOfChannels}} {{'Channels'|translate}}</p>
+          <hr style="color: black;">
+          <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: black;"> {{package.numberOfHDChannels}} {{'HD Channels'|translate}}</p>
+          <hr style="color: black;">
+          <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: black;"> {{package.numberOfSDChannels}} {{'SD Channels'|translate}}</p>
+          <hr style="color: black;">
+        </div>
+          <div style="display: flex; justify-content: center;">
+            <a class=" btn " style="  text-align: center;  background: black; color: gold; ">Book Now</a>
+          </div>
+      </div>
+
+      <div class="" style="width: auto;padding-top: 10px;  height: 450px; background: black;" *ngIf="package.id % 2==1" >
+        <p class=" card  p-3 m-3" style="text-align: center;  background: gold; color: black;">{{package.name}}</p>
+        <p style="text-align: center;"> <span class="badge "  style="color: gold; margin-top: 100px;">Tk</span> <span style="font-size: 24px; color: gold;">{{package.price}}</span> </p>
+         <hr style="color:gold;">
+          <div class="card-body" style="display: flex; flex-direction: column;">
+            <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: gold;"> {{package.numberOfChannels}} {{'Channels'|translate}}</p>
+            <hr style="color: gold;">
+            <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: gold;"> {{package.numberOfHDChannels}} {{'HD Channels'|translate}}</p>
+            <hr style="color: gold;">
+            <p style="font-size: medium; font-size: 14px; font-weight: 200; text-align: center; color: gold;"> {{package.numberOfSDChannels}} {{'SD Channels'|translate}}</p>
+            <hr style="color: gold;">
+          </div>
+          <div style="display: flex; justify-content: center;">
+            <a class=" btn    " style="  text-align: center;  background: gold; color: black; ">Book Now</a>
+          </div>
+      </div>
+  </div>
+
+    
+  </div><!-- /.row -->
+
+
+

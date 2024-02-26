@@ -1,0 +1,115 @@
+<p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ROLES' |
+      translate}}</span></ng-template>
+
+  <form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id">
+
+    <div class="formgrid grid">
+      <div class="field  col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'NAME' | translate}}</label><span class="text-danger"> *</span>
+        <input type="text" class="p-2  w-full" placeholder="" formControlName="name" pInputText />
+        <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
+          {{'NAME' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
+      <!-- <div class="field col-3 md:col-3">
+        <label>{{'REMARKS' | translate}}</label>
+        <input type="checkbox" class="p-2  w-full" placeholder="" formControlName="remarks" pInputText />
+      </div> -->
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="card-footer">
+          <div class="">
+            <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="submit"
+              icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>
+            <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+              label="{{'RESET'|translate}}"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</p-panel>
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+  [resizable]="false">
+  <ng-template pTemplate="header">
+    <h5>{{'ROLES' | translate}} {{'DETAILS' | translate}}</h5>
+  </ng-template>
+  <div class="modal-body">
+    <div class="formgrid grid">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'NAME' | translate}} : </label>
+        <p>{{viewInfo.name}}</p>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'REMARKS' | translate}} : </label>
+        <p>{{viewInfo.remarks}}</p>
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+
+<p-table #dt [value]="rolesList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+  [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+  [tableStyle]="{'min-width': '50rem'}">
+
+  <ng-template pTemplate="caption">
+
+    <div class="flex">
+      <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+        (click)="clear(dt)"></button>
+      <span class="p-input-icon-left ml-auto float-right">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Search keyword" />
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="vcenter text-danger" style="text-align: right !important;" [width]="10">{{'SlNo'|translate}}</th>
+      <th pSortableColumn="name" style="text-align: center">
+        <div class="vcenter text-center">
+          {{'NAME' | translate}}
+          <p-sortIcon field="name"></p-sortIcon>
+          <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+        </div>
+      </th>
+      <!--<th class="vcenter text-center">{{'REMARKS' | translate}}</th> -->
+      <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+    </tr>
+  </ng-template>
+
+
+  <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">
+    <tr class="p-selectable-row">
+      <td>{{rowIndex+1}}</td>
+      <td>{{r.name}}</td>
+      <!--<td>{{r.remarks}}</td> -->
+      <td class="vcenter text-center">
+        <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+          (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+        <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+          (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="9">No data found.</td>
+    </tr>
+  </ng-template>
+
+</p-table>

@@ -1,0 +1,105 @@
+<p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'MessageTemplate' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="grid">
+            
+            <!-- <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'MessageType'|translate}}</label>
+                <p-dropdown [options]="messageType" [style]="{'width':'100%'}" formControlName="oSDTypeId"
+                    [filter]="true" filterBy="name" [showClear]="true"
+                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div> -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Name' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" formControlName="name" pInputText />
+            </div>
+            <div class=" field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12">
+                <label>{{'Description' | translate}}</label><span class="text-danger"> *</span>
+                <textarea rows="2" cols="34" pInputTextarea formControlName="bodyTemplate"></textarea>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="txtIsActive"
+                        [defaultChecked]="true" checked formControlName="isActive">
+                    <label class="form-check-label" for="txtIsActive"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                            type="submit" icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
+                        <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+<p-table #dt [value]="messageTemplate" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['description','typeName','startDate','endDate']"
+    styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'SL#' | translate}}</th>
+            <th pSortableColumn="startDate" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Name' | translate}}
+                </div>
+            </th>
+            <th pSortableColumn="message" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'BodyTemplate' | translate}}
+                </div>
+            </th>
+            <!-- <th pSortableColumn="osdType" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'StartDate' | translate}}
+                </div>
+            </th>
+            <th pSortableColumn="startTime" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'EndDate' | translate}}
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'Frequency' | translate}}</th> -->
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r | orderBy:reverse let-i="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{i+1}}</td>
+            <td>{{r.name}}</td>
+            <td>{{r.bodyTemplate}}</td>
+            <!-- <td>{{r.startDate |date:'short' }}</td>
+            <td>{{r.endDate |date:'short'}}</td>
+            <td>{{r.frequency}}</td> -->
+            <td class="vcenter text-center">
+                <p-button (onClick)="edit(r)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+                title="{{'Edit' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>

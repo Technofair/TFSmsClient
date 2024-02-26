@@ -1,0 +1,264 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'Package' |
+            translate}} {{'active' |
+            translate}} {{'and' |
+            translate}} {{'inactive' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frmsrc">
+        <div class="formgrid grid mb-4">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Client'|translate}}</label>
+                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="clientId" [filter]="true"
+                    filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+                    optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SubscriberID' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SubscriberName' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="name" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Phone' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DeviceNumber' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
+            </div>
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DISTRICT'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="districtList" [style]="{'width':'100%'}" formControlName="cmnDistrictId"
+                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
+            </div> -->
+
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
+                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUnionByUpazillaId()"></p-dropdown><br>
+            </div> -->
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UNION'|translate}}</label>
+                <p-dropdown [options]="unionList" [style]="{'width':'100%'}" formControlName="cmnUnionId"
+                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value"></p-dropdown><br>
+            </div> -->
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'FromDate' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="fromDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'FromDate'|translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'ToDate' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="toDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="toDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'ToDate'|translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Status'|translate}}</label>
+                <p-dropdown [options]="status" [style]="{'width':'100%'}" formControlName="statusType" [filter]="true"
+                    filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+                    optionValue="name"></p-dropdown><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <div class="card-footer">
+                    <div class="" style="padding-top: 30px;">
+                        <p-button (click)="getRenewableSubscriber()" [disabled]="frmsrc.invalid"
+                            styleClass="p-button-primary p-button-sm" type="submit" icon="pi pi-search"
+                            label="{{'Search' | translate}}"></p-button>&nbsp;
+                        <p-button (onClick)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+<p-dialog header="Header" [(visible)]="displayPackageRenew" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'PACKAGEASSIGNHISTORY' | translate}}</h5>
+    </ng-template>
+
+    <p-table #dt [value]="packageAssignHistory" dataKey="id" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['subscriberId','customerNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+                <span class="p-input-icon-left ml-auto float-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'EMPLOYEENAME' | translate}}
+                    </div>
+                </th>
+                <th class="vcenter text-center">{{'Device' | translate}}</th>
+                <th pSortableColumn="customerNumber" style="text-align: center">
+                    <div class="vcenter text-center">
+                        {{'DONEDATE' | translate}}
+                    </div>
+                </th>
+                <th class="vcenter text-center">{{'DESCRIPTION' | translate}}</th>
+                <th class="vcenter text-center">{{'STATUSTYPE' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>{{i+1}}</td>
+                <td>{{r.employeeName}}</td>
+                <td>{{deviceNumber}}</td>
+                <td>{{r.doneDate| date:"dd-MM-YYYY | ss-mm-hh"}}</td>
+                <td>{{r.description}}</td>
+                <td>{{r.statusType}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
+
+<p-table #dt [value]="packageRenewlist" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','customerNumber','contactNumber','deviceNumber','startDate','endDate']"
+    styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '70rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flexBox">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <div class="ml-3">
+                <p-button type="button" label="{{'ExportToExcel'|translate}}" (click)="exportToExcel()"
+                    class="export-button"></p-button>
+            </div>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'SL#' | translate}}</th>
+            <th pSortableColumn="name" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Name' | translate}}
+                    <p-columnFilter type="text" field="customerNumber" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Contact' | translate}}
+                    <p-columnFilter type="text" field="contact" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Device' | translate}}
+                    <p-columnFilter type="text" field="deviceNumber" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="package" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Package' | translate}}
+
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'PackagePrice' | translate}}</th>
+            <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
+            <th pSortableColumn="osdType" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'StartDate' | translate}}
+                    <p-columnFilter type="date" field="startDate" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="startTime" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'EndDate' | translate}}
+                    <p-columnFilter type="date" field="endDate" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'STATUS' | translate}}</th>
+            <th class="vcenter text-center ">{{'ACTION' | translate}}</th>
+        </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r let-i="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{i+1}}</td>
+            <td>{{r.firstName}} {{r.lastName}}({{r.customerNumber}})</td>
+            <td>{{r.contactNumber}}</td>
+            <td>{{r.deviceNumber}}</td>
+            <td>{{r.package.packageName}}</td>
+            <td>{{r.package.packagePrice}}</td>
+            <td>{{r.package.amount}}</td>
+            <td>{{r.package.startDate |date:'dd-MM-YYYY | hh:mm:ss'}}</td>
+            <td>{{r.package.endDate |date:'dd-MM-YYYY | hh:mm:ss'}}</td>
+            <td>{{r.package.statusType}}</td>
+
+            <td class="vcenter text-center" style="display: flex; flex-direction: row;">
+                <div *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'">
+                    <p-button (onClick)="inactivePackage(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
+                        type="button" icon="pi pi-times-circle" title="{{'Inactive' | translate}}"></p-button>
+                </div>
+                <div *ngIf="r.package.statusType =='Inactive'">
+                    <p-button (onClick)="activePackage(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
+                        type="button" icon="pi pi-check-circle" title="{{'PackageRenew' | translate}}"></p-button>
+                </div>
+                <p-button (onClick)="cancelPackage(r)" styleClass="p-button-danger rounded-0 px-2 py-1 mr-2"
+                    type="button" icon="pi pi-times-circle" title="{{'packageCancel' | translate}}"></p-button>
+
+                <p-button (onClick)="packageHistory(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
+                    type="button" icon="pi pi-eye" title="{{'History' | translate}}"></p-button>
+
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="11">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog header="Header" [(visible)]="PaymentInfoVisible" [modal]="true"
+    [style]="{ 'width': '20rem', 'border':'10px solid', 'text-align':'center', 'border-color':paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''}">
+    <ng-template pTemplate="header">
+        <span
+            [style.color]="paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''"
+            style="font-weight: bold;">Payment Status</span>
+    </ng-template>
+    <p class="m-0" style="font-size: 20px;">{{paymentMsg}}</p>
+    <ng-template pTemplate="footer">
+        <button pButton type="button" (click)="PaymentInfoVisible=false" label="Ok" icon="pi pi-check"
+            class="p-button-{{paymentStatusId=='1'?'success':paymentStatusId=='2'?'warning':paymentStatusId=='3'?'danger':''}}"
+            badge="8"></button>
+    </ng-template>
+</p-dialog>

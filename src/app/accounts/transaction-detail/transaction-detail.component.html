@@ -1,0 +1,178 @@
+<p-confirmDialog [style]="{width: '20vw'}" [baseZIndex]="10000"></p-confirmDialog>
+<form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id" value="0">
+    <div class="card">
+        <h5>{{'TRANSDETAIL'|translate}}</h5>
+        <div class="formgrid grid">
+            <div class="field col-3 md:col-3">
+                <label>{{'DIGITALMONEY' | translate}}</label><span class="text-danger"> *</span>
+                <p-dropdown [options]="digitalMoneyList" [style]="{'width':'100%'}" formControlName="digitalMoneyId"
+                    [filter]="true" filterBy="orgId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="orgId" optionValue="id"></p-dropdown><br>
+                <span *ngIf="frm.controls['digitalMoneyId'].invalid && frm.controls['digitalMoneyId'].touched "
+                    class="text-danger">
+                    {{'DIGITALMONEY' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'HEAD' | translate}}</label><span class="text-danger"> *</span>
+                <p-dropdown [options]="headList" [style]="{'width':'100%'}" formControlName="headId" [filter]="true"
+                    filterBy="headName" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="headName"
+                    optionValue="id"></p-dropdown><br>
+                <span *ngIf="frm.controls['headId'].invalid && frm.controls['headId'].touched " class="text-danger">
+                    {{'HEAD' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'CHARGE' | translate}}</label>
+                <p-dropdown [options]="chargeList" [style]="{'width':'100%'}" formControlName="chargeId" [filter]="true"
+                    filterBy="chrgAmnt" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="chrgAmnt"
+                    optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'DEBIT' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'DEBIT' | translate}}" formControlName="debit"
+                    pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'CREDIT' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'CREDIT' | translate}}" formControlName="credit"
+                    pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'REMARKS' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}" formControlName="remarks"
+                    pInputText />
+            </div>
+            <div class="field col-3 md:col-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                        formControlName="isActive">
+                    <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+            <div class="field col-12 md-col:12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'SAVE'|translate}}"></p-button>
+                        <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+                        <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                            icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'TRANSDETAIL' | translate}} {{'DETAILS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <div class="formgrid grid">
+            <div class="field col-3 md:col-3">
+                <label>{{'DIGITALMONEY' | translate}} : </label>
+                <p>{{viewInfo.digitalMoneyId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'HEAD' | translate}} : </label>
+                <p>{{viewInfo.headId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'CHARGE' | translate}} : </label>
+                <p>{{viewInfo.chargeId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'DEBIT' | translate}} : </label>
+                <p>{{viewInfo.debit}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'CREDIT' | translate}} : </label>
+                <p>{{viewInfo.credit}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'REMARKS' | translate}} : </label>
+                <p>{{viewInfo.remarks}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-table #dt [value]="transdetailList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['digitalMoneyId', 'headId']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="digitalMoneyId" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'DIGITALMONEY' | translate}}
+                    <p-sortIcon field="digitalMoneyId"></p-sortIcon>
+                    <p-columnFilter type="text" field="digitalMoneyId" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="headId" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'HEAD' | translate}}
+                    <p-sortIcon field="headId"></p-sortIcon>
+                    <p-columnFilter type="text" field="headId" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'CHARGE' | translate}}</th>
+            <th class="vcenter text-center">{{'DEBIT' | translate}}</th>
+            <th class="vcenter text-center">{{'CREDIT' | translate}}</th>
+            <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-r>
+        <tr class="p-selectable-row">
+            <td>{{r.digitalMoneyId}}</td>
+            <td>{{r.headId}}</td>
+            <td>{{r.chargeId}}</td>
+            <td>{{r.debit}}</td>
+            <td>{{r.credit}}</td>
+            <td>{{r.remarks}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+                <p-button type="button" styleClass="p-button-primary p-button-sm mr-2 px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

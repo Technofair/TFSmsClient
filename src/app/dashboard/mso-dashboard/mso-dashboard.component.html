@@ -1,0 +1,403 @@
+<div class="clock-container card">
+    <div *ngIf="!isMobile" class="p-0">
+        <div class="grid">
+            <div class="field col-12 md:col-5 ml-3 col-right-gap p-0 custom-bottom">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow custom-block-box">
+                    <div class="col-md-2 bg-warning icon_container bg-light-orange icon-col-5-dvsn-3">
+                        <i class="fa fa-user icon-style"></i>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="cap-info-normal">
+                            {{'Total Subscriber'|translate}}
+                        </p>
+                        <p class="cap-info-bold">
+                            {{totalSubscriber}}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="tbl-subscriber">
+                            <tbody *ngFor="let item of subscriberList; let i = index;">
+                                <tr *ngIf="i!=0" (click)="goToUrl(item, item.name)" style="cursor: pointer;">
+                                    <td class="tbl-l-td-subscriber">{{item.name|translate}}</td>
+                                    <td class="tbl-r-td-subscriber">{{item.value}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><br>
+
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow custom-block-box div-width-col-5-dvsn-2">
+                    <div class="col-md-2 bg-warning icon_container bg-deep-paste icon-col-5-dvsn-2">
+                        <i class="fa fa-dollar icon-style"></i>
+                    </div>
+                    <div class="col-md-10">
+                        <table class="tbl-transaction">
+                            <thead>
+                                <tr class="bg-light-paste">
+                                    <th class="text-left pl-2">{{'Pay Mode'|translate}}</th>
+                                    <th class="text-right">{{'Opening'|translate}}</th>
+                                    <th class="text-right">{{'Income'|translate}}</th>
+                                    <th class="text-right">{{'Expense'|translate}}</th>
+                                    <th class="text-right pr-2">{{'Balance'|translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="tbl-l-td-transaction">{{'Cash'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-r-td-transaction">{{'0'|translate}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl-l-td-transaction">{{'Online'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-r-td-transaction">{{'0'|translate}}</td>
+                                </tr>
+                                <tr>
+                                    <td class="tbl-l-td-transaction">{{'Bank'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-td-transaction">{{'0'|translate}}</td>
+                                    <td class="tbl-r-td-transaction">{{'0'|translate}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-light-paste">
+                                    <th class="text-left pl-2">{{'Total'|translate}}</th>
+                                    <th class="text-right">0</th>
+                                    <th class="text-right">0</th>
+                                    <th class="text-right" style="color: red;">0</th>
+                                    <th class="text-right pr-2" style="font-weight: bold;">0</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div
+                    class="xl:col-6 lg:col-6 md:col-6 sm:col-12 text-center card box_shadow c-s-b-shadow custom-block-box-half col-right-gap">
+                    <div class="col-md-4 bg-warning icon_container bg-light-orange icon-col-5-dvsn-2">
+                        <i class="fa fa-user icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <!-- <p class="half-box-top-info-customer">{{'Add'|translate}}<br>{{'Customer'|translate}}</p> -->
+                        <p class="half-box-top-info-customer">{{'AddCustomer'|translate}}</p>
+                        <p class="half-box-bottom-info-customer">{{'Click Here'|translate}}</p>
+                    </div>
+                </div>
+
+                <div class="md:col-6 text-center card box_shadow c-s-b-shadow custom-block-box-half">
+                    <div class="col-md-4 bg-warning icon_container bg-deep-blue">
+                        <i class="fa fa-pen-to-square icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="half-box-top-info-complain">{{'Active complain'|translate}}</p>
+                        <p class="half-box-bottom-info-complain">{{'0'|translate}}</p>
+                    </div>
+                </div><br>
+
+                <!-- <div class="md:col-6 text-center card box_shadow c-s-b-shadow custom-block-box-half col-right-gap">
+                    <div class="col-md-4 bg-warning icon_container bg-light-orange">
+                        <i class="fa fa-calendar icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="blank-info-top">{{'10 December'|translate}}</p>
+                        <p class="blank-info-bottom">{{'2023'|translate}}</p>
+                    </div>
+                </div> -->
+
+                <!-- <div class="md:col-6 text-center card box_shadow c-s-b-shadow custom-block-box-half">
+                    <div class="col-md-4 bg-warning icon_container bg-deep-blue">
+                        <i class="fa fa-calendar icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="blank-info-top">{{'10 December'|translate}}</p>
+                        <p class="blank-info-bottom">{{'2023'|translate}}</p>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="field col-12 md:col-3 col-right-gap p-0">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow p-0">
+                    <div class="custom-block-box p-0">
+                        <div class="col-md-4 bg-info icon_container bg-deep-paste icon-2by3-set">
+                            <i class="fa fa-computer icon-style"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="cap-info-normal">{{'Expired Device'|translate}}</p>
+                            <p class="cap-info-bold">{{totalExDevice|translate}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="tbl-exp-device">
+                            <tbody *ngFor="let item of deviceList; let i = index;">
+                                <tr *ngIf="i!=0">
+                                    <td class="tbl-l-td-exp-device">{{item.name|translate}}</td>
+                                    <td class="tbl-r-td-exp-device">{{item.value|translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow custom-block-box custom-top">
+                    <div class="col-md-4 bg-warning icon_container bg-deep-paste">
+                        <i class="fa fa-user icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="half-box-top-info-sublso">{{'Total Sub-LSO'|translate}}</p>
+                        <p class="half-box-bottom-info-sublso">{{'0'|translate}}</p>
+                    </div>
+                </div><br>
+
+                <!-- <div class="md:col-12 text-center card box_shadow c-s-b-shadow custom-block-box">
+                    <div class="col-md-4 bg-warning icon_container bg-deep-paste">
+                        <i class="fa fa-calendar icon-style"></i>
+                    </div>
+                    <div class="col-md-8">
+                        <p class="blank-info-top">{{'10 December'|translate}}</p>
+                        <p class="blank-info-bottom">{{'2023'|translate}}</p>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="field col-12 md:col-3 p-0">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow p-0">
+                    <div class="custom-block-box p-0">
+                        <div class="col-md-4 bg-info icon_container bg-deep-paste icon-2by3-set">
+                            <i class="fa fa-computer icon-style"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="cap-info-normal">{{'Total Device'|translate}}</p>
+                            <p class="cap-info-bold">{{totalDevice|translate}}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <table class="tbl-total-device">
+                            <tbody *ngFor="let item of deviceHistoryList; let i = index;">
+                                <tr *ngIf="i!=0">
+                                    <td class="tbl-l-td-total-device">{{item.name|translate}}</td>
+                                    <td class="tbl-r-td-total-device">{{item.value|translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-12 xl:col-12 custom-right">
+                <div class="card p-0 c-s-b-shadow">
+                    <h5 class="collection-graph-h">
+                        {{'DailyCollection'|translate}}
+                    </h5>
+                    <div class="card">
+                        <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isMobile" class="p-0">
+        <div class="grid">
+            <div class="field col-12 md:col-12 ml-2 p-0">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m custom-block-box-m">
+                    <div class="col-md-2 bg-warning icon_container-full-m bg-light-orange-m mr-2">
+                        <i class="fa fa-user icon-style-m"></i>
+                    </div>
+                    <div class="col-md-4 custom-right-m">
+                        <p class="cap-info-normal-m">
+                            {{'Total Subscriber'|translate}}
+                        </p>
+                        <p class="cap-info-bold-m">
+                            {{totalSubscriber}}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="tbl-subscriber-m">
+                            <tbody *ngFor="let item of subscriberList; let i = index;">
+                                <tr *ngIf="i!=0">
+                                    <td class="cap-info-normal-m tbl-l-td-subscriber-m">{{item.name|translate}}</td>
+                                    <td class="cap-info-normal-m tbl-r-td-subscriber-m">{{item.value|translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field col-6 md:col-12 ml-2 p-0 col-6-right-gap-m div-half-m">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0 mb-3">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-info icon_container-half-m bg-deep-paste-m">
+                            <i class="fa fa-computer icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <p class="cap-info-normal-m">{{'Expired Device'|translate}}</p>
+                            <p class="cap-info-bold-m">{{totalExDevice|translate}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <table class="tbl-exp-device-m">
+                            <tbody *ngFor="let item of deviceList; let i = index;">
+                                <tr *ngIf="i!=0">
+                                    <td class="tbl-l-td-exp-device-m">{{item.name|translate}}</td>
+                                    <td class="tbl-r-td-exp-device-m">{{item.value|translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0 mb-2">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-warning icon_container-single-m bg-deep-paste-m">
+                            <i class="fa fa-user icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <p class="cap-info-normal-m">{{'Total Sub-LSO'|translate}}</p>
+                            <p class="cap-info-bold-m">{{'0'|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-warning icon_container-single-m bg-deep-paste-m">
+                            <i class="fa fa-calendar icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <p class="blank-info-top-m">{{'10 December'|translate}}</p>
+                            <p class="blank-info-bottom-m">{{'2023'|translate}}</p>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="field col-6 md:col-12 ml-2 p-0 div-half-m">
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-info icon_container-half-m bg-deep-paste-m">
+                            <i class="fa fa-computer icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <p class="cap-info-normal-m">{{'Total Device'|translate}}</p>
+                            <p class="cap-info-bold-m">{{totalDevice|translate}}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <table class="tbl-total-device-m">
+                            <tbody *ngFor="let item of deviceHistoryList; let i = index;">
+                                <tr *ngIf="i!=0">
+                                    <td class="tbl-l-td-total-device-m">{{item.name|translate}}</td>
+                                    <td class="tbl-r-td-total-device-m">{{item.value|translate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="field col-12 md:col-12 text-center card box_shadow c-s-b-shadow-m custom-block-box-m ml-2 mt-0 mb-3 custom-width-m">
+                <div class="col-md-2 bg-warning icon_container-single2-m bg-deep-paste">
+                    <i class="fa fa-dollar icon-style-m"></i>
+                </div>
+                <div class="col-md-10">
+                    <table class="tbl-transaction-m">
+                        <thead>
+                            <tr class="bg-light-paste-m">
+                                <th class="text-left pl-2">{{'Pay Mode'|translate}}</th>
+                                <th class="text-right">{{'Opening'|translate}}</th>
+                                <th class="text-right">{{'Income'|translate}}/th>
+                                <th class="text-right">{{'Expense'|translate}}</th>
+                                <th class="text-right pr-2">{{'Balance'|translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="tbl-l-td-transaction-m">{{'Cash'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-r-td-transaction-m">{{'0'|translate}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tbl-l-td-transaction-m">{{'Online'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-r-td-transaction-m">{{'0'|translate}}</td>
+                            </tr>
+                            <tr>
+                                <td class="tbl-l-td-transaction-m">{{'Bank'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-td-transaction-m">{{'0'|translate}}</td>
+                                <td class="tbl-r-td-transaction-m">{{'0'|translate}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr class="bg-light-paste">
+                                <th class="text-left pl-2">{{'Total'|translate}}</th>
+                                <th class="text-right">0</th>
+                                <th class="text-right">0</th>
+                                <th class="text-right" style="color: red;">0</th>
+                                <th class="text-right pr-2" style="font-weight: bold;">0</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div class="field col-6 md:col-12 ml-2 p-0 col-6-right-gap-m div-half-m">
+
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-warning icon_container-single-m bg-light-orange-m">
+                            <i class="fa fa-user icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <!-- <p class="half-box-top-info-customer-m">{{'Add'|translate}}<br>{{'Customer'|translate}}</p> -->
+                            <p class="half-box-top-info-customer-m">{{'AddCustomer'|translate}}</p>
+                            <p class="half-box-bottom-info-customer-m">{{'Click Here'|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field col-6 md:col-12 ml-2 p-0 div-half-m">
+
+                <div class="md:col-12 text-center card box_shadow c-s-b-shadow-m p-0">
+                    <div class="custom-block-box-m p-0">
+                        <div class="col-md-4 bg-warning icon_container-single-m bg-deep-blue-m">
+                            <i class="fa fa-pen-to-square icon-style-m"></i>
+                        </div>
+                        <div class="col-md-8 ml-2">
+                            <p class="half-box-top-info-complain-m">{{'Active Complain'|translate}}</p>
+                            <p class="half-box-bottom-info-complain-m">{{'0'|translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="col-12 md:col-12 xl:col-12 p-0 pt-4 ml-2 custom-width-m">
+                <div class="card p-0 c-s-b-shadow-m">
+                    <h5 class="collection-graph-h-m">
+                        {{'DailyCollection'|translate}}
+                    </h5>
+                    <div class="card">
+                        <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

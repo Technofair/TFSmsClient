@@ -1,0 +1,387 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<div [hidden]="bulkStatus" class="m-2">
+    <p-panel>
+        <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'BulkUpload' |
+                translate}}</span>
+    
+            <div class="col-10 sm:col-10 md:col-10 lg:col-10 xl:col-10 float_right">
+                <a href="\assets\bulk\bulk-subscriber.xls" label="Sample Excel"
+                    class="p-element p-ripple p-button-raised p-button-help p-button-text p-button p-component mr-4 text-white"><span
+                        class="p-button-label font-weight-normal">{{"SampleExcel"|translate}} &nbsp; <i
+                            _ngcontent-rur-c90="" class="pi pi-download"></i></span><span class="p-ink"></span></a>
+            </div>
+        </ng-template>
+        <div class="formgrid grid m-0 pt-2">
+    
+            <div class=" col-6 sm:col-6 md:col-4 lg:col-3 xl:col-3">
+                <label>{{'UPLOAD'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="file" id="filePath" name="filePath" (change)="bulkImport($event)">
+            </div>
+            <div class="col-6 sm:col-6 md:col-4 lg:col-3 xl:col-3" [hidden]="hideButton">
+                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-2 mt-4" (click)="bulkUpload()"
+                    data-toggle="tooltip" label="{{'Import' | translate}}" title="{{'Import' | translate}}"></p-button>
+            </div>
+    
+            <!-- <div class=" col-6 md:col-6">
+                <a href="\assets\bulk\bulk-item.xlsx" label="Sample Excel"
+                    class="p-element p-ripple p-button-raised p-button-help p-button-text p-button p-component mr-4 text-dark"><span
+                        class="p-button-label font-weight-normal">Sample Excel &nbsp; <i _ngcontent-rur-c90=""
+                            class="pi pi-download"></i></span><span class="p-ink"></span></a>
+            </div> -->
+        </div>
+    </p-panel>
+    
+</div>
+
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ADDSUBSCRIBER' |
+            translate}}</span>
+            <div class="col-10 sm:col-10 md:col-10 lg:col-10 xl:col-10 float_right">
+               <button class="btn btn-primary" (click)="getBulkStatus()">{{'BulkUpload'|translate}}</button>
+            </div>
+
+    </ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value=0>
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="_auth.allowAutoSubscriberNumber()!=true">
+                <label>{{'CustomerID' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="allowAutoSubscriberNumberp-2  w-full" placeholder="" formControlName="customerNumber" pInputText />
+                <span *ngIf="frm.controls['customerNumber'].invalid && frm.controls['customerNumber'].touched "
+                    class="text-danger">
+                    {{'CustomerID'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NAME' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="firstName" pInputText />
+                <span *ngIf="frm.controls['firstName'].invalid && frm.controls['firstName'].touched "
+                    class="text-danger">
+                    {{'NAME'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'MOBILENO' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="contactNumber" pInputText phoneChars />
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EMAIL' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="email" pInputText emailChars/>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SUBSCRIBERTYPE' | translate}}</label>
+                <p-dropdown [options]="subsType" [style]="{'width':'100%'}" formControlName="subscriberType"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="" optionLabel="name"
+                    optionValue="id"></p-dropdown><br>
+            </div>
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'LASTNAME' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="lastName" pInputText />
+            </div> -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'GENDER'|translate}}</label>
+                <p-dropdown [options]="genderList" [style]="{'width':'100%'}" formControlName="gender" [filter]="true"
+                    filterBy="name" [showClear]="true" placeholder="" optionLabel="name" optionValue="id">
+                </p-dropdown><br>
+            </div>
+
+            
+
+            
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COUNTRY'|translate}}</label>
+                <p-dropdown [options]="countryList" [style]="{'width':'100%'}" formControlName="cmnCountryId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div> -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DIVISION'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="divisionList" [style]="{'width':'100%'}" formControlName="cmnDivisionId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="nameInBangla" optionValue="id" (onChange)="getDistrictByDivisionId()"></p-dropdown><br>
+                <span *ngIf="frm.controls['cmnDivisionId'].invalid && frm.controls['cmnDivisionId'].touched "
+                    class="text-danger">
+                    {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DISTRICT'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="districtList" [style]="{'width':'100%'}" formControlName="cmnDistrictId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
+
+                <span *ngIf="frm.controls['cmnDistrictId'].invalid && frm.controls['cmnDistrictId'].touched "
+                    class="text-danger">
+                    {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value" (onChange)="getUnionByUpazillaId()"></p-dropdown><br>
+                <span *ngIf="frm.controls['cmnUpazillaId'].invalid && frm.controls['cmnUpazillaId'].touched "
+                    class="text-danger">
+                    {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'UNION'|translate}}</label>
+                <p-dropdown [options]="unionList" [style]="{'width':'100%'}" formControlName="cmnUnionId"
+                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="text" optionValue="value"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+                <label>{{'ADDRESS' | translate}}</label><br>
+                <!-- <textarea formControlName="address"  id="" cols="30" rows="10"></textarea> -->
+                <input class="p-2  w-full" placeholder="" formControlName="address" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'POSTALCODE' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="postCode" pInputText />
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NID' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="nidNo" pInputText />
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'KYC'|translate}}</label>
+                <input type="file" class="p-2  w-full" placeholder="" formControlName="kYC" pInputText />
+            </div>
+            <!-- <div class="form-check field co-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 xl:mt-4 lg:mt-4 md:mt-4 sm:mt-4">
+                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                    [defaultChecked]="true" formControlName="isActive" checked>
+                <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+            </div> -->
+            <br>
+            <!-- <div class=" card col-12 sm:col-12 md-col:12 lg:col-12 xl:col-12">
+                <h5>{{'DEVICEASSIGN'|translate}}</h5>
+                <div class="formgrid grid">
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'DEVICENUMBER'|translate}}</label>
+                        <p-dropdown [options]="devicesCards" [style]="{'width':'100%'}" formControlName="devicesNumber"
+                            [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="number" optionValue="number"></p-dropdown><br> 
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'CARDNUMBER'|translate}}</label>
+                        <p-dropdown [options]="devicesCards" [style]="{'width':'100%'}" formControlName="cardNumber"
+                            [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                            optionLabel="number" optionValue="number"></p-dropdown><br>
+                    </div>
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'REMARKS' | translate}}</label>
+                        <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}"
+                            formControlName="remarks" pInputText />
+                        <span *ngIf="frm.controls['remarks'].invalid && frm.controls['remarks'].touched "
+                            class="text-danger">
+                            {{'REMARKS' | translate}} {{'REQUIRED' | translate}}
+                        </span>
+                    </div>
+                </div>
+            </div> -->
+            <div class="field col-12 md-col:12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                            type="submit" icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
+                        <p-button styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                        <p-button type="button" styleClass="p-button-outlined p-button-sm"
+                            routerLink="/home/subscription/subscriberlist" label="{{'Subscriber List'|translate}}"><i
+                                class="pi pi-list mr-2"></i></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+<br>
+
+<!-- <p-table #dt [value]="subscriberList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email']"
+    styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flexBox">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="text-align: center">{{'SL#' | translate}}</th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                  {{'CustomerID' | translate}} 
+                </div>
+              </th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'NAME' | translate}}
+                </div>
+            </th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'MOBILENO' | translate}}
+                </div>
+            </th>
+            <th class="vcenter text-center">
+                <div class="vcenter text-center">
+                    {{'EMAIL' | translate}}
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
+            <th class="vcenter text-center" style="width: 250px" >{{'ACTION' | translate}}</th>
+        </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; "  >
+                <p-progressSpinner ></p-progressSpinner>
+            </div>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r let-i="rowIndex">
+        <tr class="p-selectable-row" [class.highlight]="selectedRow === r">
+            <td>{{i+1}}</td>
+            <td>{{r.customerNumber}}</td>
+            <td>{{r.firstName}} {{r.lastName}}</td>
+            <td>{{r.contactNumber}}</td>
+            <td>{{r.email}}</td>
+            <td>{{r.address}}</td>
+            <td class="vcenter text-center">
+                <p-button (onClick)="edit(r)" *ngIf="isShow" (click)="gotoTop()"
+                    styleClass="p-button-success rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+                    title="{{'EDIT' | translate}}"></p-button>
+
+                <p-button (click)="goToUrl('deviceassign', r.id)" type="button"
+                    styleClass="p-button-help rounded-0 px-2 py-1 mr-2" icon="pi pi-box"
+                    title="{{'STBASSIGN' | translate}}"></p-button>
+                <p-button (click)="goToUrl('packageassign', r.id)" type="button" styleClass="rounded-0 px-2 py-1 mr-2"
+                    icon="pi  pi-inbox" title="{{'PACKAGEASSIGN' | translate}}"></p-button>
+                <p-button (click)="goToUrl('devicereturn', r.id)" type="button"
+                    styleClass=" p-button-warning rounded-0 px-2 py-1 mr-2" icon="pi pi-undo"
+                    title="{{'DEVICERETURN' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table> -->
+<p-table #dt [value]="subscriberList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+  [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email','deviceNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+  [tableStyle]="{'min-width': '70rem'}">
+  <ng-template pTemplate="caption">
+    <div class="flexBox">
+      <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+        (click)="clear(dt)"></button>
+      <!-- <div class="ml-3">
+        <p-button type="button" label="{{'ExportToExcel'|translate}}" (click)="exportTExcel()" styleClass="p-button-outlined"
+          icon="pi pi-file-excel"></p-button>
+      </div> -->
+      <!-- <div class="ml-3">
+        <p-button type="button" label="{{'OpenReportInPDF'|translate}}" (click)="loadReportIn(); _reportModal.maximized = true"
+          styleClass="p-button-outlined" icon="pi pi-file-pdf"></p-button>
+      </div> -->
+      <span class="p-input-icon-left ml-auto float-right">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Enter Mobile,Email,SubscriberID"/>
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="vcenter text-center" >{{'SL#' | translate}}</th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'CustomerID' | translate}}
+        </div>
+      </th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'NAME' | translate}} 
+        </div>
+      </th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'MOBILENO' | translate}}
+        </div>
+      </th>
+      <!-- <th class="vcenter text-center">
+        <div class="vcenter text-center">
+          {{'EMAIL' | translate}}
+          <p-columnFilter type="text" field="email" display="menu"></p-columnFilter>
+        </div>
+      </th> -->
+      <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
+      <th class="vcenter text-center">{{'Devices' | translate}}</th>
+      <th class="vcenter text-center">{{'TotalDevice' | translate}}</th>
+      <th class="vcenter text-center">{{'STATUS' | translate}}</th>
+      <th class="vcenter text-center" style="width: 250px">{{'ACTION' | translate}}</th>
+    </tr>
+    <tr>
+      <div [hidden]="progressStatus" style="position: absolute; z-index: 10; "  >
+        <p-progressSpinner ></p-progressSpinner>
+     </div>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-r let-i="rowIndex">
+    <tr  class="p-selectable-row">
+      <td>{{i+1}}</td>
+      <td>{{r.customerNumber}}</td>
+      <td>{{r.firstName}} {{r.lastName}}</td>
+      <td>{{r.contactNumber}}</td>
+      <!-- <td>{{r.email}}</td> -->
+      <td>{{r.address}}</td>
+      <td>
+           <span *ngFor="let device of r.devices">
+            {{device.deviceNumber}}
+           </span>
+      </td>
+      <td>{{r.devices==undefined?0: r.devices.length}}</td>
+      <td>{{r.isActive ==true?'Active':'Inactive'}}</td>
+      <td class="vcenter text-center" style="width: 250px;">
+        <p-button (onClick)="edit(r)" *ngIf="isShow" (click)="gotoTop()"
+                    styleClass="p-button-success rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+                    title="{{'EDIT' | translate}}"></p-button>
+        <!-- <p-button type="button" styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-eye"
+          (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
+        <p-button (click)="goToUrl('deviceassign', r.id)" type="button"
+          styleClass="p-button-help rounded-0 px-2 py-1 mr-2" icon="pi pi-box"
+          title="{{'STBASSIGN' | translate}}"></p-button>
+        <p-button (click)="goToUrl('packageassign', r.id)" type="button"
+          styleClass="rounded-0 px-2 py-1 mr-2" icon="pi  pi-inbox" title="{{'PACKAGEASSIGN' | translate}}"></p-button>
+        <p-button (click)="goToUrl('devicereturn', r.id)" type="button"
+          styleClass=" p-button-warning rounded-0 px-2 py-1 mr-2" icon="pi pi-undo"
+          title="{{'DEVICERETURN' | translate}}"></p-button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="9">No data found.</td>
+    </tr>
+  </ng-template>
+
+</p-table>

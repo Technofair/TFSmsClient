@@ -1,0 +1,291 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'PURCHASE' |
+            translate}}</span>
+
+        <div class="col-10 md:col-10 float_right">
+            <a href="\assets\bulk\bulk-purchase-product.xls" label="Sample Excel"
+                class="p-element p-ripple p-button-raised p-button-help p-button-text p-button p-component mr-4 text-white"><span
+                    class="p-button-label font-weight-normal">{{'Sample Excel'|translate}} &nbsp; <i
+                        _ngcontent-rur-c90="" class="pi pi-download"></i></span><span class="p-ink"></span></a>
+        </div>
+    </ng-template>
+
+    <form [formGroup]="frm" (ngSubmit)="savePurchase()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="order_section">
+
+            <div class="formgrid grid">
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'SUPPLIER'|translate}}</label><span class="text-danger"> *</span>
+                    <p-dropdown [options]="supplierList" [style]="{'width':'100%'}" formControlName="invSupplierId"
+                        [filter]="true" filterBy="Name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+
+                </div>
+                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'STORE'|translate}}</label><span class="text-danger"> *</span>
+                    <p-dropdown [options]="storeList" [style]="{'width':'100%'}" formControlName="cmnStoreId"
+                        [filter]="true" filterBy="Name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+
+                </div>
+                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'PURCHASEDATE'|translate}}</label><span class="text-danger"> *</span><br>
+                    <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd/mm/yy" pInputText />
+                    <!-- <p-calendar [showIcon]="true" formControlName="date" dateFormat="dd/mm/yy"
+                        placeholder="{{'PURCHASEDATE' | translate}}"></p-calendar> -->
+
+                </div>
+                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'TOTALAMOUNT'|translate}}</label>
+                    <input [disabled]="true" type="text" class="p-2  w-full" formControlName="payableAmount" pInputText
+                        readonly />
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'REMARKS' | translate}}</label>
+                    <input type="text" class="p-2  w-full" formControlName="remarks" pInputText />
+                </div>
+            </div>
+        </div>
+
+
+        <div class="order_section my-3" formGroupName="frmDetail">
+
+            <div class="formgrid grid m-0">
+
+                <div class="field col-12 sm:col-6  md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'PRODUCT'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="products" [style]="{'width':'100%'}" formControlName="productName"
+                        (onChange)="setProductModel($event)" [filter]="true" filterBy="name" [showClear]="true"
+                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="name"></p-dropdown><br>
+
+                </div>
+                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'Quantity'|translate}}</label><span class="text-danger"> *</span><br>
+                    <input type="number" class="p-2  w-full" maxlength="20" formControlName="quantity"
+                        (keypress)="intNumber($event)" pInputText /><br>
+                </div>
+                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'Purchase Rate'|translate}}</label><span class="text-danger"> *</span><br>
+                    <input type="number" class="p-2  w-full" maxlength="10" formControlName="rate"
+                        (keypress)="decimalNumber($event)" pInputText /><br>
+                </div>
+                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2">
+                    <label>{{'Sales Rate'|translate}}</label><span class="text-danger"> *</span><br>
+                    <input type="number" class="p-2  w-full" maxlength="20" formControlName="salesRate"
+                        (keypress)="decimalNumber($event)" pInputText /><br>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'WARRENTY'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="warrentyList" [style]="{'width':'100%'}"
+                        formControlName="invWarrantyPeriodId" [filter]="true" filterBy="name" [showClear]="true"
+                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+                <div class="col-12 sm:col-12  md:col-6">
+
+                    <label>{{'Device ID'|translate}}</label>
+                    <textarea rows="6" cols="60" pInputTextarea value="HELLO"
+                        formControlName="deviceNumber"></textarea><br>
+
+                </div>
+                <div class="field col-12 sm:col-6  md:col-6 ">
+                    <div class="formgrid grid">
+                        <div class="col-12 md:col-12">
+                            <label>{{'UPLOAD'|translate}}</label><br>
+                            <input #fileInput formControlName="filePath" type="file" id="filePath" name="filePath"
+                                (change)="importProducts($event)" (click)="resetFile()">
+                        </div>
+                        <div class="field col-12 sm:col-6  md:col-12" style="padding-top: 20px;">
+                            <div class="formgrid grid">
+                                <div class="form-check field col-12 md:col-4">
+                                    <input class="form-check-input larger" type="checkbox" value="true"
+                                        id="flexCheckDefault" formControlName="isSequence" (change)="onclick($event)">
+                                    <!-- <p-checkbox value="true" formControlName="isFree" (onClick)="onclick($event)"></p-checkbox> -->
+                                    <label class="form-check-label" for="flexCheckDefault"> {{'ISSEQUENCE' | translate}}
+                                    </label>
+                                </div>
+                                <div class="field col-12 sm:col-6  md:col-4" *ngIf="isDisplayed">
+
+                                    <input type="text" class="p-2  w-full" formControlName="startRange"
+                                        placeholder="StartRange" pInputText />
+                                </div>
+                                <div class="field col-12 sm:col-6  md:col-4" *ngIf="isDisplayed">
+
+                                    <input type="text" class="p-2  w-full" (blur)="addSerial()"
+                                        formControlName="endRange" placeholder="EndRange" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field col-12 sm:col-12  md:col-12">
+                    <p-button label="{{'Add'|translate}}" (click)="addRow()"
+                        styleClass="p-button-primary ml-5"></p-button>
+                </div>
+            </div>
+        </div>
+        <div class="formgrid grid m-0">
+            <div class="col-12 sm:col-12 md:col-12 pl-0 pr-0">
+                <p-table [value]="details" dataKey="id" [rowHover]="true"
+                    styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>{{'SL#' | translate}}</th>
+                            <th>{{'PRODUCT' | translate}}</th>
+                            <th>{{'DEVICEID' | translate}}</th>
+                            <th>{{'QUANTITY' | translate}}</th>
+                            <th>{{'RATE' | translate}}</th>
+                            <th>{{'SALESRATE' | translate}}</th>
+                            <th>{{'AMOUNT' | translate}}</th>
+                            <th>{{'ACTION' | translate}}</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-index="rowIndex">
+                        <tr>
+                            <td>{{ index+1 }}</td>
+                            <td>{{ rowData.name }}</td>
+                            <!-- <td>{{ rowData.deviceNumber }}</td> -->
+                            <td>
+                                <textarea type="text" class="p-2 w-full h-8rem" [(ngModel)]="rowData.deviceNumber"
+                                    readonly [disabled]="true" [ngModelOptions]="{standalone: true}"
+                                    pInputTextarea> </textarea>
+                            </td>
+                            <td (keyup)="totalSum(rowData.quantity,index)" contenteditable="true" class="editable">{{
+                                rowData.quantity }}</td>
+                            <td (keypress)="totalSum(rowData,index)" contenteditable="true" class="editable">{{
+                                rowData.rate }}</td>
+                            <td contenteditable="true" class="editable">{{ rowData.salesRate }}</td>
+                            <td>{{ rowData.total }}</td>
+
+                            <td><p-button class="p-button-sm" (click)="removeRow(rowData)"><i class="pi pi-minus"
+                                        style="font-size: 1.5rem;color: red"></i></p-button></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+                <div class="formgrid grid mt-3">
+                    <div class="field col-12 md-col:12 sm-col:12 xl-col:12 ">
+                        <p-button (click)="savePurchase()" [disabled]="frm.invalid"
+                            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                            label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                        <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</p-panel>
+<div class="card py-2" style="margin-top: 20px;">
+
+    <form [formGroup]="searchFrm" (ngSubmit)="search()">
+
+        <div class="formgrid grid mb-4 mt-4">
+
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'Supplier'|translate}}</label>
+                <p-dropdown [options]="supplierList" [style]="{'width':'100%'}" formControlName="invSupplierId"
+                    [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'From' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="fromDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'From' | translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'To' | translate}}</label>
+                <input type="date" class="p-2  w-full" formControlName="toDate" dateFormat="dd/mm/yy" pInputText />
+                <!-- <p-calendar [showIcon]="true" formControlName="toDate" dateFormat="dd/mm/yy"
+                    placeholder="{{'To' | translate}}"></p-calendar> -->
+            </div>
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <div class="" style="padding-top: 30px;">
+                        <p-button (click)="search()" [disabled]="frm.invalid" styleClass="p-button-primary p-button-sm"
+                            type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
+                        <p-button styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<p-table #dt [value]="purchaseList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['refNo','date','supplierName','payableAmount']"
+    styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="{{'Clear'| translate}}" class="p-button-outlined p-button-sm"
+                icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+            <div class="ml-3">
+                <p-button type="button" label="{{'Export to Excel'| translate}}" (click)="exportToExcel()"
+                    class="export-button"></p-button>
+            </div>
+            <span class="p-input-icon-left ml-auto float-right">
+
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+                <i class="pi pi-search"></i>
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SL#' | translate}}</th>
+            <th class="vcenter">{{'PURCHASE REF. NO.' | translate}}</th>
+            <th class="vcenter text-center">{{'DATE' | translate}}</th>
+            <th class="vcenter">{{'SUPPLIER' | translate}}</th>
+            <th class="vcenter text-right">{{'AMOUNT' | translate}}</th>
+            <th class="vcenter">{{'PRODUCT' | translate}}</th>
+            <th class="vcenter">{{'REMARKS' | translate}}</th>
+            <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r let-i="rowIndex">
+        <tr class="p-selectable-row">
+            <td class="text-center">{{i+1}}</td>
+            <td>{{r.refNo}}</td>
+            <td class="text-center">{{r.date | date:'dd/MM/yyyy'}}</td>
+            <td>{{r.supplierName}}</td>
+            <td class="text-right">{{r.payableAmount}}</td>
+            <td>{{r.productName}}</td>
+            <td>{{r.remarks}}</td>
+            <!-- <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="loadReportIn(r); reportModal.maximized = true" data-toggle="tooltip"
+                    title="{{'Report' | translate}}"></p-button>
+            </td> -->
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-dialog #reportModal header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '250vw'}"
+    [style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
+    <ng-template pTemplate="header">
+        <h5>{{'REPORT' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <reportviewer></reportviewer>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

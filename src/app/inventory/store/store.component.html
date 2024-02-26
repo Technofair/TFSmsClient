@@ -1,0 +1,198 @@
+<p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'STORE' |
+            translate}}</span></ng-template>
+
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value=0>
+        <div class="formgrid grid">
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="cmnCompanyId" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'STORENAME'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="name" pInputText /><br>
+                <!-- <span *ngIf="frm.controls['Name'].invalid && frm.controls['Name'].touched "
+                    class="text-danger">
+                    {{'STORENAME'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CODE'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="code" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'STOREADDRESS'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="address" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="contactPerson" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CONTACTNO'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="contactNo" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EMAIL'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="email" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'STORESPACE'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="space" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'PREFIX'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="prefix" pInputText /><br>
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"  checked
+                        formControlName="isActive">
+                    <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col-12 md-col:12">
+                <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                    type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                <p-button type="reset" styleClass="p-button-warning p-button-sm"
+                    icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+            </div>
+        </div>
+    </form>
+</p-panel>
+
+
+<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'STORE' | translate}} {{'DETAILS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COMPANY' | translate}} : </label>
+                <p>{{viewInfo.cmnCompanyId}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NAME' | translate}} : </label>
+                <p>{{viewInfo.name}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CODE' | translate}} : </label>
+                <p>{{viewInfo.code}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'ADDRESS' | translate}} : </label>
+                <p>{{viewInfo.address}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'STORESPACE' | translate}} : </label>
+                <p>{{viewInfo.space}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'PREFIX' | translate}} : </label>
+                <p>{{viewInfo.prefix}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CONTACTPERSON' | translate}} : </label>
+                <p>{{viewInfo.contactPerson}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'CONTACTNO' | translate}} : </label>
+                <p>{{viewInfo.contactNo}}</p>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'EMAIL' | translate}} : </label>
+                <p>{{viewInfo.email}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+
+<p-table #dt [value]="storeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[20,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','Code','address','contactPerson','contactNo']"
+    styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-danger" style="text-align: right !important;" [width]="10">{{'SlNo'|translate}}</th>
+            <th class="vcenter text-center">{{'COMPANY'|translate}}</th>
+            <th pSortableColumn="itemName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'STORENAME'|translate}}
+                    <p-sortIcon field="Name"></p-sortIcon>
+                    <p-columnFilter type="text" field="Name" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="itemName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'CODE'|translate}}
+                    <p-sortIcon field="Code"></p-sortIcon>
+                    <p-columnFilter type="text" field="Code" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'STOREADDRESS'|translate}}</th>
+            <th class="vcenter text-center">{{'CONTACTPERSON'|translate}}</th>
+            <th class="vcenter text-center">{{'CONTACTNO'|translate}}</th>
+            <th class="vcenter text-center">{{'ACTION'|translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{rowIndex+1}}</td>
+            <td>{{r.cmnCompanyId}}</td>
+            <td>{{r.name}}</td>
+            <td>{{r.code}}</td>
+            <td>{{r.address}}</td>
+            <td>{{r.contactPerson}}</td>
+            <td>{{r.contactNo}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+
+                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>

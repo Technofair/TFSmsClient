@@ -1,0 +1,119 @@
+<div class="card py-2">
+
+    <!-- <div class="flex justify-content-between">
+      <h5 class="mt-3">{{'ChallanStatement'|translate}}</h5>
+    </div> -->
+    <p-panel>
+      <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ClientLedger' |
+              translate}}</span></ng-template>
+    <form [formGroup]="frmsrc">
+      <div class="formgrid grid">
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+          <label>{{'Client'|translate}}</label>
+          <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="clientId" [filter]="true"
+            filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+            optionValue="id"></p-dropdown><br>
+        </div>
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+            <label>{{'Product'|translate}}</label>
+            <p-dropdown [options]="products" [style]="{'width':'100%'}" formControlName="productId" [filter]="true"
+              filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+              optionValue="id"></p-dropdown><br>
+          </div>
+          <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+            <label>{{'ProductModel'|translate}}</label>
+            <p-dropdown [options]="brands" [style]="{'width':'100%'}" formControlName="productModelIdn" [filter]="true"
+              filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+              optionValue="id"></p-dropdown><br>
+          </div>
+        <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+          <label>{{'FromDate' | translate}}</label>
+          <input type="date" class="p-2  w-full" formControlName="dateFrom" pInputText />
+        </div>
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+          <label>{{'ToDate' | translate}}</label>
+          <input type="date" class="p-2  w-full" formControlName="dateTo" pInputText />
+        </div> -->
+        <div class="field col-12 sm:col-12 md:col-4 lg:col-4 xl:col-4">
+          <div class="">
+            <div class="" style="padding-top: 30px;">
+              <p-button (click)="search('html');" [disabled]="frmsrc.invalid"
+                styleClass="p-button-success p-button-sm mr-2" type="button" icon="pi pi-check"
+                label="{{'Search'|translate}}"></p-button>
+              <p-button (click)="search('rdlc'); _reportModal.maximized = true" [disabled]="frmsrc.invalid"
+                styleClass="p-button-warning p-button-sm mr-2" type="button" icon="pi pi-file-pdf"
+                label="{{'Print'|translate}}"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </p-panel>
+  </div>
+  
+  <p-table #dt [value]="lsoWiseProductList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['productName','deviceNumber','clientName','subscriberName']"
+    styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
+    <ng-template pTemplate="caption">
+      <div class="flexBox">
+        <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+          (click)="clear(dt)"></button>
+        <div class="ml-3">
+          <p-button type="button" label="{{'ExportToExcel'|translate}}" (click)="exportTExcel()"
+            styleClass="p-button-outlined" icon="pi pi-file-excel"></p-button>
+        </div>
+        <div class="ml-3">
+          <p-button type="button" label="{{'OpenReportInPDF'|translate}}"
+            (click)="loadReportIn(frmsrc.value); _reportModal.maximized = true" styleClass="p-button-outlined"
+            icon="pi pi-file-pdf"></p-button>
+        </div>
+        <span class="p-input-icon-left ml-auto float-right">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Enter Mobile,Email,SubscriberID" />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="vcenter text-center">{{'SL#' | translate}}</th>
+        <th class="vcenter text-center">{{'ProductName' | translate}}</th>
+        <th class="vcenter text-center">{{'DeviceNumber' | translate}}</th>
+        <th class="vcenter text-center">{{'ClientName' | translate}}</th>
+        <th class="vcenter text-center">{{'subscriberName' | translate}}</th>
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r let-i="rowIndex">
+      <tr class="p-selectable-row">
+        <td>{{i+1}}</td>
+        <td>{{r.productName}}</td>
+        <td>{{r.deviceNumber}}</td>
+        <td>{{r.clientName}}</td>
+        <td>{{r.subscriberName}}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">No data found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
+  <!-- Report Modal -->
+  <p-dialog #_reportModal header="Header" [(visible)]="reportModal" [modal]="true" [style]="{width: '250vw'}"
+    [style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
+    <ng-template pTemplate="header">
+      <h5>{{'REPORT' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+      <reportviewer></reportviewer>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button icon="pi pi-times" (click)="reportModal=false" label="{{'CLOSE' | translate}}"
+        styleClass="p-button-text"></p-button>
+    </ng-template>
+  </p-dialog>
+  <!-- Report Modal -->

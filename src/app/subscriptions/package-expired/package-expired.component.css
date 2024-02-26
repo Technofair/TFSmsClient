@@ -1,0 +1,23 @@
+.custom-box-shadow {
+    /* box-shadow: -6px 6px 6px 0 #878787, 0 0 0 0, 0 0 0 0, -10px 10px 6px 0 #b1b1b1; */
+    width: 85px;
+}
+
+.custom-box-shadow:hover {
+    box-shadow: -6px 6px 6px 0 #878787, 0 0 0 0, 0 0 0 0, -10px 10px 6px 0 #b1b1b1;
+    width: 85px;
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+    background: #8f3939 !important;
+    border-color: #6366F1 !important;
+    color: #ffffff !important;
+}
+
+#Noti-pDialog .p-dialog{
+    width: 20vw !important;
+}
+
+.myClass {
+    color: red;
+ }

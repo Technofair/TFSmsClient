@@ -1,0 +1,102 @@
+<app-topnavbar></app-topnavbar>
+<!-- <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog> -->
+<main style="background: #fff;">
+
+  <div class="container marketing">
+    <br>
+    <h2 class="h1-responsive font-weight-bold text-center my-1">Recharge</h2>
+
+    <p class="text-center w-responsive mx-auto mb-3"></p>
+    <form id="contact-form" name="contact-form" [formGroup]="frmPackageRenew">
+      <div style="display: flex; justify-content: center;">
+        <div class="card row pt-2 pb-2 mb-4 c-s-b-shadow" style="width: 530px; border: 2px solid #f00;">
+          <div class="col-md-12 m-2">
+            <div class="md-form mb-0">
+              <label for="phoneNumber" class="m-2 ml-0">{{'Enter Valid Mobile No or Device ID'|translate}}</label>
+              <div class="p-0 flex">
+              <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" [(ngModel)]="phoneNumber"
+                [ngModelOptions]="{standalone: true}">
+              
+                <button type="button" class="btn btn-info btn-md m-1" (click)="getUserInfoList()">Go</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 m-2">
+            <p>Subscriber: <span style="font-weight: bold;">{{subscriberName}}</span></p>
+            <!-- <input type="text" id="email" name="phone" class="form-control" [(ngModel)]="subscriberName" [ngModelOptions]="{standalone: true}"> -->
+
+          </div>
+          <div class="col-md-12 m-2">
+            <div class="md-form mb-0">
+              <!-- <label for="deviceNumber" class="m-2 ml-0">{{'ID'|translate}}</label> -->
+              <div class="input-group">                
+                <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon"
+                  formControlName="deviceNumber" (change)="getInfoOnChange()">
+                  <option selected value="">Choose Device Number</option>
+                  <option *ngFor="let item of this.assignedDevices" value={{item.deviceNumber}}>
+                    {{item.deviceNumber}}
+                  </option>
+                  <!-- <option value="2">DeviceNumber2</option>
+                          <option value="3">DeviceNumber3</option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 m-2">
+            <!-- <label class="m-2">PackageInfo</label> -->
+            <div class="card w-100 mb-0" style="padding: 10px;">
+              <div>
+                <p>Package &nbsp;:&nbsp;&nbsp;<span style="font-weight: bold;">{{frmPackageRenew.controls['packageName'].value}}</span></p>
+              </div>
+              <div>
+                <p>Price &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span style="font-weight: bold;">{{frmPackageRenew.controls['amount'].value}}</span></p>
+              </div>
+              <div>
+                <p>Expire &nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;<span style="font-weight: bold;">{{frmPackageRenew.controls['expDate'].value | date: 'dd/MM/yyyy'}}</span></p>
+              </div>
+            </div>
+          </div>
+          <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" style="border: 1px solid #eee; padding: 0;"
+            *ngIf="isShowSslPay">
+            <div class="card p-0">
+              <p-tabView id="tabView">
+                <p-tabPanel class="line-height-3 m-0" header="{{value.name}}" *ngFor="let value of getArray">
+                  <!-- <ng-template pTemplate="header">
+                                  <span style="color:rgb(21, 46, 58);">{{value.name}}</span>
+                              </ng-template> -->
+                  <div class="row featurette">
+                    <div class="custom-box-shadow ml-1 mr-1 mt-2" *ngFor="let getWay of value.chield, let i=index">
+                      <div style="display: flex;flex-direction: column;justify-content: center;">
+                        <a href="{{getWay.redirectGatewayURL}}">
+                          <img class="img-fluid mx-auto m-1" src="{{getWay.logo}}" alt="Card image cap">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </p-tabPanel>
+              </p-tabView>
+            </div>
+          </div>
+          <!-- <div class="col-6" style="display: flex; justify-content: flex-start;"> -->
+            <div class="col-12 pb-0" style="text-align: center;" *ngIf="!isShowSslPay">
+            <button type="button" class="btn btn-info btn-md m-1" (click)="savePackageRenew()">Pay Now</button>
+            <!-- <button type="button" class="btn btn-secondary btn-md m-1">Reset</button> -->
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+<web-app-footer></web-app-footer>
+
+<p-dialog header="Header" [(visible)]="PaymentInfoVisible" [modal]="true"
+    [style]="{ 'width': '20rem', 'border':'10px solid', 'text-align':'center', 'border-color':paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''}">
+    <ng-template pTemplate="header">
+        <span [style.color]="paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''"
+            style="font-weight: bold;">Payment Status</span>
+    </ng-template>
+    <p class="m-0" style="font-size: 20px;">{{paymentMsg}}</p>
+    <ng-template pTemplate="footer">        
+            <button pButton type="button" (click)="PaymentInfoVisible=false" label="Ok" icon="pi pi-check" class="p-button-{{paymentStatusId=='1'?'success':paymentStatusId=='2'?'warning':paymentStatusId=='3'?'danger':''}}" badge="8"></button>
+    </ng-template>
+</p-dialog>

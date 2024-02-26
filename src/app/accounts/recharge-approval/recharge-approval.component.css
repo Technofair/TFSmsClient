@@ -1,0 +1,13 @@
+.order_section {
+  border: 2px solid #e3e3e3;
+  padding: 1%;
+}
+
+.background-aqua {
+  background: aqua !important;
+  color: rgb(0, 0, 0) !important;
+}
+
+.white {
+  background: white;
+}

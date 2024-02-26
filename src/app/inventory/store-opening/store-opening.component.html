@@ -1,0 +1,58 @@
+<p-table #dt [value]="itemList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[20,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','cardNumber','stbSerialNo']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pSortableColumn="itemName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'ITEM'|translate}}
+                    <p-sortIcon field="itemName"></p-sortIcon>
+                    <p-columnFilter type="text" field="itemName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{'QUANTITY'|translate}}</th>
+            <th class="vcenter text-center">{{'PRICE'|translate}}</th>
+            <th class="vcenter text-center">{{'AMOUNT'|translate}}</th>
+            <th class="vcenter text-center">{{'CAS ID'|translate}}</th>
+            <th class="vcenter text-center">{{'WARRANTY'|translate}}</th>
+            <th class="vcenter text-center">{{'ACTION'|translate}}</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-r>
+        <tr class="p-selectable-row">
+            <td>{{r.itemName}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="vcenter text-center">
+                <!-- <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button> -->
+                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="8">No data found.</td>
+        </tr>
+    </ng-template>
+</p-table>

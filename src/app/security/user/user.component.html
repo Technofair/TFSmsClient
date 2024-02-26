@@ -1,0 +1,237 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ADDUSER' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
+                <p-dropdown [options]="companyList" formControlName="cmnCompanyId" placeholder="Select a company"
+                    [showClear]="true" [filter]="true" filterBy="text" [showClear]="true" [style]="{'width':'100%'}"
+                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown>
+
+                <!-- <span *ngIf="frm.controls['CmnCompanyId'].invalid && frm.controls['CmnCompanyId'].touched "
+                    class="text-danger">
+                    {{'COMPANYID'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'USERID'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="{{'USERID'|translate}}"
+                    formControlName="loginID" pInputText />
+                <!-- <span *ngIf="frm.controls['JoiningDate'].invalid && frm.controls['JoiningDate'].touched " class="text-danger">
+                    {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'PASSWORD'|translate}}</label><span class="text-danger"> *</span><br>
+                <input type="password" class="p-2  w-full" placeholder="{{'PASSWORD'|translate}}"
+                    formControlName="password" pInputText />
+                <!-- <span *ngIf="frm.controls['JoiningDate'].invalid && frm.controls['JoiningDate'].touched " class="text-danger">
+                    {{'JOININGDATE'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+           
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'EMPLOYEE'|translate}}</label><br>
+                <p-dropdown [options]="employeeList" formControlName="hrmEmployeeId" placeholder="Select an employee"
+                    [showClear]="true" [filter]="true" filterBy="text" [showClear]="true" [style]="{'width':'100%'}"
+                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown>
+                <!-- <span *ngIf="frm.controls['EmployeeId'].invalid && frm.controls['EmployeeId'].touched "
+                    class="text-danger">
+                    {{'EMPLOYEEID'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                <label>{{'UserType'|translate}}</label><br>
+                <p-dropdown [options]="roles" formControlName="secUserTypeId" placeholder="Select an roles"
+                    [showClear]="true" [filter]="true" filterBy="text" [showClear]="true" [style]="{'width':'100%'}"
+                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown>
+                <!--<span *ngIf="frm.controls['secUserTypeId'].invalid && frm.controls['secUserTypeId'].touched "
+                    class="text-danger">
+                    {{'EMPLOYEEID'|translate}} {{'REQUIRED'|translate}}
+                </span>-->
+            </div>
+            <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4 ">
+                <div class="form-check sm:mt-2 md:mt-2 user_active_btn">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"  checked
+                        formControlName="isActive">
+                    <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+        </div>
+        <div class="formgrid grid">
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0||formId==1"
+                        styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+                        label="{{'SAVE'|translate}}">
+                    </p-button>&nbsp;
+                    <!-- <p-button (click)="delete()" [disabled]="frm.invalid" *ngIf="formId==1"
+                        styleClass="p-button-danger p-button-sm" type="submit" icon="pi pi-times-circle"
+                        label="{{'DELETE'|translate}}">
+                    </p-button>&nbsp; -->
+                    <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+                        icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
+
+<!-- <p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'USER' | translate}} {{'DETAILS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <div class="formgrid grid">
+            <div class="field col-3 md:col-3">
+                <label>{{'NAME' | translate}} : </label>
+                <p>{{viewInfo.firstName}} {{viewInfo.middleName}} {{viewInfo.lastName}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"USERNAME" |translate}} : </label>
+                <p>{{viewInfo.username}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"PASSWORD" |translate}} : </label>
+                <p>{{viewInfo.password}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"EMAIL" |translate}} : </label>
+                <p>{{viewInfo.email}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"MOBILENO" |translate}} : </label>
+                <p>{{viewInfo.mobileNo}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"NID" |translate}}: </label>
+                <p>{{viewInfo.nid}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"PRESENTADDRESS" |translate}} : </label>
+                <p>{{viewInfo.presentAddress}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"PERMANENTADDRESS" |translate}} : </label>
+                <p>{{viewInfo.permanantAddress}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"USERTYPE" |translate}} : </label>
+                <p>{{viewInfo.userTypeId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"USERROLE" |translate}} : </label>
+                <p>{{viewInfo.userRoleId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"COUNTRY" |translate}} : </label>
+                <p>{{viewInfo.countryId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"DIVISION" |translate}} : </label>
+                <p>{{viewInfo.divisionId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"DISTRICT" |translate}} : </label>
+                <p>{{viewInfo.districtId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"THANA" |translate}} : </label>
+                <p>{{viewInfo.upazillaId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{"ORGANIZATION" |translate}} : </label>
+                <p>{{viewInfo.orgId}}</p>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'REMARKS' | translate}} : </label>
+                <p>{{viewInfo.remarks}}</p>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog> -->
+
+<p-table #dt [value]="userList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['employeeName','employeeID','loginID','companyName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button>
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th class="vcenter text-center">{{'SLNo'|translate}}</th>
+            <th pSortableColumn="contactNumber" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{"EMPLOYEEID" |translate}}
+                    <p-sortIcon field="contactNumber"></p-sortIcon>
+                    <p-columnFilter type="text" field="contactNumber" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th pSortableColumn="loginID" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{"USERID" |translate}}
+                    <p-sortIcon field="loginID"></p-sortIcon>
+                    <p-columnFilter type="text" field="loginID" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <!-- <th class="vcenter text-center">{{"PASSWORD" |translate}}</th> -->
+            <th class="vcenter text-center">{{"ROLENAME" |translate}}</th>
+            <th pSortableColumn="firstName" style="text-align: center">
+                <div class="vcenter text-center">
+                    {{"COMPANY" |translate}}
+                    <p-sortIcon field="firstName"></p-sortIcon>
+                    <p-columnFilter type="text" field="firstName" display="menu" class="ml-auto"></p-columnFilter>
+                </div>
+            </th>
+            <th class="vcenter text-center">{{"Action" |translate}}</th>
+        </tr>
+    </ng-template>
+
+
+    <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{rowIndex+1}}</td>
+            <td>{{user.employeeName}} {{user.employeeID}}</td>            
+            <td>{{user.loginID}}</td>
+            <!-- <td>{{user.password}}</td>  -->
+            <td>{{user.secUserTypeId}}</td>  
+            <td>{{user.companyName}}</td>                     
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(user)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+               <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+                    (click)="showModalDialog(user)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="9">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>

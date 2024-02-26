@@ -1,0 +1,30 @@
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+.custom-color-style {
+  color: rgb(252, 13, 13) !important;
+}
+
+.ui-splitbutton.custom-background-style .ui-button {
+  background: yellow;
+}
+
+:host ::ng-deep .geek { 
+  /* height: 100px; 
+  width: 200px;  */
+  background-color: transparent;
+  /* border: none;  */
+  color:rgb(255, 0, 0) !important;
+}
+
+.ui-menuitem-text{
+  float: none !important;
+  white-space: nowrap;
+  display: list-item;
+  margin-right: 2em;
+  color: white;
+}
+
+.ui-menu{
+  width: auto;
+}
+

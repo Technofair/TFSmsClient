@@ -1,0 +1,242 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+
+<p-panel class="p-0 m-0">
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'RechargeApproval' |
+            translate}}</span>
+    </ng-template>
+
+    <form [formGroup]="frm" (ngSubmit)="search()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="card">
+            <!-- <h5>{{'RechargeApproval'|translate}}</h5> -->
+            <div class="formgrid grid">
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="organizationList" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
+                        [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'FromDate' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="date" class="p-2  w-full" placeholder="{{'DateTime' | translate}}"
+                    formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
+
+                    <!-- <p-calendar [showIcon]="true" formControlName="fromDate" dateFormat="dd/mm/yy"
+                        placeholder="{{'DateTime' | translate}}"></p-calendar> -->
+
+                    <span *ngIf="frm.controls['fromDate'].invalid && frm.controls['fromDate'].touched "
+                        class="text-danger">
+                        {{'fromDate' | translate}} {{'fromDate' | translate}}
+                    </span>
+                </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'ToDate' | translate}}</label><span class="text-danger"> *</span>
+                    <input type="date" class="p-2  w-full" placeholder="{{'ToDateTime' | translate}}"
+                        formControlName="toDate" dateFormat="dd/mm/yy" pInputText />
+
+                    <!-- <p-calendar [showIcon]="true" formControlName="toDate" dateFormat="dd/mm/yy"
+                        placeholder="{{'ToDateTime' | translate}}"></p-calendar> -->
+
+                    <span *ngIf="frm.controls['toDate'].invalid && frm.controls['toDate'].touched " class="text-danger">
+                        {{'toDate' | translate}} {{'ToDateTime' | translate}}
+                    </span>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'PayMode'|translate}}</label><span class="text-danger"> *</span><br>
+                    <p-dropdown [options]="paymentMoode" [style]="{'width':'100%'}" formControlName="paymentMethodId"
+                        [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                        optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                    <div class="card-footer">
+                        <p-button (click)="search()" [disabled]="frm.invalid"
+                            styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
+                            label="{{'Search'|translate}}"></p-button>
+                        <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+
+    <!-- <p-panel class="p-0 m-0"> -->
+    <!-- <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'RechargeApproval' |
+            translate}}</span>
+    </ng-template> -->
+    <p-table #dt [value]="rechargeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['name','cardNumber','stbSerialNo']"
+        styleClass="p-datatable-sm p-datatable-gridlines pt-1" [tableStyle]="{'min-width': '80rem'}">
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center"><input type="checkbox" [(ngModel)]="isAllChecked"
+                        (click)="clickAllCheck($event)"> {{'All' | translate}}
+                </th>
+                <th class="vcenter text-center" style="width: 11%;">{{'NAME' | translate}}</th>
+                <!-- <th class="vcenter text-center" style="width: 11%;">{{'ID' | translate}}</th> -->
+                <th class="vcenter text-center">{{'DATE' | translate}}</th>
+                <!-- <th class="vcenter text-center">{{'BALANCE' | translate}}</th> -->
+                <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
+                <th class="vcenter text-center">{{'PAYMODE' | translate}}</th>
+                <!-- <th class="vcenter text-center">{{'REFNO' | translate}}</th> -->
+                <th class="vcenter text-center">{{'WALLET' | translate}}</th>
+                <th class="vcenter text-center">{{'TRXID' | translate}}</th>
+                <!-- <th class="vcenter text-center">{{'BANK' | translate}}</th> -->
+                <th class="vcenter text-center">{{'CHQ' | translate}}</th>
+                <th class="vcenter text-center">{{'CHQDATE' | translate}}</th>
+                <th class="vcenter text-center">{{'FILE' | translate}}</th>
+                <th class="vcenter text-center" style="width: 15%;">{{'STATUS' | translate}}</th>
+                <th class="vcenter text-center" style="width: 15%;">{{'REMARKS' | translate}}</th>
+                <th class="vcenter text-center">{{'CLIENT REMARKS' | translate}}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row" [ngClass]="r.isChecked?'background-aqua':''">
+                <td class="vcenter text-center">
+                    <input type="checkbox" (click)="clickSingleCheck($event, r)" [(ngModel)]="r.isChecked" />
+                </td>
+                <td>{{r.clientName+'('+r.clientID+')'}}</td>
+                <!-- <td>{{'('+r.clientID+')'}}</td> -->
+                <td>{{r.date | date:'dd/MM/yyyy'}}</td>
+                <!-- <td>{{r.balance}}</td> -->
+                <td>{{r.amount}}</td>
+                <td>{{r.paymentMethod}}</td>
+                <!-- <td>{{r.refNo}}</td> -->
+                <td>{{r.walletNo}}</td>
+                <td>{{r.trxID}}</td>
+                <td class="text-center">{{r.chequeNo}}</td>
+                <td class="text-center">{{r.chequeDate | date:'dd/MM/yyyy'}}</td>
+                <!-- <td class="vcenter text-center">{{r.chequeDate | date :'dd-MMM-yyyy HH:mm'}}</td> -->
+                <td class="text-center" (click)="showImage(r)">
+
+                    <p-button type="button" styleClass="p-button-info p-button-sm mr-2 px-2 py-1" icon="pi pi-eye"
+                        data-toggle="tooltip" title="{{'FILE' | translate}}"></p-button>
+                </td>
+                <td>
+                    <select name="satusId" [(ngModel)]="r.approvalStatus" style="width: 100%;">
+                        <option *ngFor="let item of statusList" value={{item.id}}>
+                            {{item.name}}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <textarea type="text" class="p-2 w-full h-3rem" [(ngModel)]="r.remarks" pInputTextarea> </textarea>
+                </td>
+                <td class="text-center" (click)="showRemarks(r)">
+                    <p-button type="button" styleClass="p-button-info p-button-sm mr-2 px-2 py-1" icon="pi pi-eye"
+                        data-toggle="tooltip" title="{{'REMARKS' | translate}}"></p-button>
+                </td>
+                <!-- <td class="text-center" (click)="reviceBalance(r)">
+                    <p-button type="button" styleClass="p-button-danger p-button-sm mr-2 px-2 py-1" icon="pi pi-dolar"
+                        data-toggle="tooltip" title="{{'ReviceBalance' | translate}}"></p-button>
+                </td> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div class="field sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="card-footer">
+            <div class="">
+                <p-button (click)="save()" [disabled]="isCheckedAny" styleClass="p-button-success p-button-sm mr-2"
+                    type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>
+                <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+                    label="{{'RESET'|translate}}"></p-button>
+            </div>
+        </div>
+    </div>
+
+</p-panel>
+<p-dialog header="Header" [(visible)]="reviceView" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'ReviceBalance' | translate}} {{'REMARKS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        
+    <form [formGroup]="resFrm">
+       
+        <div class="card">
+            <!-- <h5>{{'RechargeApproval'|translate}}</h5> -->
+            <div class="formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span>
+                    <input type="number" class="p-2 w-full" placeholder="{{'Amount'|translate}}"
+                        formControlName="amount" pInputText />
+                    <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
+                    class="text-danger">
+                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label>{{'Comments'|translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" class="p-2 w-full" placeholder="{{'Comments'|translate}}"
+                        formControlName="amount" pInputText />
+                    <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
+                    class="text-danger">
+                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+                </div>
+
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                    <div class="card-footer">
+                        <p-button (click)="reviceBalanceSave()" [disabled]="resFrm.invalid"
+                            styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
+                            label="{{'Search'|translate}}"></p-button>
+                        
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="reviceView=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="displayRemarks" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'RECHARGE' | translate}} {{'REMARKS' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        {{clientRemarks}}
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayRemarks=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="displayImage" [modal]="true" [style]="{width: '50vw', height: '50vw'}"
+    [draggable]="false" [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'RECHARGE' | translate}} {{'FILE' | translate}}</h5>
+    </ng-template>
+    <div class="modal-body">
+        <iframe (onclick)="util.viewDocument(imageSrc)" width="650vw" height="650vw" [src]="imageSrc"></iframe>
+        <!-- <span (click)="util.viewDocument(imageSrc)">View</span> -->
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayImage=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>

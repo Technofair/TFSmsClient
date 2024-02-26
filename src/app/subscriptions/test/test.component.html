@@ -1,0 +1,97 @@
+<p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
+<p-panel>
+    <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'Test' |
+            translate}}</span></ng-template>
+    <form [formGroup]="frm" (ngSubmit)="save()">
+        <input type="hidden" formControlName="id" value="0">
+        <div class="formgrid grid">
+            <!-- <div class="field col-3 md:col-3">
+                <label>{{'SUBSCRIBER' | translate}}</label><span class="text-danger"> *</span>
+                <p-dropdown [options]="subscriberList" [style]="{'width':'100%'}" formControlName="subscriberId"
+                    [filter]="true" filterBy="firstName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="firstName" optionValue="id"></p-dropdown>
+                <span *ngIf="frm.controls['subscriberId'].invalid && frm.controls['subscriberId'].touched "
+                    class="text-danger">
+                    {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+            -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'SUBSCRIBER'|translate}}</label>
+                <p-dropdown [options]="subscribers" [style]="{'width':'100%'}" formControlName="scpSubscriberId"
+                (onChange)="getDeviceBySubscriberId()" [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="firstName" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DEVICE'|translate}}</label>
+                <p-dropdown [options]="devices" [style]="{'width':'100%'}" formControlName="prdDeviceNumberId"
+                    [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="deviceNumber" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Packages'|translate}}</label>
+                <p-dropdown [options]="packages" [style]="{'width':'100%'}" formControlName="scpPackageId"
+                (onChange)="setPackagePrice()"  [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Amount' | translate}}</label>
+                <input type="number" class="p-2  w-full" formControlName="amount" pInputText />
+
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Period' | translate}}</label>
+                <input type="number" class="p-2  w-full"  formControlName="period" pInputText />
+                
+            </div>
+            <!--
+            <div class="field col-3 md:col-3">
+                <label>{{'CARDNUMBER' | translate}}</label><span class="text-danger"> *</span>
+                <input type="text" class="p-2  w-full" placeholder="{{'CARDNUMBER' | translate}}"
+                    formControlName="cardNumber" pInputText />
+                <span *ngIf="frm.controls['cardNumber'].invalid && frm.controls['cardNumber'].touched "
+                    class="text-danger">
+                    {{'CARDNUMBER' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div>
+
+        -->
+            <!-- <div class="field col-3 md:col-3">
+                <label>{{'CARDNUMBER'|translate}}</label>
+                <p-dropdown [options]="devicesCards" [style]="{'width':'100%'}" formControlName="devicesNumber"
+                    [filter]="true" filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="number" optionValue="number"></p-dropdown><br>
+            </div>
+            <div class="field col-3 md:col-3">
+                <label>{{'REMARKS' | translate}}</label>
+                <input type="text" class="p-2  w-full" placeholder="{{'REMARKS' | translate}}" formControlName="remarks"
+                    pInputText />
+                <span *ngIf="frm.controls['remarks'].invalid && frm.controls['remarks'].touched " class="text-danger">
+                    {{'REMARKS' | translate}} {{'REQUIRED' | translate}}
+                </span>
+            </div> -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                        [defaultChecked]="true" checked formControlName="isActive">
+                    <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                </div>
+            </div>
+
+            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                <div class="card-footer">
+                    <div class="">
+                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                            type="submit" icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
+                        <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            (click)="reset()" label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                        <p-button type="button" styleClass="p-button-outlined p-button-sm"
+                            routerLink="/home/subscription/stbassignlist" label="{{'STB Assigned List'|translate}}"><i
+                                class="pi pi-list mr-2"></i></p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-panel>
