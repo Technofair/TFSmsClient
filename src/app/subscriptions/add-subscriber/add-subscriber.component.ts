@@ -59,33 +59,7 @@ export class AddSubscriberComponent implements OnInit {
     this.genderList = [{ 'id': 1, "name": 'Male' }, { 'id': 2, "name": "Female" }, { 'id': 3, "name": "Others" }]
     this.subsType = [{ 'id': "1", 'name': 'General-জেনারেল' }, { 'id': "2", 'name': 'Corporate-কর্পোরেট' }];
     this.frmsearch();
-    this.frm = new FormGroup({
-      id: new FormControl(0),
-      cmnCompanyId: new FormControl(),
-      code: new FormControl("0"),
-      firstName: new FormControl("", Validators.required),
-      lastName: new FormControl(""),
-      gender: new FormControl(1),
-      contactNumber: new FormControl("", Validators.required),
-      customerNumber: new FormControl("",[Validators.maxLength(8)]),
-      email: new FormControl(""),
-      nidNo: new FormControl(""),
-      kYC: new FormControl(""),
-      cmnCountryId: new FormControl(1,Validators.required),
-      cmnDivisionId: new FormControl(Validators.required),
-      cmnDistrictId: new FormControl(Validators.required),
-      cmnUpazillaId: new FormControl(Validators.required),
-      cmnUnionId: new FormControl(),
-      address: new FormControl(""),
-      postCode: new FormControl(""),
-      subscriberType: new FormControl(),
-      isActive: new FormControl(true, Validators.required),
-      createdBy: new FormControl(),
-      //createdBy: new FormControl(this.auth.getUserId),
-      createdDate: new FormControl(),
-      modifiedBy: new FormControl(),
-    });
-
+    this.getFrm();
     this.route.params.subscribe((params: any) => {
       if (params.id) {
         this.id = params.id;
@@ -100,7 +74,35 @@ export class AddSubscriberComponent implements OnInit {
        this.search();
    
   }
+getFrm(){
+  this.frm = new FormGroup({
+    id: new FormControl(0),
+    cmnCompanyId: new FormControl(),
+    code: new FormControl("0"),
+    firstName: new FormControl("", Validators.required),
+    lastName: new FormControl(""),
+    gender: new FormControl(1),
+    contactNumber: new FormControl("", Validators.required),
+    customerNumber: new FormControl("",[Validators.maxLength(8)]),
+    email: new FormControl(""),
+    nidNo: new FormControl(""),
+    kYC: new FormControl(""),
+    cmnCountryId: new FormControl(1,Validators.required),
+    cmnDivisionId: new FormControl('',Validators.required),
+    cmnDistrictId: new FormControl('',Validators.required),
+    cmnUpazillaId: new FormControl('',Validators.required),
+    cmnUnionId: new FormControl(),
+    address: new FormControl(""),
+    postCode: new FormControl(""),
+    subscriberType: new FormControl(),
+    isActive: new FormControl(true),
+    createdBy: new FormControl(),
+    //createdBy: new FormControl(this.auth.getUserId),
+    createdDate: new FormControl(),
+    modifiedBy: new FormControl(),
+  });
 
+}
   
    getBulkStatus(){
     if(this.bulkStatus){
@@ -154,6 +156,7 @@ export class AddSubscriberComponent implements OnInit {
         } else if (this.frm.controls['id'].value > 0) {
           this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
         }
+      console.log(JSON.stringify(this.frm.value));
         this.gSvc.postdata("api/Subscriber/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           //New
           if(res.success){
@@ -308,9 +311,10 @@ export class AddSubscriberComponent implements OnInit {
   reset() {
     this.formId = 0;
     this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.controls['isActive'].setValue(true);
-    this.frm.markAsPristine();
+    this.getFrm();
+   // this.frm.controls['id'].setValue(0);
+   // this.frm.controls['isActive'].setValue(true);
+   // this.frm.markAsPristine();
   }
 
   // getSubscriberList() {

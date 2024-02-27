@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { read, utils } from "xlsx";
 import { ExportService } from '../../layout/service/export.service';
 import { Location } from '@angular/common';
 import { balanceService } from 'src/app/global';
+import { ReportModel } from 'src/app/reportviewer/reportmodel';
+import { ReportViewer } from 'src/app/reportviewer/reportviewer';
 
 @Component({
   selector: 'app-package-assign',
@@ -99,9 +101,9 @@ export class SubscriptionProfileComponent implements OnInit {
       nidNo: new FormControl(""),
       kYC: new FormControl(""),
       cmnCountryId: new FormControl(1, Validators.required),
-      cmnDivisionId: new FormControl(Validators.required),
-      cmnDistrictId: new FormControl(Validators.required),
-      cmnUpazillaId: new FormControl(Validators.required),
+      cmnDivisionId: new FormControl('',Validators.required),
+      cmnDistrictId: new FormControl('',Validators.required),
+      cmnUpazillaId: new FormControl('',Validators.required),
       cmnUnionId: new FormControl(),
       address: new FormControl(""),
       postCode: new FormControl(""),
@@ -1070,6 +1072,7 @@ reConnect(data:any){
                   else if (res.success) {
 
                     this.toastrService.success(res.message);
+                    this.loadReportIn(res);
                     //this.getPackageAssignHistory() //Asad Commented At Merge
                     this.subDetails();
                     this.getDeviceBySubscriberId();
@@ -1114,6 +1117,27 @@ reConnect(data:any){
   }
 
   //End Of Package
+//Report Execution
+@ViewChild(ReportViewer)
+_rptViewer!: ReportViewer;
+@ViewChild('_reportModal')
+_reportModal!: any;
+//_reportModal:any;
+public reportModal: boolean = false;
+public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
+loadReportIn(data: any) {
+  debugger;
+  this._reportModal.maximized = true;
+  var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
+  this.reportModal = true;
+  var repFile = 'SubscriberBill.rdlc';
+  var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+  this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
+  var Models = JSON.stringify(frm);
+  this._rptViewer.reportInPage(this._getReportUrl, Models);
+}
+//Report Execution
+
 
 
 
