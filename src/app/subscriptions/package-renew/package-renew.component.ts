@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { type } from 'os';
 import { ExportService } from 'src/app/layout/service/export.service';
 import { Location } from '@angular/common';
 import { balanceService } from 'src/app/global';
+import { ReportViewer } from 'src/app/reportviewer/reportviewer';
+import { ReportModel } from 'src/app/reportviewer/reportmodel';
 @Component({
   selector: 'app-stb-assign-test',
   templateUrl: './package-renew.component.html',
@@ -260,6 +262,7 @@ export class PackageRenewComponent implements OnInit {
           else if (res != undefined && res.success) {
             debugger;
             this.balService.updateCurrentBalance(0);
+            this.loadReportIn(res);
             this.getRenewableSubscriber();
             this.reset();
             this.toastrService.success("Saved success");
@@ -427,6 +430,25 @@ export class PackageRenewComponent implements OnInit {
     this.getWayaList = dt.chield;
   }
 
-
+//Report Execution
+@ViewChild(ReportViewer)
+_rptViewer!: ReportViewer;
+@ViewChild('_reportModal')
+_reportModal!: any;
+//_reportModal:any;
+public reportModal: boolean = false;
+public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
+loadReportIn(data: any) {
+  debugger;
+  this._reportModal.maximized = true;
+  var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
+  this.reportModal = true;
+  var repFile = 'SubscriberBill.rdlc';
+  var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+  this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
+  var Models = JSON.stringify(frm);
+  this._rptViewer.reportInPage(this._getReportUrl, Models);
+}
+//Report Execution
 
 }
