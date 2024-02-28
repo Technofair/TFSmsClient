@@ -190,7 +190,7 @@ export class PaymentComponent implements OnInit {
         period: model.package.period,
         packageType: 2,
         value: model.package.amount,
-        expDate: this.util.Today(),
+        expDate: model.package.endDate,
         isActive: true,
         createdBy: model.id,
         createdDate: new Date(),
