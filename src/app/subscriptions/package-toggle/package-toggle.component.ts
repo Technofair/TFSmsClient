@@ -174,7 +174,7 @@ export class PackageToggleComponent implements OnInit {
   activePackage(data: any) {
     this.setPackageDetail(data);
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to active package?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -262,7 +262,7 @@ export class PackageToggleComponent implements OnInit {
     //if (this.frm.invalid) return false;
     //console.log(this.frm.value);
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to inactive package?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -311,7 +311,7 @@ export class PackageToggleComponent implements OnInit {
   cancelPackage(data: any) {
 
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
+      message: 'Are you sure that you want to cancel package?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
