@@ -520,6 +520,7 @@
     "SubscribtionType":"Subscribtion Type",
     "Number Of Month":"Number Of Month",
     "ExpDate":"Exp Date",
-    "PaymentType":"Payment Type"
+    "PaymentType":"Payment Type",
+    "ExpiryDays":"Expiry Days"
     
 }
