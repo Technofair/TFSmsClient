@@ -255,7 +255,7 @@
             </td>
             <td > 
                 <span class="btn btn-success badge" *ngIf="r.expiryDays>0">{{r.package.statusType}}</span>
-                <span class="btn btn-danger badge" *ngIf="r.expiryDays<=0">{{"Expired"}}</span>
+                <span class="btn btn-danger badge" *ngIf="r.expiryDays<=0">{{r.package.statusType}}</span>
             </td>
             <td class="vcenter text-center" *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'" style="width: 15%;">
                 <!-- <p-button (onClick)="showPackageRenewModal(r.package)"
