@@ -229,7 +229,7 @@ export class SubscriptionProfileComponent implements OnInit {
   //Start Of Create Subscriber
 
   saveSubscriber() {
-    console.log(JSON.stringify(this.frm.value));
+    
     if (this.frm.invalid) {
       return false;
     }
@@ -253,11 +253,13 @@ export class SubscriptionProfileComponent implements OnInit {
 
           //From- device assign
           this.openTab(1)
+          
           this.getSubscriberDetail();
           // this.getSubscriberInvoice();
           // this.getAssignHistory();
 
           //end
+
 
 
 
