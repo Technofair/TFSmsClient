@@ -616,7 +616,7 @@ reConnect(data:any){
         this.gSvc.postdata("api/DeviceAssign/AssignDevice", JSON.stringify(obj)).subscribe(res => {
 
           if (res.success == true) {
-
+            this.openTab(2)
             this.toastrService.success("Device Assigned Successfully");
             //New On 03.02.2024
             this.isPayWithSubscription = false;
