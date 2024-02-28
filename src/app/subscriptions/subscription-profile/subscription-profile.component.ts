@@ -229,7 +229,7 @@ export class SubscriptionProfileComponent implements OnInit {
   //Start Of Create Subscriber
 
   saveSubscriber() {
-    console.log(JSON.stringify(this.frm.value));
+    
     if (this.frm.invalid) {
       return false;
     }
@@ -248,25 +248,16 @@ export class SubscriptionProfileComponent implements OnInit {
         }
         this.gSvc.postdata("api/Subscriber/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           //New
-          this.scpSubscriberId = res.operationId;
-
-
-          //From- device assign
-          this.openTab(1)
-          this.getSubscriberDetail();
-          // this.getSubscriberInvoice();
-          // this.getAssignHistory();
-
-          //end
-
-
-
-          this.getSubscriberList();
-
-          this.toastrService.success(res.message);
-
+         
+         
           if (res.success) {
-
+          this.scpSubscriberId = res.operationId;
+          this.openTab(1);
+          this.getSubscriberDetail();
+          this.getSubscriberList();
+          this.toastrService.success(res.message);
+            this.sub_profile_frm();
+             this.syncAddressAsMSO();
             if (res.operationId == 1) //1=Add
             {
               this.reset();
@@ -616,7 +607,7 @@ reConnect(data:any){
         this.gSvc.postdata("api/DeviceAssign/AssignDevice", JSON.stringify(obj)).subscribe(res => {
 
           if (res.success == true) {
-
+            this.openTab(2)
             this.toastrService.success("Device Assigned Successfully");
             //New On 03.02.2024
             this.isPayWithSubscription = false;
