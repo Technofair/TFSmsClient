@@ -226,18 +226,8 @@
             </th>
             <th class="vcenter text-center">{{'PackagePrice' | translate}}</th>
             <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
-          
-            <th pSortableColumn="startDate" style="text-align: center">
-                <div class="vcenter text-center">
-                    {{'StartDate' | translate}}
-                </div>
-            </th>
-            <th pSortableColumn="endDate" style="text-align: center">
-                <div class="vcenter text-center">
-                    {{'EndDate' | translate}}
-
-                </div>
-            </th>
+            <th class="vcenter text-center" >{{'StartDate' | translate}}</th>
+            <th class="vcenter text-center" >{{'EndDate' | translate}}</th>
             <th class="vcenter text-center">{{'ExpiryDays' | translate}}</th>
             <th class="vcenter text-center">{{'STATUS' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
@@ -257,8 +247,8 @@
             <td class="vcenter text-center">{{r.package.packageName}}</td>
             <td class="vcenter text-center">{{r.package.amount}}</td>
             <td class="vcenter text-center">{{r.amount}}</td>
-            <td>{{r.package.startDate |date:'dd-MM-YYYY'}}</td>
-            <td>{{r.package.endDate |date:'dd-MM-YYYY'}}</td>
+            <td class="vcenter text-center">{{r.package.startDate |date:'dd/MM/YYYY'}}</td>
+            <td class="vcenter text-center">{{r.package.endDate |date:'dd/MM/YYYY'}}</td>
             <td> 
                 <span *ngIf="r.expiryDays>0" class="btn btn-success badge">{{r.expiryDays}}</span>
                 <span *ngIf="r.expiryDays<=0" class="btn btn-danger badge">{{r.expiryDays}}</span> 

@@ -666,7 +666,8 @@
     "CustomerID":"কাস্টমার আইডি",
     "PackagePrice":"প্যাকেজ মূল্য",
     "DevicdeNumber":"ডিভাইস নাম্বার",
-    "ChalanDate":"",
+    "ChalanDate":"চালান তারিখ",
+    "ExpiryDays":"উত্তীর্ণ দিন",
     "Enter your mobile or device ID":"আপনার মোবাইল অথবা ডিভাইস আইডি দিন"
 
 }
