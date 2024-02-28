@@ -248,27 +248,16 @@ export class SubscriptionProfileComponent implements OnInit {
         }
         this.gSvc.postdata("api/Subscriber/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           //New
-          this.scpSubscriberId = res.operationId;
-
-
-          //From- device assign
-          this.openTab(1)
-          
-          this.getSubscriberDetail();
-          // this.getSubscriberInvoice();
-          // this.getAssignHistory();
-
-          //end
-
-
-
-
-          this.getSubscriberList();
-
-          this.toastrService.success(res.message);
-
+         
+         
           if (res.success) {
-
+          this.scpSubscriberId = res.operationId;
+          this.openTab(1);
+          this.getSubscriberDetail();
+          this.getSubscriberList();
+          this.toastrService.success(res.message);
+            this.sub_profile_frm();
+             this.syncAddressAsMSO();
             if (res.operationId == 1) //1=Add
             {
               this.reset();
