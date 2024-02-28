@@ -334,7 +334,7 @@
       </th> -->
       <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
       <th class="vcenter text-center">{{'Devices' | translate}}</th>
-      <th class="vcenter text-center">{{'TotalDevice' | translate}}</th>
+      <!-- <th class="vcenter text-center">{{'TotalDevice' | translate}}</th> -->
       <th class="vcenter text-center">{{'STATUS' | translate}}</th>
       <th class="vcenter text-center" style="width: 250px">{{'ACTION' | translate}}</th>
     </tr>
@@ -353,11 +353,11 @@
       <td>{{r.contactNumber}}</td>
       <!-- <td>{{r.email}}</td> -->
       <td>{{r.address}}</td>
-      <td>
+      <!-- <td>
            <span *ngFor="let device of r.devices">
             {{device.deviceNumber}}
            </span>
-      </td>
+      </td> -->
       <td>{{r.devices==undefined?0: r.devices.length}}</td>
       <td>{{r.isActive ==true?'Active':'Inactive'}}</td>
       <td class="vcenter text-center" style="width: 250px;">
