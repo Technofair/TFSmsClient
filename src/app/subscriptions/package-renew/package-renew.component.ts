@@ -440,14 +440,27 @@ public reportModal: boolean = false;
 public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
 loadReportIn(data: any) {
   debugger;
-  this._reportModal.maximized = true;
-  var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
-  this.reportModal = true;
-  var repFile = 'SubscriberBill.rdlc';
-  var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
-  this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
-  var Models = JSON.stringify(frm);
-  this._rptViewer.reportInPage(this._getReportUrl, Models);
+  this.confirmationService.confirm({
+    message: 'Do you want to print Invoice?',
+    header: 'Confirmation',
+    icon: 'pi pi-print',
+    accept: () => {
+
+      this._reportModal.maximized = true;
+      var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
+      this.reportModal = true;
+      var repFile = 'SubscriberBill.rdlc';
+      var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+      this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
+      var Models = JSON.stringify(frm);
+      this._rptViewer.reportInPage(this._getReportUrl, Models);
+
+      return true;
+    },
+    reject: () => {
+    }
+  })  
+  return false;
 }
 //Report Execution
 
