@@ -521,6 +521,6 @@
     "Number Of Month":"Number Of Month",
     "ExpDate":"Exp Date",
     "PaymentType":"Payment Type",
-    "ExpiryDays":"Expiry Days"
-    
+    "ExpiryDays":"Expiry Days",
+    "Inactive":"Inactive"
 }

@@ -181,7 +181,6 @@ export class SubscriptionProfileComponent implements OnInit {
         this.PaymentInfoVisible = true;
         this.paymentStatusId=sts.toString();
       }
-
       this._location.replaceState(currUrl);
     }
 
@@ -200,7 +199,6 @@ export class SubscriptionProfileComponent implements OnInit {
     this.createDeviceAssign();
     this.createPackageAssign();
     this.paymentType();
-
     //Begin Package
     this.getPackage();
     //End
