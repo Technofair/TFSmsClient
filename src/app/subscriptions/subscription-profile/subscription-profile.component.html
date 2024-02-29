@@ -334,8 +334,7 @@
 
                 <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                     <div class="card-footer">
-                        <div class="">
-
+                        <div class="" *ngIf="this.frmPackageAssign.controls['currentStatus'].value == ''|| this.frmPackageAssign.controls['currentStatus'].value == null ">
                             <p-button (click)="assignPackage()"
                                 [disabled]="frm.invalid || frmPackageAssign.invalid"
                                 styleClass="p-button-success p-button-sm" *ngIf="this.isExpire||this.isExpire==null"
