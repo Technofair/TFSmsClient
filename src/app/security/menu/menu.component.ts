@@ -26,8 +26,6 @@ export class MenuComponent {
     this.getModules();
     this.getMenus();
     this.propulateData();
-
-
   }
 
   frm: FormGroup = new FormGroup({
