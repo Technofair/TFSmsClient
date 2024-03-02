@@ -1,8 +1,9 @@
 <p-confirmDialog  [baseZIndex]="10000"></p-confirmDialog>
-<form [formGroup]="frm" (ngSubmit)="save()">
+<p-panel>
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'APPMENU' | translate}} </span></ng-template>
+   <form [formGroup]="frm" (ngSubmit)="save()">
   <input type="hidden" formControlName="id" value="0">
   <div class="card">
-    <h5>{{'APPMENU'|translate}}</h5>
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'MODULENAME' | translate}}</label>
@@ -39,8 +40,6 @@
           {{'LINK' | translate}} {{'REQUIRED' | translate}}
         </span>
       </div>
-
-
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'ICON' | translate}}</label>
         <input type="text" class="p-2 w-full" pInputText placeholder="{{'ICON' | translate}}" formControlName="icon" />
@@ -56,7 +55,7 @@
 
     <div class="form-grid grid">
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <div class="card-footer">
+       
           <div class="">
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}">
@@ -67,12 +66,12 @@
             <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
               icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
           </div>
-        </div>
+        
       </div>
     </div>
   </div>
-</form>
-
+   </form>
+</p-panel>
 <p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
   [resizable]="false">
   <ng-template pTemplate="header">
