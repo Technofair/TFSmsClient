@@ -74,7 +74,8 @@ export class PackageCreateComponent {
             this.getPackage(); 
             this.reset();
           }, err => {
-            this.toastrService.error("Error ! Data is not saved . ");
+            console.log(err.message);
+            this.toastrService.error(err.message);
           })
         return true;
       },

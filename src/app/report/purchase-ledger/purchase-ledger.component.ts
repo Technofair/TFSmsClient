@@ -167,7 +167,7 @@ export class PurchaseLedgerComponent implements OnInit {
   }
 
   exportTExcel() {
-    const columnsToExport: any[] = ['supplierName', 'purchaseNo', 'purchaseDate', 'name', 'quentity', 'rate', 'dueAmount', 'paidAmount', 'payableAmount'];
+    const columnsToExport: any[] = ['supplierName', 'purchaseNo', 'purchaseDate', 'name', 'quantity', 'rate', 'dueAmount', 'paidAmount', 'payableAmount'];
     this.exportService.exportToExcel(this.purchaseLedgerList, 'purchase_ledger_list', columnsToExport);
   }
 }

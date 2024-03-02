@@ -146,7 +146,7 @@ export class PurchaseComponent implements OnInit {
       cmnCompanyId: new FormControl(this.auth.getCompany()),
       cmnFinancialYearId: new FormControl(0),
       invSupplierId: new FormControl("", Validators.required),
-      date: new FormControl(new Date(), [Validators.required]),
+      date: new FormControl(this.util.Today(), [Validators.required]),
       totalPrice: new FormControl(0),
       challanNo: new FormControl(),
       transportCharge: new FormControl(),
