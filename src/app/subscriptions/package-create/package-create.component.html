@@ -15,12 +15,22 @@
                     {{'SERVICETYPE'|translate}} {{'NAME'|translate}} {{'REQUIRED'|translate}}
                 </span>
             </div>
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'INTEGRATORPACKAGE'|translate}}</label>
                 <p-dropdown [options]="integratorPackages" [style]="{'width':'100%'}" formControlName="cmnIntegratorPackageId"
                     [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                     optionLabel="name" optionValue="id"></p-dropdown><br>
                 <span *ngIf="frm.controls['cmnIntegratorPackageId'].invalid && frm.controls['cmnIntegratorPackageId'].touched "
+                    class="text-danger">
+                    {{'PACKAGE'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div> -->
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Products'|translate}}</label>
+                <p-dropdown [options]="products" [style]="{'width':'100%'}" formControlName="scpProductId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+                <span *ngIf="frm.controls['scpProductId'].invalid && frm.controls['scpProductId'].touched "
                     class="text-danger">
                     {{'PACKAGE'|translate}} {{'REQUIRED'|translate}}
                 </span>
@@ -37,6 +47,27 @@
                 <input type="number" class="p-2  w-full" placeholder="" formControlName="price" pInputText />
                 <span *ngIf="frm.controls['price'].invalid && frm.controls['price'].touched " class="text-danger">
                     {{'PRICE'|translate}} {{'NAME'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NumberOfChannels'|translate}}</label><br>
+                <input type="number" class="p-2  w-full" placeholder="" formControlName="numberOfChannels" pInputText />
+                <span *ngIf="frm.controls['numberOfChannels'].invalid && frm.controls['price'].touched " class="text-danger">
+                    {{'NumberOfChannels'|translate}}  {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NumberOfHDChannels'|translate}}</label><br>
+                <input type="number" class="p-2  w-full" placeholder="" formControlName="numberOfHDChannels" pInputText />
+                <span *ngIf="frm.controls['numberOfHDChannels'].invalid && frm.controls['price'].touched " class="text-danger">
+                    {{'NumberOfHDChannels'|translate}}  {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'NumberOfSDChannels'|translate}}</label><br>
+                <input type="number" class="p-2  w-full" placeholder="" formControlName="numberOfSDChannels" pInputText />
+                <span *ngIf="frm.controls['numberOfSDChannels'].invalid && frm.controls['price'].touched " class="text-danger">
+                    {{'NumberOfSDChannels'|translate}}  {{'REQUIRED'|translate}}
                 </span>
             </div>
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="isDisplayed">
@@ -78,84 +109,6 @@
 
 </p-panel>
 
-<!-- <p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
-    [resizable]="false">
-    <ng-template pTemplate="header">
-        <h5>{{'SERVICETYPE' | translate}} {{'DETAILS' | translate}}</h5>
-    </ng-template>
-    <div class="modal-body">
-        <div class="formgrid grid">
-            <div class="field col-3 md:col-3">
-                <label>{{'NAME' | translate}} : </label>
-                <p>{{viewInfo.name}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'SHORTNAME' | translate}} : </label>
-                <p>{{viewInfo.shortName}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'CONTACTPERSON' | translate}} : </label>
-                <p>{{viewInfo.contactPerson}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'CONTACTNO' | translate}} : </label>
-                <p>{{viewInfo.ContactNo}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'ALTERNATIVEPHONE' | translate}} : </label>
-                <p>{{viewInfo.AlternatePhone}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'EMAIL' | translate}} : </label>
-                <p>{{viewInfo.Email}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'FAX' | translate}} : </label>
-                <p>{{viewInfo.Fax}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'WEB' | translate}} : </label>
-                <p>{{viewInfo.Web}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'COMPANYTYPE' | translate}} : </label>
-                <p>{{viewInfo.CmnCompanyTypeId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'COUNTRY' | translate}} : </label>
-                <p>{{viewInfo.CmnCountryId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'DIVISION' | translate}} : </label>
-                <p>{{viewInfo.divisionId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'DISTRICT' | translate}} : </label>
-                <p>{{viewInfo.districtId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'UPAZILLA' | translate}} : </label>
-                <p>{{viewInfo.upazillaId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'UNION' | translate}} : </label>
-                <p>{{viewInfo.upazillaId}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'ADDRESS' | translate}} : </label>
-                <p>{{viewInfo.address}}</p>
-            </div>
-            <div class="field col-3 md:col-3">
-                <label>{{'ZIP' | translate}} : </label>
-                <p>{{viewInfo.Zip}}</p>
-            </div>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
-            styleClass="p-button-text"></p-button>
-    </ng-template>
-</p-dialog> -->
 
 
 <p-table #dt [value]="packages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
@@ -180,14 +133,11 @@
         <tr>
             <th class="">{{'SL#' | translate}}</th>
             <!-- <th class="vcenter text-center">{{'SERVICETYPE' | translate}}</th> -->
-            <th pSortableColumn="name">
-                <div class="">
-                    {{'NAME' | translate}}
-                    <p-sortIcon field="Name"></p-sortIcon>
-                    <p-columnFilter type="text" field="Name" display="menu" class="ml-auto"></p-columnFilter>
-                </div>
-            </th>
+            <th class=""> {{'NAME' | translate}}</th>
             <th class="">{{'PRICE' | translate}}</th>
+            <th class="">{{'NumberOfChannels' | translate}}</th>
+            <th class="">{{'NumberOfHDChannels' | translate}}</th>
+            <th class="">{{'NumberOfSDChannels' | translate}}</th>
             <!-- <th class="vcenter text-center">{{'FTA' | translate}}</th>
             <th class="vcenter text-center">{{'AUTOREFUND' | translate}}</th> -->
             <th class=" text-center">{{'ACTION' | translate}}</th>
@@ -200,13 +150,12 @@
             <!-- <td>{{r.name}}</td> -->
             <td>{{r.name}}</td>
             <td>{{r.price}}</td>
-            <!-- <td>{{r.name}}</td>
-            <td>{{r.code}}</td> -->
+            <td>{{r.numberOfChannels}}</td>
+            <td>{{r.numberOfHDChannels}}</td>
+            <td>{{r.numberOfSDChannels}}</td>
             <td class="vcenter text-center">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
-                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-                    (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
             </td>
         </tr>
     </ng-template>
