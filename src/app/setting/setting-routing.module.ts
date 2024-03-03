@@ -11,6 +11,7 @@ import { QuickDashboardComponent } from './quick-dashboard/quick-dashboard.compo
 import { NetidMappingComponent } from './company-integrator-netid-mapping/netid-mapping.component';
 import { ClientPackageCommissionComponent } from './client-package-commission/client-package-commission.component';
 import { PackagePeriodPermissionComponent } from './package-period-permission/package-period-permission.component';
+import { ScpProductComponent } from './scp-product/scp-product.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,8 @@ const routes: Routes = [
   { path: 'quick-dashboard', component: QuickDashboardComponent},
   { path: 'netid-mapping', component: NetidMappingComponent },
   { path: 'client-package-commission', component: ClientPackageCommissionComponent },
-  { path: 'package-period-permission', component: PackagePeriodPermissionComponent }
+  { path: 'package-period-permission', component: PackagePeriodPermissionComponent },
+  { path: 'scp-package', component: ScpProductComponent }
   
 ];
 
