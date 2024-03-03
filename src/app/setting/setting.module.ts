@@ -37,6 +37,7 @@ import { NetidMappingComponent } from './company-integrator-netid-mapping/netid-
 import { DirectiveModule } from '../directives/directive.module';
 import { ClientPackageCommissionComponent } from './client-package-commission/client-package-commission.component';
 import { PackagePeriodPermissionComponent } from './package-period-permission/package-period-permission.component';
+import { ScpProductComponent } from './scp-product/scp-product.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { PackagePeriodPermissionComponent } from './package-period-permission/pa
     QuickDashboardComponent,
     NetidMappingComponent,
     ClientPackageCommissionComponent,
-    PackagePeriodPermissionComponent
+    PackagePeriodPermissionComponent,
+    ScpProductComponent
   ],
   exports: [
   ],
