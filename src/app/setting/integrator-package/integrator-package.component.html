@@ -27,7 +27,7 @@
           filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id">
         </p-dropdown><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
           pInputText /><br>
@@ -39,7 +39,7 @@
         <label>{{'Price'|translate}}</label>
         <input type="text" maxlength="3" class="p-2  w-full" placeholder="{{'Price'|translate}}" formControlName="price"
           pInputText />
-      </div>
+      </div> -->
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" >
         <div class="form-check mt-5 ml-3 mb-5">
             <input class="form-check-input" type="checkbox" value="true" id="PaymentSchedule"
@@ -77,11 +77,10 @@
   <ng-template pTemplate="body" let-r let-i="rowIndex">
     <tr class="p-selectable-row">
       <td>{{i+1}}</td>
-      <td>{{r.name}}</td>
-      <td>{{r.contactPerson}}</td>
-      <td>{{r.contactPersonNo}}</td>
-      <td class=";"><input /></td>
-      <td><input type="number" style="width:90%" /></td>
+      <td>{{r.integratorName}}</td>
+      <td>{{r.packageNo}}</td>
+      <td>{{r.casProductName}}</td>
+      <td>{{r.smsProductName}}</td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage">

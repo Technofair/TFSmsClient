@@ -670,6 +670,11 @@
     "ExpiryDays":"উত্তীর্ণ দিন",
     "And":"এবং",
     "Inactive":"নিষ্ক্রিয়",
+    "Integrators":"ইন্টিগ্রেটর",
+    "CasName":"ইন্টিগ্রেটর নাম",
+    "ProductId":"প্রডাক্ট আইডি",
+    "CasProduct":"ইন্টিগ্রেটর প্রডাক্ট",
+    "SmsProduct":"এস.এম.এস প্রডাক্ট",
     "Enter your mobile or device ID":"আপনার মোবাইল অথবা ডিভাইস আইডি দিন"
 
 }

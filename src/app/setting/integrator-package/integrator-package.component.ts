@@ -36,7 +36,13 @@ export class IntegratorPackageComponent implements OnInit {
 
  
   ngOnInit(): void {
-    this.frm = this.fb.group({
+   this.getFrm();
+    this.getIntregatorCompany();
+    this.getProducts();
+    this.getIntegratorPackageList();
+  }
+getFrm(){
+  this.frm = this.fb.group({
     id: new FormControl(0),
     cmnCompanyId: new FormControl(this.auth.getCompany(),Validators.required),
     cmnIntegratorId: new FormControl(Validators.required),
@@ -47,11 +53,10 @@ export class IntegratorPackageComponent implements OnInit {
     period: new FormControl(""),
     packageGroup: new FormControl(""),
     isActive: new FormControl(true),
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date),
     });
-    this.getIntregatorCompany();
-    this.getProducts();
-    this.getIntegratorPackageList();
-  }
+}
   save() {
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -63,7 +68,7 @@ export class IntegratorPackageComponent implements OnInit {
         console.log(JSON.stringify(this.frm.value));
           this.gSvc.postdata("Common/IntegratorPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getSuppliers();
+            this.getIntegratorPackageList();
             this.toastrService.success(res.message);
           }, err => {
             this.toastrService.error(err.message);
@@ -146,9 +151,7 @@ export class IntegratorPackageComponent implements OnInit {
     this.router.navigateByUrl('/inventory/itembrand')
   }
   reset() {
-    this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.markAsPristine();
+    this.getFrm();
   }
   clear(table: Table) {
     table.clear();
