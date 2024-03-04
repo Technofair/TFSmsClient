@@ -67,13 +67,12 @@ getFrm(){
        
         console.log(JSON.stringify(this.frm.value));
           this.gSvc.postdata("Common/IntegratorPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
+            this.reset();
             this.getIntegratorPackageList();
             this.toastrService.success(res.message);
           }, err => {
             this.toastrService.error(err.message);
           })
-        
         return true;
       },
       reject: () => {
