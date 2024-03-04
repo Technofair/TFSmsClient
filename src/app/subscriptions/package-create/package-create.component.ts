@@ -53,7 +53,7 @@ export class PackageCreateComponent {
 
   ngOnInit(): void {    
     this.getServiceType();
-    this.getIntegratorPackage();
+    //this.getIntegratorPackage();
     this.getPackage();
     this.getProducts();
   }
