@@ -44,14 +44,14 @@ export class IntegratorPackageComponent implements OnInit {
 getFrm(){
   this.frm = this.fb.group({
     id: new FormControl(0),
-    cmnCompanyId: new FormControl(this.auth.getCompany(),Validators.required),
+    cmnCompanyId: new FormControl(Number(this.auth.getCompany()),Validators.required),
     cmnIntegratorId: new FormControl(Validators.required),
     scpProductId: new FormControl(Validators.required),
     packageNo: new FormControl(Validators.required),
     name: new FormControl("",Validators.required),
-    price: new FormControl(""),
-    period: new FormControl(""),
-    packageGroup: new FormControl(""),
+    price: new FormControl(),
+    period: new FormControl(),
+    packageGroup: new FormControl(),
     isActive: new FormControl(true),
     createdBy: new FormControl(this.auth.getUserId()),
     createdDate: new FormControl(new Date),
