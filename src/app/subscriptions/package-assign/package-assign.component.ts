@@ -52,7 +52,7 @@ export class PackageAssignComponent implements OnInit {
   DeviceLatestPackageInfoByDeviceNumberId:any;
   getArray: any = [{ id: 1, name: 'Mobile Banking', chield: [] }, { id: 2, name: 'Internet Banking', chield: [] }, { id: 3, name: 'Card', chield: [] }]
   //subscribtionTypes: any = [{ 'id': 1, 'name': 'Daily' }, { 'id': 2, 'name': 'Monthly' }, { 'id': 1, 'name': 'Yearly' }];
-  subscribtionTypes: any = [{ 'id': 2, 'name': 'Monthly' }];
+  subscribtionTypes: any 
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -92,7 +92,6 @@ export class PackageAssignComponent implements OnInit {
       anFPaymentMethodId: new FormControl(),
       isExpired:new FormControl()
     });
-
     var currUrl = this.route.snapshot.queryParamMap.get('urlNam');
     if (currUrl != null) {
       var trx = this.route.snapshot.queryParamMap.get('trxID');
@@ -117,6 +116,15 @@ export class PackageAssignComponent implements OnInit {
     } else {
       this.router.navigate(['/home/subscription/addSubscriber']);
     }
+    this.clientPeriod();
+  }
+  clientPeriod(){
+    this.gSvc.getdata("api/ScpPackagePeriod/GetScpPackagePeriodByCompanyId?cmnCompanyId=" + this.auth.getCompany()).subscribe(res => {
+      this.subscribtionTypes = res;
+    }, err => {
+      this.toastrService.error(err.message);
+      console.log('Exception: (subscribtionTypes)' + err.message);
+    })
   }
   paymentType() {
     this.gSvc.postdata("api/PaymentMethod/GetActivePaymentMode", {}).subscribe(res => {
