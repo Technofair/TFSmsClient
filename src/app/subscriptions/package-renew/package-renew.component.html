@@ -257,29 +257,30 @@
                 <span class="btn btn-success badge" *ngIf="r.expiryDays>0">{{r.package.statusType}}</span>
                 <span class="btn btn-danger badge" *ngIf="r.expiryDays<=0">{{r.package.statusType}}</span>
             </td>
-            <td class="" *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'" style="width: 15%;">
+            <td class="" style="width: 15%; text-align: center;">
+                <div class="p-0" *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'">
                 <!-- <p-button (onClick)="showPackageRenewModal(r.package)"
                  type="button" styleClass=" rounded-0 "
                     title="{{'PackageRenew' | translate}}">
                     <span *ngIf="r.expiryDays<=0" class="btn btn-danger "><i class="fa-solid fa-lock"></i> <span class="badge">{{r.expiryDays}}</span> </span> 
                         <span *ngIf="r.expiryDays>0" class="btn btn-success"> <span><i class="fa-solid fa-unlock"></i></span><span class="badge">{{r.expiryDays}}</span></span>
                 </p-button> -->
-                 <p-button *ngIf="r.expiryDays<=0" (onClick)="showPackageRenewModal(r.package)"
-                    title="{{'PackageRenew' | translate}}" icon="fa-solid fa-lock">
+                 <button type="button" style="text-align: center;" class="btn btn-md btn-primary" *ngIf="r.expiryDays<=0" (click)="showPackageRenewModal(r.package)"
+                    title="{{'PackageRenew' | translate}}"><i class="fa fa-lock"></i>
                     <!-- <span class="badge">{{r.expiryDays}}</span> -->
-                </p-button>
+                </button>
 
                 <div *ngIf="r.expiryDays>0" style="display: flex; flex-direction: row; ">
                    
-                      <p-button  (onClick)="showPackageRenewModal(r.package)"
-                           title="{{'PackageRenew' | translate}}" icon="pi pi-dollar">
-                       </p-button>
+                      <button type="button" style="text-align: center;" class="btn btn-md btn-primary"  (click)="showPackageRenewModal(r.package)"
+                           title="{{'PackageRenew' | translate}}"><i class="fa fa-dollar"></i>
+                       </button>
                        <!-- <p class="btn btn-worning badge ">{{r.expiryDays}}</p> -->
                 </div>
                 
                 <!-- <span *ngIf="r.expiryDays<=0" class="btn btn-danger " (onClick)="showPackageRenewModal(r.package)"><i class="fa-solid fa-lock"></i> <span class="badge">{{r.expiryDays}}</span> </span> 
                 <span *ngIf="r.expiryDays>0" class="btn btn-success" (onClick)="showPackageRenewModal(r.package)"> <span><i class="fa-solid fa-unlock"></i></span><span class="badge">{{r.expiryDays}}</span></span> -->
-
+            </div>
             </td>
         </tr>
     </ng-template>
