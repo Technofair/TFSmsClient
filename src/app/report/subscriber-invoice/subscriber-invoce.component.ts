@@ -140,12 +140,12 @@ export class SubscriberInvoceComponent implements OnInit {
   _rptViewer!: ReportViewer;
   public reportModal: boolean = false;
   public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
-  loadReportIn(data: any) {
+  loadReportIn(data: any, isPos:boolean) {
     debugger;
     
     var frm = { InvoiceId: data.id, companyId: this.auth.getCompany() };
     this.reportModal = true;
-    var repFile = 'SubscriberBill.rdlc';
+    var repFile = isPos?'SubscriberBillPos.rdlc':'SubscriberBill.rdlc';
     var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
     this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
     var Models = JSON.stringify(frm);

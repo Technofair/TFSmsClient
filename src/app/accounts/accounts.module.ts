@@ -35,6 +35,7 @@ import { PaymentVoucherComponent } from './voucher-payment/vouchar-payment.compo
 import { ReceivedVoucherComponent } from './voucher-received/voucher-received.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ReportViewerModule } from '../reportviewer/reportviewer.module';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     OpeningBalanceComponent,
   ],
   imports: [
+    ReportViewerModule,
+    
     CommonModule, TranslateModule,
     HttpClientModule,
     FormsModule, ReactiveFormsModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { Utility } from 'src/app/services/utility.service';
+import { ReportViewer } from 'src/app/reportviewer/reportviewer';
+import { ReportModel } from 'src/app/reportviewer/reportmodel';
 
 @Component({
   selector: 'app-digital-head',
@@ -156,4 +158,24 @@ export class RechargeHistoryComponent implements OnInit {
    this.resFrm.controls['scpClientRechargeId'].setValue(data.id);
    this.resFrm.controls['cmnCompanyId'].setValue(data.cmnCompanyId);
   }
+
+  //Report Execution
+  @ViewChild(ReportViewer)
+  _rptViewer!: ReportViewer;
+  public reportModal: boolean = false;
+  public _getReportUrl: string = 'api/ClientRecharge/GetRechargeHistoryPackageByClientAndDateRdlc';
+  loadReportIn() {
+    debugger;
+    if(this.isMso == false){
+      this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+    }
+    
+    this.reportModal = true;
+    var repFile = 'RechargeHistory.rdlc';
+    var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Recharge History' };
+    this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
+    var Models = JSON.stringify(this.frm.value);
+    this._rptViewer.reportInPage(this._getReportUrl, Models);
+  }
+  //Report Execution
 }
