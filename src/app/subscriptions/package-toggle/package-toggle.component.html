@@ -218,8 +218,8 @@
 
             <td class="vcenter text-center" style="display: flex; flex-direction: row;">
                 <div *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'">
-                    <p-button (onClick)="inactivePackage(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
-                        type="button" icon="pi pi-times-circle" title="{{'Inactive' | translate}}"></p-button>
+                    <p-button (onClick)="inactivePackage(r.package)" styleClass="p-button-warning rounded-0 px-2 py-1 mr-2" 
+                        type="button" icon="pi pi-times-circle"  title="{{'Inactive' | translate}}" ></p-button>
                 </div>
                 <div *ngIf="r.package.statusType =='Inactive'">
                     <p-button (onClick)="activePackage(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
