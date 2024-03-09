@@ -126,20 +126,20 @@
       <td>{{r.discount}}</td>
       <td>{{r.trxID}}</td>
       <td>{{r.paymentMode}}</td>
-      <td class="vcenter text-center">
+      <td class="vcenter text-center" style="display: flex;">
         <p-button (onClick)="loadReportIn(r, false); _reportModal.maximized = true"
           styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-print"
-          title="{{'Print' | translate}}">Print</p-button>
+          title="{{'Print' | translate}}"></p-button>
         <p-button (onClick)="loadReportIn(r, true); _reportModal.maximized = true"
-          styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-print"
-          title="{{'Print' | translate}}">POS Print</p-button>
+          styleClass="p-button-warning rounded-0 px-2 py-1" type="button" icon="pi pi-credit-card"
+          title="{{'Print' | translate}}"></p-button>
       </td>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="emptymessage">
     <tr>
-      <td colspan="11">No data found.</td>
+      <td colspan="12">No data found.</td>
     </tr>
   </ng-template>
 
