@@ -101,7 +101,7 @@
       <th class="vcenter text-center">{{'Descount' | translate}}</th>
       <th class="vcenter text-center">{{'TrxID' | translate}}</th>
       <th class="vcenter text-center">{{'PaymentMode' | translate}}</th>
-      <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+      <th class="vcenter text-center">{{'Print' | translate}}</th>
     </tr>
     <tr>
       <!-- <div [hidden]="progressStatus" >
@@ -127,12 +127,21 @@
       <td>{{r.trxID}}</td>
       <td>{{r.paymentMode}}</td>
       <td class="vcenter text-center" style="display: flex;">
-        <p-button (onClick)="loadReportIn(r, false); _reportModal.maximized = true"
+        <!-- <p-button (onClick)="loadReportIn(r, false); _reportModal.maximized = true"
           styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-print"
-          title="{{'Print' | translate}}"></p-button>
-        <p-button (onClick)="loadReportIn(r, true); _reportModal.maximized = true"
+          title="{{'Print' | translate}}"></p-button> -->
+
+          <button pButton pRipple type="button" class="p-button-raised p-button-info mr-2"
+          (click)="loadReportIn(r, false); _reportModal.maximized = true" title="{{'Print' | translate}}"><i
+              class="fa fa-print"></i></button>
+
+        <!-- <p-button (onClick)="loadReportIn(r, true); _reportModal.maximized = true"
           styleClass="p-button-warning rounded-0 px-2 py-1" type="button" icon="pi pi-credit-card"
-          title="{{'Print' | translate}}"></p-button>
+          title="{{'Print' | translate}}"></p-button> -->
+
+          <button pButton pRipple type="button" class="p-button-raised p-button-warning mr-2"
+          (click)="loadReportIn(r, true); _reportModal.maximized = true" title="{{'POS Print' | translate}}"><i
+              class="fa fa-scroll"></i></button>
       </td>
     </tr>
   </ng-template>

@@ -280,9 +280,9 @@
                     <!-- <button pButton pRipple type="button" class="p-button-outlined p-button-info"
                         *ngIf="r.expiryDays<=0" (click)="showPackageRenewModal(r.package)"
                         title="{{'PackageRenew' | translate}}"><i class="fa fa-lock"></i></button> -->
-                    <button pButton pRipple type="button" label="Info" class="p-button-raised p-button-info"
-                        *ngIf="r.expiryDays<=0" (click)="showPackageRenewModal(r.package)"
-                        title="{{'PackageRenew' | translate}}"><i class="fa fa-lock"></i></button>
+                    <button pButton pRipple type="button" class="p-button-raised p-button-danger" *ngIf="r.expiryDays<=0"
+                        (click)="showPackageRenewModal(r.package)" title="{{'PackageRenew' | translate}}"><i
+                            class="fa fa-lock"></i></button>
 
                     <!-- <div *ngIf="r.expiryDays>0" style="display: flex; flex-direction: row; "> -->
                     <div *ngIf="r.expiryDays>0" style="flex-direction: row; ">
