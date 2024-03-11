@@ -13,12 +13,13 @@ import { GeneralService } from 'src/app/services/general.service';
 export class UnassignedDeviceComponent implements OnInit {
 
   frm!: FormGroup;
+  upFrm!:FormGroup;
   devices: any[] = [];
   companies:any;
   deviceNumber:any;
   progressStatus:boolean=true;
   isMso: boolean =this.auth.isMso();
-
+  updateDeviceFormView:boolean=false
     constructor(
         private fb: FormBuilder,
         private gSvc: GeneralService,
@@ -41,7 +42,16 @@ export class UnassignedDeviceComponent implements OnInit {
           deviceNumber: new FormControl()
         })
       }
-
+    updateForm(){
+      this.upFrm = this.fb.group({
+        cmnCompanyId: new FormControl(),
+        deviceNumber: new FormControl()
+      })
+    }
+    editDevice(res:any){
+      this.updateDeviceFormView=true
+      this.frm.patchValue(res);
+    }
 
       getCompany(){  
         this.gSvc.postdata("Common/Company/GetCompanyByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
@@ -96,5 +106,6 @@ export class UnassignedDeviceComponent implements OnInit {
     exportTExcel() {
         const columnsToExport: any[] = ['productName', 'deviceNumber', 'modelName'];
         this.exportService.exportToExcel(this.devices, 'Unassign_report', columnsToExport);
-      }
+    }
+
 }
