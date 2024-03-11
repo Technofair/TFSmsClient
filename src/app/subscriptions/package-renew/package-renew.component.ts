@@ -321,9 +321,9 @@ export class PackageRenewComponent implements OnInit {
   showPackageRenewModal(res: any) {
     this.frmPackageRenew.reset();
     this.displayPackageRenew = true;
-    this.packageValue = res.amount;
+    this.packageValue = res.rate;
     this.packageExpDate = res.endDate;
-    this.frmPackageRenew.controls["packageValue"].setValue(res.amount)
+    this.frmPackageRenew.controls["packageValue"].setValue(res.rate)
     //this.frmPackageRenew.controls['endDate'].setValue(res.endDate);
     this.frmPackageRenew.controls['statusType'].setValue(res.statusType);
 

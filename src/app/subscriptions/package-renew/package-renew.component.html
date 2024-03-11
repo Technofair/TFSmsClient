@@ -245,7 +245,7 @@
             <td>{{r.contactNumber}}</td>
             <td>{{r.deviceNumber}}</td>
             <td class="vcenter text-center">{{r.package.packageName}}</td>
-            <td class="vcenter text-center">{{r.package.amount}}</td>
+            <td class="vcenter text-center">{{r.package.rate}}</td>
             <td class="vcenter text-center">{{r.amount}}</td>
             <td class="vcenter text-center">{{r.package.startDate |date:'dd/MM/YYYY'}}</td>
             <td class="vcenter text-center">{{r.package.endDate |date:'dd/MM/YYYY'}}</td>
@@ -266,7 +266,7 @@
                 <!-- <span class="btn btn-danger btn-md badge" *ngIf="r.expiryDays<=0">{{r.package.statusType}}</span> -->
             </td>
             <td class="" style="width: 15%; text-align: center;">
-                <div class="p-0" *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'">
+                <div class="p-0" *ngIf="r.package.statusType =='Active' || r.package.statusType =='Inactive' || r.package.statusType =='Expired'">
                     <!-- <p-button (onClick)="showPackageRenewModal(r.package)"
                  type="button" styleClass=" rounded-0 "
                     title="{{'PackageRenew' | translate}}">
