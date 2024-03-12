@@ -53,7 +53,7 @@ export class PackageRenewComponent implements OnInit {
 
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
-  subscribtionTypes: any ;
+  subscribtionTypes: any;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -80,12 +80,12 @@ export class PackageRenewComponent implements OnInit {
       if (trx != null) {
         if (trx == 'Deactive') {
           this.frmsrc.controls['statusType'].setValue(2);
-         } else {
-        var sts: any = this.route.snapshot.queryParamMap.get('status');
-        this.paymentMsg = sts == '1' ? 'Payment Success!!!' : sts == '2' ? 'Payment Faile!!!' : sts == '3' ? 'Payment Cancel' : '';
-        this.PaymentInfoVisible = true;
-        this.paymentStatusId = sts;
-         }
+        } else {
+          var sts: any = this.route.snapshot.queryParamMap.get('status');
+          this.paymentMsg = sts == '1' ? 'Payment Success!!!' : sts == '2' ? 'Payment Faile!!!' : sts == '3' ? 'Payment Cancel' : '';
+          this.PaymentInfoVisible = true;
+          this.paymentStatusId = sts;
+        }
       }
 
       this._location.replaceState(currUrl);
@@ -97,7 +97,7 @@ export class PackageRenewComponent implements OnInit {
     //this.getDistrict();
     this.getCompanys();
     this.getRenewableSubscriber();
-   this.clientPeriod();
+    this.clientPeriod();
   }
 
   frmsearch() {
@@ -122,7 +122,7 @@ export class PackageRenewComponent implements OnInit {
     //this.getUpazillaByDistrictId();
     //this.getUnionByUpazillaId();
   }
-  clientPeriod(){
+  clientPeriod() {
     this.gSvc.getdata("api/ScpPackagePeriod/GetScpPackagePeriodByCompanyId?cmnCompanyId=" + this.auth.getCompany()).subscribe(res => {
       this.subscribtionTypes = res;
     }, err => {
@@ -439,38 +439,38 @@ export class PackageRenewComponent implements OnInit {
     this.getWayaList = dt.chield;
   }
 
-//Report Execution
-@ViewChild(ReportViewer)
-_rptViewer!: ReportViewer;
-@ViewChild('_reportModal')
-_reportModal!: any;
-//_reportModal:any;
-public reportModal: boolean = false;
-public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
-loadReportIn(data: any) {
-  debugger;
-  this.confirmationService.confirm({
-    message: 'Do you want to print Invoice?',
-    header: 'Confirmation',
-    icon: 'pi pi-print',
-    accept: () => {
+  //Report Execution
+  @ViewChild(ReportViewer)
+  _rptViewer!: ReportViewer;
+  @ViewChild('_reportModal')
+  _reportModal!: any;
+  //_reportModal:any;
+  public reportModal: boolean = false;
+  public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
+  loadReportIn(data: any) {
+    debugger;
+    this.confirmationService.confirm({
+      message: 'Do you want to print Invoice?',
+      header: 'Confirmation',
+      icon: 'pi pi-print',
+      accept: () => {
 
-      this._reportModal.maximized = true;
-      var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
-      this.reportModal = true;
-      var repFile = 'SubscriberBill.rdlc';
-      var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
-      this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
-      var Models = JSON.stringify(frm);
-      this._rptViewer.reportInPage(this._getReportUrl, Models);
+        this._reportModal.maximized = true;
+        var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
+        this.reportModal = true;
+        var repFile = 'SubscriberBill.rdlc';
+        var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+        this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
+        var Models = JSON.stringify(frm);
+        this._rptViewer.reportInPage(this._getReportUrl, Models);
 
-      return true;
-    },
-    reject: () => {
-    }
-  })  
-  return false;
-}
-//Report Execution
+        return true;
+      },
+      reject: () => {
+      }
+    })
+    return false;
+  }
+  //Report Execution
 
 }
