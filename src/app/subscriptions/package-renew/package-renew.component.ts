@@ -51,7 +51,8 @@ export class PackageRenewComponent implements OnInit {
   packageStatus: any;
   isShowSslPay: boolean = false;
   progressStatus: boolean = false;
-
+  packageAssignHistory:any;
+  displayPackageRenewHis:boolean=false
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
   subscribtionTypes: any ;
@@ -251,18 +252,14 @@ export class PackageRenewComponent implements OnInit {
   }
 
   savePackageRenew() {
-    
     if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == null || this.frmPackageRenew.controls['anFPaymentMethodId'].value == '' || this.frmPackageRenew.controls['anFPaymentMethodId'].value === 'undefined') {
       this.toastrService.error("Please select payment method.");
-
       return;
     }
-
     if (this.frmPackageRenew.controls['statusType'].value == 'Inactive') {
       this.toastrService.error("Your package is inactive . Acrive or Reactive first then renew. ");
       return;
     }
-
     this.frmPackageRenew.controls['createdBy'].setValue(this.auth.getUserId());
     this.frmPackageRenew.controls['createdDate'].setValue(new Date());
     this.frmPackageRenew.controls['endDate'].setValue(new Date());
@@ -450,5 +447,15 @@ loadReportIn(data: any) {
   return false;
 }
 //Report Execution
-
+packageHistory(data: any) {
+  // console.log(data);
+  this.displayPackageRenewHis = true;
+  this.deviceNumber = data.deviceNumber;
+  this.gSvc.postdata("api/SubscriberPackage/GetHistoryBySubscriberAndDeviceId?subscriberId=" + data.scpSubscriberId + "&deviceNumberId=" + data.prdDeviceNumberId, {}).subscribe(res => {
+    this.packageAssignHistory = res;
+  }, err => {
+    this.toastrService.error(err.message);
+    console.log('Exception: (getPackageAssignHistory)' + err.message);
+  })
+}
 }

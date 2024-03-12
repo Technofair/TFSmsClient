@@ -110,7 +110,7 @@
             </th>
             <th class="vcenter text-center">{{'PackagePrice' | translate}}</th>
             <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
-            <th class="vcenter text-center">{{'StartDate' | translate}}</th>
+            <!-- <th class="vcenter text-center">{{'StartDate' | translate}}</th> -->
             <th class="vcenter text-center">{{'EndDate' | translate}}</th>
             <th class="vcenter text-center">{{'ExpiryDays' | translate}}</th>
             <th class="vcenter text-center">{{'STATUS' | translate}}</th>
@@ -131,7 +131,7 @@
             <td class="vcenter text-center">{{r.package.packageName}}</td>
             <td class="vcenter text-center">{{r.package.rate}}</td>
             <td class="vcenter text-center">{{r.amount}}</td>
-            <td class="vcenter text-center">{{r.package.startDate |date:'dd/MM/YYYY'}}</td>
+            <!-- <td class="vcenter text-center">{{r.package.startDate |date:'dd/MM/YYYY'}}</td> -->
             <td class="vcenter text-center">{{r.package.endDate |date:'dd/MM/YYYY'}}</td>
             <td>
                 <button pButton pRipple type="button" class="p-button-rounded p-button-success"
@@ -147,7 +147,7 @@
                     *ngIf="r.expiryDays<=0">{{r.package.statusType}}</button>
                 
             </td>
-            <td class="" style="width: 15%; text-align: center;">
+            <td class="" style="width: 15%; text-align: center; display: flex; flex-direction: row;">
                 <div class="p-0" *ngIf="r.package.statusType =='Active' || r.package.statusType =='Inactive' || r.package.statusType =='Expired'">
                                                             
                     <button pButton pRipple type="button" class="p-button-raised p-button-danger" *ngIf="r.expiryDays<=0"
@@ -160,6 +160,14 @@
                                 class="fa fa-dollar"></i></button>
                     </div>
                 </div>
+                <div class="ml-1">
+                    <button pButton pRipple type="button" class="p-button-raised p-button-info "
+                    (click)="packageHistory(r.package)" title="{{'PackageRenew' | translate}}"><i
+                        class="fa fa-eye"></i></button>
+                </div>
+                   
+               
+                
             </td>
         </tr>
     </ng-template>
@@ -273,17 +281,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <p-dialog header="Header" [(visible)]="PaymentInfoVisible" [modal]="true"
     [style]="{ 'width': '20rem', 'border':'10px solid', 'text-align':'center', 'border-color':paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''}">
     <ng-template pTemplate="header">
@@ -314,3 +311,55 @@
     </ng-template>
 </p-dialog>
 <!-- Report Modal -->
+
+<p-dialog header="Header" [(visible)]="displayPackageRenewHis" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'PACKAGEASSIGNHISTORY' | translate}}</h5>
+    </ng-template>
+
+    <p-table #dt [value]="packageAssignHistory" dataKey="id" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['subscriberId','customerNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+                <span class="p-input-icon-left ml-auto float-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th class="vcenter text-center">{{'EMPLOYEENAME' | translate}}</th>
+                
+                <th class="vcenter text-center">{{'Device' | translate}}</th>
+                <th class="vcenter text-center"> {{'DONEDATE' | translate}}</th>
+                
+                <th class="vcenter text-center">{{'DESCRIPTION' | translate}}</th>
+                <th class="vcenter text-center">{{'STATUSTYPE' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>{{i+1}}</td>
+                <td>{{r.employeeName}}</td>
+                <td>{{deviceNumber}}</td>
+                <td>{{r.doneDate| date:"dd-MM-YYYY | ss-mm-hh"}}</td>
+                <td>{{r.description}}</td>
+                <td>{{r.statusType}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-dialog>
