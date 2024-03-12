@@ -24,14 +24,18 @@ export class PackageCreateComponent {
   id: any;
   isDisplayed: boolean = false;
   frm!: FormGroup;
-
+  products:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService,private auth: AuthService, private toastrService: ToastrService, private route: ActivatedRoute) {
     this.frm = new FormGroup({
       id: new FormControl(0),
       cmnCompanyId:new FormControl(),
       cmnServiceTypeId: new FormControl("", [Validators.required]),
       name: new FormControl("",[Validators.required]),
-      cmnIntegratorPackageId: new FormControl("", [Validators.required]),
+      //cmnIntegratorPackageId: new FormControl("", [Validators.required]),
+      scpProductId:new FormControl("", [Validators.required]),
+      numberOfChannels:new FormControl(""),
+      numberOfHDChannels:new FormControl("" ),
+      numberOfSDChannels:new FormControl(""),
       price: new FormControl("", [Validators.required]),
       period: new FormControl(0 ,[Validators.required]),
       isBasic: new FormControl(true),
@@ -49,8 +53,9 @@ export class PackageCreateComponent {
 
   ngOnInit(): void {    
     this.getServiceType();
-    this.getIntegratorPackage();
+    //this.getIntegratorPackage();
     this.getPackage();
+    this.getProducts();
   }
 
   save() {
@@ -120,9 +125,17 @@ export class PackageCreateComponent {
       this.isDisplayed = false;
     }
   }
+  getProducts() {
+    this.gSvc.postdata("api/ScpProduct/GetAll", {}).subscribe(res => {
+      this.products = res;
+    }, err => {
+      this.toastrService.error("Error! Product Not Found");
+    })
+
+  }
 
   edit(res: any) {
-    this.formId = 1;
+    
     this.frm.patchValue(res);
   }
 

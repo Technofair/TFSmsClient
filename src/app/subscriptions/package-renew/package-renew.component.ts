@@ -53,7 +53,7 @@ export class PackageRenewComponent implements OnInit {
 
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
-  subscribtionTypes: any = [{ name: "Monthly", id: 2 }];
+  subscribtionTypes: any ;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -97,6 +97,7 @@ export class PackageRenewComponent implements OnInit {
     //this.getDistrict();
     this.getCompanys();
     this.getRenewableSubscriber();
+   this.clientPeriod();
   }
 
   frmsearch() {
@@ -120,6 +121,14 @@ export class PackageRenewComponent implements OnInit {
     })
     //this.getUpazillaByDistrictId();
     //this.getUnionByUpazillaId();
+  }
+  clientPeriod(){
+    this.gSvc.getdata("api/ScpPackagePeriod/GetScpPackagePeriodByCompanyId?cmnCompanyId=" + this.auth.getCompany()).subscribe(res => {
+      this.subscribtionTypes = res;
+    }, err => {
+      this.toastrService.error(err.message);
+      console.log('Exception: (subscribtionTypes)' + err.message);
+    })
   }
   createPackageRenew() {
     this.frmPackageRenew = this.fb.group({
@@ -312,9 +321,9 @@ export class PackageRenewComponent implements OnInit {
   showPackageRenewModal(res: any) {
     this.frmPackageRenew.reset();
     this.displayPackageRenew = true;
-    this.packageValue = res.amount;
+    this.packageValue = res.rate;
     this.packageExpDate = res.endDate;
-    this.frmPackageRenew.controls["packageValue"].setValue(res.amount)
+    this.frmPackageRenew.controls["packageValue"].setValue(res.rate)
     //this.frmPackageRenew.controls['endDate'].setValue(res.endDate);
     this.frmPackageRenew.controls['statusType'].setValue(res.statusType);
 

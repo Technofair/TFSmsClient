@@ -20,7 +20,7 @@
                 <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                     <label>{{'FromDate' | translate}}</label><span class="text-danger"> </span>
                     <input type="date" class="p-2  w-full" placeholder="{{'DateTime' | translate}}"
-                    formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
+                        formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
 
                     <!-- <p-calendar [showIcon]="true" formControlName="fromDate" dateFormat="dd/mm/yy"
                         placeholder="{{'DateTime' | translate}}"></p-calendar> -->
@@ -70,43 +70,43 @@
         <h5>{{'ReviceBalance' | translate}} {{'REMARKS' | translate}}</h5>
     </ng-template>
     <div class="modal-body">
-        
-    <form [formGroup]="resFrm">
-       
-        <div class="card">
-            <!-- <h5>{{'RechargeApproval'|translate}}</h5> -->
-            <div class="formgrid grid">
-                <div class="field col-12 md:col-6">
-                    <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span>
-                    <input type="number" class="p-2 w-full" placeholder="{{'Amount'|translate}}"
-                        formControlName="amount" pInputText />
-                    <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
-                    class="text-danger">
-                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
-                </span> -->
-                </div>
-                <div class="field col-12 md:col-6">
-                    <label>{{'Comments'|translate}}</label><span class="text-danger"> *</span>
-                    <input type="text" class="p-2 w-full" placeholder="{{'Comments'|translate}}"
-                        formControlName="comments" pInputText />
-                    <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
-                    class="text-danger">
-                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
-                </span> -->
-                </div>
 
-                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                    <div class="card-footer">
-                        <p-button (click)="reviseBalanceSave()" [disabled]="resFrm.invalid"
-                            styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
-                            label="{{'Save'|translate}}"></p-button>
-                        
+        <form [formGroup]="resFrm">
+
+            <div class="card">
+                <!-- <h5>{{'RechargeApproval'|translate}}</h5> -->
+                <div class="formgrid grid">
+                    <div class="field col-12 md:col-6">
+                        <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span>
+                        <input type="number" class="p-2 w-full" placeholder="{{'Amount'|translate}}"
+                            formControlName="amount" pInputText />
+                        <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
+                    class="text-danger">
+                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
                     </div>
-                </div>
+                    <div class="field col-12 md:col-6">
+                        <label>{{'Comments'|translate}}</label><span class="text-danger"> *</span>
+                        <input type="text" class="p-2 w-full" placeholder="{{'Comments'|translate}}"
+                            formControlName="comments" pInputText />
+                        <!-- <span *ngIf="frm.controls['ContactPerson'].invalid && frm.controls['ContactPerson'].touched "
+                    class="text-danger">
+                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
+                </span> -->
+                    </div>
 
+                    <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                        <div class="card-footer">
+                            <p-button (click)="reviseBalanceSave()" [disabled]="resFrm.invalid"
+                                styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
+                                label="{{'Save'|translate}}"></p-button>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="reviceView=false" label="{{'CLOSE' | translate}}"
@@ -124,6 +124,10 @@
         <div class="flex">
             <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
                 (click)="clear(dt)"></button>
+
+            <button pButton label="Print" class="p-button-outlined p-button-sm p-button-warning ml-1" icon="pi pi-print"
+                (click)="loadReportIn(); _reportModal.maximized = true"></button>
+
             <span class="p-input-icon-left ml-auto float-right">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
@@ -174,3 +178,20 @@
         </tr>
     </ng-template>
 </p-table>
+
+
+<!-- Report Modal -->
+<p-dialog #_reportModal header="Header" [(visible)]="reportModal" [modal]="true" [style]="{width: '250vw'}"
+  [style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
+  <ng-template pTemplate="header">
+    <h5>{{'REPORT' | translate}}</h5>
+  </ng-template>
+  <div class="modal-body">
+    <reportviewer></reportviewer>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="reportModal=false" label="{{'CLOSE' | translate}}"
+      styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>
+<!-- Report Modal -->

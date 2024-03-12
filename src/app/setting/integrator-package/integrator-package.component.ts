@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-integrator-package',
@@ -14,8 +15,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class IntegratorPackageComponent implements OnInit {
 
-
-
   suppliers: any;
   serviceList: any;
   countries: any;
@@ -24,64 +23,40 @@ export class IntegratorPackageComponent implements OnInit {
   viewInfo: any = {};
   formId = 0;
   packageTypes: any;
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService) {
+  integrators:any;
+  packages:any;
+  products:any;
+  integratorPackages:any;
+  integratorPackageList:any;
+  frm!:FormGroup
+  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth:AuthService) {
     this.getServiceType();
     this.getSuppliers();
   }
 
-  frm: FormGroup = new FormGroup({
-    Id: new FormControl(""),
-    Name: new FormControl(""),
-    Address: new FormControl(""),
-    Phone: new FormControl(""),
-    Fax: new FormControl(""),
-    Email: new FormControl(""),
-    Website: new FormControl(""),
-    ContactPerson: new FormControl(""),
-    ContactPersonNo: new FormControl(""),
-    CmnCountryId: new FormControl(""),
-    AnFChartOfAccountParentId: new FormControl(""),
-    AnFChartOfAccountId: new FormControl(""),
-    CmnCompanyId: new FormControl(""),
-    CmnCurrencyId: new FormControl(""),
-    isActive: new FormControl(""),
-    isEnlisted: new FormControl(""),
-    createdBy: new FormControl(""),
-    createdDate: new FormControl(""),
-    modifiedBy: new FormControl(""),
-    modifiedDate: new FormControl(""),
-    remarks: new FormControl(""),
-  })
-
+ 
   ngOnInit(): void {
-    this.frm = this.fb.group({
-      id: ["0"],
-      name: ["", [Validators.required]],
-      phone: ["1"],
-      address: [""],
-      fax: ["0"],
-      email: [""],
-      website: ["0"],
-      contactPerson: [""],
-      contactPersonNo: [""],
-      cmnCountryId: ["1"],
-      anFChartOfAccountParentId: ["1"],
-      anFChartOfAccountId: ["1"],
-      cmnCompanyId: [""],
-      cmnCurrencyId: [""],
-      isActive: [true],
-      isEnlisted: [true],
-      createdBy: ["1"],
-      createdDate: ["2023-05-17"],
-      modifiedBy: ["1"],
-      modifiedDate: [""],
-      remarks: [""],
-    });
-    // this.getCountries();
-    this.getSuppliers();
-    this.packageTypes = [{ 'id': 1, "name": 'Basic' }, { 'id': 2, "name": 'Addon' }, { 'id': 2, "name": 'Alacart' }];
+   this.getFrm();
+    this.getIntregatorCompany();
+    this.getProducts();
+    this.getIntegratorPackageList();
   }
-
+getFrm(){
+  this.frm = this.fb.group({
+    id: new FormControl(0),
+    cmnCompanyId: new FormControl(Number(this.auth.getCompany()),Validators.required),
+    cmnIntegratorId: new FormControl(Validators.required),
+    scpProductId: new FormControl(Validators.required),
+    packageNo: new FormControl(Validators.required),
+    name: new FormControl("",Validators.required),
+    price: new FormControl(),
+    period: new FormControl(),
+    packageGroup: new FormControl(),
+    isActive: new FormControl(true),
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date),
+    });
+}
   save() {
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -89,28 +64,15 @@ export class IntegratorPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-
-          this.gSvc.postdata("Inventory/Supplier/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.getSuppliers();
-            this.toastrService.success("Supplier Saved");
+       
+        console.log(JSON.stringify(this.frm.value));
+          this.gSvc.postdata("Common/IntegratorPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+            this.reset();
+            this.getIntegratorPackageList();
+            this.toastrService.success(res.message);
           }, err => {
-            this.toastrService.error("Error! Supplier Not Saved");
+            this.toastrService.error(err.message);
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("Inventory/Supplier/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getSuppliers();
-            this.toastrService.success("Supplier Updated");
-
-          }, err => {
-            this.toastrService.error("Error! Supplier Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
         return true;
       },
       reject: () => {
@@ -125,35 +87,45 @@ export class IntegratorPackageComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })
   }
-  
-  edit(id: any) {
-    this.formId = 1;
-
-    this.gSvc.postdata("Inventory/Supplier/GetById/" + id + "", {}).subscribe((res: any) => {
-      this.frm.controls['id'].setValue(res.id);
-      this.frm.controls['name'].setValue(res.name);
-      this.frm.controls['phone'].setValue(res.phone);
-      this.frm.controls['fax'].setValue(res.fax);
-      this.frm.controls['email'].setValue(res.email);
-      this.frm.controls['website'].setValue(res.website);
-      this.frm.controls['contactPerson'].setValue(res.contactPerson);
-      this.frm.controls['contactPersonNo'].setValue(res.contactPersonNo);
-      this.frm.controls['cmnCountryId'].setValue(res.cmnCountryId);
-      this.frm.controls['anFChartOfAccountParentId'].setValue(res.anFChartOfAccountParentId);
-      this.frm.controls['anFChartOfAccountId'].setValue(res.anFChartOfAccountId);
-      this.frm.controls['cmnCompanyId'].setValue(res.cmnCompanyId);
-      this.frm.controls['cmnCurrencyId'].setValue(res.cmnCurrencyId);
-      this.frm.controls['isActive'].setValue(res.isActive);
-      this.frm.controls['isEnlisted'].setValue(res.isEnlisted);
-      this.frm.controls['createdBy'].setValue(res.isActive);
-      this.frm.controls['createdDate'].setValue(res.isEnlisted);
-      this.frm.controls['modifiedBy'].setValue(res.modifiedBy);
-      this.frm.controls['modifiedDate'].setValue(res.modifiedDate);
-
-      this.viewInfo = res;
+  getPackages(id:any){
+    this.gSvc.getdata("Common/IntegratorPackage/GetIntegratorPackageByCmnIntegratorId?companyId="+this.auth.getCompany()+"&cmnIntegratorId="+this.frm.controls['cmnIntegratorId'].value).subscribe(res => {
+      
+      this.integratorPackages = res;
+     
+      
     }, err => {
-      this.toastrService.error("Error! Data Not Found");
+      //this.toastrService.error("Error! Package not found");
     })
+  }
+  setName(){
+    var packageNo= this.frm.controls['packageNo'].value;
+    var name =this.integratorPackages.find((item: { packageNo: number; })=> item.packageNo==packageNo).name;
+    this.frm.controls['name'].setValue(name);
+  }
+  getIntregatorCompany() {
+    this.gSvc.postdata("Common/Integrator/GetPermittedIntegratorByCompanyId?cmnCompanyId="+this.auth.getCompany(), {}).subscribe(res => {      
+      this.integrators = res;
+    }, err => {
+      this.toastrService.error("Error! Intregation Company List not found");
+    })
+  }
+  getProducts() {
+    this.gSvc.postdata("api/ScpProduct/GetAll", {}).subscribe(res => {
+      this.products = res;
+    }, err => {
+      this.toastrService.error("Error! Product Not Found");
+    })
+  }
+  getIntegratorPackageList() {
+    this.gSvc.getdata("Common/IntegratorPackage/GetIntegratorPackageByAnyKey?integratorId="+"&scpProductId=" ).subscribe(res => {
+      
+      this.integratorPackageList = res;
+    }, err => {
+      
+    })
+  }
+  edit(res: any) {
+    this.frm.patchValue(res);    
   }
   getServiceType() {
     this.gSvc.postdata("Common/ServiceType/GetAll", {}).subscribe(res => {
@@ -178,9 +150,7 @@ export class IntegratorPackageComponent implements OnInit {
     this.router.navigateByUrl('/inventory/itembrand')
   }
   reset() {
-    this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.markAsPristine();
+    this.getFrm();
   }
   clear(table: Table) {
     table.clear();
