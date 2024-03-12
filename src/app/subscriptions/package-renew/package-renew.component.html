@@ -26,26 +26,7 @@
                 <label>{{'DeviceNumber' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
             </div>
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'DISTRICT'|translate}}</label><span class="text-danger"> *</span><br>
-                <p-dropdown [options]="districtList" [style]="{'width':'100%'}" formControlName="cmnDistrictId"
-                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
-            </div> -->
-
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
-                <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
-                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value" (onChange)="getUnionByUpazillaId()"></p-dropdown><br>
-            </div> -->
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'UNION'|translate}}</label>
-                <p-dropdown [options]="unionList" [style]="{'width':'100%'}" formControlName="cmnUnionId"
-                 [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value"></p-dropdown><br>
-            </div> -->
-
+                   
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'FromDate' | translate}}</label>
                 <input type="date" class="p-2  w-full" formControlName="fromDate" dateFormat="dd/mm/yy" pInputText />
@@ -79,104 +60,7 @@
         </div>
     </form>
 </p-panel>
-<p-dialog header="Header" [(visible)]="displayPackageRenew" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
-    [resizable]="false">
-    <ng-template pTemplate="header">
-        <h5>{{'PackageRenew' | translate}}</h5>
-    </ng-template>
 
-    <form [formGroup]="frmPackageRenew">
-        <div class="modal-body">
-            <div class="formgrid grid">
-                <input type="text" class="p-2  w-full" formControlName="deviceNumber" value="{{deviceNumber}}" hidden
-                    pInputText />
-                <input type="number" class="p-2  w-full" formControlName="id" pInputText hidden />
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'Packages'|translate}}</label><span class="text-danger">*</span>
-                    <input type="number" class="p-2  w-full" formControlName="scpPackageId" pInputText hidden />
-                    <input type="text" class="p-2  w-full" formControlName="packageName" pInputText readonly />
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'PackgaeAmount' | translate}}</label><span class="text-danger">*</span>
-                    <!-- <input type="number" class="p-2  w-full" formControlName="packageValue" pInputText
-                        value="{{packageValue}}" readonly /> -->
-                    <input type="number" class="p-2  w-full" formControlName="packageValue" pInputText readonly />
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'Amount' | translate}}</label><span class="text-danger">*</span>
-                    <input type="number" class="p-2  w-full" formControlName="amount" pInputText readonly />
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'SubscribtionType'|translate}}</label><span class="text-danger">*</span>
-                    <p-dropdown [options]="subscribtionTypes" [style]="{'width':'100%'}" formControlName="packageType"
-                        (onChange)="packageTypeValue()" [filter]="false" filterBy="name" [showClear]="true"
-                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'Number Of Month' | translate}}</label><span class="text-danger">*</span>
-                    <input type="number" (blur)="packageTypeValue()" class="p-2  w-full" formControlName="value"
-                        pInputText />
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'ExpDate' | translate}}</label>
-                    <input type="text" class="p-2  w-full" formControlName="expDate" pInputText readonly />
-                    <!-- <p-calendar formControlName="expDate" dateFormat="dd/mm/yy"
-                    placeholder="dd/mm/yyyy" readonly></p-calendar> -->
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <label>{{'PaymentType'|translate}}</label><span class="text-danger">*</span>
-                    <p-dropdown [options]="paymentMoodList" [style]="{'width':'100%'}"
-                        formControlName="anFPaymentMethodId" [filter]="false" filterBy="name" [showClear]="true"
-                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
-                </div>
-                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
-                    <div class="form-check mt-4">
-                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
-                            [defaultChecked]="true" checked formControlName="isActive">
-                        <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}}
-                        </label>
-                    </div>
-                </div>
-                <div class="field col-12 lg:col-12 xl:col-12 md:col-12 sm:col-12">
-                    <div class="card-footer">
-                        <div class="">
-                            <p-button [disabled]="frmPackageRenew.invalid || isShowSslPay" (click)="savePackageRenew()"
-                                styleClass="p-button-success p-button-sm" type="button" icon="pi pi-check"
-                                label="{{'Proceed'|translate}}"></p-button>&nbsp;
-                            <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
-                                (click)="reset()" label="{{'RESET'|translate}}"></p-button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
-                    style="border: 1px solid #eee; padding: 0;" *ngIf="isShowSslPay">
-                    <div class="card p-0">
-                        <p-tabView id="tabView">
-                            <p-tabPanel class="line-height-3 m-0" header="{{value.name}}"
-                                *ngFor="let value of getArray">
-                                <!-- <ng-template pTemplate="header">
-                                        <span style="color:rgb(21, 46, 58);">{{value.name}}</span>
-                                    </ng-template> -->
-                                <div class="row featurette">
-                                    <div class="custom-box-shadow ml-1 mr-1 mt-2"
-                                        *ngFor="let getWay of value.chield, let i=index">
-                                        <div style="display: flex;flex-direction: column;justify-content: center;">
-                                            <a href="{{getWay.redirectGatewayURL}}">
-                                                <img class="img-fluid mx-auto m-1" src="{{getWay.logo}}"
-                                                    alt="Card image cap">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </p-tabPanel>
-                        </p-tabView>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</p-dialog>
 
 <p-table #dt [value]="packageRenewlist" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
@@ -254,54 +138,27 @@
                     *ngIf="r.expiryDays>0">{{r.expiryDays}}</button>
                 <button pButton pRipple type="button" class="p-button-rounded p-button-warning"
                     *ngIf="r.expiryDays<=0">{{r.expiryDays}}</button>
-                <!-- <span *ngIf="r.expiryDays>0" class="btn btn-success btn-md badge">{{r.expiryDays}}</span>
-                <span *ngIf="r.expiryDays<=0" class="btn btn-danger btn-md badge">{{r.expiryDays}}</span> -->
+                
             </td>
             <td>
                 <button pButton pRipple type="button" class="p-button-rounded p-button-success"
                     *ngIf="r.expiryDays>0">{{r.package.statusType}}</button>
                 <button pButton pRipple type="button" class="p-button-rounded p-button-warning"
                     *ngIf="r.expiryDays<=0">{{r.package.statusType}}</button>
-                <!-- <span class="btn btn-success btn-md badge" *ngIf="r.expiryDays>0">{{r.package.statusType}}</span> -->
-                <!-- <span class="btn btn-danger btn-md badge" *ngIf="r.expiryDays<=0">{{r.package.statusType}}</span> -->
+                
             </td>
             <td class="" style="width: 15%; text-align: center;">
                 <div class="p-0" *ngIf="r.package.statusType =='Active' || r.package.statusType =='Inactive' || r.package.statusType =='Expired'">
-                    <!-- <p-button (onClick)="showPackageRenewModal(r.package)"
-                 type="button" styleClass=" rounded-0 "
-                    title="{{'PackageRenew' | translate}}">
-                    <span *ngIf="r.expiryDays<=0" class="btn btn-danger "><i class="fa-solid fa-lock"></i> <span class="badge">{{r.expiryDays}}</span> </span> 
-                        <span *ngIf="r.expiryDays>0" class="btn btn-success"> <span><i class="fa-solid fa-unlock"></i></span><span class="badge">{{r.expiryDays}}</span></span>
-                </p-button> -->
-                    <!-- <button type="button" class="btn btn-md btn-primary" *ngIf="r.expiryDays<=0"
-                        (click)="showPackageRenewModal(r.package)" title="{{'PackageRenew' | translate}}"><i
-                            class="fa fa-lock"></i>
-                    </button> -->
-                    <!-- <button pButton pRipple type="button" class="p-button-outlined p-button-info"
-                        *ngIf="r.expiryDays<=0" (click)="showPackageRenewModal(r.package)"
-                        title="{{'PackageRenew' | translate}}"><i class="fa fa-lock"></i></button> -->
+                                                            
                     <button pButton pRipple type="button" class="p-button-raised p-button-danger" *ngIf="r.expiryDays<=0"
                         (click)="showPackageRenewModal(r.package)" title="{{'PackageRenew' | translate}}"><i
                             class="fa fa-lock"></i></button>
-
-                    <!-- <div *ngIf="r.expiryDays>0" style="display: flex; flex-direction: row; "> -->
-                    <div *ngIf="r.expiryDays>0" style="flex-direction: row; ">
-
-                        <!-- <button type="button" class="btn btn-md btn-primary" (click)="showPackageRenewModal(r.package)"
-                            title="{{'PackageRenew' | translate}}"><i class="fa fa-dollar"></i>
-                        </button> -->
-                        <!-- <button pButton pRipple type="button" class="p-button-outlined p-button-info"
-                            (click)="showPackageRenewModal(r.package)" title="{{'PackageRenew' | translate}}"><i
-                                class="fa fa-dollar"></i></button> -->
-
+         
+                    <div *ngIf="r.expiryDays>0" style="flex-direction: row; ">                                       
                         <button pButton pRipple type="button" class="p-button-raised p-button-info"
                             (click)="showPackageRenewModal(r.package)" title="{{'PackageRenew' | translate}}"><i
                                 class="fa fa-dollar"></i></button>
-                        <!-- <p class="btn btn-worning badge ">{{r.expiryDays}}</p> -->
                     </div>
-
-                    <!-- <span *ngIf="r.expiryDays<=0" class="btn btn-danger " (onClick)="showPackageRenewModal(r.package)"><i class="fa-solid fa-lock"></i> <span class="badge">{{r.expiryDays}}</span> </span> 
-                <span *ngIf="r.expiryDays>0" class="btn btn-success" (onClick)="showPackageRenewModal(r.package)"> <span><i class="fa-solid fa-unlock"></i></span><span class="badge">{{r.expiryDays}}</span></span> -->
                 </div>
             </td>
         </tr>
@@ -312,6 +169,120 @@
         </tr>
     </ng-template>
 </p-table>
+
+
+
+<p-dialog header="Header" [(visible)]="displayPackageRenew" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'PackageRenew' | translate}}</h5>
+    </ng-template>
+
+    <form [formGroup]="frmPackageRenew">
+        <div class="modal-body">
+            <div class="formgrid grid">
+                <input type="text" class="p-2  w-full" formControlName="deviceNumber" value="{{deviceNumber}}" hidden
+                    pInputText />
+                <input type="number" class="p-2  w-full" formControlName="id" pInputText hidden />
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'Packages'|translate}}</label><span class="text-danger">*</span>
+                    <input type="number" class="p-2  w-full" formControlName="scpPackageId" pInputText hidden />
+                    <input type="text" class="p-2  w-full" formControlName="packageName" pInputText readonly />
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'PackgaeAmount' | translate}}</label><span class="text-danger">*</span>
+                    
+                    <input type="number" class="p-2  w-full" formControlName="packageValue" pInputText readonly />
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'Amount' | translate}}</label><span class="text-danger">*</span>
+                    <input type="number" class="p-2  w-full" formControlName="amount" pInputText readonly />
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'SubscribtionType'|translate}}</label><span class="text-danger">*</span>
+                    <p-dropdown [options]="subscribtionTypes" [style]="{'width':'100%'}" formControlName="packageType"
+                        (onChange)="packageTypeValue()" [filter]="false" filterBy="name" [showClear]="true"
+                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'Number Of Month' | translate}}</label><span class="text-danger">*</span>
+                    <input type="number" (blur)="packageTypeValue()" class="p-2  w-full" formControlName="value"
+                        pInputText />
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'ExpDate' | translate}}</label>
+                    <input type="text" class="p-2  w-full" formControlName="expDate" pInputText readonly />
+                    
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <label>{{'PaymentType'|translate}}</label><span class="text-danger">*</span>
+                    <p-dropdown [options]="paymentMoodList" [style]="{'width':'100%'}"
+                        formControlName="anFPaymentMethodId" [filter]="false" filterBy="name" [showClear]="true"
+                        placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
+                </div>
+                <div class="field col-12 lg:col-3 xl:col-3 md:col-3 sm:col-3">
+                    <div class="form-check mt-4">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            [defaultChecked]="true" checked formControlName="isActive">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="field col-12 lg:col-12 xl:col-12 md:col-12 sm:col-12">
+                    <div class="card-footer">
+                        <div class="">
+                            <p-button [disabled]="frmPackageRenew.invalid || isShowSslPay" (click)="savePackageRenew()"
+                                styleClass="p-button-success p-button-sm" type="button" icon="pi pi-check"
+                                label="{{'Proceed'|translate}}"></p-button>&nbsp;
+                            <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                                (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"
+                    style="border: 1px solid #eee; padding: 0;" *ngIf="isShowSslPay">
+                    <div class="card p-0">
+                        <p-tabView id="tabView">
+                            <p-tabPanel class="line-height-3 m-0" header="{{value.name}}"
+                                *ngFor="let value of getArray">
+                                <!-- <ng-template pTemplate="header">
+                                        <span style="color:rgb(21, 46, 58);">{{value.name}}</span>
+                                    </ng-template> -->
+                                <div class="row featurette">
+                                    <div class="custom-box-shadow ml-1 mr-1 mt-2"
+                                        *ngFor="let getWay of value.chield, let i=index">
+                                        <div style="display: flex;flex-direction: column;justify-content: center;">
+                                            <a href="{{getWay.redirectGatewayURL}}">
+                                                <img class="img-fluid mx-auto m-1" src="{{getWay.logo}}"
+                                                    alt="Card image cap">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-tabPanel>
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</p-dialog>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <p-dialog header="Header" [(visible)]="PaymentInfoVisible" [modal]="true"
     [style]="{ 'width': '20rem', 'border':'10px solid', 'text-align':'center', 'border-color':paymentStatusId=='1'?'green':paymentStatusId=='2'?'#b97e1c':paymentStatusId=='3'?'#c93737':''}">

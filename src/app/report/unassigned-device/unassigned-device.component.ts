@@ -34,6 +34,7 @@ export class UnassignedDeviceComponent implements OnInit {
         this.getCompany();
         this.getCompanys();
         this.getDevices();
+        this.updateForm();
     }
 
     frmsearch() { 
@@ -50,7 +51,7 @@ export class UnassignedDeviceComponent implements OnInit {
     }
     editDevice(res:any){
       this.updateDeviceFormView=true
-      this.frm.patchValue(res);
+      this.upFrm.patchValue(res);
     }
 
       getCompany(){  
