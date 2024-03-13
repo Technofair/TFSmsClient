@@ -334,6 +334,7 @@ getFrm(){
     this.progressStatus=false;
     this.gSvc.postdata("api/Subscriber/GetSubscriberWithDeviceByParameter", JSON.stringify(requestBody)).subscribe(res => {
       this.subscriberList = res;
+      console.log(JSON.stringify(res));
       this.progressStatus=true;
 
     }, err => {

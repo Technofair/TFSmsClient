@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmationService } from 'primeng/api/confirmationservice';
 import { ExportService } from 'src/app/layout/service/export.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from 'src/app/services/general.service';
@@ -8,7 +9,8 @@ import { GeneralService } from 'src/app/services/general.service';
 @Component({
   selector: 'app-unassigned-device',
   templateUrl: './unassigned-device.component.html',
-  styleUrls: ['./unassigned-device.component.css']
+  styleUrls: ['./unassigned-device.component.css'],
+  // providers: [ConfirmationService]
 })
 export class UnassignedDeviceComponent implements OnInit {
 
@@ -25,7 +27,8 @@ export class UnassignedDeviceComponent implements OnInit {
         private gSvc: GeneralService,
         private toastrService: ToastrService,
         private exportService: ExportService,
-        private auth: AuthService
+        private auth: AuthService,
+        
     ) {}
 
     ngOnInit(): void {
@@ -34,6 +37,7 @@ export class UnassignedDeviceComponent implements OnInit {
         this.getCompany();
         this.getCompanys();
         this.getDevices();
+        this.updateForm();
     }
 
     frmsearch() { 
@@ -44,13 +48,15 @@ export class UnassignedDeviceComponent implements OnInit {
       }
     updateForm(){
       this.upFrm = this.fb.group({
-        cmnCompanyId: new FormControl(),
-        deviceNumber: new FormControl()
+        id: new FormControl(),
+        deviceNumber: new FormControl(),
+        createdBy:new FormControl(this.auth.getUserId()),
+        createdDate:new FormControl(new Date())
       })
     }
     editDevice(res:any){
       this.updateDeviceFormView=true
-      this.frm.patchValue(res);
+      this.upFrm.patchValue(res);
     }
 
       getCompany(){  
@@ -62,7 +68,6 @@ export class UnassignedDeviceComponent implements OnInit {
       }
 
     getCompanys(){  
-      
         //New
         this.gSvc.postdata("Common/Company/GetCompanyBySelfOrParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
         //Old
@@ -83,7 +88,6 @@ export class UnassignedDeviceComponent implements OnInit {
        var companyId= this.frm.controls['cmnCompanyId'].value;
        if(companyId==null || companyId==0 ||companyId==""||companyId==undefined)
       var test= this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-
         this.gSvc.postdata("Inventory/Purchase/GetUnassignDeviceByAnyKey", JSON.stringify(this.frm.value)).subscribe((res: any) => {
         //oLD
         //this.gSvc.postdata("Inventory/Purchase/GetUnassignStockInDeviceByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe((res: any) => {
@@ -98,7 +102,17 @@ export class UnassignedDeviceComponent implements OnInit {
             }
         );
     }
-
+   
+    save() {
+      if (this.upFrm.invalid) return false;
+      this.upFrm.controls['createdBy'].setValue(this.auth.getUserId());
+      this.gSvc.postdata("api/DeviceNumberLog/Save", JSON.stringify(this.upFrm.value)).subscribe(res => {
+        this.toastrService.success(res.message);
+      }, err => {
+        this.toastrService.error(err.message);
+      })
+      return false;
+    }
     reset(): void{
       this.frm.reset();
     }

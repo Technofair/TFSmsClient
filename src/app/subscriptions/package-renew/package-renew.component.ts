@@ -12,6 +12,7 @@ import { Location } from '@angular/common';
 import { balanceService } from 'src/app/global';
 import { ReportViewer } from 'src/app/reportviewer/reportviewer';
 import { ReportModel } from 'src/app/reportviewer/reportmodel';
+
 @Component({
   selector: 'app-stb-assign-test',
   templateUrl: './package-renew.component.html',
@@ -53,7 +54,7 @@ export class PackageRenewComponent implements OnInit {
 
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
-  subscribtionTypes: any;
+  subscribtionTypes: any ;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -80,12 +81,12 @@ export class PackageRenewComponent implements OnInit {
       if (trx != null) {
         if (trx == 'Deactive') {
           this.frmsrc.controls['statusType'].setValue(2);
-        } else {
-          var sts: any = this.route.snapshot.queryParamMap.get('status');
-          this.paymentMsg = sts == '1' ? 'Payment Success!!!' : sts == '2' ? 'Payment Faile!!!' : sts == '3' ? 'Payment Cancel' : '';
-          this.PaymentInfoVisible = true;
-          this.paymentStatusId = sts;
-        }
+         } else {
+        var sts: any = this.route.snapshot.queryParamMap.get('status');
+        this.paymentMsg = sts == '1' ? 'Payment Success!!!' : sts == '2' ? 'Payment Faile!!!' : sts == '3' ? 'Payment Cancel' : '';
+        this.PaymentInfoVisible = true;
+        this.paymentStatusId = sts;
+         }
       }
 
       this._location.replaceState(currUrl);
@@ -97,7 +98,7 @@ export class PackageRenewComponent implements OnInit {
     //this.getDistrict();
     this.getCompanys();
     this.getRenewableSubscriber();
-    this.clientPeriod();
+   this.clientPeriod();
   }
 
   frmsearch() {
@@ -122,7 +123,7 @@ export class PackageRenewComponent implements OnInit {
     //this.getUpazillaByDistrictId();
     //this.getUnionByUpazillaId();
   }
-  clientPeriod() {
+  clientPeriod(){
     this.gSvc.getdata("api/ScpPackagePeriod/GetScpPackagePeriodByCompanyId?cmnCompanyId=" + this.auth.getCompany()).subscribe(res => {
       this.subscribtionTypes = res;
     }, err => {
@@ -172,64 +173,71 @@ export class PackageRenewComponent implements OnInit {
       endDat = newDateTime;
     }
     var packageType = this.frmPackageRenew.get('packageType')?.value;
-    //this.frm.controls['frm'].setValue(obj);
+    
+
+    var period = this.frmPackageRenew.get('value')?.value;
+    this.frmPackageRenew.controls['period'].setValue(period);
+
+    if (period <= 0) {
+      return;
+    }
 
     if (packageType == 1) {
-      var value = this.frmPackageRenew.get('value')?.value;
-      var priceDaily = (constamount / 30) * value;
-      var numberOfDaysToAdd = value;
 
-      var myDate = new Date(endDat.getTime() + (numberOfDaysToAdd * (24 * 60 * 60 * 1000)));
-
-      // var result = myDate.getDate() + "/" + myDate.getMonth() + "/" + myDate.getFullYear();
+      //var value = this.frmPackageRenew.get('value')?.value;
+      var priceDaily = (constamount / 30) * period;
+      //var numberOfDaysToAdd = period;
+      var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
       var result = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
       this.frmPackageRenew.controls['endDate'].setValue(myDate);
       this.frmPackageRenew.controls['expDate'].setValue(result);
-
       this.frmPackageRenew.controls['amount'].setValue(priceDaily);
-    } else if (packageType == 2) {
-      debugger;
-      var value = this.frmPackageRenew.get('value')?.value;
-      if (value < 0) {
-        return;
-      }
-      var priceMontly = constamount * value;
+    } 
+    else if (packageType == 2) {
+      
+      
+      var priceMontly = constamount * period;
 
-      // var numberOfDaysToAdd: any = (30 * value) ;
-      var numberOfDaysToAdd: any = value;
+     // var numberOfDaysToAdd: any = value;
 
-      var myDate = new Date(endDat.getTime() + (numberOfDaysToAdd * (24 * 60 * 60 * 1000)));
+      var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
       var days = endDat.getDate();
-
-
       var year = myDate.getFullYear();
       var dat = myDate.getDate();
-      var month = endDat.setMonth(endDat.getMonth() + value);
-      // var result = myDate.getDate() + "/" + (myDate.getMonth()+value) + "/" + myDate.getFullYear();
-      var result2 = endDat.getDate() + "/" + (endDat.getMonth()) + "/" + endDat.getFullYear();
-      // var result3 = endDat.toLocaleString();
-      var result3 = ('0' + endDat.getDate()).slice(-2) + '/' + ('0' + (endDat.getMonth() + 1)).slice(-2) + '/' + endDat.getFullYear();
-      this.frmPackageRenew.controls['endDate'].setValue(result3);
-      this.frmPackageRenew.controls['period'].setValue(value);
-      this.frmPackageRenew.controls['expDate'].setValue(result3);
-      // this.frmPackageRenew.controls['expDate'].setValue(result2);
 
+      debugger;
+
+      //var month = endDat.setMonth(endDat.getMonth() + period);
+      //var result2 = endDat.getDate() + "/" + (endDat.getMonth()) + "/" + endDat.getFullYear();
+     //var result3 = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
+     
+     var expireDate = this.addMonths(endDat, period);
+     var result3 = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
+     
+      this.frmPackageRenew.controls['endDate'].setValue(result3);
+      this.frmPackageRenew.controls['expDate'].setValue(result3);
       this.frmPackageRenew.controls['amount'].setValue(priceMontly);
-    } else if (packageType == 3) {
-      var value = this.frmPackageRenew.get('value')?.value;
-      var priceYearly = (constamount * 12) * value;
-      var numberOfDaysToAdd: any = (365 * value);
+    } 
+      else if (packageType == 3) {
+      //var value = this.frmPackageRenew.get('value')?.value;
+      var priceYearly = (constamount * 12) * period;
+      var numberOfDaysToAdd: any = (365 * period);
 
       var myDate = new Date(endDat.getTime() + (numberOfDaysToAdd * (24 * 60 * 60 * 1000)));
       var dat = myDate.getDate();
-      // var result = myDate.getDate() + "/" + myDate.getMonth() + "/" + myDate.getFullYear();
+      
       var result = ('0' + endDat.getDate()).slice(-2) + '/' + ('0' + (endDat.getMonth() + 1)).slice(-2) + '/' + endDat.getFullYear();
       this.frmPackageRenew.controls['endDate'].setValue(dat);
       this.frmPackageRenew.controls['expDate'].setValue(result);
-
       this.frmPackageRenew.controls['amount'].setValue(priceYearly);
     }
 
+  }
+
+  addMonths(date: Date, months: number): Date {
+    const newDate = new Date(date);
+    newDate.setMonth(newDate.getMonth() + months);
+    return newDate;
   }
 
   getPackage() {
@@ -241,13 +249,13 @@ export class PackageRenewComponent implements OnInit {
   }
 
   savePackageRenew() {
-    // this.toastrService.warning("This option is not active for you .");
-    // return;
+    
     if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == null || this.frmPackageRenew.controls['anFPaymentMethodId'].value == '' || this.frmPackageRenew.controls['anFPaymentMethodId'].value === 'undefined') {
       this.toastrService.error("Please select payment method.");
 
       return;
     }
+
     if (this.frmPackageRenew.controls['statusType'].value == 'Inactive') {
       this.toastrService.error("Your package is inactive . Acrive or Reactive first then renew. ");
       return;
@@ -257,7 +265,7 @@ export class PackageRenewComponent implements OnInit {
     this.frmPackageRenew.controls['createdDate'].setValue(new Date());
     this.frmPackageRenew.controls['endDate'].setValue(new Date());
     if (this.frmPackageRenew.invalid || this.isShowSslPay) return false;
-    //console.log(this.frm.value); 
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -279,7 +287,6 @@ export class PackageRenewComponent implements OnInit {
           } else {
             if (res.operationId == -4) {
               if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == 5) {
-                //this.paymentAction = false;
                 this.getPaymentList();
                 this.getRenewableSubscriber();
               }
@@ -319,21 +326,17 @@ export class PackageRenewComponent implements OnInit {
   }
 
   showPackageRenewModal(res: any) {
+
     this.frmPackageRenew.reset();
     this.displayPackageRenew = true;
+
     this.packageValue = res.rate;
     this.packageExpDate = res.endDate;
-    this.frmPackageRenew.controls["packageValue"].setValue(res.rate)
-    //this.frmPackageRenew.controls['endDate'].setValue(res.endDate);
+    this.frmPackageRenew.controls["packageValue"].setValue(res.rate);
     this.frmPackageRenew.controls['statusType'].setValue(res.statusType);
+    res.amount = '';
 
     this.paymentType();
-
-    // this.frmPackageRenew.controls["scpSubscriberId"].setValue(res.scpSubscriberId);
-    // this.frmPackageRenew.controls["prdDeviceNumberId"].setValue(res.prdDeviceNumberId);
-    // this.frmPackageRenew.controls["amount"].setValue(res.amount);
-    // this.frmPackageRenew.controls["packageValue"].setValue(res.amount);
-
     this.frmPackageRenew.patchValue(res);
   }
   paymentType() {
@@ -355,34 +358,7 @@ export class PackageRenewComponent implements OnInit {
     this.frmsrc.reset();
     this.frmsrc.markAsPristine();
   }
-  // getDistrict() {
-  //   this.apiurl = "api/GeneralServices/Districts";
-  //   this.gSvc.getdata(this.apiurl).subscribe(res => {
-  //     this.districtList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("District error!");
-  //   })
-  // }
-
-  // getUpazillaByDistrictId() {
-  //   this.apiurl = "api/GeneralServices/Upazila/" + this.frmsrc.controls['cmnDistrictId'].value;
-  //   this.gSvc.getdata(this.apiurl).subscribe(res => {
-  //     this.thanaList = res;
-  //   }, err => {
-  //     this.toastrService.error("Upazila error!");
-  //   })
-  // }
-
-  // getUnionByUpazillaId() {
-  //   this.apiurl = "api/GeneralServices/Union/" + this.frmsrc.controls['cmnUpazillaId'].value;
-  //   this.gSvc.getdata(this.apiurl).subscribe(res => {
-  //     this.unionList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("Union error!");
-  //   })
-  // }
+ 
 
   getCompanys() {
     this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
@@ -398,7 +374,7 @@ export class PackageRenewComponent implements OnInit {
   }
 
   getPaymentList() {
-    // this.gSvc.postdata("api/MFSPGW/GetSSLCommerzGrantToken?deviceNumberId=553&&paymentMethodId=5", {}).subscribe(res => {
+    
     var param = {
       deviceNumberId: this.frmPackageRenew.controls["prdDeviceNumberId"].value,
       paymentMethodId: this.frmPackageRenew.controls['anFPaymentMethodId'].value,
@@ -439,38 +415,38 @@ export class PackageRenewComponent implements OnInit {
     this.getWayaList = dt.chield;
   }
 
-  //Report Execution
-  @ViewChild(ReportViewer)
-  _rptViewer!: ReportViewer;
-  @ViewChild('_reportModal')
-  _reportModal!: any;
-  //_reportModal:any;
-  public reportModal: boolean = false;
-  public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
-  loadReportIn(data: any) {
-    debugger;
-    this.confirmationService.confirm({
-      message: 'Do you want to print Invoice?',
-      header: 'Confirmation',
-      icon: 'pi pi-print',
-      accept: () => {
+//Report Execution
+@ViewChild(ReportViewer)
+_rptViewer!: ReportViewer;
+@ViewChild('_reportModal')
+_reportModal!: any;
+//_reportModal:any;
+public reportModal: boolean = false;
+public _getReportUrl: string = 'api/SubscriberInvoice/GetSubscriberInvoicePaymentByInvoiceIdRdlc';
+loadReportIn(data: any) {
+  debugger;
+  this.confirmationService.confirm({
+    message: 'Do you want to print Invoice?',
+    header: 'Confirmation',
+    icon: 'pi pi-print',
+    accept: () => {
 
-        this._reportModal.maximized = true;
-        var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
-        this.reportModal = true;
-        var repFile = 'SubscriberBill.rdlc';
-        var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
-        this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
-        var Models = JSON.stringify(frm);
-        this._rptViewer.reportInPage(this._getReportUrl, Models);
+      this._reportModal.maximized = true;
+      var frm = { InvoiceId: data.operationId, companyId: this.auth.getCompany() };
+      this.reportModal = true;
+      var repFile = 'SubscriberBill.rdlc';
+      var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Subscriber Bill' };
+      this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);    
+      var Models = JSON.stringify(frm);
+      this._rptViewer.reportInPage(this._getReportUrl, Models);
 
-        return true;
-      },
-      reject: () => {
-      }
-    })
-    return false;
-  }
-  //Report Execution
+      return true;
+    },
+    reject: () => {
+    }
+  })  
+  return false;
+}
+//Report Execution
 
 }

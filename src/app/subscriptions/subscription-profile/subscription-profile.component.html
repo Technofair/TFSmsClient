@@ -446,8 +446,8 @@
                             {{device.deviceNumber}}
                         </span>
                     </td>
-                    <!-- <td>{{r.devices==undefined?0: r.devices.length}}</td> -->
-                    <td>{{r.isActive ==true?'Active':'Inactive'}}</td>
+                    <td>{{r.statusType}}</td>
+                    <!-- <td>{{r.isActive ==true?'Active':'Inactive'}}</td> -->
                     <td class="vcenter text-center" style="display: flex; flex-direction: row; ">
                         <p-button type="button" styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-pencil"
                             (click)="edit(r)" data-toggle="tooltip"

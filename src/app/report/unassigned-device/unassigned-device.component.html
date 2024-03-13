@@ -1,3 +1,4 @@
+
 <p-panel>
     <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'UnassignDevice' |
             translate}}</span></ng-template>
@@ -31,8 +32,6 @@
         
     </div>
 </form>
-
-
 <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
   <button pButton type="button" label="{{'ExportToExcel'|translate}}" (click)="exportTExcel()" class="export-button"></button>
 </div>
@@ -78,18 +77,10 @@
             <span class="font-bold white-space-nowrap">{{'DeviceUpdate'|translate}}</span>
         </div>
     </ng-template>
-    <form [formGroup]="frm">
-
-        <div class="formgrid grid mb-4">
-    
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="isMso">
-                <label>{{'Client'|translate}}</label>
-                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
-                    [filter]="true" filterBy="number" [showClear]="true"
-                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown><br>
-            </div>
-                
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+    <form [formGroup]="upFrm">
+        <div class="formgrid grid mb-4">    
+            <input type="text" class="p-2  w-full" formControlName="id" hidden pInputText/>
+            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'DeviceNumber' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
             </div>
@@ -97,10 +88,10 @@
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card-footer">
                     <div class="" style="padding-top: 30px;">
-                        <p-button (click)="getDevices()" styleClass="p-button-primary p-button-sm"
+                        <p-button (click)="save()" styleClass="p-button-primary p-button-sm"
                             type="submit" icon="pi pi-save" label="{{'Save' | translate}}"></p-button>&nbsp;
-                        <p-button (onClick)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
-                            label="{{'RESET'|translate}}"> </p-button>&nbsp;
+                        <!-- <p-button (onClick)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+                            label="{{'RESET'|translate}}"> </p-button>&nbsp; -->
                     </div>
                 </div>
             </div>
