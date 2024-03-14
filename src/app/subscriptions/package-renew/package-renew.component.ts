@@ -160,10 +160,8 @@ export class PackageRenewComponent implements OnInit {
 
   packageTypeValue() {
     var packageId = this.frmPackageRenew.get("scpPackageId")?.value;
-    //var objPackage = this.packages.find(w => w.id === packageId);
-
     const constamount = this.packageValue;
-    debugger
+
     const packageEnddate = new Date(this.packageExpDate);
     const newDateTime = new Date();
     var endDat;
@@ -173,8 +171,6 @@ export class PackageRenewComponent implements OnInit {
       endDat = newDateTime;
     }
     var packageType = this.frmPackageRenew.get('packageType')?.value;
-    
-
     var period = this.frmPackageRenew.get('value')?.value;
     this.frmPackageRenew.controls['period'].setValue(period);
 
@@ -184,9 +180,7 @@ export class PackageRenewComponent implements OnInit {
 
     if (packageType == 1) {
 
-      //var value = this.frmPackageRenew.get('value')?.value;
       var priceDaily = (constamount / 30) * period;
-      //var numberOfDaysToAdd = period;
       var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
       var result = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
       this.frmPackageRenew.controls['endDate'].setValue(myDate);
@@ -194,24 +188,10 @@ export class PackageRenewComponent implements OnInit {
       this.frmPackageRenew.controls['amount'].setValue(priceDaily);
     } 
     else if (packageType == 2) {
-      
-      
-      var priceMontly = constamount * period;
-
-     // var numberOfDaysToAdd: any = value;
-
-      var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
-      var days = endDat.getDate();
-      var year = myDate.getFullYear();
-      var dat = myDate.getDate();
-
-      debugger;
-
-      //var month = endDat.setMonth(endDat.getMonth() + period);
-      //var result2 = endDat.getDate() + "/" + (endDat.getMonth()) + "/" + endDat.getFullYear();
-     //var result3 = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
-     
+        
+     var priceMontly = constamount * period;
      var expireDate = this.addMonths(endDat, period);
+     expireDate = this.addDays(expireDate, -1);
      var result3 = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
      
       this.frmPackageRenew.controls['endDate'].setValue(result3);
@@ -219,24 +199,36 @@ export class PackageRenewComponent implements OnInit {
       this.frmPackageRenew.controls['amount'].setValue(priceMontly);
     } 
       else if (packageType == 3) {
-      //var value = this.frmPackageRenew.get('value')?.value;
-      var priceYearly = (constamount * 12) * period;
-      var numberOfDaysToAdd: any = (365 * period);
 
-      var myDate = new Date(endDat.getTime() + (numberOfDaysToAdd * (24 * 60 * 60 * 1000)));
-      var dat = myDate.getDate();
-      
-      var result = ('0' + endDat.getDate()).slice(-2) + '/' + ('0' + (endDat.getMonth() + 1)).slice(-2) + '/' + endDat.getFullYear();
-      this.frmPackageRenew.controls['endDate'].setValue(dat);
+      var priceYearly = (constamount * 12) * period;
+      var expireDate = this.addYears(endDat, period);
+      expireDate = this.addDays(expireDate, -1);
+           
+      var result = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
+      this.frmPackageRenew.controls['endDate'].setValue(result);
       this.frmPackageRenew.controls['expDate'].setValue(result);
       this.frmPackageRenew.controls['amount'].setValue(priceYearly);
     }
+  }
 
+  
+  addDays(date: Date, days: number): Date {
+    debugger;
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + days);
+    return newDate;
   }
 
   addMonths(date: Date, months: number): Date {
     const newDate = new Date(date);
     newDate.setMonth(newDate.getMonth() + months);
+    return newDate;
+  }
+
+  addYears(date: Date, years: number): Date {
+    debugger;
+    const newDate = new Date(date);
+    newDate.setFullYear(newDate.getFullYear() + years);
     return newDate;
   }
 
