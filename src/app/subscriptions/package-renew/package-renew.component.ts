@@ -158,59 +158,61 @@ export class PackageRenewComponent implements OnInit {
     });
   }
 
-  packageTypeValue() {
-    var packageId = this.frmPackageRenew.get("scpPackageId")?.value;
-    const constamount = this.packageValue;
+  // packageTypeValue() {
+  //   var packageId = this.frmPackageRenew.get("scpPackageId")?.value;
+  //   const constamount = this.packageValue;
 
-    const packageEnddate = new Date(this.packageExpDate);
-    const newDateTime = new Date();
-    var endDat;
-    if (packageEnddate > newDateTime) {
-      endDat = packageEnddate;
-    } else {
-      endDat = newDateTime;
-    }
-    var packageType = this.frmPackageRenew.get('packageType')?.value;
-    var period = this.frmPackageRenew.get('value')?.value;
-    this.frmPackageRenew.controls['period'].setValue(period);
+  //   const packageEnddate = new Date(this.packageExpDate);
+  //   const newDateTime = new Date();
+  //   var endDat;
+  //   if (packageEnddate > newDateTime) {
+  //     endDat = packageEnddate;
+  //   } else {
+  //     endDat = newDateTime;
+  //   }
+  //   var packageType = this.frmPackageRenew.get('packageType')?.value;
+  //   var period = this.frmPackageRenew.get('value')?.value;
+  //   this.frmPackageRenew.controls['period'].setValue(period);
 
-    if (period <= 0) {
-      return;
-    }
+  //   if (period <= 0) {
+  //     return;
+  //   }
 
-    if (packageType == 1) {
+  //   if (packageType == 1) {
 
-      var priceDaily = (constamount / 30) * period;
-      var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
-      var result = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
-      this.frmPackageRenew.controls['endDate'].setValue(myDate);
-      this.frmPackageRenew.controls['expDate'].setValue(result);
-      this.frmPackageRenew.controls['amount'].setValue(priceDaily);
-    } 
-    else if (packageType == 2) {
+  //     var priceDaily = (constamount / 30) * period;
+  //     var myDate = new Date(endDat.getTime() + (period * (24 * 60 * 60 * 1000)));
+  //     var result = ('0' + myDate.getDate()).slice(-2) + '/' + ('0' + (myDate.getMonth() + 1)).slice(-2) + '/' + myDate.getFullYear();
+  //     this.frmPackageRenew.controls['endDate'].setValue(myDate);
+  //     this.frmPackageRenew.controls['expDate'].setValue(result);
+  //     this.frmPackageRenew.controls['amount'].setValue(priceDaily);
+  //   } 
+  //   else if (packageType == 2) {
         
-     var priceMontly = constamount * period;
-     var expireDate = this.addMonths(endDat, period);
-     expireDate = this.addDays(expireDate, -1);
-     var result3 = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
+  //    var priceMontly = constamount * period;
+  //    var expireDate = this.addMonths(endDat, period);
+  //    expireDate = this.addDays(expireDate, -1);
+  //    var result3 = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
      
-      this.frmPackageRenew.controls['endDate'].setValue(result3);
-      this.frmPackageRenew.controls['expDate'].setValue(result3);
-      this.frmPackageRenew.controls['amount'].setValue(priceMontly);
-    } 
-      else if (packageType == 3) {
+  //     this.frmPackageRenew.controls['endDate'].setValue(result3);
+  //     this.frmPackageRenew.controls['expDate'].setValue(result3);
+  //     this.frmPackageRenew.controls['amount'].setValue(priceMontly);
+  //   } 
+  //     else if (packageType == 3) {
 
-      var priceYearly = (constamount * 12) * period;
-      var expireDate = this.addYears(endDat, period);
-      expireDate = this.addDays(expireDate, -1);
+  //     var priceYearly = (constamount * 12) * period;
+  //     var expireDate = this.addYears(endDat, period);
+  //     expireDate = this.addDays(expireDate, -1);
            
-      var result = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
-      this.frmPackageRenew.controls['endDate'].setValue(result);
-      this.frmPackageRenew.controls['expDate'].setValue(result);
-      this.frmPackageRenew.controls['amount'].setValue(priceYearly);
-    }
-  }
+  //     var result = ('0' + expireDate.getDate()).slice(-2) + '/' + ('0' + (expireDate.getMonth() + 1)).slice(-2) + '/' + expireDate.getFullYear();
+  //     this.frmPackageRenew.controls['endDate'].setValue(result);
+  //     this.frmPackageRenew.controls['expDate'].setValue(result);
+  //     this.frmPackageRenew.controls['amount'].setValue(priceYearly);
+  //   }
+  // }
+  packageTypeValue(){
 
+  }
   
   addDays(date: Date, days: number): Date {
     debugger;
@@ -247,7 +249,6 @@ export class PackageRenewComponent implements OnInit {
 
       return;
     }
-
     if (this.frmPackageRenew.controls['statusType'].value == 'Inactive') {
       this.toastrService.error("Your package is inactive . Acrive or Reactive first then renew. ");
       return;
@@ -300,10 +301,28 @@ export class PackageRenewComponent implements OnInit {
     return false;
   }
 
+packageRenwe(){
+  // var scpPackageId = this.frmPackageRenew.get("scpPackageId")?.value;
+  // var packageType = this.frmPackageRenew.get('packageType')?.value;
+  // var period = this.frmPackageRenew.get('value')?.value;
+  // var deviceNumberId = this.frmPackageRenew.get('prdDeviceNumberId')?.value;
+  // var subscriberPackageId = this.frmPackageRenew.get('id')?.value;
+  this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionByPeriod?scpPackageId="+this.frmPackageRenew.controls['scpPackageId'].value+"&packageType="+this.frmPackageRenew.controls['packageType'].value+"&period="+this.frmPackageRenew.controls['period']+"&deviceNumberId="+this.frmPackageRenew.controls['deviceNumberId'].value+"&subscriberPackageId="+this.frmPackageRenew.controls['id'].value, {}).subscribe(res => {
+  //  this.frmPackageRenew.controls['scpPackageId'].setValue(res.scpPackageId);
+  //  this.frmPackageRenew.controls['packageType'].setValue(res.packageType);
+  //  this.frmPackageRenew.controls['value'].setValue(res.value);
+  //  this.frmPackageRenew.controls['prdDeviceNumberId'].setValue(res.prdDeviceNumberId);
+  //  this.frmPackageRenew.controls['id'].setValue(res.value);
+    this.frmPackageRenew.controls['endDate'].setValue(res.startDate);
+    this.frmPackageRenew.controls['expDate'].setValue(res.endDate);
+   // this.frmPackageRenew.controls['rate'].setValue(res.rate);
+    this.frmPackageRenew.controls['amount'].setValue(res.price);
+  }, err => {
+    this.toastrService.error("Error ! Data is not saved . ");
+  })
+}
 
-
-  getRenewableSubscriber() {
-
+getRenewableSubscriber() {
     var requestBody = this.frmsrc.value;
     this.progressStatus = false;
     requestBody.companyId = this.auth.getCompany();
@@ -326,6 +345,7 @@ export class PackageRenewComponent implements OnInit {
     this.packageExpDate = res.endDate;
     this.frmPackageRenew.controls["packageValue"].setValue(res.rate);
     this.frmPackageRenew.controls['statusType'].setValue(res.statusType);
+    
     res.amount = '';
 
     this.paymentType();
