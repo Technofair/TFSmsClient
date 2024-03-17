@@ -1,4 +1,4 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { DatePipe, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -81,6 +81,7 @@ export function createTranslateLoader(http: HttpClient) {    return new Translat
   ],
   imports: [
     //TopNavBarModule,
+    
     CalendarModule,
     BrowserModule,
     HttpClientModule,
@@ -117,7 +118,7 @@ export function createTranslateLoader(http: HttpClient) {    return new Translat
       preventDuplicates: true,
     }), // T
   ],
-  providers: [ interceptorProviders,
+  providers: [ interceptorProviders, DatePipe,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     //CountryService, CustomerService, EventService, IconService, NodeService,
    // PhotoService, ProductService

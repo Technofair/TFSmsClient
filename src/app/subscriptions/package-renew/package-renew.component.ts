@@ -12,6 +12,8 @@ import { Location } from '@angular/common';
 import { balanceService } from 'src/app/global';
 import { ReportViewer } from 'src/app/reportviewer/reportviewer';
 import { ReportModel } from 'src/app/reportviewer/reportmodel';
+import { Utility } from 'src/app/services/utility.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-stb-assign-test',
@@ -61,6 +63,8 @@ export class PackageRenewComponent implements OnInit {
     , private confirmationService: ConfirmationService
     , private gSvc: GeneralService
     , private auth: AuthService
+    , private utility: Utility
+    , private datePipe: DatePipe
     , private toastrService: ToastrService
     , private exportService: ExportService
     , private route: ActivatedRoute
@@ -158,6 +162,14 @@ export class PackageRenewComponent implements OnInit {
     });
   }
 
+
+  //New
+  packageTypeValue(){
+    this.getSubscriptionByPeriod();
+    
+  }
+
+  //Old
   // packageTypeValue() {
   //   var packageId = this.frmPackageRenew.get("scpPackageId")?.value;
   //   const constamount = this.packageValue;
@@ -210,9 +222,7 @@ export class PackageRenewComponent implements OnInit {
   //     this.frmPackageRenew.controls['amount'].setValue(priceYearly);
   //   }
   // }
-  packageTypeValue(){
-
-  }
+  
   
   addDays(date: Date, days: number): Date {
     debugger;
@@ -301,21 +311,20 @@ export class PackageRenewComponent implements OnInit {
     return false;
   }
 
-packageRenwe(){
-  // var scpPackageId = this.frmPackageRenew.get("scpPackageId")?.value;
-  // var packageType = this.frmPackageRenew.get('packageType')?.value;
-  // var period = this.frmPackageRenew.get('value')?.value;
-  // var deviceNumberId = this.frmPackageRenew.get('prdDeviceNumberId')?.value;
-  // var subscriberPackageId = this.frmPackageRenew.get('id')?.value;
-  this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionByPeriod?scpPackageId="+this.frmPackageRenew.controls['scpPackageId'].value+"&packageType="+this.frmPackageRenew.controls['packageType'].value+"&period="+this.frmPackageRenew.controls['period']+"&deviceNumberId="+this.frmPackageRenew.controls['deviceNumberId'].value+"&subscriberPackageId="+this.frmPackageRenew.controls['id'].value, {}).subscribe(res => {
-  //  this.frmPackageRenew.controls['scpPackageId'].setValue(res.scpPackageId);
-  //  this.frmPackageRenew.controls['packageType'].setValue(res.packageType);
-  //  this.frmPackageRenew.controls['value'].setValue(res.value);
-  //  this.frmPackageRenew.controls['prdDeviceNumberId'].setValue(res.prdDeviceNumberId);
-  //  this.frmPackageRenew.controls['id'].setValue(res.value);
-    this.frmPackageRenew.controls['endDate'].setValue(res.startDate);
-    this.frmPackageRenew.controls['expDate'].setValue(res.endDate);
-   // this.frmPackageRenew.controls['rate'].setValue(res.rate);
+  getSubscriptionByPeriod(){
+
+    var scpPackageId = this.frmPackageRenew.get("scpPackageId")?.value;
+    var packageType = this.frmPackageRenew.get('packageType')?.value;
+    var period = this.frmPackageRenew.get('value')?.value;
+    var deviceNumberId = this.frmPackageRenew.get('prdDeviceNumberId')?.value;
+    var subscriberPackageId = this.frmPackageRenew.get('id')?.value;
+
+    this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionByPeriod?scpPackageId="+ scpPackageId + "&packageType=" + packageType + "&period=" + period + "&deviceNumberId=" + deviceNumberId + "&subscriberPackageId=" + subscriberPackageId, {}).subscribe(res => {
+  
+    var expDate = this.datePipe.transform(res.endDate, 'dd/MM/yyyy');
+
+    this.frmPackageRenew.controls['endDate'].setValue(expDate);
+    this.frmPackageRenew.controls['expDate'].setValue(expDate);
     this.frmPackageRenew.controls['amount'].setValue(res.price);
   }, err => {
     this.toastrService.error("Error ! Data is not saved . ");
