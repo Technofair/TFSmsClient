@@ -452,9 +452,16 @@
                         <p-button type="button" styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-pencil"
                             (click)="edit(r)" data-toggle="tooltip"
                             title="{{'Edit' | translate}}"></p-button>
-                        <p-button type="button" styleClass="p-button-warning rounded-0 px-2 py-1 mr-2"  icon="pi pi-sync"
+                        <p-button type="button"  *ngIf="progressreConnectStatus==true" styleClass="p-button-warning rounded-0 px-2 py-1 mr-2"  icon="pi pi-sync"
                             (click)="reConnect(r)" data-toggle="tooltip"
-                            title="{{'Reconnect' | translate}}"></p-button>
+                            title="{{'Reconnect' | translate}}" >
+                            
+                        </p-button>
+                        <p-button type="button" *ngIf="r.customerNumber==customernumber" styleClass="p-button-warning rounded-0 px-2 py-1 mr-2"  icon="pi pi-spin pi-spinner"
+                            (click)="reConnect(r)" data-toggle="tooltip"
+                            title="{{'Reconnect' | translate}}" >
+                        </p-button>
+                            
                         <!-- <p-button type="button" styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-eye"
                             (click)="showModalDialog(r)" data-toggle="tooltip"
                             title="{{'VIEW' | translate}}"></p-button>

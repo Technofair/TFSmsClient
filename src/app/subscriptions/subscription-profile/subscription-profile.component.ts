@@ -68,8 +68,9 @@ export class SubscriptionProfileComponent implements OnInit {
   isShowSslPay: boolean = false;
   subscriberDeviceList: any[] = [];
   _auth:any
+  customernumber:any;
   //End Of Package
-
+  progressreConnectStatus:boolean=true;
   constructor(private fb: FormBuilder
     , private router: Router
     , private confirmationService: ConfirmationService
@@ -410,10 +411,16 @@ export class SubscriptionProfileComponent implements OnInit {
     })
   }
 reConnect(data:any){
+  this.customernumber=data.customerNumber
+  this.progressreConnectStatus=false;
   this.gSvc.postdata("api/SubscriberPackage/ReconnectPackage?deviceNumberId=" + data.prdDeviceNumberId, {}).subscribe(res => {
     this.devices = res;
+    this.customernumber=null;
+    this.toastrService.success("Reconnected Successfully");
+    this.progressreConnectStatus=true;
   }, err => {
     this.toastrService.error("Error! Device not found!");
+    this.progressreConnectStatus=true;
   })
 
 }

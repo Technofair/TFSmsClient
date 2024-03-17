@@ -36,7 +36,7 @@ export class PackageRenewComponent implements OnInit {
   frmPackageRenew!: FormGroup
   organizations: any;
   packageRenewlist: any;
-
+  packageAssignHistory: any;
   displayPackageRenew: boolean = false;
   packages: any[] = [];
   packageRenew: any;
@@ -53,7 +53,7 @@ export class PackageRenewComponent implements OnInit {
   packageStatus: any;
   isShowSslPay: boolean = false;
   progressStatus: boolean = false;
-
+  displayPackageRenewHis: boolean=false;
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
   subscribtionTypes: any ;
@@ -92,7 +92,6 @@ export class PackageRenewComponent implements OnInit {
         this.paymentStatusId = sts;
          }
       }
-
       this._location.replaceState(currUrl);
     }
 
@@ -435,7 +434,17 @@ getRenewableSubscriber() {
     var dt = this.getArray.find((x: { id: any; }) => x.id == data);
     this.getWayaList = dt.chield;
   }
-
+  packageHistory(data: any) {
+    // console.log(data);
+    this.displayPackageRenewHis = true;
+    this.deviceNumber = data.deviceNumber;
+    this.gSvc.postdata("api/SubscriberPackage/GetHistoryBySubscriberAndDeviceId?subscriberId=" + data.scpSubscriberId + "&deviceNumberId=" + data.prdDeviceNumberId, {}).subscribe(res => {
+      this.packageAssignHistory = res;
+    }, err => {
+      this.toastrService.error(err.message);
+      console.log('Exception: (getPackageAssignHistory)' + err.message);
+    })
+  }
 //Report Execution
 @ViewChild(ReportViewer)
 _rptViewer!: ReportViewer;
