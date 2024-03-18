@@ -39,6 +39,8 @@ export class IntegratorCompanyComponent implements OnInit {
       name: new FormControl(),
       cmnServiceTypeId: new FormControl(1),
       isActive: new FormControl(true),
+      hasProductApi: new FormControl(false),
+      hasNetworkApi: new FormControl(false),
       url: new FormControl(""),
       createdBy: new FormControl(1),
       createdDate: new FormControl(new Date()),

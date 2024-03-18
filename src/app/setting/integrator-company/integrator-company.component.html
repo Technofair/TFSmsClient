@@ -20,6 +20,24 @@
                     {{'CAS'|translate}} {{'NAME'|translate}} {{'REQUIRED'|translate}}
                 </span>
             </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'URL'|translate}}</label><span class="text-danger">
+                    *</span><br>
+                <input type="text" class="p-2  w-full" placeholder="" formControlName="url" pInputText />
+                <span *ngIf="frm.controls['url'].invalid && frm.controls['url'].touched " class="text-danger">
+                    {{'Url'|translate}}  {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="form-check col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 sm:mt-2 md:mt-5">
+                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                    formControlName="hasProductApi">
+                <label class="form-check-label" for="flexCheckDefault"> {{'HasProductApi' | translate}} </label>
+            </div>
+            <div class="form-check col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 sm:mt-2 md:mt-5 ml-2">
+                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                    formControlName="hasNetworkApi">
+                <label class="form-check-label" for="flexCheckDefault"> {{'HasNetworkApi' | translate}} </label>
+            </div>
             <div class="form-check col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 sm:mt-2 md:mt-5">
                 <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
                     formControlName="isActive">
@@ -28,8 +46,8 @@
         </div>
         <div class="formgrid grid">
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <div class="card-footer">
-                    <div class="">
+                
+                    <div style="display: flex; flex-direction: row;">
                         <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
                             styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
                             label="{{'SAVE'|translate}}"></p-button>
@@ -39,7 +57,7 @@
                         <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
                             icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
                     </div>
-                </div>
+                
             </div>
         </div>
     </form>
