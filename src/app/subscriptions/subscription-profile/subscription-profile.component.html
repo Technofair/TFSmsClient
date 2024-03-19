@@ -386,7 +386,7 @@
         <p-table #dt [value]="subscriberList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-            [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email']"
+            [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email','deviceNumber']"
             styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '70rem'}">
             <ng-template pTemplate="caption">
                 <div class="flexBox">
@@ -441,11 +441,12 @@
                     <td>{{r.contactNumber}}</td>
                     <!-- <td>{{r.email}}</td> -->
                     <td>{{r.address}}</td>
-                    <td>
+                    <td>{{r.deviceNumber}}</td>
+                    <!-- <td>
                         <span *ngFor="let device of r.devices">
                             {{device.deviceNumber}}
                         </span>
-                    </td>
+                    </td> -->
                     <td>{{r.statusType}}</td>
                     <!-- <td>{{r.isActive ==true?'Active':'Inactive'}}</td> -->
                     <td class="vcenter text-center" style="display: flex; flex-direction: row; ">
