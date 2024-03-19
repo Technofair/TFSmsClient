@@ -10,7 +10,7 @@
           filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id" (onChange)="getPackages($event)" >
         </p-dropdown><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="integrator==true">
         <label>{{'INTEGRATORPACKAGE'|translate}}</label>
         <p-dropdown [options]="integratorPackages" [style]="{'width':'100%'}" formControlName="packageNo"
                     [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
@@ -20,7 +20,11 @@
                     {{'PACKAGE'|translate}} {{'REQUIRED'|translate}}
         </span>
       </div>
-      
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="integrator==false">
+        <label>{{'INTEGRATORPACKAGE'|translate}}</label>
+        <input type="text" class="p-2  w-full" formControlName="packageNo"
+                    pInputText />
+      </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Product'|translate}}</label>
         <p-dropdown [options]="products" [style]="{'width':'100%'}" formControlName="scpProductId" [filter]="true"

@@ -28,13 +28,13 @@ export class IntegratorPackageComponent implements OnInit {
   products:any;
   integratorPackages:any;
   integratorPackageList:any;
+  integrator:any;
   frm!:FormGroup
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth:AuthService) {
     this.getServiceType();
     this.getSuppliers();
   }
 
- 
   ngOnInit(): void {
    this.getFrm();
     this.getIntregatorCompany();
@@ -88,11 +88,12 @@ getFrm(){
     })
   }
   getPackages(id:any){
-    this.gSvc.getdata("Common/IntegratorPackage/GetIntegratorPackageByCmnIntegratorId?companyId="+this.auth.getCompany()+"&cmnIntegratorId="+this.frm.controls['cmnIntegratorId'].value).subscribe(res => {
-      
+    
+    var cmnIntegratorId = this.frm.controls['cmnIntegratorId'].value;
+    this.integrator =this.integrators.find((item: { id: Number; })=> item.id == cmnIntegratorId).hasProductApi;
+    console.log(this.integrator);
+    this.gSvc.getdata("Common/IntegratorPackage/GetIntegratorPackageByCmnIntegratorId?companyId="+this.auth.getCompany()+"&cmnIntegratorId="+ cmnIntegratorId).subscribe(res => {
       this.integratorPackages = res;
-     
-      
     }, err => {
       //this.toastrService.error("Error! Package not found");
     })
@@ -105,6 +106,7 @@ getFrm(){
   getIntregatorCompany() {
     this.gSvc.postdata("Common/Integrator/GetPermittedIntegratorByCompanyId?cmnCompanyId="+this.auth.getCompany(), {}).subscribe(res => {      
       this.integrators = res;
+      console.log(this.integrators);
     }, err => {
       this.toastrService.error("Error! Intregation Company List not found");
     })
