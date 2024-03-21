@@ -38,6 +38,8 @@ import { DirectiveModule } from '../directives/directive.module';
 import { ClientPackageCommissionComponent } from './client-package-commission/client-package-commission.component';
 import { PackagePeriodPermissionComponent } from './package-period-permission/package-period-permission.component';
 import { ScpProductComponent } from './scp-product/scp-product.component';
+import { BankInfoComponent } from './bank-info/bank-info.component';
+import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { ScpProductComponent } from './scp-product/scp-product.component';
     NetidMappingComponent,
     ClientPackageCommissionComponent,
     PackagePeriodPermissionComponent,
-    ScpProductComponent
+    ScpProductComponent,
+    BankInfoComponent,
+    ClientBankInfoComponent
   ],
   exports: [
   ],

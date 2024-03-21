@@ -12,6 +12,8 @@ import { NetidMappingComponent } from './company-integrator-netid-mapping/netid-
 import { ClientPackageCommissionComponent } from './client-package-commission/client-package-commission.component';
 import { PackagePeriodPermissionComponent } from './package-period-permission/package-period-permission.component';
 import { ScpProductComponent } from './scp-product/scp-product.component';
+import { BankInfoComponent } from './bank-info/bank-info.component';
+import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
 
 
 const routes: Routes = [
@@ -26,7 +28,9 @@ const routes: Routes = [
   { path: 'netid-mapping', component: NetidMappingComponent },
   { path: 'client-package-commission', component: ClientPackageCommissionComponent },
   { path: 'package-period-permission', component: PackagePeriodPermissionComponent },
-  { path: 'scp-package', component: ScpProductComponent }
+  { path: 'scp-package', component: ScpProductComponent },
+  { path: 'bank-info', component: BankInfoComponent },
+  { path: 'client-bank-info', component: ClientBankInfoComponent }
   
 ];
 

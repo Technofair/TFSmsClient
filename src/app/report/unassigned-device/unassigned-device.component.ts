@@ -51,6 +51,7 @@ export class UnassignedDeviceComponent implements OnInit {
         id: new FormControl(),
         deviceNumber: new FormControl(),
         createdBy:new FormControl(this.auth.getUserId()),
+        modifiedBy:new FormControl(this.auth.getUserId()),
         createdDate:new FormControl(new Date())
       })
     }
