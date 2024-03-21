@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class BankInfoComponent implements OnInit {
 
-  ItembrandList: any;
+   banks: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
@@ -27,7 +27,7 @@ export class BankInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
-    this.getItembrand();
+    this.getbankas();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -52,7 +52,7 @@ export class BankInfoComponent implements OnInit {
         if (this.formId == 0) {
           this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getItembrand();
+            this.getbankas();
             this.toastrService.success("Bank Information Saved");
           }, err => {
             this.toastrService.error("Error! Bank Information Not Saved");
@@ -61,7 +61,7 @@ export class BankInfoComponent implements OnInit {
           this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
             this.formId = 0;
-            this.getItembrand();
+            this.getbankas();
             this.toastrService.success("Bank Information Updated");
 
           }, err => {
@@ -80,9 +80,9 @@ export class BankInfoComponent implements OnInit {
     return false;
   }
 
-  getItembrand() {
+  getbankas() {
     this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.ItembrandList = res;
+      this.banks = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })

@@ -10,24 +10,43 @@
     <!-- <h5>{{'ITEMBRAND'|translate}}</h5> -->
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'DIVISION'|translate}}</label><span class="text-danger"> *</span><br>
+        <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnDivisionId"
+            [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+            optionLabel="nameInBangla" optionValue="id" ></p-dropdown><br>
+        <span *ngIf="frm.controls['cmnDivisionId'].invalid && frm.controls['cmnDivisionId'].touched "
+            class="text-danger">
+            {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+        </span>
+    </div>
+    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <label>{{'DIVISION'|translate}}</label><span class="text-danger"> *</span><br>
+      <p-dropdown [options]="banks" [style]="{'width':'100%'}" formControlName="cmnDivisionId"
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="nameInBangla" optionValue="id" ></p-dropdown><br>
+      <span *ngIf="frm.controls['cmnDivisionId'].invalid && frm.controls['cmnDivisionId'].touched "
+          class="text-danger">
+          {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+      </span>
+  </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
+        <input type="text" class="p-2  w-full" placeholder="{{'AccountName'|translate}}" formControlName="accountName"
           pInputText /><br>
-        <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
-          {{'NAME'|translate}} {{'REQUIRED'|translate}}
+        <span *ngIf="frm.controls['accountName'].invalid && frm.controls['accountName'].touched " class="text-danger">
+          {{'AccountName'|translate}} {{'REQUIRED'|translate}}
         </span>
       </div>
-      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'CODE'|translate}}</label>
-        <input type="text" maxlength="3" class="p-2  w-full" placeholder="{{'CODE'|translate}}" formControlName="code"
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'AccountNo'|translate}}</label>
+        <input type="text" maxlength="3" class="p-2  w-full" placeholder="{{'AccountNo'|translate}}" formControlName="accountNo"
           pInputText />
-       
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'REMARKS'|translate}}</label><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'REMARKS'|translate}}" formControlName="remarks"
+        <label>{{'ReferenceID'|translate}}</label><br>
+        <input type="text" class="p-2  w-full" placeholder="{{'ReferenceID'|translate}}" formControlName="referenceID"
           pInputText />
-      </div> -->
+      </div>
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="">
           <div class="">

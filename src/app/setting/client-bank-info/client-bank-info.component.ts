@@ -21,18 +21,24 @@ export class ClientBankInfoComponent implements OnInit {
   viewInfo: any = {};
   formId = 0;
   frm!: FormGroup;
+  banks:any;
+  companies:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth :AuthService) {
    
   }
   ngOnInit(): void {
     this.getFrm();
+    this.getBanks();
+    this. getCompanies();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(""),
-      shortName: new FormControl(""),
-      address: new FormControl(""),
+      cmnCompanyId: new FormControl(),
+      bnkBankId: new FormControl(),
+      accountName: new FormControl(""),
+      accountNo: new FormControl(""),
+      referenceID: new FormControl(""),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -47,28 +53,15 @@ export class ClientBankInfoComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-
-          this.gSvc.postdata("Inventory/Brand/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+      
+          this.gSvc.postdata("api/ClientBankAccountInfo/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getItembrand();
-            this.toastrService.success("Item Brand Saved");
+           
+            this.toastrService.success("Client Bank Account Info Saved");
           }, err => {
-            this.toastrService.error("Error! Item Brand Not Saved");
+            this.toastrService.error("Error! Client Bank Account Info Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("Inventory/Brand/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getItembrand();
-            this.toastrService.success("Item Brand Updated");
-
-          }, err => {
-            this.toastrService.error("Error! Item Brand Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -79,27 +72,23 @@ export class ClientBankInfoComponent implements OnInit {
     return false;
   }
 
-  getItembrand() {
-    this.gSvc.postdata("Inventory/Brand/GetAll", {}).subscribe(res => {
-      this.ItembrandList = res;
+  getBanks() {
+    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
+      this.banks = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
-
   }
-
-  edit(id: any) {
-    this.formId = 1;
-    this.getItembrand();
-    this.gSvc.postdata("Inventory/Brand/GetById/" + id + "", {}).subscribe((res: any) => {
-      this.frm.controls['name'].setValue(res.name);
-      this.frm.controls['code'].setValue(res.code);
-      this.frm.controls['remarks'].setValue(res.remarks);
-      this.frm.controls['id'].setValue(res.id);
-      this.viewInfo = res;
+  
+  getCompanies() {
+    this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+      this.companies = res;
     }, err => {
-      this.toastrService.error("Error! Data Not Found");
+      this.toastrService.error("Error! Company list not found ");
     })
+  }
+  edit(res: any) {
+   this.frm.patchValue(res);
   }
 
   showModalDialog(id: any) {
