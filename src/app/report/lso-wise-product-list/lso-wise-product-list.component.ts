@@ -110,12 +110,12 @@ export class LsoWiseProductListComponent implements OnInit {
 
   frmsearch() {
     this.frmsrc = this.fb.group({
-      clientId: new FormControl(),
-      cmnCompanyId: new FormControl(this.auth.getCompany()),
-      productId: new FormControl(),
-      productModelId: new FormControl(),
-      productNumber: new FormControl(),
-      deviceNumber:new FormControl()
+      clientId: new FormControl(null),
+      cmnCompanyId: new FormControl(null),
+      productId: new FormControl(null),
+      productModelId: new FormControl(null),
+      productNumber: new FormControl(null),
+      deviceNumber:new FormControl(null)
     })
   }
 
