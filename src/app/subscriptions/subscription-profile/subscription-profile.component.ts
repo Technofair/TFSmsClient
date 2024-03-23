@@ -69,6 +69,7 @@ export class SubscriptionProfileComponent implements OnInit {
   subscriberDeviceList: any[] = [];
   _auth:any
   customernumber:any;
+  frmsrc!:FormGroup;
   //End Of Package
   progressreConnectStatus:boolean=true;
   constructor(private fb: FormBuilder
@@ -203,7 +204,7 @@ export class SubscriptionProfileComponent implements OnInit {
     //Begin Package
     this.getPackage();
     //End
-
+    this.frmsearch()
   }
   // getSubscriberInfo() {
   //   this.gSvc.postdata("api/Subscriber/Subscribers", {}).subscribe(res => {
@@ -212,7 +213,28 @@ export class SubscriptionProfileComponent implements OnInit {
   //     this.toastrService.error("Error! Subscribers not found!");
   //   })
   // }
+  frmsearch() {
+    
+    // var dstrct: any = this.auth.getDistrict();
+    // var upzla: any = this.auth.getUpazila();
+    // var unon: any = this.auth.getUnion();
 
+    this.frmsrc = this.fb.group({
+      companyId: new FormControl(),
+      clientId: new FormControl(),
+      customerNumber: new FormControl(''),
+      contactNumber: new FormControl(''),
+      deviceNumber: new FormControl(''),
+      name: new FormControl('') //,
+      // cmnDistrictId: new FormControl(parseInt(dstrct)),
+      // cmnUpazillaId: new FormControl(parseInt(upzla)),
+      // cmnUnionId: new FormControl(parseInt(unon))
+    })
+
+    // this.getUpazillaByDistrictId();
+    // this.getUnionByUpazillaId();
+
+  }
   toggleTab(idx: number) {
     this.activeTabs[idx] = !this.activeTabs[idx];
   }
@@ -583,7 +605,21 @@ reConnect(data:any){
   clear(table: Table) {
     table.clear();
   }
+  search() {
+    var requestBody = this.frmsrc.value;
+    requestBody.companyId = this.auth.getCompany();
+    this.progressStatus=false;
+    this.gSvc.postdata("api/Subscriber/GetSubscriberWithDeviceByParameter", JSON.stringify(requestBody)).subscribe(res => {
+      this.subscriberList = res;
+      this.progressStatus=true;
 
+    }, err => {
+      this.progressStatus=true;
+      this.toastrService.error(err.message);
+            console.log('Exception: (search)' +  err.message);
+      //this.toastrService.error("Error ! Data is not found . ");
+    })
+  }
   reset() {
     this.frm.reset();
     this.frm.controls['id'].setValue(0);
@@ -591,7 +627,10 @@ reConnect(data:any){
   }
   //End Of Create Subscriber
 
-
+  searchReset() {
+    this.frmsrc.reset();
+    this.frmsrc.markAsPristine();
+  }
   //Start Of DeviceAssign-------
   assignDevice() {
     if (this.frmDeviceAssign.invalid) return false;
