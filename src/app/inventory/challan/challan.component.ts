@@ -57,6 +57,7 @@ export class ChallanComponent implements OnInit {
   isFromList: boolean = false;
   isSequence: boolean = false;
   progressStatus: boolean = false;
+  challenListStatus:boolean=true;
   stbCounter: any = 0;
   constructor(
     private fb: FormBuilder
@@ -312,7 +313,6 @@ export class ChallanComponent implements OnInit {
       return;
     }
 
-    debugger;
 
     if (objDetail.id > 0) {
       var dtlModel = this.details.filter(x => x.id == objDetail.id && x.slsChallanId == objDetail.slsChallanId)[0];
@@ -326,7 +326,7 @@ export class ChallanComponent implements OnInit {
 
       if (dvcNo != '' && dvcNo != null && dvcNo != undefined) {
         var dvcList: any[] = dvcNo.split(',');
-        debugger;
+      
         var duplist=this.getDuplicate(dvcList);
         this.deviceNumberDuplicate=duplist.join(',');
 
@@ -343,11 +343,11 @@ export class ChallanComponent implements OnInit {
       objDetail.slsChallanId = 0;
       this.frm.controls['frmDetail'].setValue(objDetail);
     } else {
-      debugger;
+     
       var dvcNo = this._util.removeSpace(objDetail.deviceNumber);
       if (dvcNo != '' && dvcNo != null && dvcNo != undefined) {
         var dvcList: any[] = dvcNo.split(',');
-        debugger;
+       
         var duplist=this.getDuplicate(dvcList);
         this.deviceNumberDuplicate=duplist.join(',');
 
@@ -661,13 +661,14 @@ export class ChallanComponent implements OnInit {
     })
   }
   search() {
-
+    this.challenListStatus=false;
     var obj = this.searchFrm.value;
     obj.cmnCompanyId = this.auth.getCompany();
     this.gSvc.postdata("Inventory/Challan/SearchChallan", JSON.stringify(obj)).subscribe(res => {
-
       this.challanList = res;
+      this.challenListStatus=true;
     }, err => {
+      this.challenListStatus=true;
       this.toastrService.error(err.message);
       console.log('Exception: (search)' + err.message);
     })

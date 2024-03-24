@@ -164,7 +164,7 @@
                                         <input type="text" class="p-2  w-full" (blur)="addSerial()"
                                             [(ngModel)]="searchDevice" [ngModelOptions]="{standalone: true}"
                                             placeholder="Search Device" pInputText />
-                                    </div> -->
+                                        </div> -->
 
                                     <p-table #dt [value]="unassignedStockDeviceList" dataKey="id" [rowHover]="true"
                                         styleClass="p-datatable-sm p-datatable-gridlines"
@@ -303,7 +303,7 @@
 
                     <ng-template pTemplate="footer">
                         <tr *ngIf="details.length>0">
-                            <th colspan="7" class="text-right">{{'NETAMOUNT' | translate}}</th>
+                            <th colspan="9" class="text-right">{{'NETAMOUNT' | translate}}</th>
                             <th class="text-right">{{frm.controls['netTotal'].value}}</th>
                             <th></th>
                         </tr>
@@ -418,6 +418,11 @@
             <th class="vcenter text-center">{{'Status' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
+        <tr>
+            <div [hidden]="challenListStatus" style="position: absolute; z-index: 10; ">
+             <p-progressSpinner></p-progressSpinner>
+            </div>
+         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-r let-i="rowIndex">
         <tr class="p-selectable-row" [class.highlight]="selectedRow === r.id">

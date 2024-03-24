@@ -54,7 +54,7 @@ export class PurchaseComponent implements OnInit {
   purchaseList: any;
   suppliers: any
   hasDeviceID:any;
-
+  purchaseStatus:boolean=true;
   @ViewChild('fileInput', { static: false })
   myFileInput!: ElementRef;
 
@@ -483,9 +483,12 @@ export class PurchaseComponent implements OnInit {
     })
   }
   purchaseSearchList(obj: any) {
+    this.purchaseStatus=false;
     this.gSvc.postdata("Inventory/Purchase/PurchaseSearch", { obj }).subscribe(res => {
       this.purchaseList = res;
+      this.purchaseStatus=true;
     }, err => {
+      this.purchaseStatus=true;
       this.toastrService.error(err.message);
       console.log('Exception: (purchaseSearchLis)' +  err.message);
     })
@@ -521,12 +524,15 @@ export class PurchaseComponent implements OnInit {
     })
   }
   search() {
+    this.purchaseStatus=false;
     var obj = this.searchFrm.value;
     obj.cmnCompanyId = this.auth.getCompany();
     this.gSvc.postdata("Inventory/Purchase/PurchaseSearch", JSON.stringify(obj)).subscribe(res => {
       
       this.purchaseList = res;
+      this.purchaseStatus=true;
     }, err => {
+      this.purchaseStatus=true;
       this.toastrService.error(err.message);
       console.log('Exception: (search)' +  err.message);
     })
