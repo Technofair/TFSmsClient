@@ -19,6 +19,7 @@ export class ItemBrandComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
+  itemBrandStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService) {
     this.getItembrand();
   }
@@ -80,9 +81,12 @@ export class ItemBrandComponent implements OnInit {
   }
 
   getItembrand() {
+    this.itemBrandStatus=false;
     this.gSvc.postdata("Inventory/Brand/GetAll", {}).subscribe(res => {
       this.ItembrandList = res;
+      this.itemBrandStatus=true;
     }, err => {
+      this.itemBrandStatus=true;
       this.toastrService.error("Error! Data list Not Found");
     })
 

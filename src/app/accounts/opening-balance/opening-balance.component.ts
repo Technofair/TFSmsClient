@@ -51,7 +51,8 @@ export class OpeningBalanceComponent implements OnInit {
   fileToUpload: any;
   isDisplayed: boolean = false;
   openingBalanceList: any[] = [];
-  suppliers: any
+  suppliers: any;
+  openingBaStatus:boolean=true;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -136,9 +137,10 @@ export class OpeningBalanceComponent implements OnInit {
 
   holdOpeningBalanceList: any[] = [];
   search() {
+    this.openingBaStatus=false;
     var param = { companyId: this.auth.getCompany() };
     this.gSvc.postparam("api/OpeningBalance/GetOpeningBalanceByCompanyId", param).subscribe(res => {
-      debugger;
+      
       if (res != null && res.length > 0) {
         var opbalList: any[] = res;
         opbalList.forEach(item => {
@@ -148,7 +150,7 @@ export class OpeningBalanceComponent implements OnInit {
         });
 
         this.openingBalanceList = opbalList;
-
+        this.openingBaStatus=true;
         opbalList.forEach(item => {
           this.holdOpeningBalanceList.push({
             id: item.id,
@@ -163,7 +165,9 @@ export class OpeningBalanceComponent implements OnInit {
 
         this.setTotal();
       }
+
     }, err => {
+      this.openingBaStatus=true;
       this.toastrService.error("Error! list not found");
     })
   }

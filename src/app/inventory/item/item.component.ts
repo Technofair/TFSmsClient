@@ -20,13 +20,9 @@ export class ItemComponent implements OnInit {
   formId: any;
   frm!: FormGroup;
   items: any[] = [];
+  itemStatus: boolean = true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth: AuthService) {
-
-
   }
-
-
-
   ngOnInit(): void {
     this.formId = 0;
     this.frm = this.fb.group({
@@ -203,9 +199,12 @@ export class ItemComponent implements OnInit {
   //   })
   // }
  getAllItem() {   
+  this.itemStatus = false;
     this.gSvc.postdata("Inventory/Product/GetProductsLastNode", {}).subscribe(res => {
       this.productList = res;
+      this.itemStatus = true;
     }, err => {
+      this.itemStatus = true;
       this.toastrService.error("Error! Brand not found");
     })
   }

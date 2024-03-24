@@ -62,7 +62,6 @@
             </div>
         </p-divider>
         <div class="fromgrid grid" formGroupName="frmItemModel">
-
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'ITEMMODEL'|translate}}</label><span class="text-danger"> *</span><br>
                 <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
@@ -99,6 +98,7 @@
                             <th class="text-center" style="width: 10px !important;">{{'IsModelActive' | translate}}</th>
                             <th class="text-center" style="width: 10px !important;">{{'Action'|translate}}</th>
                         </tr>
+                       
                     </ng-template>
                     <ng-template pTemplate="body" let-rowData let-index="rowIndex">
                         <tr>
@@ -169,6 +169,11 @@
             <th class="vcenter text-center">{{'WARRANTYABLE' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
+        <tr>
+            <div [hidden]="itemStatus" style="position: absolute; z-index: 10; ">
+             <p-progressSpinner></p-progressSpinner>
+            </div>
+         </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-r | let-i="rowIndex">

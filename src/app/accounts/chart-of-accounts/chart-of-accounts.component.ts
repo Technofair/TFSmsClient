@@ -23,6 +23,7 @@ export class ChartOfAccountComponent implements OnInit {
   companies: any;
   frm!: FormGroup
   rechargeList: any;
+  chartofaccountStatus:boolean=true;
   paymentMoode: any = [{ name: "Cash", id: 1 }, { name: "Bkash", id: 2 }, { name: "Rocket", id: 3 }, { name: "Nagad", id: 3 }]
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth: AuthService) {
 
@@ -86,14 +87,14 @@ export class ChartOfAccountComponent implements OnInit {
   }
 
   Delete(item: any) {
-    debugger;
+    
     if (item.id == 0) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to delete?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        debugger;
+       
         var param = { id: item.id };
         this.gSvc.postdata("api/ChartofAccount/Delete", param).subscribe(res => {
           this.getCOA();
@@ -152,10 +153,13 @@ export class ChartOfAccountComponent implements OnInit {
 
   chartOfAccountList: any[] = [];
   getCOA() {
+    this.chartofaccountStatus=false;
     var param = { companyId: this.auth.getCompany() };
     this.gSvc.postparam("api/ChartofAccount/GetChartOfAccount", param).subscribe((res: any) => {
       this.chartOfAccountList = res;
+      this.chartofaccountStatus=true;
     }, err => {
+      this.chartofaccountStatus=true;
       this.toastrService.error("Error! Data Not Found");
     })
   }
