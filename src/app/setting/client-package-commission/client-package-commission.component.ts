@@ -23,7 +23,7 @@ export class ClientPackageCommissionComponent implements OnInit {
     companies: Company[] = [];
     clientPackageDetails: ClientPackageDetail[] = [];
     frm: FormGroup;
-  
+    progressStatus=true;
     constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService, private route: ActivatedRoute) {
       this.frm = new FormGroup({
         id: new FormControl(0, [Validators.required]),
@@ -134,12 +134,15 @@ export class ClientPackageCommissionComponent implements OnInit {
     }
 
     getPackage() {
+        this.progressStatus=false;
       this.gSvc.postdata("Subscription/Package/GetAll", {}).subscribe(res => {
-        
         this.packages = res;
+        this.progressStatus=true;
       }, err => {
+        this.progressStatus=true;
         this.toastrService.error("Error! Package not found");
       })
+      
     }
   
     reload() {

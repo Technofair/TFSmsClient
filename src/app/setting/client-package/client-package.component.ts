@@ -24,7 +24,7 @@ export class ClientPackageComponent implements OnInit {
   companies: Company[] = [];
   clientPackageDetails: ClientPackageDetail[] = [];
   frm: FormGroup;
-
+  progressStatus:boolean=true;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -98,13 +98,6 @@ export class ClientPackageComponent implements OnInit {
           obj: frmVal,
           list: details,
         }
-
-        debugger;
-        // console.log(JSON.stringify(frmVal));
-        // console.log(JSON.stringify(details));
-        console.log(JSON.stringify(reqestbody));
-
-
         this.gSvc.postdata("Subscription/ClientPackage/Save", JSON.stringify(reqestbody)).subscribe(res => {
           
           //New
@@ -144,10 +137,12 @@ export class ClientPackageComponent implements OnInit {
 
   holdCompanies: any[] = [];
   getCompany() {
+    this.progressStatus=false;
     this.holdCompanies = [];
     this.companies = [];
     this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
       this.companies = res;
+      this.progressStatus=true;
       this.companies.forEach(item => {
         item.scpClientPackageId = 0;
         item.scpPackageId = 0;
@@ -202,10 +197,13 @@ export class ClientPackageComponent implements OnInit {
       //     // upazilla:item.upazilla
       //   });
       // });
+     
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error(err.message);
       console.log('Exception: (getCompany)' + err.message);
     })
+    
   }
 
   isCheckedAll: boolean = false;

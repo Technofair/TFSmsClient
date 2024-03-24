@@ -24,7 +24,7 @@ export class IntegratorSettingsComponent implements OnInit {
   formId = 0;
   id: any;
   frm!: FormGroup;
-
+  progressStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private route: ActivatedRoute, private auth: AuthService) {
 
   }
@@ -127,11 +127,12 @@ getPermittedIntegratorByCompanyId(cmnCompanyId: any){
 var param = {
   cmnCompanyId: cmnCompanyId
 }
-
+this.progressStatus=false;
   this.gSvc.postparam("Common/Integrator/GetPermittedIntegratorByCompanyId", param).subscribe(res => {
-    console.log(res);
     this.intregatorList = res;
+    this.progressStatus=true;
   }, err => {
+    this.progressStatus=true;
     this.toastrService.error("Error! Intregation Company List not found");
   })
 }

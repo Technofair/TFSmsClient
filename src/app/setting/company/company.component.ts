@@ -49,7 +49,7 @@ export class CompanyComponent implements OnInit {
   cmnDistrictId: any;
   cmnDivisionId: any;
   secUserTypeList: any;
-
+  progressStatus=true;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -193,11 +193,15 @@ export class CompanyComponent implements OnInit {
   }
 
   getCompany() {
+    this.progressStatus=false;
     this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
       this.companyList = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! Company list not found ");
     })
+   
   }
 
   getCompanyType() {

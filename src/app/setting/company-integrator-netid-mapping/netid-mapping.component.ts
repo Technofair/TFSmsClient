@@ -26,6 +26,7 @@ export class NetidMappingComponent implements OnInit {
   companies:any;
   list:any;
   intregatorNetworkMappingList:any;
+  progressStatus:any=false;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private route: ActivatedRoute, private auth: AuthService) {
     
   }
@@ -57,7 +58,6 @@ export class NetidMappingComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        debugger
           this.gSvc.postdata("Common/CmnCompanyNetworkMapping/Save", JSON.stringify(this.frm.value)).subscribe(res => {            
             this.toastrService.success("Saved success");   
             this.getIntregatorCompany(); 
@@ -77,7 +77,6 @@ export class NetidMappingComponent implements OnInit {
 
   getCompany() {
     this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
-      debugger
       this.companies = res;
     }, err => {
       this.toastrService.error(err.message);
@@ -122,13 +121,13 @@ getnetworklist() {
     })
   }
   getCompanyIntregatorNetworkMapping() {
+    this.progressStatus=false;
     this.gSvc.postdata("Common/CmnCompanyNetworkMapping/GetAllCompanyNetworkMapping", {}).subscribe(res => {      
       this.intregatorNetworkMappingList = res;
      // this.join();
-     
-      console.log(res);
+     this.progressStatus=true;
     }, err => {
-   
+      this.progressStatus=true;
       this.toastrService.error(err.message);
     })
   }

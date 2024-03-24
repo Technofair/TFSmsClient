@@ -21,7 +21,8 @@ export class ScpProductComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
-  frm!:FormGroup
+  frm!:FormGroup;
+  progressStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService ,private auth:AuthService ,private utill:Utility) {
    
   }
@@ -68,9 +69,12 @@ export class ScpProductComponent implements OnInit {
   }
 
   getProducts() {
+    this.progressStatus=false;
     this.gSvc.postdata("api/ScpProduct/GetAll", {}).subscribe(res => {
       this.products = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! Product Not Found");
     })
 

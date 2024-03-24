@@ -3,6 +3,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { LoadingService } from './loading.service';
 
+
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 @Component({
   selector: 'app-loading-spinner',
   templateUrl: './loading-spinner.component.html',

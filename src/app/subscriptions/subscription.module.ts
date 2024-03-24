@@ -43,12 +43,13 @@ import { TransferSubscriberComponent } from './transfer-subscriber/transfer-subs
 import { MessageSetupComponent } from './message-setup/message-setup.component';
 import { MessageTypeComponent } from './message-type/message-type.component';
 import { DirectiveModule } from '../directives/directive.module';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { AccordionModule } from 'primeng/accordion';
 import { SubscriptionProfileComponent } from './subscription-profile/subscription-profile.component';
 import { PackageToggleComponent } from './package-toggle/package-toggle.component';
 import { PackageExpiredComponent } from './package-expired/package-expired.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @NgModule({
   declarations: [
     AddSubscriberComponent,
@@ -80,11 +81,12 @@ import { PackageExpiredComponent } from './package-expired/package-expired.compo
     CommonModule,
     TranslateModule,
     HttpClientModule,
+    ProgressSpinnerModule,
     FormsModule, ReactiveFormsModule,
     InputTextModule, InputTextareaModule, MultiSelectModule, CascadeSelectModule,
     InputNumberModule, InputMaskModule, DropdownModule, AutoCompleteModule, CalendarModule, ChipsModule, TableModule, ConfirmDialogModule,
     MessagesModule, DialogModule, RadioButtonModule,
-    SubscriberManagementRoutingModule, TabViewModule, PanelModule, DirectiveModule,ProgressSpinnerModule,SelectButtonModule,AccordionModule
+    SubscriberManagementRoutingModule, TabViewModule, PanelModule, DirectiveModule,SelectButtonModule,AccordionModule
   ]
 })
 export class SubscriberManagementModule { }

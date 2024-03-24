@@ -22,7 +22,7 @@ export class IntegratorPermissionComponent implements OnInit {
   companies: Company[] = [];
   integratorPermissions: IntegratorPermission[] = [];
   frm: FormGroup;
-
+  progressStatus:boolean=true
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService, private route: ActivatedRoute) {
     this.frm = this.fb.group({
       companyId: ["", [Validators.required]]
@@ -78,10 +78,12 @@ export class IntegratorPermissionComponent implements OnInit {
   }
 
   getIntegrator() {
-    debugger
+    this.progressStatus=false;
     this.gSvc.postdata("Common/Integrator/GetAll", {}).subscribe(res => {
       this.integrators = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! Integrator not found");
     })
   }

@@ -77,6 +77,11 @@
       <th class="vcenter text-center" style="width:20%">{{'SmsProduct'|translate}}</th>
       
     </tr>
+    <tr>
+      <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+       <p-progressSpinner></p-progressSpinner>
+      </div>
+   </tr>
   </ng-template>
   <ng-template pTemplate="body" let-r let-i="rowIndex">
     <tr class="p-selectable-row">

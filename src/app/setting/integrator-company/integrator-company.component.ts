@@ -22,7 +22,7 @@ export class IntegratorCompanyComponent implements OnInit {
   id: any;
   serviceList: any;
   frm!: FormGroup
-
+  progressStatus=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private route: ActivatedRoute, private auth: AuthService) {
     this.getServiceType();
   }
@@ -83,9 +83,12 @@ export class IntegratorCompanyComponent implements OnInit {
   }
 
   getIntregatorCompany() {
+    this.progressStatus=false;
     this.gSvc.postdata("Common/Integrator/GetAll", {}).subscribe(res => {      
       this.intregatorList = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! Intregation Company List not found");
     })
   }

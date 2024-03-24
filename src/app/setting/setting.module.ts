@@ -40,6 +40,7 @@ import { PackagePeriodPermissionComponent } from './package-period-permission/pa
 import { ScpProductComponent } from './scp-product/scp-product.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.com
   imports: [
     CommonModule,
     TranslateModule,
+    ProgressSpinnerModule,
     SettingRoutingModule,FormsModule,ReactiveFormsModule,
     InputTextModule,InputTextareaModule,MultiSelectModule,CascadeSelectModule,
     InputNumberModule,InputMaskModule,DropdownModule,AutoCompleteModule,CalendarModule,ChipsModule,TableModule,ConfirmDialogModule,

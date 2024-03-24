@@ -23,6 +23,7 @@ export class ClientBankInfoComponent implements OnInit {
   frm!: FormGroup;
   banks:any;
   companies:any;
+  progressStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth :AuthService) {
    
   }
@@ -56,12 +57,10 @@ export class ClientBankInfoComponent implements OnInit {
       
           this.gSvc.postdata("api/ClientBankAccountInfo/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-           
             this.toastrService.success("Client Bank Account Info Saved");
           }, err => {
             this.toastrService.error("Error! Client Bank Account Info Not Saved");
           })
-        
         return true;
       },
       reject: () => {

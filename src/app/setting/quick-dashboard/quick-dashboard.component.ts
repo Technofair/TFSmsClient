@@ -39,6 +39,7 @@ export class QuickDashboardComponent implements OnInit {
   oldUserPassword:any;
   isMobile: boolean = false;
   parentEmail:any;
+  progressStatus:boolean=true;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -70,11 +71,13 @@ export class QuickDashboardComponent implements OnInit {
   }
 
   getCompany() {
+    this.progressStatus=false;
     var c= this.auth.getCompany();
     this.gSvc.postdata("Common/Company/GetClientForQuickLoginByCompanyId/"+c, {}).subscribe(res => {
       this.companyList = res;
-      console.log(this.companyList);
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! Company not found ");
     })
   }

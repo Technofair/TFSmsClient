@@ -20,6 +20,7 @@ export class BankInfoComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
+ progressStatus:boolean=true;
   frm!:FormGroup
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
@@ -81,11 +82,13 @@ export class BankInfoComponent implements OnInit {
   }
 
   getbankas() {
+    this.progressStatus=false;
     this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
       this.banks = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
+    this.progressStatus=true;
   }
 
   edit(res: any) {

@@ -29,7 +29,8 @@ export class IntegratorPackageComponent implements OnInit {
   integratorPackages:any;
   integratorPackageList:any;
   integrator:any;
-  frm!:FormGroup
+  frm!:FormGroup;
+  progressStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth:AuthService) {
     this.getServiceType();
     this.getSuppliers();
@@ -119,11 +120,13 @@ getFrm(){
     })
   }
   getIntegratorPackageList() {
+    this.progressStatus=false;
     this.gSvc.getdata("Common/IntegratorPackage/GetIntegratorPackageByAnyKey?integratorId="+"&scpProductId=" ).subscribe(res => {
       
       this.integratorPackageList = res;
+      this.progressStatus=true;
     }, err => {
-      
+      this.progressStatus=true;
     })
   }
   edit(res: any) {

@@ -49,6 +49,8 @@ import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
 import { AccordionModule } from 'primeng/accordion';
 import { CalendarModule } from 'primeng/calendar';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -78,6 +80,7 @@ export function createTranslateLoader(http: HttpClient) {    return new Translat
     ChieldPaywithComponent,
     WebProductsComponent,
     PaymentComponent
+  
   ],
   imports: [
     //TopNavBarModule,
@@ -96,6 +99,7 @@ export function createTranslateLoader(http: HttpClient) {    return new Translat
     PanelModule,
     DialogModule,
     AccordionModule,
+    ProgressSpinnerModule, 
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

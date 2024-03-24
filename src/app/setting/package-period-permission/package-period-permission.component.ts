@@ -25,6 +25,7 @@ export class PackagePeriodPermissionComponent implements OnInit {
   companies:any;
   cols:any=[];
   products:any;
+  progressStatus:boolean=true;
 //   products:any=[
 //     {
 //         companyId:2,
@@ -100,10 +101,13 @@ export class PackagePeriodPermissionComponent implements OnInit {
 
  
   getCompanyPackagePeriod() {
+    this.progressStatus=false;
     this.gSvc.postdata("api/ScpPackagePeriodPermission/GetCompanyPackagePeriod", {}).subscribe((res: any) => {
       this.products = res;
       this.cols = Object.keys( this.products[0]);
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error(err.message);
       console.log('Exception: (getCompany)' + err.message);
     })

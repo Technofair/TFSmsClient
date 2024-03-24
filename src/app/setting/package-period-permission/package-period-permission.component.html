@@ -8,6 +8,11 @@
                     {{col}}
                 </th>
             </tr>
+            <tr>
+                <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                 <p-progressSpinner></p-progressSpinner>
+                </div>
+             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>

@@ -41,6 +41,11 @@
                     <th style="min-width:200px">{{'PRICE' | translate}}</th>
                     <th style="min-width:200px">{{'COMMISSIONAMOUNT' | translate}}</th>
                 </tr>
+                <tr>
+                    <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                     <p-progressSpinner></p-progressSpinner>
+                    </div>
+                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-permission>
                 <tr>
