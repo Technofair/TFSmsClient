@@ -104,6 +104,11 @@
         <th class="vcenter text-center" (click)="clickAllCheck()"><input type="checkbox"> {{'All' | translate}}</th>
 
       </tr>
+      <tr>
+        <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+         <p-progressSpinner></p-progressSpinner>
+        </div>
+     </tr>
     </ng-template>
 
 

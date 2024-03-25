@@ -18,6 +18,7 @@ export class ModuleComponent {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
+  progressStatus=true;
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService) {
     this.getAppModuleList();
   }
@@ -80,9 +81,12 @@ export class ModuleComponent {
   }
 
   getAppModuleList() {
+    this.progressStatus=false;
     this.gSvc.postdata("Security/Menu/Modules", {}).subscribe(res => {
       this.appmodulelist = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! List not found");
     })
 

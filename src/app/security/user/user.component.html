@@ -208,6 +208,11 @@
             </th>
             <th class="vcenter text-center">{{"Action" |translate}}</th>
         </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+             <p-progressSpinner></p-progressSpinner>
+            </div>
+         </tr>
     </ng-template>
 
 

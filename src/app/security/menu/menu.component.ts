@@ -21,6 +21,7 @@ export class MenuComponent {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
+  progressStatus=true
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService) {
     this.getParentsMenu();
     this.getModules();
@@ -119,9 +120,12 @@ export class MenuComponent {
   }
 
   getMenus() {
+    this.progressStatus=false;
     this.gSvc.postdata("Security/Menu/GetMenus", {}).subscribe(res => {
       this.menulist = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("error");
     })
   }
@@ -129,7 +133,6 @@ export class MenuComponent {
   getModules() {
     this.gSvc.postdata("Security/Menu/Modules", {}).subscribe(res => {
       this.moduleList = res;
-
     }, err => {
       this.toastrService.error("Error");
     })

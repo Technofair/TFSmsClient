@@ -21,7 +21,6 @@ interface roleUser {
   createdDate: Date;
   modifiedBy: number;
   modifiedDate: Date;
-
 }
 @Component({
   selector: 'app-user-roles',
@@ -41,6 +40,7 @@ export class UserRolesMappingComponent implements OnInit {
   isCheck :boolean=true;
   activeUserRoles:any []=[];
   inActiveUserRoles:any []=[];
+  progressStatus:boolean=true;
   authUserId:any=this.Authser.getUserId();
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService, private Authser: AuthService) {
   }
@@ -60,7 +60,6 @@ export class UserRolesMappingComponent implements OnInit {
     //this.userList();
   }
   toggleItemCheck(user: user): void {
-   
     //user.checked = !user.checked;
   }
   roleList() {
@@ -71,17 +70,20 @@ export class UserRolesMappingComponent implements OnInit {
     })
   }
   userList() {
-   
+    this.progressStatus=false;
     this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.Authser.getCompany()+"&roleId="+ this.frm.get("role")?.value, {})
     .subscribe(res => {     
       this.users = res;
+      this.progressStatus=true;
       this.activeUserRoles = this.users.filter((user: {
-        secRoleId: any; isActive: any; 
+        secRoleId: any; isActive: any;
+       
 }) => user.isActive==true && user.secRoleId==this.frm.get("role")?.value);
       this.inActiveUserRoles = this.users.filter((user: {
         secRoleId: any; isActive: any; 
 }) => user.isActive==false && user.secRoleId==0);
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("error");
     })
   }

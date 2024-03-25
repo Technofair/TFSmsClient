@@ -32,6 +32,7 @@ export class MenuPermissionComponent {
   clickDelete: boolean = true;
   clickEdit: boolean = true;
   clickPrint: boolean = true;
+  progressStatus:boolean=true;
   frm: FormGroup = new FormGroup({
     id: new FormControl(""),
     roleId: new FormControl(""),

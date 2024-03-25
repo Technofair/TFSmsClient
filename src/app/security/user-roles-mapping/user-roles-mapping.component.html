@@ -38,6 +38,11 @@
               <th>{{'Name'|translate}}</th>
               <th>{{'Company'|translate}}</th>
             </tr>
+            <tr>
+              <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+               <p-progressSpinner></p-progressSpinner>
+              </div>
+           </tr>
           </ng-template>
           <ng-template pTemplate="body" let-user let-rowIndex="rowIndex">
             <tr>
@@ -88,6 +93,11 @@
       
       <th class="vcenter text-center">{{'ACTION' | translate}}</th>
     </tr>
+    <tr>
+      <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+       <p-progressSpinner></p-progressSpinner>
+      </div>
+   </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">

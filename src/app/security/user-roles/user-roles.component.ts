@@ -16,20 +16,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserRolesComponent implements OnInit {
 
   rolesList: any;
-
   displayModal: boolean = false;
   viewInfo: any = {};
-
   frm!: FormGroup
-
+  progressStatus=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private Authser: AuthService) {
     this.getRoles();
   }
-
-
-
   ngOnInit(): void {
-
     this.getRoles();
     this.createForm();
   }
@@ -74,9 +68,12 @@ export class UserRolesComponent implements OnInit {
   }
 
   getRoles() {
+    this.progressStatus=false
     this.gSvc.postdata("Security/Role/GetAll", {}).subscribe(res => {
       this.rolesList = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("error");
     })
 

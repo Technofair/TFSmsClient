@@ -29,6 +29,7 @@ import { PanelModule } from 'primeng/panel';
 //import { UserRoleMappingComponent } from './user-role-mapping/user-role-mapping.component';
 import { UserRolesMappingComponent } from './user-roles-mapping/user-roles-mapping.component';
 import { BackgroundServiceComponent } from './background-service/background-service.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { BackgroundServiceComponent } from './background-service/background-serv
   imports: [
     CommonModule,
     TranslateModule,
+    ProgressSpinnerModule,
     FormsModule, ReactiveFormsModule,
     InputTextModule, InputTextareaModule, MultiSelectModule, CascadeSelectModule,
     InputNumberModule, InputMaskModule, DropdownModule, AutoCompleteModule, CalendarModule, ChipsModule, TableModule,

@@ -15,7 +15,6 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class UserComponent implements OnInit {
-
   userList: any;
   formId = 0;
   id: any;
@@ -27,6 +26,7 @@ export class UserComponent implements OnInit {
   userTypes: any;
   users: any;
   roles:any;
+  progressStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private route: ActivatedRoute, private auth: AuthService) {
 
   }
@@ -109,9 +109,12 @@ export class UserComponent implements OnInit {
   }
 
   getUsers() {
+    this.progressStatus=false;
     this.gSvc.postdata("Security/User/GetUserInfoByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
       this.userList = res;
+      this.progressStatus=true;
     }, err => {
+      this.progressStatus=true;
       this.toastrService.error("Error! User  not found");
     })
   }
