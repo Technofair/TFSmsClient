@@ -436,12 +436,21 @@ reConnect(data:any){
   this.customernumber=data.customerNumber
   this.progressreConnectStatus=false;
   this.gSvc.postdata("api/SubscriberPackage/ReconnectPackage?deviceNumberId=" + data.prdDeviceNumberId, {}).subscribe(res => {
+    
     this.devices = res;
     this.customernumber=null;
-    this.toastrService.success("Reconnected Successfully");
     this.progressreConnectStatus=true;
+
+    if(res.success){
+      this.toastrService.success(res.message);
+    }
+    else{
+      this.toastrService.warning(res.message);
+    }
+       
+
   }, err => {
-    this.toastrService.error("Error! Device not found!");
+    this.toastrService.error("Unable to perform operation, please try again later.");
     this.progressreConnectStatus=true;
   })
 
