@@ -171,7 +171,13 @@ export class TransferSubscriberComponent implements OnInit {
 
         this.gSvc.postdata("api/TransferSubscriber/Save", transformedList).subscribe(res => {
           this.reset();
-          this.toastrService.success("Saved success");
+          if(res.success){
+            this.toastrService.success(res.message);
+          }
+          else{
+            this.toastrService.warning(res.message);
+          }
+          //this.toastrService.success("Saved success");
         }, err => {
           this.toastrService.error("Error ! Subscriber transfer is not saved . ");
         })
