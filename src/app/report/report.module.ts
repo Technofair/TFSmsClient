@@ -39,6 +39,7 @@ import { PurchaseLedgerComponent } from './purchase-ledger/purchase-ledger.compo
 import { ClientLedgerComponent } from './client-ledger/client-ledger.component';
 import { AssignDeviceComponent } from './assign-device/assign-device.component';
 import { ProductReceiveComponent } from './product-receive/product-receive.component';
+import { SubscriberTransferReportComponent } from './subscriber-transfer-report/subscriber-transfer-report.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { ProductReceiveComponent } from './product-receive/product-receive.compo
     PurchaseLedgerComponent,
     ClientLedgerComponent,
     AssignDeviceComponent,
-    ProductReceiveComponent
+    ProductReceiveComponent,
+    SubscriberTransferReportComponent
   ],
   imports: [
     ReportViewerModule,

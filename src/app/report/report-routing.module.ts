@@ -17,6 +17,7 @@ import { ClientLedgerComponent } from './client-ledger/client-ledger.component';
 import { AssignDeviceComponent } from './assign-device/assign-device.component';
 import { ProductReceiveComponent } from './product-receive/product-receive.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SubscriberTransferReportComponent } from './subscriber-transfer-report/subscriber-transfer-report.component';
 
 const routes: Routes = [
   { path: "subscriber-report", component: SubscriberReportComponent },
@@ -34,8 +35,9 @@ const routes: Routes = [
   { path: "purchase-ledger", component: PurchaseLedgerComponent },
   { path: "client-ledger", component: ClientLedgerComponent },
   { path: "assign-device-list", component: AssignDeviceComponent },
-  { path: "product-receive", component: ProductReceiveComponent }
-
+  { path: "product-receive", component: ProductReceiveComponent },
+  { path: "subscriber-transfer-report", component: SubscriberTransferReportComponent }
+  
   
 ];
 
