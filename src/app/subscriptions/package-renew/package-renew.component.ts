@@ -54,6 +54,7 @@ export class PackageRenewComponent implements OnInit {
   isShowSslPay: boolean = false;
   progressStatus: boolean = false;
   displayPackageRenewHis: boolean=false;
+  packageRenewStatus:boolean=true;
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
   subscribtionTypes: any ;
@@ -252,7 +253,7 @@ export class PackageRenewComponent implements OnInit {
   }
 
   savePackageRenew() {
-    
+    this.packageRenewStatus=false;
     if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == null || this.frmPackageRenew.controls['anFPaymentMethodId'].value == '' || this.frmPackageRenew.controls['anFPaymentMethodId'].value === 'undefined') {
       this.toastrService.error("Please select payment method.");
 
@@ -275,7 +276,7 @@ export class PackageRenewComponent implements OnInit {
       accept: () => {
 
         this.gSvc.postdata("api/SubscriberPackage/RenewPackage", JSON.stringify({ obj: this.frmPackageRenew.value, status: 0 })).subscribe(res => {
-         
+          this.packageRenewStatus=true;
           if (res != undefined && res.success) {
             debugger;
             this.balService.updateCurrentBalance(0);
@@ -297,6 +298,7 @@ export class PackageRenewComponent implements OnInit {
           }
 
         }, err => {
+          this.packageRenewStatus=true;
           this.toastrService.error("Unable to Renew");
         })
 

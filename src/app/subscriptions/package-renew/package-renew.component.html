@@ -288,6 +288,9 @@
                             <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
                                 (click)="reset()" label="{{'RESET'|translate}}"></p-button>
                         </div>
+                        <div [hidden]="packageRenewStatus" style="position: absolute; z-index: 10; ">
+                            <p-progressSpinner></p-progressSpinner>
+                        </div>
                     </div>
                 </div>
 
