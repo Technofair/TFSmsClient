@@ -275,31 +275,29 @@ export class PackageRenewComponent implements OnInit {
       accept: () => {
 
         this.gSvc.postdata("api/SubscriberPackage/RenewPackage", JSON.stringify({ obj: this.frmPackageRenew.value, status: 0 })).subscribe(res => {
-          if (res != undefined && !res.success && res.OperationId == -3) {
-            this.toastrService.warning("Error! Insufficient balance.");
-          }
-          else if (res != undefined && res.success) {
+         
+          if (res != undefined && res.success) {
             debugger;
             this.balService.updateCurrentBalance(0);
             this.loadReportIn(res);
             this.getRenewableSubscriber();
             this.reset();
-            this.toastrService.success("Saved success");
+            this.toastrService.success(res.message);
             this.displayPackageRenew = false;
           } else {
-            if (res.operationId == -4) {
+            //if (res.operationId == -4) {
               if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == 5) {
                 this.getPaymentList();
                 this.getRenewableSubscriber();
-              }
+              //}
             } else {
-              this.toastrService.error("Error ! Package not assign . ");
+              this.toastrService.error(res.message);
               this.getRenewableSubscriber();
             }
           }
 
         }, err => {
-          this.toastrService.error("Error ! Data is not saved . ");
+          this.toastrService.error("Unable to Renew");
         })
 
         return true;
