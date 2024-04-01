@@ -253,7 +253,7 @@ export class PackageRenewComponent implements OnInit {
   }
 
   savePackageRenew() {
-    this.packageRenewStatus=false;
+   
     if (this.frmPackageRenew.controls['anFPaymentMethodId'].value == null || this.frmPackageRenew.controls['anFPaymentMethodId'].value == '' || this.frmPackageRenew.controls['anFPaymentMethodId'].value === 'undefined') {
       this.toastrService.error("Please select payment method.");
 
@@ -274,11 +274,10 @@ export class PackageRenewComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
+        this.packageRenewStatus=false;
         this.gSvc.postdata("api/SubscriberPackage/RenewPackage", JSON.stringify({ obj: this.frmPackageRenew.value, status: 0 })).subscribe(res => {
           this.packageRenewStatus=true;
           if (res != undefined && res.success) {
-            debugger;
             this.balService.updateCurrentBalance(0);
             this.loadReportIn(res);
             this.getRenewableSubscriber();
