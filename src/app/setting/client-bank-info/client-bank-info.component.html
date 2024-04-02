@@ -10,23 +10,23 @@
     <!-- <h5>{{'ITEMBRAND'|translate}}</h5> -->
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'DIVISION'|translate}}</label><span class="text-danger"> *</span><br>
-        <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnDivisionId"
+        <label>{{'Company'|translate}}</label><span class="text-danger"> *</span><br>
+        <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnCompanyId"
             [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-            optionLabel="nameInBangla" optionValue="id" ></p-dropdown><br>
-        <span *ngIf="frm.controls['cmnDivisionId'].invalid && frm.controls['cmnDivisionId'].touched "
+            optionLabel="name" optionValue="id" ></p-dropdown><br>
+        <span *ngIf="frm.controls['cmnCompanyId'].invalid && frm.controls['cmnCompanyId'].touched "
             class="text-danger">
-            {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+            {{'Company'|translate}} {{'REQUIRED'|translate}}
         </span>
     </div>
     <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-      <label>{{'DIVISION'|translate}}</label><span class="text-danger"> *</span><br>
-      <p-dropdown [options]="banks" [style]="{'width':'100%'}" formControlName="cmnDivisionId"
+      <label>{{'Bank'|translate}}</label><span class="text-danger"> *</span><br>
+      <p-dropdown [options]="banks" [style]="{'width':'100%'}" formControlName="bnkBankId"
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="nameInBangla" optionValue="id" ></p-dropdown><br>
-      <span *ngIf="frm.controls['cmnDivisionId'].invalid && frm.controls['cmnDivisionId'].touched "
+          optionLabel="name" optionValue="id" ></p-dropdown><br>
+      <span *ngIf="frm.controls['bnkBankId'].invalid && frm.controls['bnkBankId'].touched "
           class="text-danger">
-          {{'DIVISION'|translate}} {{'REQUIRED'|translate}}
+          {{'Bank'|translate}} {{'REQUIRED'|translate}}
       </span>
   </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
