@@ -23,29 +23,15 @@ export class BackupServiceComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
-    this.getServiceStatus();
+   
   }
-
-  getServiceStatus() {
-    this.gSvc.postdata("api/GeneralServices/GetServiceStatus", {}).subscribe(res => {
-      debugger;
+  getBackup() {
+    this.gSvc.postdata("api/BackupDB/BackupAllDB", {}).subscribe(res => {    
       this.isOn = res;
+      this.toastrService.success(res.messages);
     }, err => {
       this.toastrService.error("error");
     })
   }
-
-  startStopService() {
-    debugger;
-    var pararm = { IsStop: this.isOn };
-    this.gSvc.postparam("api/GeneralServices/ServiceStartStop", pararm).subscribe(res => {
-      this.isOn = this.isOn ? false : true;
-      this.getServiceStatus();
-    }, err => {
-      this.toastrService.error("error");
-    })
-  }
-
 }

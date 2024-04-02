@@ -4,15 +4,12 @@
       translate}}</span></ng-template>
   <div class="row p-0">
     <div class="field col-12 sm:col-4 md:col-4 lg:col-4 xl:col-4 p-0">
-      <p-button *ngIf="!isOn" (click)="startStopService()" styleClass="p-button-success p-button-lg" type="button"
-        icon="pi pi-play" label="{{'Start DB Backup'|translate}}"></p-button>
-
-      <p-button *ngIf="isOn" (click)="startStopService()" styleClass="p-button-danger p-button-lg" type="button"
-        icon="pi pi-power-off" label="{{'Stop DB Backup'|translate}}"></p-button>
+      <p-button *ngIf="!isOn" (click)="getBackup()" styleClass="p-button-success p-button-lg" type="button"
+         label="{{'Download DB Backup'|translate}}"></p-button>
     </div>
-    <div class="field col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8 p-0">
+    <!-- <div class="field col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8 p-0">
       <p style="float: right; margin-right: 4px; font-weight: bold; font-size: xx-large;">Service Status: <span class="text-success"
           *ngIf="isOn">Running</span> <span class="text-danger" *ngIf="!isOn">Stopped</span> </p>
-    </div>
+    </div> -->
   </div>
 </p-panel>
