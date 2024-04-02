@@ -9,6 +9,7 @@ import { UserwiseMenuComponent } from './userwise-menu/userwise-menu.component';
 //import { UserRoleMappingComponent } from './user-role-mapping/user-role-mapping.component';
 import { UserRolesMappingComponent } from './user-roles-mapping/user-roles-mapping.component';
 import { BackgroundServiceComponent } from './background-service/background-service.component';
+import { BackupServiceComponent } from './backup/backup.component';
 const routes: Routes = [
 
   { path: 'roles', component: UserRolesComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   //{ path: "userrolemapping", component: UserRoleMappingComponent },
   { path: "userrolesmapping", component: UserRolesMappingComponent },
   { path: "bgservice", component: BackgroundServiceComponent },
+  { path: "backup", component: BackupServiceComponent },
 ];
 
 @NgModule({

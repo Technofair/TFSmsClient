@@ -30,6 +30,7 @@ import { PanelModule } from 'primeng/panel';
 import { UserRolesMappingComponent } from './user-roles-mapping/user-roles-mapping.component';
 import { BackgroundServiceComponent } from './background-service/background-service.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { BackupServiceComponent } from './backup/backup.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     UserwiseMenuComponent,
    // UserRoleMappingComponent,
     UserRolesMappingComponent,
-    BackgroundServiceComponent
+    BackgroundServiceComponent,
+    BackupServiceComponent
   ],
   imports: [
     CommonModule,
