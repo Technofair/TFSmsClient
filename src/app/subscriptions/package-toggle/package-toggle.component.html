@@ -182,12 +182,12 @@
             </th>
             <th class="vcenter text-center">{{'PackagePrice' | translate}}</th>
             <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
-            <th pSortableColumn="osdType" style="text-align: center">
+            <!-- <th pSortableColumn="osdType" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'StartDate' | translate}}
                     
                 </div>
-            </th>
+            </th> -->
             <th pSortableColumn="startTime" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'EndDate' | translate}}
@@ -212,10 +212,9 @@
             <td>{{r.package.packageName}}</td>
             <td>{{r.package.amount}}</td>
             <td>{{r.amount}}</td>
-            <td>{{r.package.startDate |date:'dd/MM/YYYY'}}</td>
+            <!-- <td>{{r.package.startDate |date:'dd/MM/YYYY'}}</td> -->
             <td>{{r.package.endDate |date:'dd/MM/YYYY'}}</td>
             <td>{{r.package.statusType}}</td>
-
             <td class="vcenter text-center" style="display: flex; flex-direction: row;">
                 <div *ngIf="r.package.statusType =='Active'|| r.package.statusType =='Reactive'">
                     <p-button (onClick)="inactivePackage(r.package)" styleClass="p-button-warning rounded-0 px-2 py-1 mr-2" 
@@ -227,10 +226,8 @@
                 </div>
                 <p-button (onClick)="cancelPackage(r)" styleClass="p-button-danger rounded-0 px-2 py-1 mr-2"
                     type="button" icon="pi pi-times-circle" title="{{'packageCancel' | translate}}"></p-button>
-
                 <p-button (onClick)="packageHistory(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
                     type="button" icon="pi pi-eye" title="{{'History' | translate}}"></p-button>
-
             </td>
         </tr>
     </ng-template>
