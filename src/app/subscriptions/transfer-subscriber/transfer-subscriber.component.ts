@@ -85,12 +85,10 @@ export class TransferSubscriberComponent implements OnInit {
 
     console.log(param);
 
-     this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", param).subscribe(res => {
-
-
-    //Old
-    // this.gSvc.postdata("api/Subscriber/GetSubscriberWithDeviceOnlyByParameter", { companyId: this.frm.get('companyId')?.value }).subscribe(res => {
-      
+    //New: 06.04.2024
+    this.gSvc.postdata("api/SubscriberPackage/GetSubscriberWithNeverdOrExpiredPackage", param).subscribe(res => {
+    //Old: 06.04.2024
+     //this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", param).subscribe(res => {
 
       if (res.length > 0) {
         var subscriberList: any[] = res;
