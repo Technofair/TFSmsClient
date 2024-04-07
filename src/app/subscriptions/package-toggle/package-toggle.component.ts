@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { type } from 'os';
 import { ExportService } from 'src/app/layout/service/export.service';
-import { Location } from '@angular/common';
+import { JsonPipe, Location } from '@angular/common';
 import { balanceService } from 'src/app/global';
 @Component({
   selector: 'app-stb-assign-test',
@@ -50,10 +50,12 @@ export class PackageToggleComponent implements OnInit {
   isShowSslPay: boolean = false;
   progressStatus: boolean = true;
   packageAssignHistory: any;
+  subscriberPackage: any;
 
   status: any = [{ name: 'All', value: 0 }, { name: 'Active', value: 1 }, { name: 'InActive', value: 2 }]
   // subscribtionTypes: any = [{ name: "Select Types", id: 0 }, { name: "Daily", id: 1 }, { name: "Monthly", id: 2 }, { "name": "Yearly", id: 3 }];
   subscribtionTypes: any = [{ name: "Monthly", id: 2 }];
+  displaySubscriberPackage: boolean=false;
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -308,6 +310,17 @@ export class PackageToggleComponent implements OnInit {
     return false;
   }
 
+  //New
+getSubscriberPackageByDeviceId(data: any) {
+  this.displaySubscriberPackage = true;
+  this.gSvc.postdata("api/ScpSubscriberInvoiceDetail/GetSubscriberInvoiceDetailByDeviceId?scpSubscriberId=" + data.id + "&prdDeviceNumberId=" + data.prdDeviceNumberId + "&activateType=" + 1, {}).subscribe(res => {
+    this.subscriberPackage = res;
+  }, err => {
+    this.toastrService.error(err.message);
+    console.log('Exception: (getSubscriberPackageByDeviceId)' + err.message);
+  })
+ }
+
   cancelPackage(data: any) {
 
     this.confirmationService.confirm({
@@ -315,29 +328,23 @@ export class PackageToggleComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
-        this.gSvc.postdata("api/SubscriberPackage/CancelPackage?deviceNumberId=" + data.prdDeviceNumberId + "&createdBy=" + this.auth.getUserId(), {})
+        
+        this.gSvc.postdata("api/SubscriberPackage/CancelPackage?deviceNumberId=" + data.prdDeviceNumberId + "&isFirst=" + data.isFirst + "&isLast=" + data.isLast + "&createdBy=" + this.auth.getUserId(), {})
           .subscribe(res => {
             if (res.success) {
               this.toastrService.success(res.message);
               this.getRenewableSubscriber();
-              //this.getDeviceBySubscriberId();
-              //this.reset();
-              //this.reload();
+              
             } else {
               this.toastrService.warning(res.message);
             }
           }, err => {
             this.toastrService.error(err.message);
-            //console.log('Exception: (save)' + err.message);
           })
-
         return true;
       },
       reject: () => {
-
       }
-
     })
     return false;
   }
@@ -353,6 +360,7 @@ export class PackageToggleComponent implements OnInit {
       console.log('Exception: (getPackageAssignHistory)' + err.message);
     })
   }
+
   getRenewableSubscriber() {
     var requestBody = this.frmsrc.value;
     this.progressStatus = false;

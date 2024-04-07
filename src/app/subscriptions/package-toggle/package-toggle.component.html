@@ -224,9 +224,11 @@
                     <p-button (onClick)="activePackage(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
                         type="button" icon="pi pi-check-circle" title="{{'Active' | translate}}"></p-button>
                 </div>
-                <p-button (onClick)="cancelPackage(r)" styleClass="p-button-danger rounded-0 px-2 py-1 mr-2"
+
+                <p-button (onClick)="getSubscriberPackageByDeviceId(r)" styleClass="p-button-danger rounded-0 px-2 py-1 mr-2"
                     type="button" icon="pi pi-times-circle" title="{{'packageCancel' | translate}}"></p-button>
-                <p-button (onClick)="packageHistory(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
+                    
+                    <p-button (onClick)="packageHistory(r.package)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2"
                     type="button" icon="pi pi-eye" title="{{'History' | translate}}"></p-button>
             </td>
         </tr>
@@ -251,4 +253,63 @@
             class="p-button-{{paymentStatusId=='1'?'success':paymentStatusId=='2'?'warning':paymentStatusId=='3'?'danger':''}}"
             badge="8"></button>
     </ng-template>
+</p-dialog>
+
+
+<!-- Asad Added -->
+<p-dialog header="Header" [(visible)]="displaySubscriberPackage" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'SubscriberPackage' | translate}}</h5>
+    </ng-template>
+
+    <p-table #dt [value]="subscriberPackage" dataKey="id" [rowHover]="true" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['subscriberId','customerNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '50rem'}">
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                    (click)="clear(dt)"></button>
+                <span class="p-input-icon-left ml-auto float-right">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="vcenter text-center">{{'SL#' | translate}}</th>
+                <th class="vcenter text-center">{{'PackageName' | translate}}</th>         
+                <th class="vcenter text-center"> {{'StartDate' | translate}}</th>
+                <th class="vcenter text-center">{{'EndDate' | translate}}</th>
+                <th class="vcenter text-center">{{'Amount' | translate}}</th>
+                <th class="vcenter text-center ">{{'ACTION' | translate}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+            <tr class="p-selectable-row">
+                <td>{{i+1}}</td>
+                <td>{{r.packageName}}</td>
+                
+                <td>{{r.startDate| date:"dd-MM-YYYY"}}</td>
+                <td>{{r.endDate| date:"dd-MM-YYYY"}}</td>
+                <td>{{r.amount}}</td>
+                <td class="vcenter text-center" style="display: flex; flex-direction: row;">
+                    <div *ngIf="r.isLast == true">
+                        <p-button (onClick)="cancelPackage(r)" styleClass="p-button-danger rounded-0 px-2 py-1 mr-2"
+                        type="button" icon="pi pi-times-circle" title="{{'packageCancel' | translate}}"></p-button>
+                    </div>
+                </td>
+
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="9">No data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </p-dialog>
