@@ -333,6 +333,7 @@ getSubscriberPackageByDeviceId(data: any) {
           .subscribe(res => {
             if (res.success) {
               this.toastrService.success(res.message);
+              this.getSubscriberPackageByDeviceId(data);
               this.getRenewableSubscriber();
               
             } else {
