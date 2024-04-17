@@ -522,5 +522,8 @@
     "ExpDate":"Exp Date",
     "PaymentType":"Payment Type",
     "ExpiryDays":"Expiry Days",
-    "Inactive":"Inactive"
+    "Inactive":"Inactive",
+    "NumberOfChannels":"Total Channels",
+    "NumberOfHDChannels":"HD Channels",
+    "NumberOfSDChannels":"SD Channels"
 }
