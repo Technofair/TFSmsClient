@@ -58,7 +58,8 @@ export class UserComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         if (this.frm.controls['id'].value == 0) {
-          this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+          //Old
+          //this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
           this.frm.controls['createdBy'].setValue(this.auth.getUserId());
           this.frm.controls['createdDate'].setValue(new Date());
         } else if (this.frm.controls['id'].value > 0) {
