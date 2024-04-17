@@ -311,7 +311,8 @@ export class PackageAssignComponent implements OnInit {
           .subscribe(result => {
             if (result != undefined && result.operationId>0  ) {
               if(result.success==false){
-                this.toastrService.warning("Error!"+result.message);
+                this.toastrService.warning("Error! "+result.message);
+                return;
               }
               this.gSvc.postdata("api/SubscriberPackage/ActivePackage", JSON.stringify({ obj: frmVal, status: 1 }))
                 .subscribe(res => {
