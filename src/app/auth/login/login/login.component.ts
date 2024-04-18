@@ -55,6 +55,14 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.loginForm.value).subscribe(
         (result: any) => {
           //console.log(result);
+
+          if(result != undefined){
+            if(result.isAuhentic == false){
+              this.toastrService.warning(result.message);
+              return;
+            }
+          }
+
           if (result != undefined && result.userId > 0) {
             this.auth.setToken(result.token);
             this.auth.setRole(result.roleId);
