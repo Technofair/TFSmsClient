@@ -7,24 +7,24 @@
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'MODULENAME' | translate}}</label>
-        <p-dropdown [options]="moduleList" [style]="{'width':'100%'}" formControlName="moduleId" [filter]="true"
+        <p-dropdown [options]="moduleList" [style]="{'width':'100%'}" formControlName="secModuleId" [filter]="true"
           filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id">
         </p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'MENUFOR' | translate}}</label>
-        <p-dropdown [options]="parentlist" [style]="{'width':'100%'}" formControlName="isParents" [filter]="true"
+        <p-dropdown [options]="parentlist" [style]="{'width':'100%'}" formControlName="isParent" [filter]="true"
         filterBy="text" [showClear]="true"
           placeholder="{{'SELECT'|translate}}" optionLabel="text" optionValue="value"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'PARENTS' | translate}}</label>
-        <p-dropdown [options]="parentsmenuList" [style]="{'width':'100%'}" formControlName="parentsId" [filter]="true"
-          filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="text"
-          optionValue="value"></p-dropdown><br>
+        <p-dropdown [options]="menulist" [style]="{'width':'100%'}" formControlName="parentMenuId" [filter]="true"
+          filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="title"
+          optionValue="id"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'TITLE' | translate}}</label><span class="text-danger"> *</span>
+        <label>{{'ENTITLE' | translate}}</label><span class="text-danger"> *</span>
         <input type="text" class="p-2 w-full" pInputText placeholder="{{'TITLE' | translate}}"
           formControlName="title" />
         <span *ngIf="frm.controls['title'].invalid && frm.controls['title'].touched " class="text-danger">
@@ -33,6 +33,14 @@
       </div>
     </div>
     <div class="form-grid grid">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'BNTITLE' | translate}}</label><span class="text-danger"> *</span>
+        <input type="text" class="p-2 w-full" pInputText placeholder="{{'BNTITLE' | translate}}"
+          formControlName="titleBn" />
+        <span *ngIf="frm.controls['titleBn'].invalid && frm.controls['titleBn'].touched " class="text-danger">
+          {{'BNTITLE' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'LINK' | translate}}</label><span class="text-danger"> *</span>
         <input type="text" class="p-2 w-full" pInputText placeholder="{{'LINK' | translate}}" formControlName="link" />
@@ -44,9 +52,12 @@
         <label>{{'ICON' | translate}}</label>
         <input type="text" class="p-2 w-full" pInputText placeholder="{{'ICON' | translate}}" formControlName="icon" />
       </div>
-
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'LEVEL' | translate}}</label>
+        <input type="text" class="p-2 w-full" pInputText placeholder="{{'LEVEL' | translate}}" formControlName="levelNo" />
+      </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3 ">
-        <div class="form-check sm:mt-2 md:mt-5">
+        <div class="form-check ">
           <input class="form-check-input" type="checkbox" value="true" checked id="flexCheckDefault" formControlName="isActive">
           <label class="form-check-label" for="flexCheckDefault">{{'ISACTIVE' | translate}}</label>
         </div>
@@ -129,23 +140,15 @@
 
   <ng-template pTemplate="header">
     <tr>
-      <th pSortableColumn="title" style="text-align: center">
-        <div class="vcenter text-center">
-          {{'TITLE' | translate}}
-          <p-sortIcon field="title"></p-sortIcon>
-          <p-columnFilter type="text" field="title" display="menu" class="ml-auto"></p-columnFilter>
-        </div>
-      </th>
-
-      <th pSortableColumn="link" style="text-align: center">
-        <div class="vcenter text-center">
-          {{'LINK' | translate}}
-          <p-sortIcon field="link"></p-sortIcon>
-          <p-columnFilter type="text" field="link" display="menu" class="ml-auto"></p-columnFilter>
-        </div>
-      </th>
+      <th class="vcenter text-center">{{'ID' | translate}}</th>
+      <th class="vcenter text-center">{{'ENTITLE' | translate}}</th>
+      <th class="vcenter text-center"> {{'BNTITLE' | translate}}</th>
+      <th class="vcenter text-center"> {{'LINK' | translate}}</th>
+      <th class="vcenter text-center"> {{'ICON' | translate}}</th>
+      <th class="vcenter text-center"> {{'ParentMenu' | translate}}</th>
+      <th class="vcenter text-center"> {{'LevelNo' | translate}}</th>
       <th class="vcenter text-center">{{'ISACTIVE' | translate}}</th>
-      <!-- <th class="vcenter text-center">{{'PARENTS' | translate}}</th> -->
+      <!-- <th class="vcenter text-center">{{'PARENTS' | translate}}</th>-->
       <th class="vcenter text-center">{{'ACTION' | translate}}</th>
     </tr>
     <tr>
@@ -157,15 +160,20 @@
 
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
+      <td>{{r.id}}</td>
       <td>{{r.title}}</td>
+      <td>{{r.titleBn}}</td>
       <td>{{r.link}}</td>
+      <td>{{r.icon}}</td>
+      <td>{{r.parentMenuId}}</td>
+      <td>{{r.levelNo}}</td>
       <td>{{r.isActive}}</td>
       <!-- <td>{{r.parentsId}}</td> -->
       <td class="vcenter text-center">
-        <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil" (click)="edit(r.id)">
+        <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil" (click)="edit(r)">
         </p-button>
-        <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-          (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
+        <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
+          (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
       </td>
     </tr>
   </ng-template>

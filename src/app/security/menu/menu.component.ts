@@ -16,12 +16,24 @@ import { GeneralService } from 'src/app/services/general.service';
 export class MenuComponent {
   menulist: any
   moduleList: any;
-  parentlist: any;
+ // parentlist: any;
   parentsmenuList: any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
-  progressStatus=true
+  progressStatus=true;
+  frm!:FormGroup;
+  parentlist: any = [
+    {
+      value: '', text: "Select One"
+    },
+    {
+      value: true, text: "Parents"
+    },
+    {
+      value: false, text: "Children"
+    }
+  ];
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService) {
     this.getParentsMenu();
     this.getModules();
@@ -29,52 +41,33 @@ export class MenuComponent {
     this.propulateData();
   }
 
-  frm: FormGroup = new FormGroup({
+  
+
+  async ngOnInit(): Promise<void> {
+
+   this.getFrm();
+   
+    //this.propulateData();
+  }
+ getFrm(){
+  this.frm = this.fb.group({
     id: new FormControl(""),
     title: new FormControl(""),
     link: new FormControl(""),
-    isParents: new FormControl(true),
+    isParent: new FormControl(),
     parentsId: new FormControl(""),
-    moduleId: new FormControl(""),
+    secModuleId: new FormControl(),
     icon: new FormControl(""),
+    titleBn: new FormControl(""),
+    parentMenuId: new FormControl(),
+    levelNo: new FormControl(),
     // menuLevel: new FormControl(""),
     // parentSeqNo: new FormControl(""),
     // childSeqNo: new FormControl(""),
     isActive: new FormControl(),
-  })
-
-  async ngOnInit(): Promise<void> {
-
-    this.frm = this.fb.group({
-      title: ["", [Validators.required]],
-      link: ["", [Validators.required]],
-      moduleId: ["", [Validators.required]],
-      icon: [""],
-      id: ["0"],
-      parentsId: [0],
-      isParents: ["", [Validators.required]],
-      // menuLevel: ["0"],
-      // parentSeqNo: ["0"],
-      // childSeqNo: ["0"],
-      isActive: [true],
-    });
-
-    this.parentlist = [
-      {
-        value: "", text: ""
-      },
-      {
-        value: "Y", text: "Parents"
-      },
-      {
-        value: "N", text: "Children"
-      }
-    ]
-    this.propulateData();
-  }
-
+  });
+ }
   save() {
-
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -142,7 +135,6 @@ export class MenuComponent {
   getParentsMenu() {
     this.gSvc.postdata("Security/Menu/GetParentsMenu", {}).subscribe(res => {
       this.parentsmenuList = res;
-
     }, err => {
       this.toastrService.error("Error");
     })
@@ -160,40 +152,11 @@ export class MenuComponent {
     })
   }
 
-  edit(id: any) {
-
-    this.formId = 1;
-    this.gSvc.postdata("Security/Menu/GetMenuById?id=" + id + "", {}).subscribe((res: any) => {
-
-
-      // var filter_array = this.parentsmenuList.filter((x: { value: any; }) => x.value == res.parentsId);
-      // const [obj] = filter_array;
-      //this.frm.controls['parentsId'].setValue(res.parentsId.toString());
-      //  res.parentsId.toString();
-      let appmneu = {
-        link: res.link,
-        title: res.title,
-        isParents: res.isParents,
-        parentsId: res.parentsId.toString(),
-        moduleId: res.moduleId,
-        icon: res.icon,
-        isActive: res.isActive == "Y" ? true : false,
-        id: res.id
-
-      };
-      this.frm.patchValue(appmneu);
-      //this.frm.controls['title'].setValue(res.title);
-      //this.frm.controls['link'].setValue(res.link);
-      //this.frm.controls['isParents'].setValue(res.isParents);
-      this.frm.controls['parentsId'].setValue(res.parentsId.toString());
-      //this.frm.controls['moduleId'].setValue(res.moduleId);
-      //this.frm.controls['icon'].setValue(res.icon);
-      //this.frm.controls['isActive'].setValue(res.isActive=="Y"?true:false);
-      //this.frm.controls['id'].setValue(res.id);
-    }, err => {
-
-      this.toastrService.error("edit error");
-    })
+  edit(data: any) {
+    this.frm.patchValue(data);
+    this.frm.controls['isParent'].setValue(data.isParent);
+    this.frm.controls['secModuleId'].setValue(data.secModuleId);
+    this.frm.controls['parentMenuId'].setValue(data.parentMenuId);
   }
 
   showModalDialog(id: any) {

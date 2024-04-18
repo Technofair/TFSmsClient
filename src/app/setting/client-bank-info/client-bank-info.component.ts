@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ClientBankInfoComponent implements OnInit {
 
-  ItembrandList: any;
+  itemList: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
@@ -31,6 +31,7 @@ export class ClientBankInfoComponent implements OnInit {
     this.getFrm();
     this.getBanks();
     this. getCompanies();
+    this.getClientBanks();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -78,7 +79,13 @@ export class ClientBankInfoComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })
   }
-  
+  getClientBanks() {
+    this.gSvc.postdata("api/ClientBankAccountInfo/GetAll", {}).subscribe(res => {
+      this.itemList = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+  }
   getCompanies() {
     this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
       this.companies = res;
