@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmationService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { forkJoin } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from 'src/app/services/general.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class MenuComponent {
       value: false, text: "Children"
     }
   ];
-  constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService) {
+  constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService, private auth: AuthService) {
     this.getParentsMenu();
     this.getModules();
     this.getMenus();
@@ -51,20 +52,21 @@ export class MenuComponent {
   }
  getFrm(){
   this.frm = this.fb.group({
-    id: new FormControl(""),
+    id: new FormControl(0),
+    titleBn:new FormControl(""),
     title: new FormControl(""),
     link: new FormControl(""),
-    isParent: new FormControl(),
-    parentsId: new FormControl(""),
-    secModuleId: new FormControl(),
-    icon: new FormControl(""),
-    titleBn: new FormControl(""),
-    parentMenuId: new FormControl(),
+    parentMenuId:new FormControl(),
+    secModuleId:new FormControl(),
+    parentSerialNo:new FormControl(),
+    childSerialNo:new FormControl(),
     levelNo: new FormControl(),
-    // menuLevel: new FormControl(""),
-    // parentSeqNo: new FormControl(""),
-    // childSeqNo: new FormControl(""),
-    isActive: new FormControl(),
+    isParent: new FormControl(false),
+    icon: new FormControl(""),
+    isActive: new FormControl(true),
+    createdBy:new FormControl(this.auth.getUserId()),
+    createdDate:new FormControl(new Date),
+    isModule:new FormControl(),
   });
  }
   save() {
@@ -74,10 +76,9 @@ export class MenuComponent {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-          let isactive = this.frm.controls['isActive'].value == true ? "Y" : "N";
-          this.frm.controls['isActive'].setValue(isactive)
-          this.gSvc.postdata("Security/Menu/AddMenu", JSON.stringify(this.frm.value)).subscribe(res => {
+        this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+        console.log(JSON.stringify(this.frm.value));
+          this.gSvc.postdata("Security/Menu/AddOrUpdateMenu", JSON.stringify(this.frm.value)).subscribe(res => {
             this.reset();
             this.toastrService.success("succesfully");
             this.getMenus();
@@ -86,22 +87,7 @@ export class MenuComponent {
           }, err => {
             this.toastrService.error("Error! internal server error");
           })
-        } else if (this.formId == 1) {
-          let isactive = this.frm.controls['isActive'].value == true ? "Y" : "N";
-          this.frm.controls['isActive'].setValue(isactive)
-          this.gSvc.postdata("Security/Menu/UpdateMenu", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.reset();
-            this.formId = 0;
-            this.toastrService.success("Updated succesfully");
-            this.getMenus();
-            this.getModules();
-            this.getParentsMenu();
-          }, err => {
-            this.toastrService.error("Error! not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -119,7 +105,7 @@ export class MenuComponent {
       this.progressStatus=true;
     }, err => {
       this.progressStatus=true;
-      this.toastrService.error("error");
+     // this.toastrService.error("error");
     })
   }
 
@@ -127,7 +113,7 @@ export class MenuComponent {
     this.gSvc.postdata("Security/Menu/Modules", {}).subscribe(res => {
       this.moduleList = res;
     }, err => {
-      this.toastrService.error("Error");
+      //this.toastrService.error("Error");
     })
   }
 
@@ -136,7 +122,7 @@ export class MenuComponent {
     this.gSvc.postdata("Security/Menu/GetParentsMenu", {}).subscribe(res => {
       this.parentsmenuList = res;
     }, err => {
-      this.toastrService.error("Error");
+     // this.toastrService.error("Error");
     })
   }
 

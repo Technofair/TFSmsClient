@@ -678,7 +678,13 @@
     "Enter your mobile or device ID":"আপনার মোবাইল অথবা ডিভাইস আইডি দিন",
     "NumberOfChannels":"চ্যানেল সংখ্যা",
     "NumberOfHDChannels":"HD চ্যানেল",
-    "NumberOfSDChannels":"SD চ্যানেল"
+    "NumberOfSDChannels":"SD চ্যানেল",
+    "ENTITLE":"EN টাইটেল",
+    "BNTITLE":"BN টাইটেল",
+    "ParentMenu":"প্যারেন্ট মেনু",
+    "LevelNo":"লেভেল নং",
+    "ParentSerialNo":"প্যারেন্ট সিরিয়াল",
+    "ChildSerialNo":"চাইল্ড সিরিয়াল"
 
 }
 

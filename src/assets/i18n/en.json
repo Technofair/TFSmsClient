@@ -525,5 +525,11 @@
     "Inactive":"Inactive",
     "NumberOfChannels":"Total Channels",
     "NumberOfHDChannels":"HD Channels",
-    "NumberOfSDChannels":"SD Channels"
+    "NumberOfSDChannels":"SD Channels",
+    "ENTITLE":"EN Title",
+    "BNTITLE":"BN Title",
+    "ParentMenu":"Parent Menu",
+    "LevelNo":"Level No",
+    "ParentSerialNo":"Parent Serial",
+    "ChildSerialNo":"Child Serial"
 }
