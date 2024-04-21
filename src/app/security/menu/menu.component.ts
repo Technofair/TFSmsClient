@@ -53,20 +53,20 @@ export class MenuComponent {
  getFrm(){
   this.frm = this.fb.group({
     id: new FormControl(0),
-    titleBn:new FormControl(""),
-    title: new FormControl(""),
+    titleBn:new FormControl("",Validators.required),
+    title: new FormControl("",Validators.required),
     link: new FormControl(""),
     parentMenuId:new FormControl(),
-    secModuleId:new FormControl(),
-    parentSerialNo:new FormControl(),
-    childSerialNo:new FormControl(),
-    levelNo: new FormControl(),
+    secModuleId:new FormControl(Validators.required),
+    parentSerialNo:new FormControl("",Validators.required),
+    childSerialNo:new FormControl("",Validators.required),
+    levelNo: new FormControl("",Validators.required),
     isParent: new FormControl(false),
     icon: new FormControl(""),
     isActive: new FormControl(true),
     createdBy:new FormControl(this.auth.getUserId()),
     createdDate:new FormControl(new Date),
-    isModule:new FormControl(),
+    isModule:new FormControl(false),
   });
  }
   save() {
