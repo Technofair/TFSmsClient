@@ -526,10 +526,12 @@
     "NumberOfChannels":"Total Channels",
     "NumberOfHDChannels":"HD Channels",
     "NumberOfSDChannels":"SD Channels",
-    "ENTITLE":"EN Title",
-    "BNTITLE":"BN Title",
+    "ENTITLE":"EN Name",
+    "BNTITLE":"BN Name",
     "ParentMenu":"Parent Menu",
     "LevelNo":"Level No",
     "ParentSerialNo":"Parent Serial",
-    "ChildSerialNo":"Child Serial"
+    "ChildSerialNo":"Child Serial",
+    "PARENT?":"Parent ?",
+    "IsModule":"IsModule ?"
 }
