@@ -55,6 +55,7 @@ export class PurchaseComponent implements OnInit {
   suppliers: any
   hasDeviceID:any;
   purchaseStatus:boolean=true;
+  allowPurchase:boolean = this.auth.allowPurchase();
   @ViewChild('fileInput', { static: false })
   myFileInput!: ElementRef;
 
@@ -79,10 +80,10 @@ export class PurchaseComponent implements OnInit {
     this.getStore();
     this.getProducts();
     this.getWarrantyPeriods();
-
     this.frmCreate();
     this.frmSearch();
     this.search();
+    this.initializeDefault();
     //this.warrentyList = [{ 'id': 1, "name": 'Not Applicable' }, { 'id': 1, "name": '6 M' }, { 'id': 2, "name": '1 Y' }]
   }
  /* frmCreate() {
@@ -193,6 +194,17 @@ export class PurchaseComponent implements OnInit {
 
     });
   }
+
+initializeDefault(){
+  if(this.allowPurchase==false){
+    var obj = this.frm.value;
+    var objDetail = obj.frmDetail;
+    objDetail.rate=0;
+    objDetail.salesRate=0;
+    this.frm.controls['frmDetail'].setValue(objDetail);
+  }
+  
+}
   frmSearch() {
     this.searchFrm = this.fb.group({
       refNo: new FormControl(),
@@ -211,7 +223,7 @@ export class PurchaseComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })
   }
-
+ 
   calculateSum() {
     var obj = this.frm.value;
     var objCal = obj.frm;
@@ -259,7 +271,6 @@ export class PurchaseComponent implements OnInit {
 
   addRow(): void {
     
-   
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
     
@@ -277,17 +288,19 @@ export class PurchaseComponent implements OnInit {
     //   this.toastrService.warning("Quantity is required!");
     //   return;
     // }
-
+   if(this.allowPurchase){
     if(objDetail.rate == "") 
-    {
-      this.toastrService.warning("Buy rate is required!");
-      return;
-    }
-    if(objDetail.salesRate == "") 
-    {
-      this.toastrService.warning("Sales Rate is required!");
-      return;
-    }
+      {
+        this.toastrService.warning("Buy rate is required!");
+        return;
+      }
+      if(objDetail.salesRate == "") 
+      {
+        this.toastrService.warning("Sales Rate is required!");
+        return;
+      }
+   }
+   
     if(objDetail.invWarrantyPeriodId == "") 
     {
       this.toastrService.warning("Warranty Period is required!");

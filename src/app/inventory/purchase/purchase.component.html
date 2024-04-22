@@ -37,7 +37,7 @@
                         placeholder="{{'PURCHASEDATE' | translate}}"></p-calendar> -->
 
                 </div>
-                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+                <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2"  *ngIf="allowPurchase">
                     <label>{{'TOTALAMOUNT'|translate}}</label>
                     <input [disabled]="true" type="text" class="p-2  w-full" formControlName="payableAmount" pInputText
                         readonly />
@@ -66,12 +66,12 @@
                     <input type="number" class="p-2  w-full" maxlength="20" formControlName="quantity"
                         (keypress)="intNumber($event)" pInputText /><br>
                 </div>
-                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2">
+                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2" *ngIf="allowPurchase">
                     <label>{{'Purchase Rate'|translate}}</label><span class="text-danger"> *</span><br>
                     <input type="number" class="p-2  w-full" maxlength="10" formControlName="rate"
                         (keypress)="decimalNumber($event)" pInputText /><br>
                 </div>
-                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2">
+                <div class="field col-12 sm:col-6  md:col-2 lg:col-2 xl:col-2" *ngIf="allowPurchase">
                     <label>{{'Sales Rate'|translate}}</label><span class="text-danger"> *</span><br>
                     <input type="number" class="p-2  w-full" maxlength="20" formControlName="salesRate"
                         (keypress)="decimalNumber($event)" pInputText /><br>
@@ -136,9 +136,9 @@
                             <th>{{'PRODUCT' | translate}}</th>
                             <th>{{'DEVICEID' | translate}}</th>
                             <th>{{'QUANTITY' | translate}}</th>
-                            <th>{{'RATE' | translate}}</th>
-                            <th>{{'SALESRATE' | translate}}</th>
-                            <th>{{'AMOUNT' | translate}}</th>
+                            <th  *ngIf="allowPurchase">{{'RATE' | translate}}</th>
+                            <th  *ngIf="allowPurchase">{{'SALESRATE' | translate}}</th>
+                            <th  *ngIf="allowPurchase">{{'AMOUNT' | translate}}</th>
                             <th>{{'ACTION' | translate}}</th>
                         </tr>
                     </ng-template>
@@ -154,10 +154,10 @@
                             </td>
                             <td (keyup)="totalSum(rowData.quantity,index)" contenteditable="true" class="editable">{{
                                 rowData.quantity }}</td>
-                            <td (keypress)="totalSum(rowData,index)" contenteditable="true" class="editable">{{
+                            <td (keypress)="totalSum(rowData,index)" contenteditable="true" class="editable"  *ngIf="allowPurchase">{{
                                 rowData.rate }}</td>
-                            <td contenteditable="true" class="editable">{{ rowData.salesRate }}</td>
-                            <td>{{ rowData.total }}</td>
+                            <td contenteditable="true" class="editable"  *ngIf="allowPurchase">{{ rowData.salesRate }}</td>
+                            <td  *ngIf="allowPurchase">{{ rowData.total }}</td>
 
                             <td><p-button class="p-button-sm" (click)="removeRow(rowData)"><i class="pi pi-minus"
                                         style="font-size: 1.5rem;color: red"></i></p-button></td>
@@ -246,7 +246,7 @@
             <th class="vcenter text-center">{{'DATE' | translate}}</th>
             <th class="vcenter">{{'SUPPLIER' | translate}}</th>
             <th class="vcenter">{{'PRODUCT' | translate}}</th>
-            <th class="vcenter text-right">{{'AMOUNT' | translate}}</th>
+            <th class="vcenter text-right"  *ngIf="allowPurchase">{{'AMOUNT' | translate}}</th>
             <th class="vcenter">{{'REMARKS' | translate}}</th>
             <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
         </tr>
@@ -263,7 +263,7 @@
             <td class="text-center">{{r.date | date:'dd/MM/yyyy'}}</td>
             <td>{{r.supplierName}}</td>
             <td>{{r.productName}}</td>
-            <td class="text-right">{{r.payableAmount}}</td>
+            <td class="text-right"  *ngIf="allowPurchase">{{r.payableAmount}}</td>
             <td>{{r.remarks}}</td>
             <!-- <td class="vcenter text-center">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"

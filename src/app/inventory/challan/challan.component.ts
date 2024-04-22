@@ -59,6 +59,8 @@ export class ChallanComponent implements OnInit {
   progressStatus: boolean = false;
   challenListStatus:boolean=true;
   stbCounter: any = 0;
+  allowSale:boolean= false;
+
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -85,7 +87,19 @@ export class ChallanComponent implements OnInit {
     this.frmSearch();
     this.search();
     this.getWarranty();
+    this.allowSale = this.auth.allowSale();
+    this.initializeDefault();
     // this.warrentyList = [{ 'id': 0, "name": 'Not Applicable' }, { 'id': 1, "name": '6 M' }, { 'id': 2, "name": '1 Y' }]
+  }
+  initializeDefault(){
+    if(this.allowSale==false){
+      var obj = this.frm.value;
+      var objDetail = obj.frmDetail;
+      objDetail.rate=0;
+      objDetail.salesRate=0;
+      this.frm.controls['frmDetail'].setValue(objDetail);
+    }
+    
   }
   frmCreate() {
     this.frm = this.fb.group({

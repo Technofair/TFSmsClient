@@ -64,22 +64,19 @@
                         (keypress)="intNumber($event)" pInputText /><br>
                 </div>
 
-                <div
-                    class="field col-12 sm:col-2 md:col-2 lg:col-2 xl:col-2 xl:pl-2 lg:pl-2 md:pl-2 sm:pl-2 xl:pr-2 lg:pr-2 md:pr-2 sm:pr-2">
+                <div class="field col-12 sm:col-2 md:col-2 lg:col-2 xl:col-2 xl:pl-2 lg:pl-2 md:pl-2 sm:pl-2 xl:pr-2 lg:pr-2 md:pr-2 sm:pr-2" *ngIf="allowSale">
                     <label>{{'SalesRate'|translate}}</label><br>
                     <input type="number" class="p-2  w-full" maxlength="20" formControlName="salesRate" readonly
                         [disabled]="true" (keypress)="decimalNumber($event)" pInputText /><br>
                 </div>
 
-                <div
-                    class="field col-12 sm:col-1 md:col-1 lg:col-1 xl:col-1 xl:pl-1 lg:pl-1 md:pl-1 sm:pl-1 xl:pr-1 lg:pr-1 md:pr-1 sm:pr-1">
+                <div class="field col-12 sm:col-1 md:col-1 lg:col-1 xl:col-1 xl:pl-1 lg:pl-1 md:pl-1 sm:pl-1 xl:pr-1 lg:pr-1 md:pr-1 sm:pr-1">
                     <label>{{'Quantity'|translate}}</label><span class="text-danger"> *</span><br>
                     <input type="number" class="p-2  w-full" maxlength="20" formControlName="quantity"
                         (keypress)="intNumber($event)" pInputText /><br>
                 </div>
 
-                <div
-                    class="field col-12 sm:col-2 md:col-2 lg:col-2 xl:col-2 xl:pl-1 lg:pl-1 md:pl-1 sm:pl-1 xl:pr-1 lg:pr-1 md:pr-1 sm:pr-1">
+                <div class="field col-12 sm:col-2 md:col-2 lg:col-2 xl:col-2 xl:pl-1 lg:pl-1 md:pl-1 sm:pl-1 xl:pr-1 lg:pr-1 md:pr-1 sm:pr-1" *ngIf="allowSale">
                     <label>{{'Rate'|translate}}</label><span class="text-danger"> *</span><br>
                     <input type="number" class="p-2  w-full" maxlength="10" formControlName="rate"
                         (keypress)="decimalNumber($event)" pInputText /><br>
@@ -257,10 +254,10 @@
                             <th class="w-10rem">{{'PRODUCT' | translate}}</th>
                             <th class="w-50rem">{{'DEVICEID' | translate}}</th>
                             <th class="w-5rem">{{'QUANTITY' | translate}}</th>
-                            <th class="w-5rem">{{'RATE' | translate}}</th>
-                            <th class="w-5rem">{{'BILLAMOUNT' | translate}}</th>
-                            <th class="w-5rem">{{'DISCOUNT' | translate}}</th>
-                            <th class="w-5rem">{{'TOTALAMOUNT' | translate}}</th>
+                            <th class="w-5rem" *ngIf="allowSale">{{'RATE' | translate}}</th>
+                            <th class="w-5rem" *ngIf="allowSale">{{'BILLAMOUNT' | translate}}</th>
+                            <th class="w-5rem" *ngIf="allowSale">{{'DISCOUNT' | translate}}</th>
+                            <th class="w-5rem" *ngIf="allowSale">{{'TOTALAMOUNT' | translate}}</th>
                             <th class="w-10rem">{{'ACTION' | translate}}</th>
                         </tr>
                     </ng-template>
@@ -275,19 +272,19 @@
                             </td>
                             <td class="text-center">{{rowData.quantity }}</td>
                             <!-- <td contenteditable="true" class="editable">{{ rowData.salesRate }}</td> -->
-                            <td contenteditable="true" class="editable text-center">
+                            <td contenteditable="true" class="editable text-center" *ngIf="allowSale">
                                 <!-- {{rowData.rate}} -->
                                 <input type="number" class="p-2 w-full" [(ngModel)]="rowData.rate"
                                     [ngModelOptions]="{standalone: true}" (keyup)="totalSum(rowData,index)"
                                     placeholder="Discount" pInputText />
                             </td>
-                            <td class="text-right">{{ rowData.total }}</td>
-                            <td contenteditable="true" class="editable text-right">
+                            <td class="text-right" *ngIf="allowSale">{{ rowData.total }}</td>
+                            <td contenteditable="true" class="editable text-right"*ngIf="allowSale">
                                 <input type="number" class="p-2 w-full text-right" [(ngModel)]="rowData.discount"
                                     [ngModelOptions]="{standalone: true}" (keyup)="totalCal(rowData,index)"
                                     placeholder="Discount" pInputText />
                             </td>
-                            <td class="text-right">{{ rowData.totalAmount }}</td>
+                            <td class="text-right" *ngIf="allowSale">{{ rowData.totalAmount }}</td>
                             <td class="vcenter text-center">
                                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1"
                                     icon="pi pi-pencil" (click)="editDtl(rowData)" data-toggle="tooltip"
@@ -303,8 +300,8 @@
 
                     <ng-template pTemplate="footer">
                         <tr *ngIf="details.length>0">
-                            <th colspan="9" class="text-right">{{'NETAMOUNT' | translate}}</th>
-                            <th class="text-right">{{frm.controls['netTotal'].value}}</th>
+                            <th colspan="9" class="text-right" *ngIf="allowSale">{{'NETAMOUNT' | translate}}</th>
+                            <th class="text-right" *ngIf="allowSale">{{frm.controls['netTotal'].value}}</th>
                             <th></th>
                         </tr>
                     </ng-template>
@@ -314,13 +311,13 @@
                 <br /><br />
 
                 <div class="row">
-                    <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" *ngIf="allowSale">
                         <label>{{'DISCOUNT' | translate}}</label>
                         <input type="number" class="p-2 w-full" formControlName="totalDiscount"
                             (keyup)="grandTotalCalc()" pInputText />
                     </div>
 
-                    <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+                    <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" *ngIf="allowSale">
                         <label>{{'GRANDTOTAL' | translate}}</label>
                         <input type="number" class="p-2 w-full" formControlName="totalAmount" readonly [disabled]="true"
                             pInputText />
@@ -414,7 +411,7 @@
             <th class="vcenter ">{{'CHALLAN REF. NO.' | translate}}</th>
             <th class="vcenter ">{{'PRODUCT' | translate}}</th>
             <th class="vcenter text-center">{{'Quantity' | translate}}</th>
-            <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
+            <th class="vcenter text-center"*ngIf="allowSale">{{'AMOUNT' | translate}}</th>
             <th class="vcenter text-center">{{'Status' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
@@ -432,7 +429,7 @@
             <td>{{r.refNo}}</td>
             <td>{{r.productName}}</td>
             <td class="text-center">{{r.quantity}}</td>
-            <td class="text-center">{{r.totalAmount}}</td>
+            <td class="text-center"*ngIf="allowSale">{{r.totalAmount}}</td>
             <td class="text-center">{{r.challanStatus}}</td>
             <td class="vcenter text-center">
 
@@ -521,7 +518,7 @@
                             <th class="w-15rem">{{'CHALLANNO' | translate}}</th>
                             <th class="w-15rem">{{'MEMONO' | translate}}</th>
                             <th class="w-15rem">{{'HEAD' | translate}}</th>
-                            <th class="w-10rem">{{'AMOUNT' | translate}}</th>
+                            <th class="w-10rem" *ngIf="allowSale">{{'AMOUNT' | translate}}</th>
                             <!-- <th class="w-5rem">{{'STATUS' | translate}}</th> -->
                             <th class="w-10rem">{{'ACTION' | translate}}</th>
                         </tr>
@@ -533,7 +530,7 @@
                             <td>{{ rowData.challanNo }}</td>
                             <td>{{ rowData.memoNo }}</td>
                             <td>{{ rowData.description.split('=')[0] }}</td>
-                            <td>{{ rowData.totalAmount }}</td>
+                            <td *ngIf="allowSale">{{ rowData.totalAmount }}</td>
                             <!-- <td>{{ rowData.status }}</td> -->
 
                             <td class="vcenter text-center">
@@ -571,8 +568,8 @@
                         <th class="w-10rem text-center">{{'Date' | translate}}</th>
                         <th class="w-10rem text-center">{{'Tran. Type' | translate}}</th>
                         <th class="w-10rem text-center">{{'RefNo' | translate}}</th>
-                        <th class="w-10rem text-center">{{'TotalAmount' | translate}}</th>
-                        <th class="w-10rem text-center">{{'Total Discount' | translate}}</th>
+                        <th class="w-10rem text-center"*ngIf="allowSale">{{'TotalAmount' | translate}}</th>
+                        <th class="w-10rem text-center"*ngIf="allowSale">{{'Total Discount' | translate}}</th>
                         <th class="w-10rem text-center">{{'Remarks' | translate}}</th>
                         <th class="w-10rem text-center">{{'ProductName' | translate}}</th>
                         <th class="w-10rem text-center">{{'DeviceId' | translate}}</th>
@@ -584,8 +581,8 @@
                         <td class="text-center">{{ rowData.date | date:'dd/MM/yyyy' }}</td>
                         <td class="text-center">{{ rowData.transactionType }}</td>
                         <td class="text-center">{{ rowData.refNo }}</td>
-                        <td class="text-center">{{ rowData.totalAmount }}</td>
-                        <td class="text-center">{{ rowData.totalDiscount }}</td>
+                        <td class="text-center"*ngIf="allowSale">{{ rowData.totalAmount }}</td>
+                        <td class="text-center"*ngIf="allowSale">{{ rowData.totalDiscount }}</td>
                         <td class="text-left">{{ rowData.remarks }}</td>
                         <td class="text-center">{{ rowData.productName }}</td>
                         <!-- <td>{{ rowData.deviceNumbers }}</td> -->
