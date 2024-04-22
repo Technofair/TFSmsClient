@@ -533,5 +533,6 @@
     "ParentSerialNo":"Parent Serial",
     "ChildSerialNo":"Child Serial",
     "PARENT?":"Parent ?",
-    "IsModule":"IsModule ?"
+    "IsModule":"IsModule ?",
+    "UserType":"User type"
 }

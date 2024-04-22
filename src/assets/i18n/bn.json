@@ -686,7 +686,8 @@
     "ParentSerialNo":"প্যারেন্ট সিরিয়াল",
     "ChildSerialNo":"চাইল্ড সিরিয়াল",
     "PARENT?":"প্যারেন্ট ?",
-    "IsModule":"মডিউল ?"
+    "IsModule":"মডিউল ?",
+    "UserType":"ইউজার টাইপ"
 
 }
 
