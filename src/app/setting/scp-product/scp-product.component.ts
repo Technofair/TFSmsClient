@@ -34,7 +34,7 @@ export class ScpProductComponent implements OnInit {
     this.frm = this.fb.group({
         id: new FormControl(0),
         name: new FormControl(),
-        price: new FormControl(),
+        price: new FormControl(0),
         isActive: new FormControl(),
         createdBy: new FormControl(this.auth.getUserId()),
         createdDate: new FormControl(new Date()),
