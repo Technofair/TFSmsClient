@@ -465,7 +465,7 @@
    "Check#":"চেক",
    "INTEGRETOR":"ইন্টিগ্রেটর",
    "BILLAMOUNT":"বিল এমাউন্ট",
-   "GRANDTOTAL":"সর্বমোট মোট",
+   "GRANDTOTAL":"সর্বমোট",
    "NETAMOUNT":"মোট এমাউন্ট",
    "From":"হইতে",
    "To":"পর্যন্ত",
@@ -687,7 +687,10 @@
     "ChildSerialNo":"চাইল্ড সিরিয়াল",
     "PARENT?":"প্যারেন্ট ?",
     "IsModule":"মডিউল ?",
-    "UserType":"ইউজার টাইপ"
+    "UserType":"ইউজার টাইপ",
+    "SMSProduct":"এস.এম.এস প্রডাক্ট",
+    "CASProduct":"ক্যাস প্রডাক্ট",
+    "ProductMapping":"প্রডাক্ট ম্যাপ"
 
 }
 

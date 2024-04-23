@@ -534,5 +534,8 @@
     "ChildSerialNo":"Child Serial",
     "PARENT?":"Parent ?",
     "IsModule":"IsModule ?",
-    "UserType":"User type"
+    "UserType":"User type",
+    "SMSProduct":"SMS Product",
+    "CASProduct":"CAS Product",
+    "ProductMapping":"Product Mapping"
 }
