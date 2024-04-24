@@ -13,12 +13,12 @@ import { GeneralService } from 'src/app/services/general.service';
 })
 export class AssignDeviceComponent implements OnInit {
     frmsrc!: FormGroup;
-  devices: any[] = [];
-  companies:any;
-  deviceNumber:any;
-  progressStatus:boolean=true
-  packageRenewlist:any;
-  isMso:boolean = this.auth.isMso();
+    devices: any[] = [];
+    companies:any;
+    deviceNumber:any;
+    progressStatus:boolean=true
+    packageRenewlist:any;
+    isMso:boolean = this.auth.isMso();
     constructor(
         private fb: FormBuilder,
         private gSvc: GeneralService,
@@ -35,20 +35,13 @@ export class AssignDeviceComponent implements OnInit {
     }
 
     frmsearch() {
-        
+
         this.frmsrc = this.fb.group({
-          companyId: new FormControl(),
-          clientId: new FormControl(),
-          customerNumber: new FormControl(),
-          contactNumber: new FormControl(),
-          deviceNumber: new FormControl(),
-          name: new FormControl(),
-          fromDate: new FormControl(),
-          toDate: new FormControl(),
-          statusType: new FormControl()
-    
+          cmnCompanyId: new FormControl(null),
+          contactNumber: new FormControl(null),
+          deviceNumber: new FormControl(null)
         })
-        
+
       }
       getCompany(){  
         this.gSvc.postdata("Common/Company/GetCompanyByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
@@ -77,8 +70,15 @@ export class AssignDeviceComponent implements OnInit {
       getRenewableSubscriber() {
         var requestBody = this.frmsrc.value;
         this.progressStatus=false;
-        requestBody.companyId = this.auth.getCompany();
-        this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", JSON.stringify(requestBody)).subscribe(res => {
+
+        //requestBody.companyId = this.auth.getCompany();
+        //New
+
+        console.log(JSON.stringify(this.frmsrc.value));
+ 
+        this.gSvc.postdata("Inventory/Purchase/GetAssignDeviceByAnyKey", JSON.stringify(this.frmsrc.value)).subscribe(res => {
+        //Old
+        //this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", JSON.stringify(requestBody)).subscribe(res => {
          this.packageRenewlist = res;
         this.progressStatus=true;
         }, err => {

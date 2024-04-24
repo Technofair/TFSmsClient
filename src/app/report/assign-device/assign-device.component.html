@@ -3,24 +3,19 @@
             translate}}</span></ng-template>
     <form [formGroup]="frmsrc">
         <div class="formgrid grid mb-4">
+
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="isMso">
                 <label>{{'Client'|translate}}</label>
-                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="clientId" [filter]="true"
+                <p-dropdown [options]="companies" [style]="{'width':'100%'}" formControlName="cmnCompanyId" [filter]="true"
                     filterBy="number" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
                     optionValue="id"></p-dropdown><br>
             </div>
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'SubscriberID' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
-            </div> -->
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'SubscriberName' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="name" pInputText />
-            </div> -->
+            
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'Phone' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
             </div>
+
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'DeviceNumber' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
@@ -41,6 +36,7 @@
         </div>
     </form>
 </p-panel>
+
 <p-table #dt [value]="packageRenewlist" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
@@ -92,13 +88,9 @@
     <ng-template pTemplate="body" let-r let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.firstName}} {{r.lastName}}({{r.customerNumber}})</td>
+            <td>{{r.subscriberName}} ({{r.customerNumber}})</td>
             <td>{{r.contactNumber}}</td>
             <td>{{r.deviceNumber}}</td>
-          
-          
-
-            
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
