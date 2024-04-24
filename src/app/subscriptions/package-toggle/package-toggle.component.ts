@@ -312,6 +312,10 @@ export class PackageToggleComponent implements OnInit {
 
   //New
 getSubscriberPackageByDeviceId(data: any) {
+
+
+//console.log( 'Packages: ' + JSON.stringify(data));
+
   this.displaySubscriberPackage = true;
   this.gSvc.postdata("api/ScpSubscriberInvoiceDetail/GetSubscriberInvoiceDetailByDeviceId?scpSubscriberId=" + data.id + "&prdDeviceNumberId=" + data.prdDeviceNumberId + "&activateType=" + 1, {}).subscribe(res => {
     this.subscriberPackage = res;
@@ -333,7 +337,17 @@ getSubscriberPackageByDeviceId(data: any) {
           .subscribe(res => {
             if (res.success) {
               this.toastrService.success(res.message);
-              this.getSubscriberPackageByDeviceId(data);
+
+              var dt =  {
+                id: data.scpSubscriberId,
+                prdDeviceNumberId: data.prdDeviceNumberId,
+                activateType: 1
+                //scpSubscriberId=" + data.id + "&prdDeviceNumberId=" + data.prdDeviceNumberId + "&activateType
+              };
+
+              this.getSubscriberPackageByDeviceId(dt);
+
+
               this.getRenewableSubscriber();
               
             } else {
