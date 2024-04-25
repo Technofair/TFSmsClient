@@ -41,6 +41,7 @@ export class UserRolesMappingComponent implements OnInit {
   activeUserRoles:any []=[];
   inActiveUserRoles:any []=[];
   progressStatus:boolean=true;
+  companyList:any;
   authUserId:any=this.Authser.getUserId();
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService, private Authser: AuthService) {
   }
@@ -48,6 +49,7 @@ export class UserRolesMappingComponent implements OnInit {
     this.frm = this.fb.group({
       id: new FormControl(0),
       role: new FormControl(0),
+      companyId:new FormControl(0),
       secUserId: new FormControl(0),
       secRoleId: new FormControl(0),
       isActive: new FormControl(true),
@@ -58,6 +60,14 @@ export class UserRolesMappingComponent implements OnInit {
     });
     this.roleList();
     //this.userList();
+    this.getCompany();
+  }
+  getCompany() {
+    this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+      this.companyList = res;
+    }, err => {
+      this.toastrService.error("Error! Company list not found ");
+    })
   }
   toggleItemCheck(user: user): void {
     //user.checked = !user.checked;
@@ -71,7 +81,7 @@ export class UserRolesMappingComponent implements OnInit {
   }
   userList() {
     this.progressStatus=false;
-    this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.Authser.getCompany()+"&roleId="+ this.frm.get("role")?.value, {})
+    this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.frm.get("companyId")?.value+"&roleId="+ this.frm.get("role")?.value, {})
     .subscribe(res => {     
       this.users = res;
       this.progressStatus=true;
@@ -115,7 +125,6 @@ export class UserRolesMappingComponent implements OnInit {
       modifiedBy: this.Authser.getUserId(),
       modifiedDate: new Date()
     }));
-
 
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -176,8 +185,6 @@ export class UserRolesMappingComponent implements OnInit {
       this.users.forEach(user => (user.isActive = false));
       
     }
-    
-    
   }
 
 }

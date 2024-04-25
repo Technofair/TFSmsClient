@@ -2,20 +2,40 @@
 <p-panel>
   <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'UserRoleMapping' |
       translate}}</span></ng-template>
-  <form [formGroup]="frm" (ngSubmit)="save()">
+  <form [formGroup]="frm" >
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
       <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Role' | translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="role" (onChange)="userList()"
+        <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="role" 
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
           optionValue="id"></p-dropdown>
         <span *ngIf="frm.controls['role'].invalid && frm.controls['role'].touched " class="text-danger">
           {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
         </span>
       </div>
-      <div class="field  col-12 sm:col-12 md:col-8 lg:col-8 xl:col-8">
+      <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'Company' | translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId" 
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+          optionValue="id"></p-dropdown>
+        <span *ngIf="frm.controls['companyId'].invalid && frm.controls['companyId'].touched " class="text-danger">
+          {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+        </span>
+      </div>
+      <div class="field  col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+        <div class="card-footer">
+          <div class=" mt-5">
+            <p-button (click)="userList()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="submit"
+              icon="pi pi-check" label="{{'Search' | translate}}"></p-button>&nbsp;
+            
+          </div>
+        </div>
+      </div>
 
+    </div>
+      <div class="formgrid grid">
+      <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <p-table #dt [value]="inActiveUserRoles" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
           [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
