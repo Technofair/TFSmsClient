@@ -36,6 +36,7 @@ import { ReceivedVoucherComponent } from './voucher-received/voucher-received.co
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ReportViewerModule } from '../reportviewer/reportviewer.module';
+import { ScpUserDebitComponent } from './scp-user-debit/scp-user-debit.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ReportViewerModule } from '../reportviewer/reportviewer.module';
     PaymentVoucherComponent,
     ReceivedVoucherComponent,
     OpeningBalanceComponent,
+    ScpUserDebitComponent
   ],
   imports: [
     ReportViewerModule,
