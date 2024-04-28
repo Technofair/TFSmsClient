@@ -140,7 +140,10 @@ export class ClientPackageComponent implements OnInit {
     this.progressStatus=false;
     this.holdCompanies = [];
     this.companies = [];
-    this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+    //New: 28.04.2024
+    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+    //Old: 28.04.2024
+    //this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
       this.companies = res;
       this.progressStatus=true;
       this.companies.forEach(item => {
@@ -347,7 +350,11 @@ export class ClientPackageComponent implements OnInit {
 
 
   getPackage() {
-    this.gSvc.postdata("Subscription/Package/GetAll", {}).subscribe(res => {
+
+    //New
+    this.gSvc.postdata("Subscription/Package/GetPermittedScpPackages?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+    //Old
+    //this.gSvc.postdata("Subscription/Package/GetAll", {}).subscribe(res => {    
       debugger;
       this.packages = res;
       this.packages.forEach(item => {
