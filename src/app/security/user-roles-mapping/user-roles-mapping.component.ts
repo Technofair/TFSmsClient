@@ -72,13 +72,22 @@ export class UserRolesMappingComponent implements OnInit {
   toggleItemCheck(user: user): void {
     //user.checked = !user.checked;
   }
+   //new 29-04-2024
   roleList() {
-    this.gSvc.postdata("Security/Role/GetAll", {}).subscribe(res => {
-      this.roles = res;
-    }, err => {
-      this.toastrService.error("error");
-    })
-  }
+      this.gSvc.postdata("Security/Role/GetSecRoleByCompanyId?cmnCompanyId="+this.Authser.getCompany(), {}).subscribe(res => {
+        this.roles = res;
+      }, err => {
+        this.toastrService.error("error");
+      })
+    }
+  //old 29-04-2024
+  // roleList() {
+  //   this.gSvc.postdata("Security/Role/GetAll", {}).subscribe(res => {
+  //     this.roles = res;
+  //   }, err => {
+  //     this.toastrService.error("error");
+  //   })
+  // }
   userList() {
     this.progressStatus=false;
     this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.frm.get("companyId")?.value+"&roleId="+ this.frm.get("role")?.value, {})
