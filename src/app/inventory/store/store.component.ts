@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-store',
@@ -18,7 +19,7 @@ export class StoreComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   frm!: FormGroup;
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService,private auth:AuthService) {
     this.getStore();
   }
  
@@ -26,19 +27,19 @@ export class StoreComponent implements OnInit {
   ngOnInit(): void {
     this.frm = new FormGroup({
       id: new FormControl("0"),
-      cmnCompanyId: new FormControl(1),
+      cmnCompanyId: new FormControl(this.auth.getCompany()),
       code: new FormControl(""),
       name: new FormControl("", [Validators.required]),
       address: new FormControl("", [Validators.required]),
       space: new FormControl(),
       prefix: new FormControl(),
-      contactPerson: new FormControl("", Validators.required),
-      contactNo: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.email]),
+      contactPerson: new FormControl(""),
+      contactNo: new FormControl(""),
+      email: new FormControl(""),
       isActive: new FormControl(true),
-      createdBy: new FormControl(1),
+      createdBy: new FormControl(this.auth.getUserId()),
       // CreatedDate: new FormControl(""),
-      modifiedBy: new FormControl(1),
+      modifiedBy: new FormControl(this.auth.getUserId()),
       // ModifiedDate: new FormControl(""),
     })
 
