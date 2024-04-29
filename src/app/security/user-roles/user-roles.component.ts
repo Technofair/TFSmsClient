@@ -28,6 +28,7 @@ export class UserRolesComponent implements OnInit {
     this.getRoles();
     this.createForm();
     this.getAllCompanyType();
+   
   }
   createForm() {
     this.frm = this.fb.group({
@@ -55,7 +56,7 @@ export class UserRolesComponent implements OnInit {
       accept: () => {
 
         this.gSvc.postdata("Security/Role/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-          this.frm.reset();
+          this.createForm();
           this.getRoles();
           this.toastrService.success("Saved success");
         }, err => {
