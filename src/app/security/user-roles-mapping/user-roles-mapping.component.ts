@@ -62,13 +62,23 @@ export class UserRolesMappingComponent implements OnInit {
     //this.userList();
     this.getCompany();
   }
+  //new 29-04-2024
   getCompany() {
-    this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+    this.gSvc.postdata("Common/Company/GetSelfAndChildCompanyByCompanyId?companyId="+this.Authser.getCompany(), {}).subscribe(res => {
       this.companyList = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
     })
   }
+
+  // old
+  // getCompany() {
+  //   this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+  //     this.companyList = res;
+  //   }, err => {
+  //     this.toastrService.error("Error! Company list not found ");
+  //   })
+  // }
   toggleItemCheck(user: user): void {
     //user.checked = !user.checked;
   }
