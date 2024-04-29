@@ -36,14 +36,14 @@ export class SupplierComponent implements OnInit {
     this.frm = this.fb.group({
       id: new FormControl("0"),
       name: new FormControl("", [Validators.required]),
-      address: new FormControl("", [Validators.required]),
+      address: new FormControl(),
       phone: new FormControl(),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      contactPerson: new FormControl("", [Validators.required]),
-      contactPersonNo: new FormControl("", [Validators.required]),
-      cmnCompanyId: new FormControl(),
-      createdBy: new FormControl(),
-      modifiedBy: new FormControl(),
+      email: new FormControl('',[Validators.email]),
+      contactPerson: new FormControl('',[Validators.required]),
+      contactPersonNo: new FormControl('',[Validators.required]),
+      cmnCompanyId: new FormControl(this.authAvc.getCompany()),
+      createdBy: new FormControl(this.authAvc.getUserId()),
+      modifiedBy: new FormControl(this.authAvc.getUserId()),
       isActive: new FormControl(true)
 
     });

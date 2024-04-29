@@ -31,7 +31,7 @@
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'EMAIL'|translate}}</label><span class="text-danger"> *</span><br>
+        <label>{{'EMAIL'|translate}}</label>
         <input type="text" class="p-2  w-full" placeholder="" formControlName="email" pInputText /><br>
         <span *ngIf="frm.controls['email'].invalid && frm.controls['email'].touched " class="text-danger">
           {{'EMAIL'|translate}} {{'REQUIRED'|translate}}
@@ -41,7 +41,7 @@
     </div>
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-        <label>{{'ADDRESS'|translate}}</label><span class="text-danger"> *</span><br>
+        <label>{{'ADDRESS'|translate}}</label>
         <input type="text" class="p-2  w-full" placeholder="" formControlName="address" pInputText /><br>
         <span *ngIf="frm.controls['address'].invalid && frm.controls['address'].touched " class="text-danger">
           {{'ADDRESS'|translate}} {{'REQUIRED'|translate}}
