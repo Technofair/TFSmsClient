@@ -56,9 +56,9 @@ export class UserRolesComponent implements OnInit {
       accept: () => {
 
         this.gSvc.postdata("Security/Role/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.toastrService.success(res.message);
           this.createForm();
           this.getRoles();
-          this.toastrService.success("Saved success");
         }, err => {
           this.toastrService.error("Error ! User role is not saved . ");
         })
