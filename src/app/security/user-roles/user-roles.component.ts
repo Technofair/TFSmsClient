@@ -20,28 +20,32 @@ export class UserRolesComponent implements OnInit {
   viewInfo: any = {};
   frm!: FormGroup
   progressStatus=true;
+  companyTypeList:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private Authser: AuthService) {
     this.getRoles();
   }
   ngOnInit(): void {
     this.getRoles();
     this.createForm();
+    this.getAllCompanyType();
   }
   createForm() {
     this.frm = this.fb.group({
       id: new FormControl(0),
       name: new FormControl("", Validators.required),
       isActive: new FormControl(true, Validators.required),
-      // createdBy: new FormControl(101),
-      // modifiedBy: new FormControl(101)
+      cmnCompanyTypeId: new FormControl(Validators.required),
       createdBy: new FormControl(this.Authser.getUserId),
       modifiedBy: new FormControl(this.Authser.getUserId)
     });
-
   }
-
-
-
+  getAllCompanyType() {
+    this.gSvc.postdata("Common/Company/GetAllCompanyType", this.Authser.getCompany()).subscribe(res => {
+      this.companyTypeList = res;
+    }, err => {
+      this.toastrService.error("Error! Company type list not found");
+    })
+  }
   save() {
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -69,7 +73,7 @@ export class UserRolesComponent implements OnInit {
 
   getRoles() {
     this.progressStatus=false
-    this.gSvc.postdata("Security/Role/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("Security/Role/GetAllSecRole", {}).subscribe(res => {
       this.rolesList = res;
       this.progressStatus=true;
     }, err => {
