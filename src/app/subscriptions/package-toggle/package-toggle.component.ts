@@ -71,25 +71,7 @@ export class PackageToggleComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // debugger
-
-    // var currUrl = this.route.snapshot.queryParamMap.get('urlNam');
-    // if (currUrl != null) {
-    //   var trx = this.route.snapshot.queryParamMap.get('trxID');
-    //   if (trx != null) {
-    //     if (trx == 'Deactive') {
-    //       this.executeFuncFromDash();
-    //      } else {
-    //       var sts: any = this.route.snapshot.queryParamMap.get('status');
-    //       this.paymentMsg = sts == '1' ? 'Payment Success!!!' : sts == '2' ? 'Payment Faile!!!' : sts == '3' ? 'Payment Cancel' : '';
-    //       this.PaymentInfoVisible = true;
-    //       this.paymentStatusId = sts.toString();
-    //     }
-    //   }
-
-      //this._location.replaceState(currUrl);
-    //}
-
+    
     this.frmsearch();
     this.createPackageRenew();
 
@@ -124,9 +106,7 @@ export class PackageToggleComponent implements OnInit {
     });
   }
   frmsearch() {
-    //var dstrct: any = this.auth.getDistrict();
-    //var upzla: any = this.auth.getUpazila();
-    //var unon: any = this.auth.getUnion();
+  
     this.frmsrc = this.fb.group({
       companyId: new FormControl(),
       clientId: new FormControl(),
@@ -134,16 +114,11 @@ export class PackageToggleComponent implements OnInit {
       contactNumber: new FormControl(),
       deviceNumber: new FormControl(),
       name: new FormControl(),
-      //cmnDistrictId:new FormControl(parseInt(dstrct)),
-      //cmnUpazillaId: new FormControl(parseInt(upzla)),
-      //cmnUnionId: new FormControl(),
       fromDate: new FormControl(),
       toDate: new FormControl(),
       statusType: new FormControl()
 
     })
-    //this.getUpazillaByDistrictId();
-    //this.getUnionByUpazillaId();
   }
   createPackageRenew() {
     this.frmPackageRenew = this.fb.group({
@@ -196,10 +171,7 @@ export class PackageToggleComponent implements OnInit {
               this.balService.updateCurrentBalance(0);
               data.statusType = 'Active';
               this.toastrService.success(res.message);
-              //this.subDetails();
-              //this.getDeviceBySubscriberId();
-              //  this.reset();
-              //this.reload();
+              
             }
           }, err => {
             this.toastrService.error(err.message);
@@ -214,46 +186,6 @@ export class PackageToggleComponent implements OnInit {
   }
   setPackageDetail(objPackage: any) {
     this.frm.patchValue(objPackage);
-    // this.frmPackageRenew.patchValue(objPackage);
-    // var obj = this.frm.value;
-    //  var objPackage = this.SubPackageList.find((w: { prdDeviceNumberId: any; }) => w.prdDeviceNumberId == this.frm.get("prdDeviceNumberId")?.value);
-
-    // if (objPackage != undefined) {
-
-    //   this.frm.controls['packageName'].setValue(objPackage.packageName);
-    //   this.frm.controls['scpSubscriberId'].setValue(objPackage.scpSubscriberId);
-    //   this.frm.controls['prdDeviceNumberId'].setValue(objPackage.prdDeviceNumberId);
-    //   this.frm.controls['amount'].setValue(objPackage.amount);
-    //   this.frm.controls['discount'].setValue(objPackage.discount);
-    //   this.frm.controls['endDate'].setValue(objPackage.endDate);
-    //   this.frm.controls['scpPackageId'].setValue(objPackage.scpPackageId);
-    //   this.frm.controls['deviceNumber'].setValue(objPackage.deviceNumber);
-    //   this.frm.controls['period'].setValue(objPackage.period);
-    //   this.frm.controls['packageType'].setValue(objPackage.packageType);
-    //   this.frm.controls['value'].setValue(objPackage.value);
-    //   this.frm.controls['expDate'].setValue(objPackage.expDate);
-    //   this.frm.controls['isActive'].setValue(objPackage.isActive);
-    //   this.frm.controls['createdBy'].setValue(objPackage.createdBy);
-    //   this.frm.controls['createdDate'].setValue(objPackage.createdDate);
-    //   this.frm.controls['modifiedBy'].setValue(objPackage.modifiedBy);
-    //   this.frm.controls['modifiedDate'].setValue(objPackage.modifiedDate);
-    //   this.frm.controls['packageValue'].setValue(objPackage.packageValue);
-    //   this.frm.controls['anFPaymentMethodId'].setValue(objPackage.anFPaymentMethodId);
-    //   this.frm.controls['statusType'].setValue(objPackage.statusType);
-
-    //   this.frm.controls['isFree'].setValue(objPackage.isFree);
-    //   this.frm.controls['freeDays'].setValue(objPackage.freeDays);
-
-    //   this.frm.controls['scpPackageId'].setValue(objPackage.scpPackageId);
-    //   this.frm.controls['period'].setValue(objPackage.period);
-    //   this.frm.controls['packageType'].setValue(objPackage.packageType);
-    //   this.frm.controls['currentStatus'].setValue(objPackage.statusType);
-    //   this.frm.controls['scpSubscriberId'].setValue(objPackage.scpSubscriberId);
-
-    //this.frm.controls['anFPaymentMethodId'].setValue(objPackage.anFPaymentMethodId);
-    //this.frm.controls['frm'].setValue(obj);
-    //this.frm.patchValue(objPackage);
-    // }
   }
 
   inactivePackage(data: any) {
@@ -379,7 +311,17 @@ getSubscriberPackageByDeviceId(data: any) {
   getRenewableSubscriber() {
     var requestBody = this.frmsrc.value;
     this.progressStatus = false;
-    requestBody.companyId = this.auth.getCompany();
+
+
+    if(this.frmsrc.controls['clientId'].value == null)
+      {
+        requestBody.companyId = this.auth.getCompany();
+      }
+      else
+      {
+        requestBody.companyId = this.frmsrc.controls['clientId'].value;
+      }
+
     this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", JSON.stringify(requestBody)).subscribe(res => {
       this.packageRenewlist = res;
       this.progressStatus = true;
