@@ -111,9 +111,6 @@ export class TransferSubscriberComponent implements OnInit {
     })
   }
   getToCompany(id:any){
-    alert(id.value)
-    
-    debugger
     this.toCompanyList=this.companyList.filter((x: { id: number; })=> x.id!=id.value);
     console.log(this.toCompanyList);
    }
