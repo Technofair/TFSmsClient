@@ -107,10 +107,11 @@ export class TransferSubscriberComponent implements OnInit {
   }
 
   getCompany() {
-    this.gSvc.postdata("Common/Company/GetAll", {}).subscribe(res => {
-      debugger;
-      var cmpny:any[]=res;
-      this.companyList = cmpny.filter(x=> x.cmnCompanyTypeId!=1);
+    this.gSvc.postdata("Common/Company/GetSelfExceptMSOAndSucceedingClientByCompanyId?companyId="+this.Authser.getCompany(), {}).subscribe(res => {
+    //this.gSvc.postdata("Common/Company/GetAll", {}).subscribe(res => {
+      this.companyList = res;
+      //var cmpny:any[]=res;
+      //this.companyList = cmpny.filter(x=> x.cmnCompanyTypeId!=1);
     }, err => {
       this.toastrService.error("Error! Company list not found ");
     })
