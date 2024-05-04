@@ -180,7 +180,7 @@ export class EmployeeComponent implements OnInit {
   }
   //new 04-05-2024
   getCompany() {
-    this.gSvc.postdata("Common/Company/GetSelfAndChildCompanyByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
+    this.gSvc.postdata("Common/Company/GetSelfAndSucceedingClientByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
       this.companyList = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
@@ -198,7 +198,7 @@ export class EmployeeComponent implements OnInit {
 
   getEmployee() {
     //GetEmployeeSummary/{companyId:int}
-    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + "1", {}).subscribe(res => {
+    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
       this.employeeList = res;
     }, err => {
       this.toastrService.error("Employee List Not Found");
