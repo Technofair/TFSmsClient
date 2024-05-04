@@ -178,15 +178,23 @@ export class EmployeeComponent implements OnInit {
     formData.append('employeeId', employeeId.toString());
     return this.gSvc.postdatafile('HRM/Employee/UploadPhoto', formData).subscribe(() => alert("Photo Uploaded Successfully"));
   }
-
-
+  //new 04-05-2024
   getCompany() {
-    this.gSvc.postdata("Common/Company/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("Common/Company/GetSelfAndChildCompanyByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
       this.companyList = res;
     }, err => {
-      this.toastrService.error("Company List Not Found");
+      this.toastrService.error("Error! Company list not found ");
     })
   }
+
+//old
+  // getCompany() {
+  //   this.gSvc.postdata("Common/Company/GetAll", {}).subscribe(res => {
+  //     this.companyList = res;
+  //   }, err => {
+  //     this.toastrService.error("Company List Not Found");
+  //   })
+  // }
 
   getEmployee() {
     //GetEmployeeSummary/{companyId:int}
