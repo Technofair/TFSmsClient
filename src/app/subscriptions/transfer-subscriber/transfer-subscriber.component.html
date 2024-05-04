@@ -10,7 +10,7 @@
           <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <label>{{'From Company' | translate}}</label><span class="text-danger"> *</span>
             <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId"
-              (onChange)="getSubscriberList()" [filter]="true" filterBy="name" [showClear]="true"
+              (onChange)="getSubscriberList()" (onChange)="getToCompany($event)" [filter]="true" filterBy="name" [showClear]="true"
               placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"></p-dropdown>
             <span *ngIf="frm.controls['companyId'].invalid && frm.controls['companyId'].touched " class="text-danger">
               {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
@@ -72,7 +72,7 @@
         <div class="formgrid grid">
           <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <label>{{'To Company' | translate}}</label><span class="text-danger"> *</span>
-            <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="trasCompanyId"
+            <p-dropdown [options]="toCompanyList" [style]="{'width':'100%'}" formControlName="trasCompanyId"
               [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
               optionValue="id"></p-dropdown>
             <span
@@ -94,7 +94,6 @@
                     <!-- <p-button (click)="transfer('to-from')" [disabled]="frm.invalid"
                       styleClass="p-button-info p-button-sm mr-4 pull-left" type="button" icon="pi pi-angle-double-left"
                       label="{{'TRANSFER' | translate}}"></p-button> -->
-
                     <span class="p-input-icon-left ml-auto pull-right">
                       <i class="pi pi-search"></i>
                       <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"

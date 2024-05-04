@@ -35,7 +35,7 @@ export class TransferSubscriberComponent implements OnInit {
   companyList: any;
   fromSubscriberList: any[] = [];
   toSubscriberList: any[] = [];
-
+  toCompanyList: any ;
   cmnCompanyId: any;
 
   constructor(
@@ -60,16 +60,12 @@ export class TransferSubscriberComponent implements OnInit {
   }
 
   getSubscriberList() {
-  
   this.fromSubscriberList = [];
   var cmnCompanyId = this.frm.get('companyId')?.value == null ? 0 : this.frm.get('companyId')?.value;
-  
   if(cmnCompanyId == 0){
     this.toastrService.warning("Please select from Company.");
     return;
   }
-  
-
   var param = {
     companyId: cmnCompanyId,
     clientId: null,
@@ -82,9 +78,7 @@ export class TransferSubscriberComponent implements OnInit {
     ToDate: null,
     Status: 1
     };
-
-    console.log(param);
-
+    
     //New: 06.04.2024
     this.gSvc.postdata("api/SubscriberPackage/GetSubscriberWithNeverdOrExpiredPackage", param).subscribe(res => {
     //Old: 06.04.2024
@@ -116,7 +110,13 @@ export class TransferSubscriberComponent implements OnInit {
       this.toastrService.error("Error! Company list not found ");
     })
   }
-
+  getToCompany(id:any){
+    alert(id.value)
+    
+    debugger
+    this.toCompanyList=this.companyList.filter((x: { id: number; })=> x.id!=id.value);
+    console.log(this.toCompanyList);
+   }
   save() {
     if (this.frm.invalid || this.transferfrm.invalid || this.toSubscriberList.length == 0) return false;
     this.confirmationService.confirm({

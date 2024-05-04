@@ -14,6 +14,7 @@ import { PackagePeriodPermissionComponent } from './package-period-permission/pa
 import { ScpProductComponent } from './scp-product/scp-product.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
+import { AppsettingsComponent } from './appsettings/appsettings.component';
 
 
 const routes: Routes = [
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'package-period-permission', component: PackagePeriodPermissionComponent },
   { path: 'scp-package', component: ScpProductComponent },
   { path: 'bank-info', component: BankInfoComponent },
-  { path: 'client-bank-info', component: ClientBankInfoComponent }
+  { path: 'client-bank-info', component: ClientBankInfoComponent },
+  { path: 'appsettings', component: AppsettingsComponent }
   
 ];
 

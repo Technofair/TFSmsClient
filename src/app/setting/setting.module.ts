@@ -41,6 +41,9 @@ import { ScpProductComponent } from './scp-product/scp-product.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { AppsettingsComponent } from './appsettings/appsettings.component';
+import { AccordionModule } from 'primeng/accordion';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +60,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     PackagePeriodPermissionComponent,
     ScpProductComponent,
     BankInfoComponent,
-    ClientBankInfoComponent
+    ClientBankInfoComponent,
+    AppsettingsComponent
   ],
   exports: [
   ],
@@ -68,7 +72,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     SettingRoutingModule,FormsModule,ReactiveFormsModule,
     InputTextModule,InputTextareaModule,MultiSelectModule,CascadeSelectModule,
     InputNumberModule,InputMaskModule,DropdownModule,AutoCompleteModule,CalendarModule,ChipsModule,TableModule,ConfirmDialogModule,
-    MessagesModule,DialogModule, PanelModule, CheckboxModule, DirectiveModule
+    MessagesModule,DialogModule, PanelModule, CheckboxModule, DirectiveModule,AccordionModule
   ],
   
 })
