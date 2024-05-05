@@ -25,10 +25,11 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DirectiveModule } from '../directives/directive.module';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ClientInfoComponent } from './client-info/client-info.component';
 
 @NgModule({
   declarations: [
-  //  CompanyComponent,
+    ClientInfoComponent
   
   ],
   exports: [

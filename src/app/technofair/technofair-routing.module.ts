@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ClientInfoComponent } from './client-info/client-info.component';
 
 const routes: Routes = [
-  //{ path: 'company', component: CompanyComponent },
+  { path: 'clientinfo', component: ClientInfoComponent },
 ];
 
 @NgModule({
