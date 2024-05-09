@@ -34,7 +34,7 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     this.frm = new FormGroup({
       id: new FormControl(0),
-      hrmEmployeeId: new FormControl(),
+      hrmEmployeeId: new FormControl(0,Validators.required),
       loginID: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
       isActive: new FormControl(true, Validators.required),
