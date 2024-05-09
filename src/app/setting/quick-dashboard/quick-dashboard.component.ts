@@ -116,32 +116,57 @@ export class QuickDashboardComponent implements OnInit {
    this.oldUserPassword=ref.parentPassword;
     this.auth.login(this.frm.value).subscribe(
       (result:any) => {        
-        console.log(result);
-        if(result !=undefined && result.userId>0)
-        {
-        this.auth.setParentEmail(this.parentEmail);
-        this.auth.setOldUserName(this.oldUserName);
-        this.auth.setOldPassword(this.oldUserPassword);
-        this.auth.setToken(result.token);
-        this.auth.setRole(result.roleId);
-        this.auth.setCompany(result.companyId);
-        this.auth.setCompanyTypeShortName(result.companyTypeShortName);
-        this.auth.setUserId(result.userId);
-        this.auth.setPhotoUrl(result.photoUrl);
-        this.auth.setUserName(result.userName);
-        this.auth.setDistrict(result.districtId);
-        this.auth.setUpazila(result.upazilaId);
-        this.auth.setUnion(result.unionId);
-        this.auth.setView(this.isMobile);
-        //New: 12.02.2024 Added BY Shariful
-        this.auth.setAppSetting(result.cmnAppSetting);
-        //End
-        this.auth.setlanguage('bn');
+        
+        //New
+        if(result.isAuhentic == true)
+          {       
+              this.auth.setParentEmail(this.parentEmail);
+              this.auth.setOldUserName(this.oldUserName);
+              this.auth.setOldPassword(this.oldUserPassword);
+              this.auth.setToken(result.token);
+              this.auth.setRole(result.roleId);
+              this.auth.setCompany(result.companyId);
+              this.auth.setCompanyTypeShortName(result.companyTypeShortName);
+              this.auth.setUserId(result.userId);
+              this.auth.setPhotoUrl(result.photoUrl);
+              this.auth.setUserName(result.userName);
+              this.auth.setDistrict(result.districtId);
+              this.auth.setUpazila(result.upazilaId);
+              this.auth.setUnion(result.unionId);
+              this.auth.setView(this.isMobile);
+              this.auth.setAppSetting(result.cmnAppSetting);
+              this.auth.setlanguage('bn');
+              this.openLinkInNewTab('/home/dashboard/msodashboard');
+          }
+          else
+          {
+            this.toastrService.warning(result.message);
+          }
+        
+          //Old
+        // if(result !=undefined && result.userId>0)
+        // {
+        // this.auth.setParentEmail(this.parentEmail);
+        // this.auth.setOldUserName(this.oldUserName);
+        // this.auth.setOldPassword(this.oldUserPassword);
+        // this.auth.setToken(result.token);
+        // this.auth.setRole(result.roleId);
+        // this.auth.setCompany(result.companyId);
+        // this.auth.setCompanyTypeShortName(result.companyTypeShortName);
+        // this.auth.setUserId(result.userId);
+        // this.auth.setPhotoUrl(result.photoUrl);
+        // this.auth.setUserName(result.userName);
+        // this.auth.setDistrict(result.districtId);
+        // this.auth.setUpazila(result.upazilaId);
+        // this.auth.setUnion(result.unionId);
+        // this.auth.setView(this.isMobile);
+        // this.auth.setAppSetting(result.cmnAppSetting);
+        // this.auth.setlanguage('bn');
+        // this.openLinkInNewTab('/home/dashboard/msodashboard');
+        // }else{
+        //   this.toastrService.warning("Incorrect User ID or Password");
+        // }
 
-        this.openLinkInNewTab('/home/dashboard/msodashboard');
-        }else{
-          this.toastrService.warning("Incorrect User ID or Password");
-        }
       },
       (err: Error) => {
         this.toastrService.error("Error! internal problem");
