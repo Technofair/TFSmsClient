@@ -108,7 +108,11 @@ export class UnassignedDeviceComponent implements OnInit {
       if (this.upFrm.invalid) return false;
       this.upFrm.controls['createdBy'].setValue(this.auth.getUserId());
       this.gSvc.postdata("api/PrdDeviceNumber/UpdateDeviceNumber", JSON.stringify(this.upFrm.value)).subscribe(res => {
+        
         this.toastrService.success(res.message);
+        this.updateDeviceFormView=false;
+        this.getDevices();
+
       }, err => {
         this.toastrService.error(err.message);
       })
