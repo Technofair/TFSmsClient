@@ -43,6 +43,7 @@ import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.com
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AppsettingsComponent } from './appsettings/appsettings.component';
 import { AccordionModule } from 'primeng/accordion';
+import { FrequencyComponent } from './frequency/frequency.component';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { AccordionModule } from 'primeng/accordion';
     ScpProductComponent,
     BankInfoComponent,
     ClientBankInfoComponent,
-    AppsettingsComponent
+    AppsettingsComponent,
+    FrequencyComponent
   ],
   exports: [
   ],

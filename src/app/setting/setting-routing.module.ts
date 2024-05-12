@@ -15,6 +15,7 @@ import { ScpProductComponent } from './scp-product/scp-product.component';
 import { BankInfoComponent } from './bank-info/bank-info.component';
 import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.component';
 import { AppsettingsComponent } from './appsettings/appsettings.component';
+import { FrequencyComponent } from './frequency/frequency.component';
 
 
 const routes: Routes = [
@@ -32,8 +33,8 @@ const routes: Routes = [
   { path: 'scp-package', component: ScpProductComponent },
   { path: 'bank-info', component: BankInfoComponent },
   { path: 'client-bank-info', component: ClientBankInfoComponent },
-  { path: 'appsettings', component: AppsettingsComponent }
-  
+  { path: 'appsettings', component: AppsettingsComponent },
+  { path: 'frequency', component: FrequencyComponent },
 ];
 
 @NgModule({
