@@ -130,7 +130,17 @@ export class LsoWiseProductListComponent implements OnInit {
 
   searchData(obj: any) {
     this.progressStatus=false;
-    this.gSvc.postdata("api/Report/GetDeviceInfoByClientId", JSON.stringify(obj)).subscribe(res => {
+
+       alert(obj.cmnCompanyId);
+
+       var companyId = this.frmsrc.controls['cmnCompanyId'].value;
+       if( companyId == null || companyId == 0 || companyId == "" || companyId == undefined)
+        {
+          this.frmsrc.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+        }
+        
+
+    this.gSvc.postdata("api/Report/GetDeviceInfoByClientId", JSON.stringify(this.frmsrc.value)).subscribe(res => {
       this.lsoWiseProductList = res;
       this.progressStatus=true;
     }, err => {

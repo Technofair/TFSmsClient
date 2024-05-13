@@ -56,10 +56,7 @@ export class AssignDeviceComponent implements OnInit {
         })
       }
     getCompanys(){  
-        //New
-        this.gSvc.postdata("Common/Company/GetCompanyBySelfOrParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
-        //Old
-        //this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+          this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
           this.companies = res;
         }, err => {
           console.log(err);
@@ -71,15 +68,14 @@ export class AssignDeviceComponent implements OnInit {
         var requestBody = this.frmsrc.value;
         this.progressStatus=false;
 
-        //requestBody.companyId = this.auth.getCompany();
-        //New
-
-        console.log(JSON.stringify(this.frmsrc.value));
+        var companyId= this.frmsrc.controls['cmnCompanyId'].value;
+        if( companyId == null || companyId == 0 || companyId == "" || companyId == undefined)
+         {
+           this.frmsrc.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+         }
  
         this.gSvc.postdata("Inventory/Purchase/GetAssignDeviceByAnyKey", JSON.stringify(this.frmsrc.value)).subscribe(res => {
-        //Old
-        //this.gSvc.postdata("api/SubscriberPackage/GetSubscriptionInfoByParameter", JSON.stringify(requestBody)).subscribe(res => {
-         this.packageRenewlist = res;
+        this.packageRenewlist = res;
         this.progressStatus=true;
         }, err => {
         this.progressStatus=true;

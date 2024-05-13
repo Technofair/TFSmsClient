@@ -36,7 +36,7 @@ export class UnassignedDeviceComponent implements OnInit {
         //console.log(JSON.stringify(this.auth.getCompany()));
         this.getCompany();
         this.getCompanys();
-        this.getDevices();
+        //this.getDevices();
         this.updateForm();
     }
 
@@ -69,10 +69,8 @@ export class UnassignedDeviceComponent implements OnInit {
       }
 
     getCompanys(){  
-        //New
-        this.gSvc.postdata("Common/Company/GetCompanyBySelfOrParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
-        //Old
-        //this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+        //this.gSvc.postdata("Common/Company/GetCompanyBySelfOrParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+        this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
           this.companies = res;
         }, err => {
           console.log(err);
@@ -81,18 +79,19 @@ export class UnassignedDeviceComponent implements OnInit {
       }
 
     getDevices(): void {
-        //NEW BY ASAD ON 19.12.2023
+       
         this.progressStatus=false;
-        // public int? CmnCompanyId { get; set; }
-        // public string? DeviceNumber { get; set; }
+
         console.log(JSON.stringify(this.frm.value));
-       var companyId= this.frm.controls['cmnCompanyId'].value;
-       if(companyId==null || companyId==0 ||companyId==""||companyId==undefined)
-      var test= this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+
+        var companyId= this.frm.controls['cmnCompanyId'].value;
+       if( companyId == null || companyId == 0 || companyId == "" || companyId == undefined)
+        {
+          this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+        }
+
         this.gSvc.postdata("Inventory/Purchase/GetUnassignDeviceByAnyKey", JSON.stringify(this.frm.value)).subscribe((res: any) => {
-        //oLD
-        //this.gSvc.postdata("Inventory/Purchase/GetUnassignStockInDeviceByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe((res: any) => {
-                this.devices = res;
+        this.devices = res;
                 this.progressStatus=true;
             },
             (err: any) => {
