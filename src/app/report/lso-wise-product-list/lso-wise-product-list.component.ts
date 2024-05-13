@@ -130,9 +130,7 @@ export class LsoWiseProductListComponent implements OnInit {
 
   searchData(obj: any) {
     this.progressStatus=false;
-
-       alert(obj.cmnCompanyId);
-
+      
        var companyId = this.frmsrc.controls['cmnCompanyId'].value;
        if( companyId == null || companyId == 0 || companyId == "" || companyId == undefined)
         {
