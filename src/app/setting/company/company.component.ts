@@ -205,8 +205,9 @@ export class CompanyComponent implements OnInit {
   }
 
   getCompanyType() {
-    this.gSvc.postdata("Common/Company/GetCompanyType", this.auth.getCompany()).subscribe(res => {
-      this.companyTypeList = res;
+    //New
+    this.gSvc.postdata("Common/Company/GetChildCompanyType", this.auth.getCompany()).subscribe(res => {
+    this.companyTypeList = res;
     }, err => {
       this.toastrService.error("Error! Company type list not found");
     })
