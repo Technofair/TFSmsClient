@@ -50,6 +50,7 @@ import { SubscriptionProfileComponent } from './subscription-profile/subscriptio
 import { PackageToggleComponent } from './package-toggle/package-toggle.component';
 import { PackageExpiredComponent } from './package-expired/package-expired.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { MobileMessageComponent } from './mobile-message/mobile-message.component';
 @NgModule({
   declarations: [
     AddSubscriberComponent,
@@ -74,7 +75,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     MessageTypeComponent,
     SubscriptionProfileComponent,
     PackageToggleComponent,
-    PackageExpiredComponent
+    PackageExpiredComponent,
+    MobileMessageComponent
   ],
   imports: [
     ReportViewerModule,
