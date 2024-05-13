@@ -1,6 +1,5 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-// import { ConfirmationService, PrimeNGConfig } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Table } from 'primeng/table';
@@ -12,7 +11,6 @@ import { Utility } from 'src/app/services/utility.service';
 import { ReportModel } from 'src/app/reportviewer/reportmodel';
 import { ReportViewer } from 'src/app/reportviewer/reportviewer';
 import { ExportService } from 'src/app/layout/service/export.service';
-//import { DOCUMENT } from '@angular/common';
 declare var $: any;
 interface jsonObject {
   id: number;
@@ -60,7 +58,7 @@ export class ChallanComponent implements OnInit {
   challenListStatus:boolean=true;
   stbCounter: any = 0;
   allowSale:boolean= false;
-
+  isFree:boolean= this.auth.allowSale();
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -70,16 +68,12 @@ export class ChallanComponent implements OnInit {
     , private auth: AuthService
     , private _util: Utility,
     private exportService: ExportService
-    // @Inject(DOCUMENT) private document: any
+    
   ) {
     this.getCompany();
     this.getStore();
     this.getProducts();
-    //this.getStockDevice();
-    //this.calculateSum();
-    // this.getBrandList();
-    // this.getItemCategory();
-    // this.getItemModelList();
+    
   }
 
   ngOnInit(): void {
@@ -89,7 +83,7 @@ export class ChallanComponent implements OnInit {
     this.getWarranty();
     this.allowSale = this.auth.allowSale();
     this.initializeDefault();
-    // this.warrentyList = [{ 'id': 0, "name": 'Not Applicable' }, { 'id': 1, "name": '6 M' }, { 'id': 2, "name": '1 Y' }]
+    
   }
   initializeDefault(){
     if(this.allowSale==false){
@@ -148,11 +142,12 @@ export class ChallanComponent implements OnInit {
         prdProductId: new FormControl(),
         invUnitId: new FormControl(1),
         cmnStoreId: new FormControl(),
-         prdProductModelId: new FormControl("", Validators.required),
+        prdProductModelId: new FormControl("", Validators.required),
         productName: new FormControl("", Validators.required),
         quantity: new FormControl([Validators.pattern("^[0-9]*$")]),
         stockQuantity: new FormControl(),
         rate: new FormControl(),
+        isFree: new FormControl(false),
         expireDate: new FormControl(),
         specification: new FormControl(),
         invWarrantyPeriodId: new FormControl(),
@@ -185,10 +180,7 @@ export class ChallanComponent implements OnInit {
       refNo: new FormControl(),
       fromDate: new FormControl(),
       toDate: new FormControl(),
-      // slsCustomerId: new FormControl(),
-      // prdEditionId: new FormControl(),
       cmnCompanyId: new FormControl(),
-      // cmnFinancialYearId: new FormControl(),
       cmnStoreId: new FormControl(),
       partyId: new FormControl(),
       hrmEmployeeId: new FormControl()
@@ -209,7 +201,6 @@ export class ChallanComponent implements OnInit {
     const rate = objCal.get('rate').value;
     const quantity = objCal.get('quantity').value;
     objCal.get('total').setValue(rate * quantity);
-
   }
 
   totalSum(rowData: any, index: number) {
@@ -236,9 +227,6 @@ export class ChallanComponent implements OnInit {
   }
   addCheckedItem(): void {
     var deviceList = this.unassignedStockDeviceList.filter(x => x.isActive);
-
-
-
     if (deviceList.length > 0) {
       var devices = '';
       var obj = this.frm.value;
@@ -261,10 +249,6 @@ export class ChallanComponent implements OnInit {
       objDetail.quantity = 0;
       this.frm.controls['frmDetail'].setValue(objDetail);
     }
-
-
-
-
   };
   addSerial(): void {
     var devices = '';
@@ -286,7 +270,6 @@ export class ChallanComponent implements OnInit {
     objDetail.startRange = '';
     objDetail.endRange = '';
     this.frm.controls['frmDetail'].setValue(objDetail);
-
   };
 
   deviceNumberWrong: string = '';
@@ -314,20 +297,18 @@ export class ChallanComponent implements OnInit {
 
   deviceNumberDuplicate:string='';
   addRow(): void {
-    //const objDetail = this.frm.get('frmDetail')?.value;
-    //let userName = this.frm.controls['frmOrdDetails'].value.prdProductId;
-    //console.log(userName);
-
+    
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
-
+    if(this.auth.allowSale()==false){
+      objDetail.rate=0;
+      objDetail.isFree=true;
+    }
     var prodModel = this.products.filter(x => x.id == objDetail.prdProductId)[0];
     if ((prodModel.hasDeviceID != null && prodModel.hasDeviceID == true) && (objDetail.deviceNumber == '' || objDetail.deviceNumber == null || objDetail.deviceNumber == undefined)) {
       this.toastrService.warning("Please input device id, Device ID is requeired!");
       return;
     }
-
-
     if (objDetail.id > 0) {
       var dtlModel = this.details.filter(x => x.id == objDetail.id && x.slsChallanId == objDetail.slsChallanId)[0];
       dtlModel.prdProductId = objDetail.prdProductId;
@@ -348,8 +329,7 @@ export class ChallanComponent implements OnInit {
 
         objDetail.deviceNumber = uniqueDvc.join(',');
         objDetail.quantity = uniqueDvc.length;
-        //objDetail.quantity = dvcNo.split(',').length;
-        // this.frm.controls['frmDetail'].setValue(objDetail);
+       
       }
 
       dtlModel.quantity = objDetail.quantity;
@@ -369,7 +349,6 @@ export class ChallanComponent implements OnInit {
 
         objDetail.deviceNumber = uniqueDvc.join(',');
         objDetail.quantity = uniqueDvc.length;
-        // objDetail.quantity = dvcNo.split(',').length;
         this.frm.controls['frmDetail'].setValue(objDetail);
       }
 
@@ -384,13 +363,12 @@ export class ChallanComponent implements OnInit {
       });
       if (results.length > 0) {
         this.toastrService.info("Please input complete data!");
-        // alert(results);
+        
       } else {
         var totalAmt = obj.payableAmount == undefined ? 0 : obj.payableAmount;
         totalAmt += objDetail.total;
         objDetail.totalAmount = totalAmt;
-        // this.frm.controls['payableAmount'].setValue(totalAmt);
-        // this.frm.controls['totalAmount'].setValue(totalAmt);
+        
         this.details.push(objDetail);
         var ttlAmt = 0, ttldscnt = 0;
         if (this.details.length > 0) {
@@ -407,7 +385,7 @@ export class ChallanComponent implements OnInit {
   }
 
   getDuplicate(arry:any[]) {
-    //const arry = [1, 2, 1, 3, 4, 3, 5];
+    
     const toFindDuplicates = (arry: any[]) => arry.filter((item, index) => arry.indexOf(item) !== index)
     const duplicateElementa = toFindDuplicates(arry);
     return duplicateElementa;
@@ -470,11 +448,7 @@ export class ChallanComponent implements OnInit {
     var objDetail = obj.frmDetail;
 
     this.progressStatus = false;
-     //old shariful
-    //let objProduct = this.products.find(w => w.prdProductModelId === objDetail.prdProductModelId);
-
-    //new: 27012024
-    //objDetail.productName=this.frm.controls['productName'].value;
+     
 
     let objProduct = this.products.find(w => w.name === objDetail.productName);
 
@@ -499,8 +473,7 @@ export class ChallanComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
 
-        // var deviceNumber= this.frm.controls['deviceNumber'].value;
-        // this.frm.controls['deviceNumber'].setValue(deviceNumber);
+       
 
         var obj = this.frm.value;
         if (obj.id > 0) {
@@ -509,16 +482,28 @@ export class ChallanComponent implements OnInit {
           obj.createdBy = this.auth.getUserId()
           obj.createdDate = new Date();
         }
-
+        
         let requestBody = { obj: obj, list: this.details };
         this.gSvc.postdata("Inventory/Challan/SaveChallan", requestBody).subscribe(res => {
-          this.search();
+         
           if (res.success) {
+           debugger
+            //new 
+            // this.toastrService.success("Successfull Challan");
+            // this.frmCreate();
 
-            //Asad Commented On 10.01.2023
-            //this.resetCheck();
+            // var objDetail = obj.frmDetail;
+            // this.frm.controls['cmnStoreId'].setValue(obj.cmnStoreId);
+            // objDetail.deviceNumber = '';
+            // objDetail.quantity = '';
+            // this.frm.controls['frmDetail'].setValue(objDetail);
+            // this.setProductModel();
+            // this.details = [];
+            // this.search();
 
-            //Asad added On 10.01.2023
+            
+            //old
+             this.search();
             this.unassignedStockDeviceList = [];
             var obj = this.frm.value;
             this.frm.controls['slsCustomerId'].setValue('');
@@ -530,15 +515,9 @@ export class ChallanComponent implements OnInit {
             objDetail.deviceNumber = '';
             this.frm.controls['frmDetail'].setValue(objDetail);
             this.setProductModel();
-            //End
-
-
-            //Asad Commented On 10.01.2024
-            //this.frm.reset();
-
             this.details = [];
-            this.toastrService.success("Successfull Challan");
-            // this.reload();
+           this.toastrService.success("Successfull Challan");
+           
           } else {
             this.toastrService.error(res.message);
           }
@@ -553,11 +532,26 @@ export class ChallanComponent implements OnInit {
     })
     return false;
   }
-
+  getIsFree(){
+    var obj = this.frm.value;
+    var objDetail = obj.frmDetail;
+    if ( objDetail.productName == '' || objDetail.productName == null || objDetail.productName == undefined) {
+      this.toastrService.warning("Please input device product name, Product name is requeired!");
+      return;
+    }
+    if(this.isFree && this.allowSale){
+      objDetail.rate = 0;
+      objDetail.salesRate = 0;
+      this.frm.controls['frmDetail'].setValue(objDetail);
+      this.allowSale=false;
+    }else{
+      this.setProductModel();
+      this.allowSale=true;
+    }
+  }
   edit(item: any) {
 
-    //this.frm.patchValue(id);
-    //this.details=[];
+   
     this.gSvc.postdata("Inventory/Challan/GetChallanDetailByChallanId/" + item.id + "", {}).subscribe((res: any) => {
       if (res.length > 0) {
         var dtl: any[] = [];
@@ -578,7 +572,7 @@ export class ChallanComponent implements OnInit {
         this.frm.controls['cmnFinancialYearId'].setValue(item.cmnFinancialYearId);
         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
         this.frm.controls['createdDate'].setValue(new Date());
-        //this.frm.controls['paidStatus'].setValue(item.paidStatus); 
+       
         this.frm.controls['date'].setValue(this._util.DateConvert(item.date));
         this.frm.controls['totalAmount'].setValue(item.totalAmount);
         this.frm.controls['totalDiscount'].setValue(item.totalDiscount);
@@ -596,7 +590,7 @@ export class ChallanComponent implements OnInit {
   getProdStock(prod: any) {
     var objDetail = prod.frmDetail;
     var obj = {
-      //cmnCompanyId: this.auth.getCompany(),
+    
       companyId: this.auth.getCompany(),
       cmnFinancialYearId: 1,
       cmnStoreId: prod.cmnStoreId,
@@ -644,14 +638,7 @@ export class ChallanComponent implements OnInit {
       console.log('Exception: (getCompany)' + err.message);
     })
   }
-  // challanSearchList(obj: any) {
-  //   this.gSvc.postdata("Inventory/Challan/ChallanSearch", { obj }).subscribe(res => {
-  //     this.challanList = res;
-  //   }, err => {
-  //     this.toastrService.error(err.message);
-  //     console.log('Exception: (challanSearchList)' + err.message);
-  //   })
-  // }
+  
   getStore() {
     this.gSvc.postdata("Common/Store/GetByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
       this.storeList = res;
@@ -688,35 +675,6 @@ export class ChallanComponent implements OnInit {
     })
   }
 
-
-  // getItemCategory() {
-  //   this.gSvc.getdata("api/GeneralServices/ItemCategory").subscribe(res => {
-  //     this.itemCategory = res;
-
-  //   }, err => {
-  //     this.toastrService.error("error");
-  //   })
-  // }
-
-  // getItemModelList() {
-  //   this.gSvc.postdata("api/ItemModel/ItemModels", {}).subscribe(res => {
-  //     this.itemModelList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("Item Model List Not Found");
-  //   })
-  // }
-
-  // getBrandList() {
-  //   this.gSvc.postdata("api/ItemBrand/ItemBrands", {}).subscribe(res => {
-  //     this.brandList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("Item Brand List Not Found");
-  //   })
-
-  // }
-
   getWarranty() {
     this.gSvc.postdata("Inventory/WarrantyPeriod/GetAll", {}).subscribe(res => {
       this.warrentyList = res;
@@ -726,16 +684,6 @@ export class ChallanComponent implements OnInit {
       console.log('Exception: (getWarranty)' + err.message);
     })
   }
-
-  //   itemBulkUpload() {
-  //     this.displayItemBulkModal = true;
-  //     //this.reset();
-  // /*    this.gSvc.postdata("api/Item/Item/" + id + "", {}).subscribe((res: any) => {
-  //       this.viewInfo = res;
-  //     }, err => {
-  //       this.toastrService.error("Error! Data Not Found");
-  //     })*/
-  // }
 
   importProducts($event: any) {
 
@@ -765,7 +713,7 @@ export class ChallanComponent implements OnInit {
 
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
           if (rows != undefined && rows.length) {
-            //var devices = '';
+            
             var qty = 0;
             for (var i = 0; i < rows.length; i++) {
               var obj: any = { productName: '', deviceNumber: '' };
@@ -787,7 +735,7 @@ export class ChallanComponent implements OnInit {
             objDetail.deviceNumber = devices;
             objDetail.quantity = qty;
 
-            //new:start
+            
             var dvcList: any[] = devices.split(',');
             this.unassignedStockDeviceList.forEach((item) => {
               for (let i = 0; i < dvcList.length; i++) {
@@ -799,7 +747,7 @@ export class ChallanComponent implements OnInit {
             });
             this.unassignedStockDeviceList = this.unassignedStockDeviceList.sort((b, a) => a.isActive - b.isActive);
             this.checkIfExist();
-            //end
+            
             this.frm.controls['frmDetail'].setValue(objDetail);
 
           }
@@ -809,55 +757,6 @@ export class ChallanComponent implements OnInit {
 
     }
   }
-
-
-
-  // submitForm() {    
-  //   const formData: FormData = new FormData();
-  //   //formData.append("cardNumber", "asjalkd")
-  //   formData.append('fileSource', this.fileToUpload);
-  //   //return this.gSvc.postdatafile('Inventory/Challan/UploadFile', formData).subscribe(() => alert("File uploaded"));
-  //   this.gSvc.postdatafile('Inventory/Challan/UploadFile', formData).subscribe(res => {
-  //     var obj = this.frm.value;
-  //     var objDetail=obj.frmDetail;
-  //     objDetail.deviceNumber=res.message;
-  //     this.frm.controls['frmDetail'].setValue(objDetail);
-  //   }, err => {
-  //     this.toastrService.error("There is problem");
-  //   })
-  // }
-
-  // handleFileInput(event: Event) {
-  //   // Access the file from the event object
-  //   const target = event.target as HTMLInputElement;
-  //   const file: File | null = target.files?.[0] || null;
-
-  //   if (file) {
-  //     this.fileToUpload = file;
-  //     // Handle the file
-  //     // You can access the file properties like file.name, file.size, etc.
-  //     this.submitForm();
-  //   } else {
-  //     alert("Error");
-  //     // No file selected or an error occurred
-  //   }
-  // }
-
-
-
-  // itemTypeImportSave () {
-  //   console.log('ok');
-  // }
-
-  // onclick(event: any) {
-  //   if (event.target.checked == true) {
-  //     this.isDisplayed = true;
-  //   }
-  //   else {
-  //     this.isDisplayed = false;
-  //   }
-  // }
-
   reload() {
     location.reload();
   }
@@ -894,7 +793,7 @@ export class ChallanComponent implements OnInit {
 
   }
 
-  //Collection Modal
+  
   challanModel: any;
   collectionId: number = 0;
   collectionRemarks: string = '';
@@ -903,7 +802,7 @@ export class ChallanComponent implements OnInit {
   collectionHistoryList: any[] = [];
 
   selectedRow:any;
-  //Newly Added By Asad 30.11.2023
+  
   loadCollectionModal(id: any) {
     this.selectedRow=id;
     var param = {
@@ -924,18 +823,6 @@ export class ChallanComponent implements OnInit {
       console.log('Exception: (getChallanDetail)' + err.message);
     });
   }
-
-
-
-  // Old
-  // loadCollectionModal(item: any) {
-  //   this.isCollectionEnable = true;
-  //   this.collectionEntity = undefined;
-  //   this.collectionId = 0;
-  //   this.collectionRemarks = '';
-  //   this.loadCollection(item);
-  //   this.loadCollectionHistory(item);
-  // }
 
   loadCollection(item: any) {
     this.challanModel = item;
@@ -970,14 +857,13 @@ export class ChallanComponent implements OnInit {
       this.toastrService.error(err.message);
       console.log('Exception: (loadCollectionHistory)' + err.message);
     })
-    //this.isCollectionModal = true;
+    
 
   }
 
   isCollectionEnable: boolean = true;
   checkAmount(item: any) {
 
-    // var rcvd=this.challanModel.receiveAmount;
     if (this.collectionId == 0) {
       if (item.amount > this.challanModel.dueAmount) {
         item.amount = this.challanModel.dueAmount;
@@ -1031,16 +917,10 @@ export class ChallanComponent implements OnInit {
           if (res.success) {
             this.collectionList = [];
             this.collectionRemarks = '';
-
-            //this.challanModel.dueAmount -= this.collectionEntity.totalAmount; //Asad Commented
-
             this.collectionEntity = undefined;
             this.search();
-
             this.collectionId = 0;
             this.loadCollectionModal(requestBody.obj.slsChallanId); //Asad added on 30.11.2023
-
-
             this.toastrService.success("Collection Successfully");
           } else {
             this.toastrService.error(res.message);
@@ -1066,9 +946,7 @@ export class ChallanComponent implements OnInit {
     this.collectionEntity = entity;
     this.loadCollection(this.challanModel);
   }
-  //Collection Modal
-
-  //Challan Life Cycle
+  
   isChallanLifeCycleModal: boolean = false;
   challanLifeCycleList: any[] = [];
   loadChallanLifeCycle(item: any) {
@@ -1087,9 +965,7 @@ export class ChallanComponent implements OnInit {
       console.log('Exception: (loadCollection)' + err.message);
     });
   }
-  //Challan Life Cycle
-
-  //Report Execution
+ 
   public displayModal: boolean = false;
   public _getReportUrl: string = 'reportviewer/reportviewer/gettestreport';
   loadReportIn(item: any) {
@@ -1112,15 +988,6 @@ export class ChallanComponent implements OnInit {
     var ModelsArray = [param];
     this._rptViewer.reportOutPage(this._getReportUrl, ModelsArray, isModal);
   }
-
-  // @ViewChild('reportChallan') _reportChallan!: ElementRef;
-  // openInNewTab() {
-  //   //var document=Document;
-  //   var newWindowContent: any = this._reportChallan.nativeElement.innerHTML;
-  //   var newWindow: any = window.open("", "", "width=500,height=400");
-  //   newWindow.document.write(newWindowContent);
-  // }
-  //Report Execution
 
   exportToExcel(): void {
     const columnsToExport: any[] = ['refNo', 'date', 'clientName', 'payableAmount'];
