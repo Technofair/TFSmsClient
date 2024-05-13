@@ -23,6 +23,7 @@ import { MessageTypeComponent } from './message-type/message-type.component';
 import { SubscriptionProfileComponent } from './subscription-profile/subscription-profile.component';
 import { PackageToggleComponent } from './package-toggle/package-toggle.component';
 import { PackageExpiredComponent } from './package-expired/package-expired.component';
+import { MobileMessageComponent } from './mobile-message/mobile-message.component';
 
 
 
@@ -50,7 +51,9 @@ const routes: Routes = [
   {path:"message-type",component:MessageTypeComponent},
   {path:"subscription-profile",component:SubscriptionProfileComponent},
   {path:"package-toggle",component:PackageToggleComponent},
-  {path:"package-expired",component:PackageExpiredComponent}
+  {path:"package-expired",component:PackageExpiredComponent},
+  {path:"mobile-message",component:MobileMessageComponent},
+  
   
 ];
 
