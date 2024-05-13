@@ -84,61 +84,9 @@ export class PurchaseComponent implements OnInit {
     this.frmSearch();
     this.search();
     this.initializeDefault();
-    //this.warrentyList = [{ 'id': 1, "name": 'Not Applicable' }, { 'id': 1, "name": '6 M' }, { 'id': 2, "name": '1 Y' }]
+ 
   }
- /* frmCreate() {
-    this.frm = this.fb.group({
-      id: new FormControl(0),
-      refNo: new FormControl(""),
-      lCNo: new FormControl(),
-      cmnCompanyId: new FormControl(this.auth.getCompany()),
-      cmnFinancialYearId: new FormControl(0),
-      invSupplierId: new FormControl(Validators.required),
-      date: new FormControl(new Date(), [Validators.required]),
-      totalPrice: new FormControl(0),
-      challanNo: new FormControl(),
-      transportCharge: new FormControl(),
-      otherCharge: new FormControl(),
-      deduct: new FormControl(),
-      payableAmount: new FormControl(),
-      paidAmount: new FormControl(),
-      dueAmount: new FormControl(),
-      remarks: new FormControl('',Validators.maxLength(100)),
-      status: new FormControl(0),
-      createdBy: new FormControl(),
-      createdDate: new FormControl(new Date()),
-      modifiedBy: new FormControl(),
-      modifiedDate: new FormControl(),
-      rate: new FormControl(),
-      quantity: new FormControl(),
-      total: new FormControl(),
-      filePath: new FormControl(),
-      totalAmount: new FormControl(),
-      cmnStoreId: new FormControl(Validators.required),
-      frmDetail: this.fb.group({
-        id: new FormControl(0),
-        invPurchaseId: new FormControl(0),
-        prdProductId: new FormControl(),
-        invUnitId: new FormControl(1),
-        // cmnStoreId: new FormControl(),
-        prdProductModelId: new FormControl(),
-        quantity: new FormControl([Validators.pattern("^[0-9]*$")]),
-        rate: new FormControl(),
-        expireDate: new FormControl(),
-        specification: new FormControl(),
-        invWarrantyPeriodId: new FormControl(),
-        salesRate: new FormControl(),
-        isSequence: new FormControl(),
-        startRange: new FormControl(),
-        endRange: new FormControl(),
-        name: new FormControl(),
-        deviceNumber: new FormControl(''),
-        productModel: new FormControl(),
-        total: new FormControl(),
-        filePath: new FormControl()
-      }),
-    }); 
-  }*/
+
   frmCreate() {
     this.frm = this.fb.group({
       id: new FormControl(0),
@@ -283,11 +231,7 @@ initializeDefault(){
       return;
     }
 
-    // if(objDetail.quantity == "")
-    // {
-    //   this.toastrService.warning("Quantity is required!");
-    //   return;
-    // }
+    
    if(this.allowPurchase){
     if(objDetail.rate == "") 
       {
@@ -332,7 +276,7 @@ initializeDefault(){
 
     if (results.length > 0) {
       this.toastrService.info("Please input complete data!");
-      // alert(results);
+   
     } 
     else {
 
@@ -340,26 +284,18 @@ initializeDefault(){
   
 
       
-      // var totalAmt = obj.payableAmount == undefined ? 0 : obj.payableAmount;
+     
        var totalAmt=0;
-     // totalAmt += objDetail.total;
-      objDetail.deviceNumber = objDetail.deviceNumber.trim();
-      
-      // obj.payableAmount = totalAmt;
-      // this.frm.controls['frm'].setValue(obj);
-
-     // this.frm.controls['payableAmount'].setValue(totalAmt);
     
+      objDetail.deviceNumber = objDetail.deviceNumber.trim();
      
       this.details.push(objDetail);
       this.details.forEach(element => {
         totalAmt=totalAmt+element.total;
-      //  obj.payableAmount=obj.payableAmount+element.total;
+      
       });
       this.frm.controls['payableAmount'].setValue(totalAmt);
-      // for(var i=0;this.details.length>i,i++;){
-      //   totalAmt =totalAmt+this.details[i].total;
-      // }
+      
       
 
       this.frm.controls['frmDetail'].setValue(objDetail);
@@ -372,20 +308,16 @@ initializeDefault(){
 
   removeRow(rowData: any): void {
     var totalAmt=0;
-    // var totalAmt=this.frm.controls['payableAmount'].value;
-    //  totalAmt=totalAmt-rowData.total;
     var index=rowData.index;
     this.details.splice(index, 1); // 'index' is the index of the row you want to remove
     this.details.forEach(element => {
       totalAmt=totalAmt+element.total;
-    //  obj.payableAmount=obj.payableAmount+element.total;
+   
     });
     this.frm.controls['payableAmount'].setValue(totalAmt);
   }
   toggle() {
     this.show = !this.show;
-
-    // Change the name of the button.
     if (this.show)
       this.buttonName = "Add More Serial";
     else
@@ -411,8 +343,6 @@ initializeDefault(){
   setProductModel(res:any) {
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
-    //objDetail = this.frm.get('frmDetails')?.value;
-    //const productId = this.frm.get('prdProductId')?.value;
     let objProduct = this.products.find(w => w.name === objDetail.productName);
     this.hasDeviceID= objProduct.hasDeviceID    
     objDetail.name = objProduct.name;
@@ -422,8 +352,6 @@ initializeDefault(){
   }
 
   savePurchase() {
-    // if (this.frm.invalid) return false;
-    // console.log(this.frm.value);
     if (this.details.length == 0) { this.toastrService.error("No Item found"); return false; }
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -444,10 +372,10 @@ initializeDefault(){
           this.search();
           if (res.success) {
             this.toastrService.success(res.message);
-            alert(res.message);
-            this.frm.reset();
             this.details = [];
-            location.reload();
+             this.frmCreate();
+            this.frm.controls['invSupplierId'].setValue(obj.invSupplierId);
+            this.frm.controls['cmnStoreId'].setValue(obj.cmnStoreId);
           } else {
             this.toastrService.error(res.message);
           }
@@ -463,8 +391,6 @@ initializeDefault(){
   }
 
   edit(item: any) {
-    //this.frm.patchValue(id);
-    //this.details=[];
     this.gSvc.postdata("Inventory/Purchase/GetPurchaseDetailsByPurchaseId/" + item.id + "", {}).subscribe((res: any) => {
       if (res.length > 0) {
         this.details = res;
@@ -474,7 +400,7 @@ initializeDefault(){
         this.frm.controls['cmnStoreId'].setValue(model.cmnStoreId);
         this.frm.controls['invSupplierId'].setValue(item.invSupplierId);
         this.frm.controls['cmnFinancialYearId'].setValue(item.cmnFinancialYearId);
-        //this.frm.controls['paidStatus'].setValue(item.paidStatus); 
+       
         this.frm.controls['date'].setValue(this.util.DateConvert(item.date));
         this.frm.controls['payableAmount'].setValue(item.payableAmount);
         this.frm.controls['remarks'].setValue(item.remarks);
@@ -551,53 +477,10 @@ initializeDefault(){
     })
   }
 
-
-  // getItemCategory() {
-  //   this.gSvc.getdata("api/GeneralServices/ItemCategory").subscribe(res => {
-  //     this.itemCategory = res;
-
-  //   }, err => {
-  //     this.toastrService.error("error");
-  //   })
-  // }
-
-  // getItemModelList() {
-  //   this.gSvc.postdata("api/ItemModel/ItemModels", {}).subscribe(res => {
-  //     this.itemModelList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("Item Model List Not Found");
-  //   })
-  // }
-
-  // getBrandList() {
-  //   this.gSvc.postdata("api/ItemBrand/ItemBrands", {}).subscribe(res => {
-  //     this.brandList = res;
-
-  //   }, err => {
-  //     this.toastrService.error("Item Brand List Not Found");
-  //   })
-
-  // }
-
-
-
-  //   itemBulkUpload() {
-  //     this.displayItemBulkModal = true;
-  //     //this.reset();
-  // /*    this.gSvc.postdata("api/Item/Item/" + id + "", {}).subscribe((res: any) => {
-  //       this.viewInfo = res;
-  //     }, err => {
-  //       this.toastrService.error("Error! Data Not Found");
-  //     })*/
-  // }
-
   resetFile(){
     this.myFileInput.nativeElement.value = '';
   }
-
   importProducts($event: any) {
-
     const files = $event.target.files;
     if (files.length) {
       const file = files[0];
@@ -607,8 +490,6 @@ initializeDefault(){
         const sheets = wb.SheetNames;
 
         if (sheets.length) {
-
-          //alert('greater');
 
           const rows = utils.sheet_to_json(wb.Sheets[sheets[0]]);
           if (rows != undefined && rows.length) {
@@ -633,58 +514,13 @@ initializeDefault(){
             objDetail.quantity = qty;
             this.frm.controls['frmDetail'].setValue(objDetail);
 
-            //console.log(rows);
-            //this.movies = rows;
-
-            /*  this.gSvc.postdata("api/ItemType/UpdateItemType", JSON.stringify(this.frm.value)).subscribe(res => {
-                this.frm.reset();
-                this.getItemtype();
-              }*/
+           
           }
         }
       }
       reader.readAsArrayBuffer(file);
     }
   }
-
-
-
-  // submitForm() {    
-  //   const formData: FormData = new FormData();
-  //   //formData.append("cardNumber", "asjalkd")
-  //   formData.append('fileSource', this.fileToUpload);
-  //   //return this.gSvc.postdatafile('Inventory/Purchase/UploadFile', formData).subscribe(() => alert("File uploaded"));
-  //   this.gSvc.postdatafile('Inventory/Purchase/UploadFile', formData).subscribe(res => {
-  //     var obj = this.frm.value;
-  //     var objDetail=obj.frmDetail;
-  //     objDetail.deviceNumber=res.message;
-  //     this.frm.controls['frmDetail'].setValue(objDetail);
-  //   }, err => {
-  //     this.toastrService.error("There is problem");
-  //   })
-  // }
-
-  // handleFileInput(event: Event) {
-  //   // Access the file from the event object
-  //   const target = event.target as HTMLInputElement;
-  //   const file: File | null = target.files?.[0] || null;
-
-  //   if (file) {
-  //     this.fileToUpload = file;
-  //     // Handle the file
-  //     // You can access the file properties like file.name, file.size, etc.
-  //     this.submitForm();
-  //   } else {
-  //     alert("Error");
-  //     // No file selected or an error occurred
-  //   }
-  // }
-
-
-
-  // itemTypeImportSave () {
-  //   console.log('ok');
-  // }
 
   onclick(event: any) {
     if (event.target.checked == true) {
