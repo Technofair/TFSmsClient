@@ -690,7 +690,10 @@
     "UserType":"ইউজার টাইপ",
     "SMSProduct":"এস.এম.এস প্রডাক্ট",
     "CASProduct":"ক্যাস প্রডাক্ট",
-    "ProductMapping":"প্রডাক্ট ম্যাপ"
+    "ProductMapping":"প্রডাক্ট ম্যাপ",
+    "ScpFrequency":"ফ্রিকোয়েন্সি",
+    "Timeframe":"সময়সীমা",
+    "IsFree":"ফ্রি"
 
 }
 

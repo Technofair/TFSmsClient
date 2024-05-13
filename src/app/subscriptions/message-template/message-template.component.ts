@@ -36,9 +36,9 @@ export class MessageTemplateComponent implements OnInit {
   simpleOsd:boolean=true;
   longOsd:boolean=true;
   scrollOsd:boolean=true;
-
+  scpFrequency:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
-
+    this.messageTemplates();
   }
 
   ngOnInit(): void {
@@ -46,6 +46,7 @@ export class MessageTemplateComponent implements OnInit {
     this.messageTemplates();
     this.getMessageType();
     this.getOsdType();
+    this.  getFrequency();
   }
 
   createMestemFrm() {
@@ -60,7 +61,8 @@ export class MessageTemplateComponent implements OnInit {
       oSDTypeId: new FormControl(Validators.required),
       dVBEncoding: new FormControl('ascii', Validators.required),
       duration: new FormControl(),
-
+      timeframe:new FormControl(),
+      scpFrequencyId:new FormControl(),
       recurrent: new FormControl(false),
       date:new FormControl(),
       repetition: new FormControl(),
@@ -81,7 +83,6 @@ export class MessageTemplateComponent implements OnInit {
   getMessageType(){
     this.gSvc.postdata("api/MessageType/GetActiveAMessageType", {}).subscribe(res => {
       this.messageType=res;
-      console.log(JSON.stringify(res));
     }, err => {
       this.toastrService.error(err.message);
     })
@@ -94,6 +95,15 @@ export class MessageTemplateComponent implements OnInit {
       this.toastrService.error(err.message);
     })
   }
+  
+  getFrequency() { 
+    this.gSvc.postdata("Common/CmnFrequency/CmnFrequencies", {}).subscribe(res => {
+      this.scpFrequency = res;      
+    }, err => {      
+      this.toastrService.error("List not found");
+    })
+  }
+
   messageSet(){
     var messageTypeId= this.frm.get('scpMessageTypeId')?.value;
     var messages= this.messageType.find((x: { id: any; }) => x.id ===messageTypeId );

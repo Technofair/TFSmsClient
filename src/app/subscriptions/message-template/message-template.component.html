@@ -11,24 +11,36 @@
                     [filter]="true" filterBy="name" [showClear]="true"
                     placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id" (onChange)="messageSet()" ></p-dropdown><br>
             </div>
-            <!-- <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <!-- 
+                <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'StartDate' | translate}}</label>
                 <input type="date" class="p-2  w-full" formControlName="startDate" pInputText />
-            </div>
-            <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                 </div>
+               <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'EndDate' | translate}}</label>
                 <input type="date" class="p-2  w-full" formControlName="endDate" pInputText />
-            </div> -->
+               </div> 
+            -->
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'OSDType'|translate}}</label><span class="text-danger"> *</span>
                 <p-dropdown [options]="osdTypes" [style]="{'width':'100%'}" formControlName="oSDTypeId"
-                     [filter]="true" filterBy="number" [showClear]="true"
+                     [filter]="true" filterBy="name" [showClear]="true"
                     placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="id"(onChange)="osdTypeChange()" ></p-dropdown><br>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'ScpFrequency'|translate}}</label>
+                <p-dropdown [options]="scpFrequency" [style]="{'width':'100%'}" formControlName="scpFrequencyId"
+                    [filter]="true" filterBy="name" [showClear]="true"
+                    placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="name"></p-dropdown><br>
+            </div>                                            
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'Timeframe' | translate}}</label>
+                <input type="number" class="p-2  w-full" formControlName="timeframe" pInputText />
             </div>
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'DVBEncoding'|translate}}</label>
                 <p-dropdown [options]="dvbEncodings" [style]="{'width':'100%'}" formControlName="dVBEncoding"
-                    [filter]="true" filterBy="number" [showClear]="true"
+                    [filter]="true" filterBy="name" [showClear]="true"
                     placeholder="{{'SELECT'|translate}}" optionLabel="name" optionValue="name"></p-dropdown><br>
             </div>                                            
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -53,7 +65,6 @@
                         <label>{{'Interval' | translate}}</label>
                         <input type="number" class="p-2  w-full" formControlName="interval" pInputText />
                     </div>
-                    
                 </div>
             </div>
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12"[hidden]="longOsd">

@@ -545,5 +545,8 @@
     "CasName":"Cas Name",
     "ProductId":"Product Id",
     "ChalanDate":"Chalan Date",
-    "SubscriberTransfer":"Subscriber Transfer"
+    "SubscriberTransfer":"Subscriber Transfer",
+    "ScpFrequency":"Frequency",
+    "Timeframe":"Timeframe",
+    "IsFree":"Free"
 }
