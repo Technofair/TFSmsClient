@@ -56,6 +56,7 @@ export class MobileMessageComponent implements OnInit {
   osdTypes:any;
   characters:any;
   countSMS:any;
+  messageLength:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
 
   }
@@ -79,11 +80,14 @@ export class MobileMessageComponent implements OnInit {
   }
   frmcreate() {
     this.frm = this.fb.group({
+    
       id: new FormControl(0,Validators.required),
       recipient: new FormControl('', Validators.required),
       message: new FormControl('',Validators.required ),
       countSMS: new FormControl(1,Validators.required),
       date:new FormControl(new Date()),
+      lang:new FormControl(''),
+      
     });
   }
   getCompany(){
@@ -118,7 +122,6 @@ export class MobileMessageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-      
         var obj= this.frm.value;
         this.gSvc.postdata("api/SendSMS/Save", JSON.stringify(obj)).subscribe(res => {
           if(res.success){
@@ -136,7 +139,33 @@ export class MobileMessageComponent implements OnInit {
     })
     return false;
   }
- 
+  messageCount(){
+    if(this.frm.controls['lang'].value=='bn'||this.frm.controls['lang'].value=='en'){
+      var message= this.frm.controls['message'].value;
+      var bn =67
+      var en=160
+      this.messageLength=message.length;
+      if(this.frm.controls['lang'].value=='bn'){
+        this.countSMS=Math.ceil(this.messageLength/bn).toString();
+      }
+      if(this.frm.controls['lang'].value=='en'){
+       this.countSMS=Math.ceil(this.messageLength/en).toString();
+     }
+    }else{
+      this.toastrService.error("Please select language !")
+      return ;
+    }
+
+
+  }
+  checkBnEn(){
+   if(this.frm.controls['en'].value==true){
+     this.frm.controls['bn'].setValue(false);
+   }
+   if(this.frm.controls['bn'].value==true){
+    this.frm.controls['en'].setValue(false);
+  }
+  }
   reload() {
     this.formId = 0;
     this.router.navigateByUrl('/subscriber/stbassign')
