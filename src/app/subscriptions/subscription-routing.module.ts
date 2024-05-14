@@ -53,8 +53,6 @@ const routes: Routes = [
   {path:"package-toggle",component:PackageToggleComponent},
   {path:"package-expired",component:PackageExpiredComponent},
   {path:"mobile-message",component:MobileMessageComponent},
-  
-  
 ];
 
 @NgModule({

@@ -13,6 +13,12 @@
                     optionLabel="name" optionValue="id"></p-dropdown><br>
             </div>
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+                <label>{{'ClientType'|translate}}</label>
+                <p-dropdown [options]="clientTypes" [style]="{'width':'100%'}" formControlName="clientTypeId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'SubscriberID' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
             </div>
@@ -23,7 +29,7 @@
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'Phone' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
-            </div>
+            </div> -->
 
 
             <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
@@ -32,7 +38,6 @@
                     [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                     optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
             </div>
-
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
                 <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
@@ -53,7 +58,6 @@
                             label="{{'Search' | translate}}"></p-button>&nbsp;
                         <p-button (onClick)="searchReset()" styleClass="p-button-warning p-button-sm"
                             icon="pi pi-refresh" label="{{'RESET'|translate}}"> </p-button>&nbsp;
-
                     </div>
                 </div>
             </div>
@@ -91,16 +95,29 @@
     </div>
     </div>
     <div class="col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8">
-        <form [formGroup]="frm" (ngSubmit)="send()">
+        <form [formGroup]="frm" >
             <input type="hidden" formControlName="id" value="0">
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card formgrid grid">
                     <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                        <label>{{'Message' | translate}}</label><span class="text-danger"> *</span>
-                        <textarea rows="3" cols="25" pInputTextarea formControlName="message"></textarea>
+                        <div class="formgrid grid">
+                             
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="lang" name="inlineRadioOptions" id="inlineRadio1" value="bn">
+                                <label class="form-check-label" for="inlineRadio1">Bn</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="lang" name="inlineRadioOptions" id="inlineRadio2" value="en">
+                                <label class="form-check-label" for="inlineRadio2">En</label>
+                              </div>
+                        </div>
                     </div>
                     <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-                        <p class="m-2">{{'Characters' | translate}}:{{characters}}</p>
+                        <label>{{'Message' | translate}}</label><span class="text-danger"> *</span>
+                        <textarea rows="3" cols="25" pInputTextarea formControlName="message" (ngModelChange)="messageCount()"></textarea>
+                    </div>
+                    <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+                        <p class="m-2">{{'Characters' | translate}}:{{messageLength}}</p>
                         <p class="m-2">{{'CountSMS' | translate}}:{{countSMS}}</p>
                     </div>
                     <br />
