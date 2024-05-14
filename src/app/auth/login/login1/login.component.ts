@@ -46,6 +46,7 @@ export class LoginComponent1 implements OnInit  {
           this.auth.setRole(result.roleId);
           this.auth.setCompany(result.companyId);
           this.auth.setUserId(result.userId);
+          this.auth.setUserLevel(result.userLevel);
           this.auth.setUserName(result.userName);
          
          this.router.navigate(['/home/dashboard/msodashboard']);

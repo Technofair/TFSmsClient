@@ -48,6 +48,16 @@ export class AuthService {
     return parseInt(sessionStorage.getItem('userId') ?? '0');
   }
   
+  
+  setUserLevel(userLevel: number): void {
+    sessionStorage.setItem('userLevel', userLevel.toString());
+  }
+
+  getUserLevel(): number {
+    return parseInt(sessionStorage.getItem('userLevel') ?? '0');
+  }
+
+
   setPhotoUrl(photoUrl: string): void {
     sessionStorage.setItem('photoUrl', photoUrl);
   }

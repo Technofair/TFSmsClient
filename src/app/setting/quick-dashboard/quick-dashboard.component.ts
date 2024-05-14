@@ -128,6 +128,7 @@ export class QuickDashboardComponent implements OnInit {
               this.auth.setCompany(result.companyId);
               this.auth.setCompanyTypeShortName(result.companyTypeShortName);
               this.auth.setUserId(result.userId);
+              this.auth.setUserLevel(result.userLevel);
               this.auth.setPhotoUrl(result.photoUrl);
               this.auth.setUserName(result.userName);
               this.auth.setDistrict(result.districtId);

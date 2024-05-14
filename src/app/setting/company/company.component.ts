@@ -194,7 +194,12 @@ export class CompanyComponent implements OnInit {
 
   getCompany() {
     this.progressStatus=false;
-    this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+
+    //New
+    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
+    //Old: 14.05.2024
+    //this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
+      
       this.companyList = res;
       this.progressStatus=true;
     }, err => {
@@ -205,8 +210,9 @@ export class CompanyComponent implements OnInit {
   }
 
   getCompanyType() {
-    //New
-    this.gSvc.postdata("Common/Company/GetChildCompanyType", this.auth.getCompany()).subscribe(res => {
+       
+    
+    this.gSvc.postdata("Common/Company/GetChildCompanyType?companyId=" + this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel(), {}).subscribe(res => {
     this.companyTypeList = res;
     }, err => {
       this.toastrService.error("Error! Company type list not found");
