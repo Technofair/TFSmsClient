@@ -86,7 +86,7 @@ export class MobileMessageComponent implements OnInit {
       message: new FormControl('',Validators.required ),
       countSMS: new FormControl(1,Validators.required),
       date:new FormControl(new Date()),
-      lang:new FormControl(),
+      lang:new FormControl('',Validators.required),
       
     });
   }
@@ -116,12 +116,13 @@ export class MobileMessageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+
         var obj= this.frm.value;
         this.gSvc.postdata("api/SendSMS/Save", JSON.stringify(obj)).subscribe(res => {
           if(res.success){
-          this.toastrService.success("Saved success");
+          this.toastrService.success(res.message);
           }else{
-            this.toastrService.error("Error ! Data is not send . ");
+            this.toastrService.error(res.message);
           }
         }, err => {
           this.toastrService.error(err.message);
