@@ -13,6 +13,12 @@
                     optionLabel="name" optionValue="id"></p-dropdown><br>
             </div>
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
+                <label>{{'ClientType'|translate}}</label>
+                <p-dropdown [options]="clientTypes" [style]="{'width':'100%'}" formControlName="clientTypeId"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                    optionLabel="name" optionValue="id"></p-dropdown><br>
+            </div>
+            <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'SubscriberID' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
             </div>
@@ -23,7 +29,7 @@
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'Phone' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
-            </div>
+            </div> -->
 
 
             <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
@@ -89,7 +95,7 @@
     </div>
     </div>
     <div class="col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8">
-        <form [formGroup]="frm" (ngSubmit)="send()">
+        <form [formGroup]="frm" >
             <input type="hidden" formControlName="id" value="0">
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card formgrid grid">

@@ -50,8 +50,7 @@ export class MobileMessageComponent implements OnInit {
   osdMessages:any;
   bgColors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'},{name:'Dark Red',id:'15'}];
   colors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'}];
-  dvbEncodings: any = [{ 'name': 'ascii' }, { 'name': 'latin1' },{ 'name': 'latin2'},{ 'name': 'latin5' },{ 'name': 'ISO-8859-13' },{ 'name': 'hebrew'},{ 'name': 'greek'},{ 'name': 'ISO-8859-6'},{ 'name': 'utf8' }];
-  //osdTypes: any = [{ name: 'Select OSD', id: '0' },{ name: 'Short', id: '1' }, { name: 'Long', id: '2' },  { name: 'Scroll', id: '3' }];
+  clientTypes: any = [{name:'MSO',id:1},{name:'LSO',id:'2'},{name:'Subscriber',id:'2'}];
   date: any;
   osdTypes:any;
   characters:any;
@@ -75,7 +74,8 @@ export class MobileMessageComponent implements OnInit {
       name: new FormControl(''),
       cmnDistrictId:new FormControl(),
       cmnUpazillaId: new FormControl(),
-      cmnUnionId: new FormControl()
+      cmnUnionId: new FormControl(),
+      clientTypeId:new FormControl()
     })
   }
   frmcreate() {
@@ -86,7 +86,7 @@ export class MobileMessageComponent implements OnInit {
       message: new FormControl('',Validators.required ),
       countSMS: new FormControl(1,Validators.required),
       date:new FormControl(new Date()),
-      lang:new FormControl(''),
+      lang:new FormControl(),
       
     });
   }
@@ -109,13 +109,7 @@ export class MobileMessageComponent implements OnInit {
     })
   }
   send() {
-    const selectedUsers = this.selectedSubscribers.filter(user => user.isActive);
-    const transformedList = selectedUsers.map(item => ({
-      id: 0,
-      ScpSubscriberId: item.id,
-      PrdDeviceNumberId: item.prdDeviceNumberId,
-    }));
-
+    debugger
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -127,10 +121,10 @@ export class MobileMessageComponent implements OnInit {
           if(res.success){
           this.toastrService.success("Saved success");
           }else{
-            this.toastrService.error("Error ! Data is not saved . ");
+            this.toastrService.error("Error ! Data is not send . ");
           }
         }, err => {
-          this.toastrService.error("Error ! Data is not saved . ");
+          this.toastrService.error(err.message);
         })
         return true;
       },
