@@ -50,13 +50,14 @@ export class MobileMessageComponent implements OnInit {
   osdMessages:any;
   bgColors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'},{name:'Dark Red',id:'15'}];
   colors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'}];
-  clientTypes: any = [{name:'LSO',id:1},{name:'SLSO',id:'2'},{name:'Subscriber',id:'2'}];
+  clientTypes: any = [{name:'Subscriber',id:'3'},{name:'SLSO',id:2},{name:'LSO',id:'1'}];
   date: any;
   osdTypes:any;
   characters:any;
   countSMS:any;
   messageLength:any;
   SMSBalance:any;
+  Client:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
 
   }
@@ -71,7 +72,7 @@ export class MobileMessageComponent implements OnInit {
   frmsearch() {
     this.frmsrc = this.fb.group({
       companyId:new FormControl(this.auth.getCompany()),
-      selectedType:new FormControl(),
+      selectedType:new FormControl(3),
     })
   }
   frmcreate() {
@@ -106,6 +107,15 @@ export class MobileMessageComponent implements OnInit {
   search() {
     var selectedType =  this.frmsrc.controls['selectedType'].value;  
     var companyId =  this.frmsrc.controls['companyId'].value;  
+    if(selectedType==null||selectedType==3){
+      
+    }if (selectedType==1){
+      this.Client="LSO";
+    }else if(selectedType==2){
+      this.Client="SLSO";
+    }else{
+      this.Client="Subscriber";
+    }
      if(companyId==null){
       companyId=this.auth.getCompany();
      }

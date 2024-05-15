@@ -36,21 +36,21 @@
     <br>
     <div class="formgrid grid">
         <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-            <label>{{'Subscribers'|translate}}</label>
+            <label>{{Client}}</label>
             <p-table [value]="subscribers" [(selection)]="selectedSubscribers"
-                [tableStyle]="{ 'min-width': '50rem' }">
+                [tableStyle]="{ 'min-width': '20rem' }">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th style="width: 4rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                        <th style="width: 1rem"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
                         <th>{{'Name'|translate}}</th>
-                        <th>{{'Phone'|translate}}</th>
+                        <th>{{'Contact'|translate}}</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                     <tr>
                         <td><p-tableCheckbox [value]="item"></p-tableCheckbox></td>
                         <td>{{ item.name}}</td>
-                        <td>{{ item.contactNumber }}</td>
+                        <td>{{ item.contactNo }}</td>
                     </tr>
                 </ng-template>
             </p-table>
