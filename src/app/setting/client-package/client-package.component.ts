@@ -140,8 +140,10 @@ export class ClientPackageComponent implements OnInit {
     this.progressStatus=false;
     this.holdCompanies = [];
     this.companies = [];
+    //
+    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId?companyId=" + this.auth.getCompany() + '&userLevel=' + this.auth.getUserLevel(), {}).subscribe(res => {
     //New: 28.04.2024
-    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
+    //this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
     //Old: 28.04.2024
     //this.gSvc.postdata("Common/Company/GetClientByCompanyId/" + this.auth.getCompany(), {}).subscribe((res: any) => {
       this.companies = res;
