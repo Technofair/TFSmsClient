@@ -50,7 +50,7 @@ export class MobileMessageComponent implements OnInit {
   osdMessages:any;
   bgColors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'},{name:'Dark Red',id:'15'}];
   colors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'}];
-  clientTypes: any = [{name:'MSO',id:1},{name:'LSO',id:'2'},{name:'Subscriber',id:'2'}];
+  clientTypes: any = [{name:'LSO',id:1},{name:'SLSO',id:'2'},{name:'Subscriber',id:'2'}];
   date: any;
   osdTypes:any;
   characters:any;
@@ -68,20 +68,14 @@ export class MobileMessageComponent implements OnInit {
   frmsearch() {
     this.frmsrc = this.fb.group({
       companyId:new FormControl(),
-      clientId: new FormControl(),
-      customerNumber: new FormControl(''),
-      contactNumber: new FormControl(''),
-      name: new FormControl(''),
-      cmnDistrictId:new FormControl(),
-      cmnUpazillaId: new FormControl(),
-      cmnUnionId: new FormControl(),
-      clientTypeId:new FormControl()
+      selectedType:new FormControl(),
     })
   }
   frmcreate() {
     this.frm = this.fb.group({
     
       id: new FormControl(0,Validators.required),
+      cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
       recipient: new FormControl('', Validators.required),
       message: new FormControl('',Validators.required ),
       countSMS: new FormControl(1,Validators.required),
@@ -102,8 +96,9 @@ export class MobileMessageComponent implements OnInit {
     var requestBody =  this.frmsrc.value ;  
     requestBody.companyId=this.auth.getCompany();
     
-    this.gSvc.postdata("api/Subscriber/GetSubscriberWithDeviceOnlyByParameter", JSON.stringify(requestBody)).subscribe(res => {
+    this.gSvc.postdata("api/SendSMS/GetContactNo?selectedType="+this.frmsrc.controls['selectedType'].value+"companyId="+this.frmsrc.controls['companyId'].value, {}).subscribe(res => {
       this.subscribers=res;
+      console.log(this.subscribers);
     }, err => {
       this.toastrService.error("Error ! Data is not saved . ");
     })
@@ -116,7 +111,6 @@ export class MobileMessageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
         var obj= this.frm.value;
         this.gSvc.postdata("api/SendSMS/Save", JSON.stringify(obj)).subscribe(res => {
           if(res.success){
@@ -152,8 +146,6 @@ export class MobileMessageComponent implements OnInit {
       this.toastrService.error("Please select language !")
       return ;
     }
-
-
   }
   checkBnEn(){
    if(this.frm.controls['en'].value==true){

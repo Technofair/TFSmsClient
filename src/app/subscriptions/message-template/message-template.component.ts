@@ -62,7 +62,8 @@ export class MessageTemplateComponent implements OnInit {
       dVBEncoding: new FormControl('ascii', Validators.required),
       duration: new FormControl(),
       timeframe:new FormControl(),
-      scpFrequencyId:new FormControl(),
+      cmnFrequencyId:new FormControl(),
+      serviceInitiate:new FormControl(""),
       recurrent: new FormControl(false),
       date:new FormControl(),
       repetition: new FormControl(),
@@ -145,6 +146,7 @@ export class MessageTemplateComponent implements OnInit {
         }
         //obj.cmnCompanyId=this.auth.getCompany();
         this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+        debugger
         console.log(this.frm.value);
         this.gSvc.postdata("api/MessageTemplate/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           this.toastrService.success("Saved success");
