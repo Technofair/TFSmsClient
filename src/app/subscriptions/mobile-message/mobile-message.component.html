@@ -48,7 +48,13 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
                     <tr>
-                        <td><p-tableCheckbox [value]="item"></p-tableCheckbox></td>
+                        <!-- <td><p-tableCheckbox [value]="item"></p-tableCheckbox></td> -->
+                        <td>
+                            <input type="checkbox" [(ngModel)]="item.isActive"
+                                           (change)="addCheckedItem()"
+                                         [ngModelOptions]="{standalone: true}" name="isChecked"
+                                                                id="isChecked">
+                       </td>
                         <td>{{ item.name}}</td>
                         <td>{{ item.contactNo }}</td>
                     </tr>

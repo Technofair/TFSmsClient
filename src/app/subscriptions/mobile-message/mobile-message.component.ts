@@ -222,5 +222,22 @@ export class MobileMessageComponent implements OnInit {
       this.toastrService.error("Union error!");
     })
   }
-  
+  addCheckedItem(): void {
+    var contactNo = this.subscribers.filter(x => x.isActive);
+    if (contactNo.length > 0) {
+      var recipents = '';
+      var obj = this.frm.value;
+      var recipient = obj.recipient;
+         recipient = '';
+      var recipientList: any = [];
+      contactNo.forEach((item) => {
+        recipientList.push(item.contactNo.trim());
+      });
+      recipents = recipientList.join(',');
+      this.frm.controls['recipient'].setValue(recipents);
+    } else {
+      var obj = this.frm.value;
+      this.frm.controls['recipient'].setValue(obj.contactNo);
+    }
+  };
 }
