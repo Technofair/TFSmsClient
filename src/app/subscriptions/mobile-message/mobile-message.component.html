@@ -117,28 +117,23 @@
     
 </p-panel>
 
-<!-- <h4>{{'OSDMessageList' | translate}}</h4>
-
+<h4>{{'MessageList' | translate}}</h4>
 <p-table #dt [value]="osdMessages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['message','osdType','startDate','startTime']"
     styleClass="p-datatable-sm p-datatable-gridlines" [tableStyle]="{'min-width': '50rem'}">
-
-
     <ng-template pTemplate="header">
         <tr>
             <th>{{'SL#' | translate}}</th>
             <th pSortableColumn="startDate" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'Date' | translate}}
-
                 </div>
             </th>
             <th pSortableColumn="message" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'Message' | translate}}
-
                 </div>
             </th>
             <th pSortableColumn="osdType" style="text-align: center">
@@ -149,13 +144,12 @@
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
     </ng-template>
-    S
     <ng-template pTemplate="body" let-r let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.createdDate}}</td>
+            <td>{{r.date}}</td>
             <td>{{r.message}}</td>
-            <td>{{r.osdTypeString}}</td>
+            <td>{{r.recipient}}</td>
             <td class="vcenter text-center">
                 <p-button type="button" routerLink="home/subscriber/viewSubscriber/{{r.id}}"
                     styleClass="p-button-success rounded-0 px-2 py-1 mr-2" icon="pi pi-eye" data-toggle="tooltip"
@@ -166,8 +160,8 @@
 
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td colspan="9">No data found.</td>
+            <td colspan="">No data found.</td>
         </tr>
     </ng-template>
 
-</p-table> -->
+</p-table>

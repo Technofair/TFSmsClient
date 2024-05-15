@@ -67,7 +67,7 @@ export class MobileMessageComponent implements OnInit {
     this.getCompany();
     this.getDistrict();
     this.getSMSBalance();
-   
+   this. getMessage();
   }
   frmsearch() {
     this.frmsrc = this.fb.group({
@@ -90,6 +90,14 @@ export class MobileMessageComponent implements OnInit {
   }
   getCompany(){
     this.apiurl = "Common/Company/GetAll";
+    this.gSvc.postdata(this.apiurl,{}).subscribe(res => {
+      this.organizations = res;
+    }, err => {
+      this.toastrService.error("Not Found !");
+    })
+  }
+  getMessage(){
+    this.apiurl = "api/SendSMS/GetLastThreeDays";
     this.gSvc.postdata(this.apiurl,{}).subscribe(res => {
       this.organizations = res;
     }, err => {
