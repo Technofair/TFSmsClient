@@ -8,48 +8,17 @@
         <div class="formgrid grid">
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'Client'|translate}}</label>
-                <p-dropdown [options]="organizations" [style]="{'width':'100%'}" formControlName="clientId"
+                <p-dropdown [options]="organizations" [style]="{'width':'100%'}" formControlName="companyId"
                     [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                     optionLabel="name" optionValue="id"></p-dropdown><br>
             </div>
             <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
                 <label>{{'ClientType'|translate}}</label>
-                <p-dropdown [options]="clientTypes" [style]="{'width':'100%'}" formControlName="clientTypeId"
+                <p-dropdown [options]="clientTypes" [style]="{'width':'100%'}" formControlName="selectedType"
                     [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                     optionLabel="name" optionValue="id"></p-dropdown><br>
             </div>
-            <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'SubscriberID' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="customerNumber" pInputText />
-            </div>
-            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'SubscriberName' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="name" pInputText />
-            </div>
-            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'Phone' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
-            </div> -->
-
-
-            <!-- <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'DISTRICT'|translate}}</label><span class="text-danger"> *</span><br>
-                <p-dropdown [options]="districtList" [style]="{'width':'100%'}" formControlName="cmnDistrictId"
-                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value" (onChange)="getUpazillaByDistrictId()"></p-dropdown><br>
-            </div>
-            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'UPAZILLA'|translate}}</label><span class="text-danger"> *</span><br>
-                <p-dropdown [options]="thanaList" [style]="{'width':'100%'}" formControlName="cmnUpazillaId"
-                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value" (onChange)="getUnionByUpazillaId()"></p-dropdown><br>
-            </div>
-            <div class="field col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
-                <label>{{'UNION'|translate}}</label>
-                <p-dropdown [options]="unionList" [style]="{'width':'100%'}" formControlName="cmnUnionId"
-                    [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="text" optionValue="value"></p-dropdown><br>
-            </div> -->
+            
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card-footer">
                     <div class="" style="padding-top: 30px;">
