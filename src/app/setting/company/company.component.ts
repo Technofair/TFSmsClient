@@ -195,8 +195,9 @@ export class CompanyComponent implements OnInit {
   getCompany() {
     this.progressStatus=false;
 
+    //this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId" + this.auth.getCompany(), {}).subscribe(res => {
     //New
-    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
+    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId?companyId=" + this.auth.getCompany() + '&userLevel=' + this.auth.getUserLevel(), {}).subscribe(res => {
     //Old: 14.05.2024
     //this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
       

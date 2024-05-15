@@ -120,8 +120,10 @@ export class MobileMessageComponent implements OnInit {
         var obj= this.frm.value;
         this.gSvc.postdata("api/SendSMS/Save", JSON.stringify(obj)).subscribe(res => {
           if(res.success){
+            //console.log(JSON.stringify(res));
           this.toastrService.success(res.message);
           }else{
+            //console.log(JSON.stringify(res));
             this.toastrService.error(res.message);
           }
         }, err => {
