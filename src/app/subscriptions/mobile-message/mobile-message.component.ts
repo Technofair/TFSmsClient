@@ -56,6 +56,7 @@ export class MobileMessageComponent implements OnInit {
   characters:any;
   countSMS:any;
   messageLength:any;
+  SMSBalance:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
 
   }
@@ -64,10 +65,12 @@ export class MobileMessageComponent implements OnInit {
     this.frmsearch();
     this.getCompany();
     this.getDistrict();
+    this.getSMSBalance();
+   
   }
   frmsearch() {
     this.frmsrc = this.fb.group({
-      companyId:new FormControl(),
+      companyId:new FormControl(this.auth.getCompany()),
       selectedType:new FormControl(),
     })
   }
@@ -75,7 +78,7 @@ export class MobileMessageComponent implements OnInit {
     this.frm = this.fb.group({
     
       id: new FormControl(0,Validators.required),
-      cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
+      cmnCompanyId:new FormControl(this.auth.getCompany()),
       recipient: new FormControl('', Validators.required),
       message: new FormControl('',Validators.required ),
       countSMS: new FormControl(1,Validators.required),
@@ -89,14 +92,25 @@ export class MobileMessageComponent implements OnInit {
     this.gSvc.postdata(this.apiurl,{}).subscribe(res => {
       this.organizations = res;
     }, err => {
-      this.toastrService.error("Union Error!");
+      this.toastrService.error("Not Found !");
+    })
+  }
+  getSMSBalance(){
+    this.apiurl = "api/SendSMS/GetSMSBalance";
+    this.gSvc.postdata(this.apiurl,{}).subscribe(res => {
+      this.SMSBalance = res.balance;
+    }, err => {
+      //this.toastrService.error("Not Found !");
     })
   }
   search() {
-    var requestBody =  this.frmsrc.value ;  
-    requestBody.companyId=this.auth.getCompany();
+    var selectedType =  this.frmsrc.controls['selectedType'].value;  
+    var companyId =  this.frmsrc.controls['companyId'].value;  
+     if(companyId==null){
+      companyId=this.auth.getCompany();
+     }
     
-    this.gSvc.postdata("api/SendSMS/GetContactNo?selectedType="+this.frmsrc.controls['selectedType'].value+"companyId="+this.frmsrc.controls['companyId'].value, {}).subscribe(res => {
+    this.gSvc.postdata("api/SendSMS/GetContactNo?selectedType="+selectedType+"&companyId="+companyId, {}).subscribe(res => {
       this.subscribers=res;
       console.log(this.subscribers);
     }, err => {
