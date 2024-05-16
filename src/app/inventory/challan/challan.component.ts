@@ -446,7 +446,11 @@ export class ChallanComponent implements OnInit {
   setProductModel() {
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
-
+    if ( objDetail.productName == '' || objDetail.productName == null || objDetail.productName == undefined){
+      this.unassignedStockDeviceList = [];
+      this.toastrService.warning("Please input product , Product is requeired!");
+      return;
+    }
     this.progressStatus = false;
      
     let objProduct = this.products.find(w => w.name === objDetail.productName);
@@ -458,6 +462,7 @@ export class ChallanComponent implements OnInit {
     this.getProdStock(obj);
     this.getStockDevice();
     this.changeDeviceInput('isFromList');
+    
   }
 
   saveChallan() {
@@ -535,7 +540,7 @@ export class ChallanComponent implements OnInit {
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
     if ( objDetail.productName == '' || objDetail.productName == null || objDetail.productName == undefined) {
-      this.toastrService.warning("Please input device product name, Product name is requeired!");
+      this.toastrService.warning("Please input device product , Product  is requeired!");
       objDetail.isFree=false;
       this.frm.controls['frmDetail'].setValue(objDetail);
       return;
