@@ -397,7 +397,7 @@
 <p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['name', 'code','contactNo','email']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [globalFilterFields]="['nameWithType', 'code','contactNo','email']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
     [tableStyle]="{'min-width': '70rem'}">
 
     <ng-template pTemplate="caption">
@@ -419,10 +419,10 @@
     <ng-template pTemplate="header">
         <tr>
             <th class="vcenter text-center" style="width: 8%">{{'SL#' | translate}}</th>
-            <th pSortableColumn="name" style="text-align: center">
+            <th pSortableColumn="nameWithType" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'NAME' | translate}}
-                    <p-sortIcon field="name"></p-sortIcon>
+                    <p-sortIcon field="nameWithType"></p-sortIcon>
                     <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
                 </div>
             </th>
@@ -450,7 +450,7 @@
     <ng-template pTemplate="body" let-r | let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.name}}</td>
+            <td>{{r.nameWithType}}</td>
             <td>{{r.code}}</td>
             <td>{{r.contactPerson}}</td>
             <td>{{r.contactNo}}</td>
