@@ -35,7 +35,7 @@
     <br>
     <br>
     <div class="formgrid grid">
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12" >
             <label>{{Client}}</label>
             <p-table [value]="subscribers" [(selection)]="selectedSubscribers"
                 [tableStyle]="{ 'min-width': '20rem' }">
@@ -46,7 +46,7 @@
                         <th>{{'Contact'|translate}}</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                <ng-template pTemplate="body" let-item let-rowIndex="rowIndex" >
                     <tr>
                         <!-- <td><p-tableCheckbox [value]="item"></p-tableCheckbox></td> -->
                         <td>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                         <label>{{'Message' | translate}}</label><span class="text-danger"> *</span>
-                        <textarea rows="2" cols="25" pInputTextarea formControlName="message" (ngModelChange)="messageCount()"></textarea>
+                        <textarea rows="1" cols="25" pInputTextarea formControlName="message" (ngModelChange)="messageCount()"></textarea>
                     </div>
                     <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                         <p class="m-2">{{'Characters' | translate}} : {{messageLength}}</p>
@@ -118,7 +118,7 @@
 </p-panel>
 
 <h4>{{'MessageList' | translate}}</h4>
-<p-table #dt [value]="osdMessages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="messageList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['message','osdType','startDate','startTime']"

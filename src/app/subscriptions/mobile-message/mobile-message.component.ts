@@ -58,6 +58,7 @@ export class MobileMessageComponent implements OnInit {
   messageLength:any;
   SMSBalance:any;
   Client:any;
+  messageList:any
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
 
   }
@@ -99,7 +100,7 @@ export class MobileMessageComponent implements OnInit {
   getMessage(){
     this.apiurl = "api/SendSMS/GetLastThreeDays";
     this.gSvc.postdata(this.apiurl,{}).subscribe(res => {
-      this.organizations = res;
+      this.messageList = res;
     }, err => {
       this.toastrService.error("Not Found !");
     })
