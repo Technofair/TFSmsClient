@@ -548,5 +548,8 @@
     "SubscriberTransfer":"Subscriber Transfer",
     "ScpFrequency":"Frequency",
     "Timeframe":"Timeframe",
-    "IsFree":"Free"
+    "IsFree":"Free",
+    "MessageList":"Message List",
+    "ClientType":"Client Type",
+    "Receipent":"Recipient"
 }
