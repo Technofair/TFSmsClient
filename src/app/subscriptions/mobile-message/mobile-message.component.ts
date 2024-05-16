@@ -131,9 +131,8 @@ export class MobileMessageComponent implements OnInit {
     
     this.gSvc.postdata("api/SendSMS/GetContactNo?selectedType="+selectedType+"&companyId="+companyId, {}).subscribe(res => {
       this.subscribers=res;
-      console.log(this.subscribers);
     }, err => {
-      this.toastrService.error("Error ! Data is not saved . ");
+      this.toastrService.error(err.message);
     })
   }
   send() {
