@@ -187,6 +187,34 @@ export class ChallanComponent implements OnInit {
       hrmEmployeeId: new FormControl()
     })
   }
+
+  barcodeReader(event: KeyboardEvent){
+    
+    if (event.key === 'Enter') {
+
+      //uncomment when use it for barcode
+      // var obj = this.frm.value;
+      // var objDetail = obj.frmDetail;
+      // objDetail.deviceNumber = obj.frmDetail.deviceNumber + ',';
+      // this.frm.controls['frmDetail'].setValue(objDetail);
+
+      //Use for Saving
+      // var devices = this.removeEndCharacter(objDetail.deviceNumber, ',')
+      // alert(devices);
+
+    }
+  }
+
+  removeEndCharacter(data: string, remChar: string){
+
+    var result = data;
+
+    if (data.endsWith(remChar)) {
+      result = data.substring(0, data.length - 1);
+    }
+    return result;
+  }
+
   getClients() {
     this.gSvc.postdata("Inventory/Client/GetAll", {}).subscribe(res => {
       this.clients = res
@@ -495,6 +523,15 @@ export class ChallanComponent implements OnInit {
           obj.createdDate = new Date();
         }
         
+        // //New: 16.05.2024: For Barcode
+        // var objDetail = obj.frmDetail;
+        // objDetail.deviceNumber = this.removeEndCharacter(objDetail.deviceNumber, ',');
+        // this.frm.controls['frmDetail'].setValue(objDetail);
+        // this.details = [];
+        // this.details.push(objDetail);
+        // //End
+        
+
         let requestBody = { obj: obj, list: this.details };
         this.gSvc.postdata("Inventory/Challan/SaveChallan", requestBody).subscribe(res => {
          

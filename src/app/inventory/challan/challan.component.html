@@ -96,7 +96,7 @@
                 <div class="col-12 sm:col-6 md:col-6 lg:col-6 xl:col-6">
 
                     <label>{{'DeviceId'|translate}}</label>
-                    <textarea rows="6" cols="60" pInputTextarea value="HELLO" (blur)="checkIfExist()"
+                    <textarea rows="6" cols="60" pInputTextarea value="HELLO" (blur)="checkIfExist()" (keydown)="barcodeReader($event)"
                         formControlName="deviceNumber"></textarea><br>
                     <!-- <span *ngIf="frm.controls['deviceNumber'].invalid && frm.controls['deviceNumber'].touched " class="text-danger">
                                 {{'Device ID'|translate}} {{'REQUIRED'|translate}}
