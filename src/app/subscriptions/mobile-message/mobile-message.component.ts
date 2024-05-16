@@ -147,6 +147,7 @@ export class MobileMessageComponent implements OnInit {
           if(res.success){
             //console.log(JSON.stringify(res));
             this.frmcreate()
+            this.search();
           this.toastrService.success("Success");
           }else{
             //console.log(JSON.stringify(res));
@@ -199,9 +200,8 @@ export class MobileMessageComponent implements OnInit {
     this.frmsrc.markAsPristine();
   }
   reset() {
-    this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.markAsPristine();
+    this.frmcreate();
+    this.search();
   }
   edit(res: any) {
     this.frm.patchValue(res);

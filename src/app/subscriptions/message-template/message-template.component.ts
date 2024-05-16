@@ -38,7 +38,7 @@ export class MessageTemplateComponent implements OnInit {
   scrollOsd:boolean=true;
   scpFrequency:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
-    this.messageTemplates();
+   
   }
 
   ngOnInit(): void {
@@ -101,7 +101,7 @@ export class MessageTemplateComponent implements OnInit {
     this.gSvc.postdata("Common/CmnFrequency/CmnFrequencies", {}).subscribe(res => {
       this.scpFrequency = res;      
     }, err => {      
-      this.toastrService.error("List not found");
+      this.toastrService.error(err.message);
     })
   }
 
