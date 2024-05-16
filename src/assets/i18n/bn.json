@@ -693,7 +693,9 @@
     "ProductMapping":"প্রডাক্ট ম্যাপ",
     "ScpFrequency":"ফ্রিকোয়েন্সি",
     "Timeframe":"সময়সীমা",
-    "IsFree":"ফ্রি"
-
+    "IsFree":"ফ্রি",
+    "MessageList":"মেসেজ লিস্ট",
+    "ClientType":"Recipient",
+    "Receipent":"প্রাপক"
 }
 
