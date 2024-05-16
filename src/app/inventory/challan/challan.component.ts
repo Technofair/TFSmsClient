@@ -84,7 +84,7 @@ export class ChallanComponent implements OnInit {
     this.getWarranty();
     this.allowSale = this.auth.allowSale();
     this.initializeDefault();
-    
+    this.getStockDevice();
   }
   initializeDefault(){
     if(this.allowSale==false){
@@ -448,7 +448,15 @@ export class ChallanComponent implements OnInit {
     var objDetail = obj.frmDetail;
     if ( objDetail.productName == '' || objDetail.productName == null || objDetail.productName == undefined){
       this.unassignedStockDeviceList = [];
-      this.toastrService.warning("Please input product , Product is requeired!");
+      objDetail.stockQuantity=0;
+      objDetail.salesRate=0;
+      objDetail.quantity=0;
+      objDetail.rate=0;
+      objDetail.invWarrantyPeriodId-0;
+      objDetail.isFree=false;
+      objDetail.deviceNumber='';
+      this.frm.controls['frmDetail'].setValue(objDetail);
+    //  this.toastrService.warning("Please input product , Product is requeired!");
       return;
     }
     this.progressStatus = false;
