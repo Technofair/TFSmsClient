@@ -59,6 +59,7 @@ export class ChallanComponent implements OnInit {
   stbCounter: any = 0;
   allowSale:boolean= false;
   isFree:boolean= this.auth.allowSale();
+  
   constructor(
     private fb: FormBuilder
     , private router: Router
@@ -443,13 +444,11 @@ export class ChallanComponent implements OnInit {
   }
 
   setProductModel() {
-
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
 
     this.progressStatus = false;
      
-
     let objProduct = this.products.find(w => w.name === objDetail.productName);
 
     objDetail.name = objProduct.name;
@@ -537,6 +536,8 @@ export class ChallanComponent implements OnInit {
     var objDetail = obj.frmDetail;
     if ( objDetail.productName == '' || objDetail.productName == null || objDetail.productName == undefined) {
       this.toastrService.warning("Please input device product name, Product name is requeired!");
+      objDetail.isFree=false;
+      this.frm.controls['frmDetail'].setValue(objDetail);
       return;
     }
     if(this.isFree && this.allowSale){

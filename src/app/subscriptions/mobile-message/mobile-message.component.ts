@@ -136,7 +136,6 @@ export class MobileMessageComponent implements OnInit {
     })
   }
   send() {
-    debugger
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -147,7 +146,7 @@ export class MobileMessageComponent implements OnInit {
         this.gSvc.postdata("api/SendSMS/Save", JSON.stringify(obj)).subscribe(res => {
           if(res.success){
             //console.log(JSON.stringify(res));
-          this.toastrService.success(res.message);
+          this.toastrService.success("Success");
           }else{
             //console.log(JSON.stringify(res));
             this.toastrService.error(res.message);
