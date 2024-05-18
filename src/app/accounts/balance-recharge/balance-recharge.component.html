@@ -86,7 +86,7 @@
 
                 <div class="field col-12 md-col:12">
                     <div class="card-footer">
-                        <div class="">
+                        <div class="flex justify-center">
                             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
                                 styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
                                 label="{{'SAVE'|translate}}"></p-button>
@@ -94,7 +94,7 @@
                                 styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
                                 label="{{'UPDATE'|translate}}"></p-button>&nbsp;
                             <p-button type="reset" *ngIf="formId==0||formId==1"
-                                styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+                                styleClass="p-button-warning p-button-sm mx-1" icon="pi pi-refresh" (click)="reset()"
                                 label="{{'RESET'|translate}}"></p-button>
                         </div>
                     </div>
