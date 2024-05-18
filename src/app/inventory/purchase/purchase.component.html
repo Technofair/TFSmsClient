@@ -85,7 +85,7 @@
                 <div class="col-12 sm:col-12  md:col-6">
 
                     <label>{{'Device ID'|translate}}</label>
-                    <textarea rows="6" cols="60" pInputTextarea value="HELLO"
+                    <textarea rows="6" cols="60" pInputTextarea value="HELLO" (keydown)="readBarcode($event)"
                         formControlName="deviceNumber"></textarea><br>
 
                 </div>

@@ -221,11 +221,15 @@ initializeDefault(){
     
     var obj = this.frm.value;
     var objDetail = obj.frmDetail;
-    
+
+    //New(Start):Asad:18.05.24
+    objDetail.deviceNumber = this.removeEndCharacter(objDetail.deviceNumber.trim(), ',');
+    this.frm.controls['frmDetail'].setValue(objDetail);
+    //End
 
   //NEW    
     
-    if(objDetail.prdProductId == ""||objDetail.prdProductId ==null)
+    if(objDetail.prdProductId == "" || objDetail.prdProductId == null)
     {
       this.toastrService.warning("Please Select Product!");
       return;
@@ -286,8 +290,12 @@ initializeDefault(){
       
      
        var totalAmt=0;
+
+       //New:18.05.24
+       //objDetail.deviceNumber = this.removeEndCharacter(objDetail.deviceNumber.trim(), ',');
     
-      objDetail.deviceNumber = objDetail.deviceNumber.trim();
+       //Old:18.05.24
+      //objDetail.deviceNumber = objDetail.deviceNumber.trim();
      
       this.details.push(objDetail);
       this.details.forEach(element => {
@@ -351,6 +359,28 @@ initializeDefault(){
     this.frm.controls['frmDetail'].setValue(objDetail);
   }
 
+  readBarcode(event: KeyboardEvent){
+    
+   // alert('reader alert');
+    if (event.key === 'Enter') {
+
+      var obj = this.frm.value;
+      var objDetail = obj.frmDetail;
+      objDetail.deviceNumber = obj.frmDetail.deviceNumber + ',';
+      this.frm.controls['frmDetail'].setValue(objDetail);
+    }
+  }
+
+  removeEndCharacter(data: string, remChar: string){
+
+    var result = data;
+
+    if (data.endsWith(remChar)) {
+      result = data.substring(0, data.length - 1);
+    }
+    return result;
+  }
+
   savePurchase() {
     if (this.details.length == 0) { this.toastrService.error("No Item found"); return false; }
     this.confirmationService.confirm({
@@ -366,7 +396,7 @@ initializeDefault(){
           obj.createdBy = this.auth.getUserId()
           obj.createdDate = new Date();
         }
-
+       
         let requestBody = { obj: obj, list: this.details };
         this.gSvc.postdata("Inventory/Purchase/savePurchase", requestBody).subscribe(res => {
           this.search();
