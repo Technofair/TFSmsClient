@@ -321,6 +321,7 @@ export class PackageRenewComponent implements OnInit {
   
     var expDate = this.datePipe.transform(res.endDate, 'dd/MM/yyyy');
 
+    this.frmPackageRenew.controls['period'].setValue(period);
     this.frmPackageRenew.controls['endDate'].setValue(expDate);
     this.frmPackageRenew.controls['expDate'].setValue(expDate);
     this.frmPackageRenew.controls['amount'].setValue(res.price);
