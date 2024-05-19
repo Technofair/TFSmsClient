@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'voucher-payment', component: PaymentVoucherComponent },
   { path: 'voucher-received', component: ReceivedVoucherComponent },
   { path: 'opening-balance', component: OpeningBalanceComponent },
-  { path: 'biller-recharge', component: ScpUserDebitComponent }
+  { path: 'scpUserDebit', component: ScpUserDebitComponent }
 ];
 
 @NgModule({

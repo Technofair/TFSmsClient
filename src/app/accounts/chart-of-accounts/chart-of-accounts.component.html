@@ -53,10 +53,9 @@
                     <label class="form-check-label" for="isLastNode"> {{'Is Last Node' | translate}}
                     </label>
                 </div>
-
                 <div class="field col-12 md-col:12">
                     <div class="card-footer">
-                        <div class="">
+                        <div class="flex justify-center">
                             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
                                 styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
                                 label="{{'SAVE'|translate}}"></p-button>

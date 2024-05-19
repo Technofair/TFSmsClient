@@ -117,9 +117,10 @@
                     </span> -->
                 </div>
             </div>
-            <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12 pb-5">
+            <div class="field col-12 pb-5">
                 <div class="card-footer" style="float: right;">
-                    <div class="">
+                    <div class="row justify-content-end">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                         <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
                             type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
                         <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-warning p-button-sm"
@@ -130,6 +131,7 @@
                             icon="pi pi-refresh" (click)="reset()" label="{{'CANCEL'|translate}}"></p-button>&nbsp;
                         <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-outlined p-button-sm"
                             icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                        </div>
                     </div>
                 </div>
             </div>
