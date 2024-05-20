@@ -44,6 +44,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { AppsettingsComponent } from './appsettings/appsettings.component';
 import { AccordionModule } from 'primeng/accordion';
 import { FrequencyComponent } from './frequency/frequency.component';
+import { CompanyCustomersComponent } from './company-customers/company-customers.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { FrequencyComponent } from './frequency/frequency.component';
     BankInfoComponent,
     ClientBankInfoComponent,
     AppsettingsComponent,
-    FrequencyComponent
+    FrequencyComponent,
+    CompanyCustomersComponent
   ],
   exports: [
   ],

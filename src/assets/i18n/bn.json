@@ -697,6 +697,18 @@
     "MessageList":"মেসেজ লিস্ট",
     "ClientType":"ক্লায়েন্ট টাইপ",
     "Receipent":"প্রাপক",
-    "CHALLAN REF. NO.":"রেফা. নং"
+    "CHALLAN REF. NO.":"রেফা. নং",
+    "billur-recharge":"বিলার রিচার্জ",
+    "AutoReceive":"গ্রহণ করুন",
+    "AllowSale":"বিক্রয়ের অনুমতি দিন",
+    "AllowPurchase":"ক্রয়ের অনুমতি দিন",
+    "Length Of Subscriber Number":"গ্রাহক সংখ্যার দৈর্ঘ্য",
+    "AutoSubscriberNumber":"অটো সাবস্ক্রাইবার নম্বর",
+    "Message Frequency":"বার্তা ফ্রিকোয়েন্সি",
+    "FREQUENCY":"ফ্রিকোয়েন্সি",
+    "BIN NUMBER":"বিন নম্বর",
+    "Company Customer":"কোম্পানির গ্রাহক",
+    "No Of Message":"বার্তা নম্বর",
+    "Client SMS Balance":"ক্লায়েন্ট এসএমএস ব্যালেন্স"
 }
 

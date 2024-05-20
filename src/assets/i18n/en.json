@@ -551,5 +551,15 @@
     "IsFree":"Free",
     "MessageList":"Message List",
     "ClientType":"Client Type",
-    "Receipent":"Recipient"
+    "Receipent":"Recipient",
+    "billur-recharge":"Billur recharge",
+    "AutoReceive":"Auto Receive",
+    "AllowSale":"Allow Sale",
+    "AllowPurchase":"Allow Purchase",
+    "Length Of Subscriber Number":"Length Of Subscriber Number",
+    "AutoSubscriberNumber":"Auto Subscriber Number",
+    "Message Frequency":"Message Frequency",
+    "FREQUENCY":"FREQUENCY",
+    "BIN NUMBER":"BIN Number",
+    "Company Customer":"Company Customer"
 }
