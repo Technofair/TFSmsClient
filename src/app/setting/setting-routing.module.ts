@@ -17,6 +17,7 @@ import { ClientBankInfoComponent } from './client-bank-info/client-bank-info.com
 import { AppsettingsComponent } from './appsettings/appsettings.component';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { CompanyCustomersComponent } from './company-customers/company-customers.component';
+import { ClientSmsBalanceComponent } from './client-sms-balance/client-sms-balance.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'appsettings', component: AppsettingsComponent },
   { path: 'frequency', component: FrequencyComponent },
   { path: 'companyCustomers', component: CompanyCustomersComponent },
+  { path: 'clientsmsbalance', component: ClientSmsBalanceComponent }
 ];
 
 @NgModule({
