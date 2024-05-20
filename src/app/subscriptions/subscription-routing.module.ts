@@ -24,6 +24,7 @@ import { SubscriptionProfileComponent } from './subscription-profile/subscriptio
 import { PackageToggleComponent } from './package-toggle/package-toggle.component';
 import { PackageExpiredComponent } from './package-expired/package-expired.component';
 import { MobileMessageComponent } from './mobile-message/mobile-message.component';
+import { MobileMessageTemplateComponent } from './mobile-message-template/mobile-message-template.component';
 
 
 
@@ -53,6 +54,7 @@ const routes: Routes = [
   {path:"package-toggle",component:PackageToggleComponent},
   {path:"package-expired",component:PackageExpiredComponent},
   {path:"mobile-message",component:MobileMessageComponent},
+  {path:"mobile-message-Template",component:MobileMessageTemplateComponent}
 ];
 
 @NgModule({

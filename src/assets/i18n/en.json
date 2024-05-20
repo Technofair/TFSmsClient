@@ -561,5 +561,7 @@
     "Message Frequency":"Message Frequency",
     "FREQUENCY":"FREQUENCY",
     "BIN NUMBER":"BIN Number",
-    "Company Customer":"Company Customer"
+    "Company Customer":"Company Customer",
+    "MobileMessageTemplate":"Mobile Message Template",
+    "serviceInitiate":"Service Initiate"
 }
