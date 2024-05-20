@@ -104,13 +104,14 @@ export class UserRolesMappingComponent implements OnInit {
     .subscribe(res => {     
       this.users = res;
       this.progressStatus=true;
+
       this.activeUserRoles = this.users.filter((user: {
         secRoleId: any; isActive: any;
-       
-}) => user.isActive==true && user.secRoleId==this.frm.get("role")?.value);
-      this.inActiveUserRoles = this.users.filter((user: {
+        }) => user.isActive==true && user.secRoleId==this.frm.get("role")?.value);
+      
+        this.inActiveUserRoles = this.users.filter((user: {
         secRoleId: any; isActive: any; 
-}) => user.isActive==false && user.secRoleId==0);
+      }) => user.isActive==false && user.secRoleId==0);
     }, err => {
       this.progressStatus=true;
       this.toastrService.error("error");
@@ -132,7 +133,13 @@ export class UserRolesMappingComponent implements OnInit {
   save() {
     
     this.selectedUsers=[];
-    this.selectedUsers = this.users.filter(user => user.isActive);
+    
+    //New: 20.05.2024:: //this.selectedUsers.concat(this.selectedUsers);
+    this.selectedUsers = this.users;
+    //Old20.05.2024::
+    //this.selectedUsers = this.users.filter(user => user.isActive);
+   
+    
     const transformedList = this.selectedUsers.map(item => ({
 
       id: 0,
@@ -158,9 +165,10 @@ export class UserRolesMappingComponent implements OnInit {
         }
 
         this.gSvc.postdata("Security/UserRole/Save", JSON.stringify(reqestbody)).subscribe(res => {
-          //this.frm.reset();
+
           this.userList();
           this.toastrService.success("Saved success");
+
         }, err => {
           this.toastrService.error("Error ! User role is not saved . ");
         })
