@@ -31,7 +31,7 @@ export class AssignDeviceComponent implements OnInit {
        this.frmsearch();
        this.getCompany();
        this.getCompanys();
-       this.getRenewableSubscriber();
+       //this.getRenewableSubscriber();
     }
 
     frmsearch() {
@@ -68,12 +68,17 @@ export class AssignDeviceComponent implements OnInit {
         var requestBody = this.frmsrc.value;
         this.progressStatus=false;
 
-        var companyId= this.frmsrc.controls['cmnCompanyId'].value;
-        if( companyId == null || companyId == 0 || companyId == "" || companyId == undefined)
-         {
-           this.frmsrc.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-         }
- 
+        var companyId = this.frmsrc.controls['cmnCompanyId'].value;
+        var deviceNumber = this.frmsrc.controls['deviceNumber'].value;
+        var contactNumber = this.frmsrc.controls['contactNumber'].value;
+
+        if(companyId == null && (deviceNumber == null || deviceNumber == "") && (contactNumber == null || contactNumber == "")){
+          this.progressStatus=true;
+          this.packageRenewlist = null;
+          alert('Please enter valid input');
+          return;
+        }
+    
         this.gSvc.postdata("Inventory/Purchase/GetAssignDeviceByAnyKey", JSON.stringify(this.frmsrc.value)).subscribe(res => {
         this.packageRenewlist = res;
         this.progressStatus=true;

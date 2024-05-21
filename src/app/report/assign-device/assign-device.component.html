@@ -10,16 +10,18 @@
                     filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
                     optionValue="id"></p-dropdown><br>
             </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'DeviceNumber' | translate}}</label>
+                <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
+            </div>
             
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'Phone' | translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="contactNumber" pInputText />
             </div>
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'DeviceNumber' | translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="deviceNumber" pInputText />
-            </div>
+            
           
 
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -66,16 +68,17 @@
                     <p-columnFilter type="text" field="customerNumber" display="menu"></p-columnFilter>
                 </div>
             </th>
-            <th style="text-align: center">
-                <div class="vcenter text-center">
-                    {{'Contact' | translate}}
-                    <p-columnFilter type="text" field="contact" display="menu"></p-columnFilter>
-                </div>
-            </th>
+            
             <th style="text-align: center">
                 <div class="vcenter text-center">
                     {{'Device' | translate}}
                     <p-columnFilter type="text" field="deviceNumber" display="menu"></p-columnFilter>
+                </div>
+            </th>
+            <th style="text-align: center">
+                <div class="vcenter text-center">
+                    {{'Contact' | translate}}
+                    <p-columnFilter type="text" field="contact" display="menu"></p-columnFilter>
                 </div>
             </th>
         </tr>
@@ -89,8 +92,8 @@
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
             <td>{{r.subscriberName}} ({{r.customerNumber}})</td>
-            <td>{{r.contactNumber}}</td>
             <td>{{r.deviceNumber}}</td>
+            <td>{{r.contactNumber}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">

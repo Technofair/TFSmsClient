@@ -138,7 +138,10 @@ export class LsoWiseProductListComponent implements OnInit {
         }
         
 
-    this.gSvc.postdata("api/Report/GetDeviceInfoByClientId", JSON.stringify(this.frmsrc.value)).subscribe(res => {
+      //New
+      this.gSvc.postdata("api/Report/GetDeviceProfile", JSON.stringify(this.frmsrc.value)).subscribe(res => {
+      //Old
+      //this.gSvc.postdata("api/Report/GetDeviceInfoByClientId", JSON.stringify(this.frmsrc.value)).subscribe(res => {
       this.lsoWiseProductList = res;
       this.progressStatus=true;
     }, err => {

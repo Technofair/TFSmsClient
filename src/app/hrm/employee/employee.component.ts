@@ -197,7 +197,7 @@ export class EmployeeComponent implements OnInit {
   // }
 
   getEmployee() {
-    //GetEmployeeSummary/{companyId:int}
+
     this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
       this.employeeList = res;
     }, err => {
