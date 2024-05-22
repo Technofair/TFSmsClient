@@ -112,7 +112,7 @@ export class MobileMessageTemplateComponent {
       this.toastrService.error(err.message);
     })
   }
-
+  
   messageSet(){
     var messageTypeId= this.frm.get('scpMessageTypeId')?.value;
     var messages= this.messageType.find((x: { id: any; }) => x.id ===messageTypeId );
