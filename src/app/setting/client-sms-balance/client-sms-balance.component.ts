@@ -39,14 +39,59 @@ export class ClientSmsBalanceComponent {
     noOfMessage: new FormControl("",[Validators.required]),
     cmnCompanyCustomerId: new FormControl("",[Validators.required]),
   });
+  this.getClientSmsBalance();
  }
 
 
  save(){
+  if (this.frm.invalid) return false;
+  this.confirmationService.confirm({
+    message: 'Are you sure that you want to proceed?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+
+      if (this.frm.controls['id'].value == 0) {
+        this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+        this.frm.controls['createdDate'].setValue(new Date());
+      } else if (this.frm.controls['id'].value > 0) {
+        this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+      }
+
+      this.gSvc.postdata("Common/Company/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+        debugger;
+        if (res == undefined) {
+          
+          this.toastrService.error("Something went wrong");
+        }
+        else {
+          this.toastrService.error("Error! Data not save.");
+        }
+      }, err => {
+        this.toastrService.error("Error! Data not save.");
+      })
+      return true;
+    },
+    reject: () => {
+    }
+  })
+  return false;
 
  }
 
+
+ getClientSmsBalance() { 
+  this.gSvc.postdata("api/CmnAppSetting/GetCmnAppSetting", {}).subscribe(res => {
+    this.companyList = res;      
+  }, err => {      
+    this.toastrService.error("List not found");
+  })
+}
+
  edit(){
+  debugger;    
+  this.getClientSmsBalance();
+  //this.frm.patchValue(res);
 
  }
 
@@ -59,8 +104,8 @@ export class ClientSmsBalanceComponent {
  }
 
  showModalDialog(){
-
+  this.displayModal = true;
+  this.reset();
+  //this.viewInfo = res;
  }
-
-
 }
