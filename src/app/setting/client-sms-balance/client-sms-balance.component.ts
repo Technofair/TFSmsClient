@@ -46,7 +46,19 @@ export class ClientSmsBalanceComponent {
 
  }
 
+ edit(){
+
+ }
+
  reset(){
+
+ }
+
+ clear(){
+
+ }
+
+ showModalDialog(){
 
  }
 
