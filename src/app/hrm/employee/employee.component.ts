@@ -198,7 +198,11 @@ export class EmployeeComponent implements OnInit {
 
   getEmployee() {
 
-    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
+
+    //New
+    this.gSvc.postdata("HRM/Employee/GetEmployeeExceptProxyByCompanyId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+    //Old
+    //this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
       this.employeeList = res;
     }, err => {
       this.toastrService.error("Employee List Not Found");
