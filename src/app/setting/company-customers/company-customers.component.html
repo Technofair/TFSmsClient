@@ -27,7 +27,7 @@
             </div> -->
 
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> *</span>
+                <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> </span>
                 <input type="text" class="p-2 w-full"
                     formControlName="contactPerson" pInputText />
                 <span *ngIf="frm.controls['contactPerson'].invalid && frm.controls['contactPerson'].touched "
@@ -36,7 +36,7 @@
                 </span>
             </div>
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'CONTACTNO'|translate}}</label><span class="text-danger"></span>
+                <label>{{'CONTACTNO'|translate}}</label><span class="text-danger">*</span>
                 <input type="text" class="p-2 w-full"
                     formControlName="contactNo" phoneChars />
 
@@ -62,17 +62,7 @@
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'WEB'|translate}}</label>
                 <input type="text" class="p-2  w-full" formControlName="web" webChars pInputText />
-            </div>
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
-                <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
-                    [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="shortName" optionValue="id"></p-dropdown><br>
-                <span *ngIf="frm.controls['cmnCompanyTypeId'].invalid && frm.controls['cmnCompanyTypeId'].touched "
-                    class="text-danger">
-                    {{'TYPE'|translate}} {{'REQUIRED'|translate}}
-                </span>
-            </div> -->           
+            </div>                      
             
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'ADDRESS'|translate}}</label><span class="text-danger"> *</span>
@@ -98,6 +88,7 @@
                     formControlName="isActive">
                 <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
             </div>
+            
 
             <!-- Asad Added -->
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -120,7 +111,7 @@
                         <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm mr-2"
                             type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
                         <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
-                            (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+                            (click)="initialize()" label="{{'RESET'|translate}}"></p-button>
                     </div>
                 </div>
             </div>
@@ -184,9 +175,10 @@
             <td>{{r.contactNo}}</td>
             <td>{{r.email}}</td>
             <td>{{r.address}}</td>
+            <!-- <td>{{r.code}}</td> -->
             <td  style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-                    (click)="edit()" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
                 <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
                     (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
             </td>
