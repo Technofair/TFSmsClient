@@ -96,7 +96,7 @@ export class UserComponent implements OnInit {
     })
   }
   getEmployee() {
-    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/"+this.auth.getCompany(), {}).subscribe(res => {
+    this.gSvc.postdata("HRM/Employee/GetHrmEmployeeByCompanyId/"+this.auth.getCompany(), {}).subscribe(res => {
       if(res !=undefined)
       {
         for (var i = 0; i < res.length; i++) {
