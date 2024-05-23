@@ -111,7 +111,10 @@ export class UserComponent implements OnInit {
 
   getUsers() {
     this.progressStatus=false;
-    this.gSvc.postdata("Security/User/GetUserInfoByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
+    //New
+    this.gSvc.postdata("Security/User/GetUserByCompanyId?companyId="+this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel() , {}).subscribe(res => {
+   //Old
+      //this.gSvc.postdata("Security/User/GetUserInfoByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
       this.userList = res;
       this.progressStatus=true;
     }, err => {
