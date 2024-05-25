@@ -18,6 +18,7 @@ import { AppsettingsComponent } from './appsettings/appsettings.component';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { CompanyCustomersComponent } from './company-customers/company-customers.component';
 import { ClientSmsBalanceComponent } from './client-sms-balance/client-sms-balance.component';
+import { ClientServicePermissionComponent } from './client-service-permission/client-service-permission.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
   { path: 'appsettings', component: AppsettingsComponent },
   { path: 'frequency', component: FrequencyComponent },
   { path: 'companyCustomers', component: CompanyCustomersComponent },
-  { path: 'clientsmsbalance', component: ClientSmsBalanceComponent }
+  { path: 'clientsmsbalance', component: ClientSmsBalanceComponent },
+  { path: 'client-service-permission', component: ClientServicePermissionComponent },
 ];
 
 @NgModule({

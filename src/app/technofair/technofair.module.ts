@@ -26,22 +26,34 @@ import { DirectiveModule } from '../directives/directive.module';
 
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ClientInfoComponent } from './client-info/client-info.component';
+import { ReportViewerModule } from '../reportviewer/reportviewer.module';
+import { AccordionModule } from 'primeng/accordion';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { TabViewModule } from 'primeng/tabview';
+import { SubscriberManagementRoutingModule } from '../subscriptions/subscription-routing.module';
+import { ClientServicePermissionComponent } from './client-service-permission/client-service-permission.component';
+import { TechnofairRoutingModule } from './technofair-routing.module';
 
 @NgModule({
   declarations: [
-    ClientInfoComponent
-  
+    ClientInfoComponent,
+    ClientServicePermissionComponent
   ],
   exports: [
   ],
   imports: [
+    ReportViewerModule,
     CommonModule,
     TranslateModule,
+    HttpClientModule,
     ProgressSpinnerModule,
-    FormsModule,ReactiveFormsModule,
-    InputTextModule,InputTextareaModule,MultiSelectModule,CascadeSelectModule,
-    InputNumberModule,InputMaskModule,DropdownModule,AutoCompleteModule,CalendarModule,ChipsModule,TableModule,ConfirmDialogModule,
-    MessagesModule,DialogModule, PanelModule, CheckboxModule, DirectiveModule
+    TechnofairRoutingModule,
+    FormsModule, ReactiveFormsModule,
+    InputTextModule, InputTextareaModule, MultiSelectModule, CascadeSelectModule,
+    InputNumberModule, InputMaskModule, DropdownModule, AutoCompleteModule, CalendarModule, ChipsModule, TableModule, ConfirmDialogModule,
+    MessagesModule, DialogModule, RadioButtonModule,
+    SubscriberManagementRoutingModule, TabViewModule, PanelModule, DirectiveModule,SelectButtonModule,AccordionModule
   ],
   
 })

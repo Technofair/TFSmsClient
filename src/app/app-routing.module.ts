@@ -48,6 +48,7 @@ const routes: Routes = [
       { path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule) },
       { path: 'report', loadChildren: () => import('./report/report.module').then(m => m.ReportModule) },
       { path: 'pgw', loadChildren: () => import('./payment-gateway/payment-gateway.module').then(m => m.PaymentGatewayModule) },
+      { path: 'technofair', loadChildren: () => import('./technofair/technofair.module').then(m => m.TechnofairModule) },
     ]
   },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) },
