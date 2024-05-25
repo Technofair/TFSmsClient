@@ -190,7 +190,38 @@
             styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
-
+<div class="card py-2 mt-2">
+<form [formGroup]="frmsrc" (ngSubmit)="search()">
+    <div class="formgrid grid">
+        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
+            <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
+                [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+               (onChange)="getCompanyByCompanyType()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+            
+        </div>
+        
+        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
+            <p-dropdown [options]="companyList" formControlName="cmnCompanyId"
+                placeholder="{{'COMPANY' | translate}}" [showClear]="true" [filter]="true" filterBy="name"
+                [showClear]="true" [style]="{'width':'100%'}" placeholder="{{'SELECT'|translate}}"
+                optionLabel="name" optionValue="id"></p-dropdown>
+        </div>
+      
+      <div class="field col-12 sm:col-12 md:col-6 lg:col-6 xl:col-6">
+        <div class="mt-4">
+          <div class="" style="padding-top: 10px;">
+            <p-button (click)="search()" [disabled]="frm.invalid" styleClass="p-button-primary p-button-sm"
+              type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
+            <!-- <p-button (onClick)="searchReset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
+              label="{{'RESET'|translate}}"> </p-button>&nbsp; -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 <p-table #dt [value]="employeeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"

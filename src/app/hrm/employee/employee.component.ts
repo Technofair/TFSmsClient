@@ -32,7 +32,7 @@ export class EmployeeComponent implements OnInit {
   frm!: FormGroup;
   id = 1;
   fileToUpload: any;
-
+  frmsrc! :FormGroup;
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
@@ -66,16 +66,29 @@ export class EmployeeComponent implements OnInit {
       modifiedDate: new FormControl(),
 
     });
+    this.frmsearch();
     this.genderList = [{ 'id': true, "name": 'Male' }, { 'id': false, "name": 'Female' }]
     this.getEmployee();
     this.getCompanyType();
     //this.getCompany();
     this.getDesignation();
   }
-
-
-//Asad Added 12.02.2024
-
+  search() {
+    var requestBody = this.frmsrc.value;
+    this.gSvc.postdata("api/not/making", JSON.stringify(requestBody)).subscribe(res => {
+    }, err => {
+      
+      this.toastrService.error(err.message);
+            console.log('Exception: (search)' +  err.message);
+      //this.toastrService.error("Error ! Data is not found . ");
+    })
+  }
+  frmsearch() {
+    this.frmsrc = this.fb.group({
+      cmnCompanyId: new FormControl(),
+      cmnCompanyTypeId: new FormControl(),
+    })
+  }
   clickOnBtnFile() {
     debugger;
     this._fileInput.nativeElement.value = "";
