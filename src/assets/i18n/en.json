@@ -563,5 +563,6 @@
     "BIN NUMBER":"BIN Number",
     "Company Customer":"Company Customer",
     "MobileMessageTemplate":"Mobile Message Template",
-    "serviceInitiate":"Service Initiate"
+    "serviceInitiate":"Service Initiate",
+    "ClientServicePermission":"Client Service Permission"
 }

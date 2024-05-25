@@ -46,6 +46,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { FrequencyComponent } from './frequency/frequency.component';
 import { CompanyCustomersComponent } from './company-customers/company-customers.component';
 import { ClientSmsBalanceComponent } from './client-sms-balance/client-sms-balance.component';
+import { ClientServicePermissionComponent } from './client-service-permission/client-service-permission.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { ClientSmsBalanceComponent } from './client-sms-balance/client-sms-balan
     AppsettingsComponent,
     FrequencyComponent,
     CompanyCustomersComponent,
-    ClientSmsBalanceComponent
+    ClientSmsBalanceComponent,
+    ClientServicePermissionComponent
   ],
   exports: [
   ],
