@@ -5,17 +5,23 @@
     <form [formGroup]="frm" (ngSubmit)="save()">
         <input type="hidden" formControlName="id" value="0">
         <div class="formgrid grid">
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
+                <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
+                    [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                   (onChange)="getCompanyByCompanyType()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+                
+            </div>
+            
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'COMPANY'|translate}}</label><span class="text-danger"> *</span><br>
                 <p-dropdown [options]="companyList" formControlName="cmnCompanyId"
                     placeholder="{{'COMPANY' | translate}}" [showClear]="true" [filter]="true" filterBy="name"
                     [showClear]="true" [style]="{'width':'100%'}" placeholder="{{'SELECT'|translate}}"
                     optionLabel="name" optionValue="id"></p-dropdown>
-                <!--<span *ngIf="frm.controls['CmnCompanyId'].invalid && frm.controls['CmnCompanyId'].touched "
-                    class="text-danger">
-                    {{'COMPANYID'|translate}} {{'REQUIRED'|translate}}
-                </span>-->
             </div>
+
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'EMPLOYEID'|translate}}</label><span class="text-danger"> *</span><br>
                 <input type="text" class="p-2  w-full" placeholder="" formControlName="employeeId" pInputText />
