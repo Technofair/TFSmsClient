@@ -33,31 +33,19 @@ export class CompanyCustomersComponent {
     , private toastrService: ToastrService
     , private route: ActivatedRoute
     , private auth: AuthService
-   // , private exportService: ExportService
-    //, public util: Utility,
   ) {
 
  }
 
  ngOnInit(): void{
-  this.frm = new FormGroup({
-    id: new FormControl(0),
-    name: new FormControl("", [Validators.required]),
-    contactPerson: new FormControl(""),
-    contactNo: new FormControl("",[Validators.required]),
-    email: new FormControl("",[Validators.required]),
-    web: new FormControl(),
-    code: new FormControl("0"),
-    address: new FormControl("",[Validators.required]),
-    phone: new FormControl(""),
-    isActive: new FormControl(true,[Validators.required]),
-    createdBy: new FormControl(),
-    createdDate: new FormControl()
-  })
+  this.initialize();
   this.getCompany();
  }
- save() {
 
+
+
+ save() {
+  console.log(JSON.stringify(this.frm.value))
   if (this.frm.invalid) return false;
   debugger
   this.confirmationService.confirm({
@@ -66,16 +54,14 @@ export class CompanyCustomersComponent {
     icon: 'pi pi-exclamation-triangle',
     accept: () => {
 
-      console.log(JSON.stringify(this.frm.value))
-
+  debugger
       if (this.frm.controls['id'].value == 0) {
         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
         this.frm.controls['createdDate'].setValue(new Date());
       } else if (this.frm.controls['id'].value > 0) {
         this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
-      }
-
-     
+      }     
+      
 
       this.gSvc.postdata("api/CompanyCustomer/Save", JSON.stringify(this.frm.value)).subscribe(res => {
         //this.toastrService.success("save");
@@ -83,6 +69,7 @@ export class CompanyCustomersComponent {
         if (res.success) {
           this.initialize();
           this.getCompany();
+          //this.getFrm();
           this.toastrService.success(res.message);         
          
         }
@@ -153,9 +140,9 @@ showModalDialog(res: any) {
 }
 
 
-edit(res: any) {
-  debugger
+edit(res: any) {  
   this.formId = 1;
+  //this.getFrm();
   this.frm.patchValue(res);
 }
 
@@ -176,7 +163,8 @@ initialize(){
     phone: new FormControl(""),
     isActive: new FormControl(true,[Validators.required]),
     createdBy: new FormControl(),
-    createdDate: new FormControl()
+    createdDate: new FormControl(),
+    modifiedBy: new FormControl(this.auth.getUserId())
   })
 
 }
