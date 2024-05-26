@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class UserComponent implements OnInit {
+  companyTypeList: any;
   userList: any;
   formId = 0;
   id: any;
@@ -38,6 +39,7 @@ export class UserComponent implements OnInit {
       loginID: new FormControl("", Validators.required),
       password: new FormControl("", Validators.required),
       isActive: new FormControl(true, Validators.required),
+      cmnCompanyTypeId: new FormControl(null, [Validators.required]),
       cmnCompanyId: new FormControl( 0, Validators.required),
       secUserTypeId: new FormControl( 0, Validators.required),
       createdBy: new FormControl(0,),
@@ -45,8 +47,9 @@ export class UserComponent implements OnInit {
       modifiedBy: new FormControl()
     });
     this.getUsers();
+    this.getCompanyType();
     this.getCompany();
-    this.getEmployee();
+    //this.getEmployee();
     this.getRoles();
   }
   save() {
@@ -68,9 +71,17 @@ export class UserComponent implements OnInit {
 
         this.gSvc.postdata("Security/User/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           //console.log(this.frm.value);
+          
+          if(res.success){
+            this.toastrService.success(res.message);
+          }
+          else{
+            this.toastrService.warning(res.message);
+          }
+
           this.frm.reset();
           this.getUsers();
-          this.toastrService.success("Successful");
+          
         }, err => {
           this.toastrService.error("Error! Data not Saved.");
         })
@@ -88,6 +99,35 @@ export class UserComponent implements OnInit {
       this.toastrService.error("Error! Roles not found ");
     })
   }
+
+  getCompanyType() {
+    this.gSvc.postdata("Common/Company/GetAllCompanyType", {}).subscribe(res => {
+    this.companyTypeList = res;
+    }, err => {
+      
+      this.toastrService.error(err.message);
+    })
+  }
+
+  getCompanyByCompanyTypeOne() {
+    var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+    this.getCompanyByCompanyType(cmnCompanyTypeId);
+  }
+
+  // getCompanyByCompanyTypeTwo() {
+  //   var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
+  //   this.getCompanyByCompanyType(cmnCompanyTypeId);
+  // }
+
+  getCompanyByCompanyType(cmnCompanyTypeId: any) {
+    
+    this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
+         this.companyList = res;
+    }, err => {
+      this.toastrService.error("Error! Company list not found ");
+    })
+  }
+
   getCompany() {
     this.gSvc.postdata("Common/Company/GetClientByCompanyIdForAdmin/"+this.auth.getCompany(), {}).subscribe(res => {
       this.companyList = res;
@@ -95,8 +135,14 @@ export class UserComponent implements OnInit {
       this.toastrService.error("Error! Company not found ");
     })
   }
+
   getEmployee() {
-    this.gSvc.postdata("HRM/Employee/GetHrmEmployeeByCompanyId/"+this.auth.getCompany(), {}).subscribe(res => {
+    //New
+    var cmnCompanyId = this.frm.controls["cmnCompanyId"].value;
+    
+    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId?companyId=" + cmnCompanyId + "&userLevel=" + this.auth.getUserLevel() , {}).subscribe(res => {
+    //Old: 26.05.2024
+    //this.gSvc.postdata("HRM/Employee/GetHrmEmployeeByCompanyId/"+this.auth.getCompany(), {}).subscribe(res => {
       if(res !=undefined)
       {
         for (var i = 0; i < res.length; i++) {
