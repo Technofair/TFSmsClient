@@ -41,7 +41,7 @@ export class UserRolesComponent implements OnInit {
     });
   }
   getAllCompanyType() {
-    this.gSvc.postdata("Common/Company/GetAllCompanyType", this.Authser.getCompany()).subscribe(res => {
+    this.gSvc.postdata("Common/Company/GetAllCompanyTypeByCompanyId", this.Authser.getCompany()).subscribe(res => {
       this.companyTypeList = res;
     }, err => {
       this.toastrService.error("Error! Company type list not found");
