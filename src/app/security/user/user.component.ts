@@ -24,6 +24,7 @@ export class UserComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   frm!: FormGroup;
+  frmsrc! :FormGroup;
   userTypes: any;
   users: any;
   roles:any;
@@ -33,6 +34,17 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.initializeFrm();
+    this.initializeSrcFrm();    
+
+    this.getCompanyType();
+    this.getCompany();
+    this.getAllSecUserType();
+    //this.getUsers();
+  }
+
+  initializeFrm(){
     this.frm = new FormGroup({
       id: new FormControl(0),
       hrmEmployeeId: new FormControl(0,Validators.required),
@@ -46,57 +58,12 @@ export class UserComponent implements OnInit {
       createdDate: new FormControl( ),
       modifiedBy: new FormControl()
     });
-    this.getUsers();
-    this.getCompanyType();
-    this.getCompany();
-    //this.getEmployee();
-    this.getRoles();
   }
-  save() {
-    debugger
-    if (this.frm.invalid) return false;
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        if (this.frm.controls['id'].value == 0) {
-          //Old
-          //this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
-          this.frm.controls['createdDate'].setValue(new Date());
-        } else if (this.frm.controls['id'].value > 0) {
-          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
-        }
 
-        this.gSvc.postdata("Security/User/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-          //console.log(this.frm.value);
-          
-          if(res.success){
-            this.toastrService.success(res.message);
-          }
-          else{
-            this.toastrService.warning(res.message);
-          }
-
-          this.frm.reset();
-          this.getUsers();
-          
-        }, err => {
-          this.toastrService.error("Error! Data not Saved.");
-        })
-        return true;
-      },
-      reject: () => {
-      }
-    })
-    return false;
-  }
-  getRoles(){
-    this.gSvc.postdata("Security/SecUserType/GetAllSecUserType", {}).subscribe(res => {
-      this.roles = res;
-    }, err => {
-      this.toastrService.error("Error! Roles not found ");
+  initializeSrcFrm() {
+      this.frmsrc = this.fb.group({
+      cmnCompanyId: new FormControl(null),
+      cmnCompanyTypeId: new FormControl(null),
     })
   }
 
@@ -114,10 +81,10 @@ export class UserComponent implements OnInit {
     this.getCompanyByCompanyType(cmnCompanyTypeId);
   }
 
-  // getCompanyByCompanyTypeTwo() {
-  //   var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
-  //   this.getCompanyByCompanyType(cmnCompanyTypeId);
-  // }
+  getCompanyByCompanyTypeTwo() {
+    var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
+    this.getCompanyByCompanyType(cmnCompanyTypeId);
+  }
 
   getCompanyByCompanyType(cmnCompanyTypeId: any) {
     
@@ -155,10 +122,70 @@ export class UserComponent implements OnInit {
     })
   }
 
-  getUsers() {
+  getAllSecUserType(){
+    this.gSvc.postdata("Security/SecUserType/GetAllSecUserType", {}).subscribe(res => {
+      this.roles = res;
+    }, err => {
+      this.toastrService.error("Error! Roles not found ");
+    })
+  }
+
+  save() {
+    debugger
+    if (this.frm.invalid) return false;
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        if (this.frm.controls['id'].value == 0) {
+          //Old
+          //this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+          this.frm.controls['createdDate'].setValue(new Date());
+        } else if (this.frm.controls['id'].value > 0) {
+          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+        }
+
+        this.gSvc.postdata("Security/User/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          //console.log(this.frm.value);
+          
+          if(res.success){
+            this.toastrService.success(res.message);
+          }
+          else{
+            this.toastrService.warning(res.message);
+          }
+          
+          this.getUsers(this.frm.controls["cmnCompanyTypeId"].value, this.frm.controls["cmnCompanyId"].value, this.auth.getUserLevel());
+          this.frm.reset();
+        }, err => {
+          this.toastrService.error("Error! Data not Saved.");
+        })
+        return true;
+      },
+      reject: () => {
+      }
+    })
+    return false;
+  }
+
+  search(){
+
+    var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
+    var cmnCompanyId = this.frmsrc.controls["cmnCompanyId"].value;
+
+    cmnCompanyTypeId = cmnCompanyTypeId ==  0 ? null : cmnCompanyTypeId;
+    cmnCompanyId = cmnCompanyId ==  0 ? null : cmnCompanyId;
+    var userLevel = this.auth.getUserLevel();
+    this.getUsers(cmnCompanyTypeId, cmnCompanyId, userLevel);
+  }
+ 
+  getUsers(cmnCompanyTypeId: any, cmnComnayId: any, userLevel: any) {
     this.progressStatus=false;
     //New
-    this.gSvc.postdata("Security/User/GetUserByCompanyId?companyId="+this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel() , {}).subscribe(res => {
+    //var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+    this.gSvc.postdata("Security/User/GetUserByAnyKey?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId="+ cmnComnayId + "&userLevel="+ this.auth.getUserLevel() , {}).subscribe(res => {
    //Old
       //this.gSvc.postdata("Security/User/GetUserInfoByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
       this.userList = res;
@@ -172,6 +199,8 @@ export class UserComponent implements OnInit {
   edit(res: any) {
     this.formId = 1;
     this.frm.patchValue(res);
+    //var cmnCompanyId = this.frm.controls["cmnCompanyId"].value;
+    this.getEmployee();
   }
 
   delete() {

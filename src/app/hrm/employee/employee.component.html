@@ -190,6 +190,7 @@
             styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
+
 <div class="card py-2 mt-2">
 <form [formGroup]="frmsrc">
     <div class="formgrid grid">
@@ -220,6 +221,7 @@
     </div>
   </form>
 </div>
+
 <p-table #dt [value]="employeeList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10,20,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
