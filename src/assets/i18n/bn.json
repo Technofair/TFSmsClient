@@ -712,6 +712,8 @@
     "Client SMS Balance":"ক্লায়েন্ট এসএমএস ব্যালেন্স",
     "MobileMessageTemplate":"মোবাইল ম্যাসেজ টেমপ্লেট",
     "serviceInitiate":"সেবা শুরু",
-    "ClientServicePermission":"ক্লায়েন্ট সার্ভিস পারমিশন"
+    "ClientServicePermission":"ক্লায়েন্ট সার্ভিস পারমিশন",
+    "SMSStatus":"এস এম এস স্ট্যাটাস",
+    "SMSRate(TK)":"এস এম এস রেট(৳)"
 }
 

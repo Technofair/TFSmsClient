@@ -10,7 +10,7 @@
                 <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
                 <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
                     [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                   (onChange)="getCompanyByCompanyType()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+                   (onChange)="getCompanyByCompanyTypeOne()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
                 
             </div>
             
@@ -191,13 +191,13 @@
     </ng-template>
 </p-dialog>
 <div class="card py-2 mt-2">
-<form [formGroup]="frmsrc" (ngSubmit)="search()">
+<form [formGroup]="frmsrc">
     <div class="formgrid grid">
         <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
             <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
             <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
                 [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-               (onChange)="getCompanyByCompanyType()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+               (onChange)="getCompanyByCompanyTypeTwo()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
             
         </div>
         
@@ -214,8 +214,6 @@
           <div class="" style="padding-top: 10px;">
             <p-button (click)="search()" [disabled]="frm.invalid" styleClass="p-button-primary p-button-sm"
               type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
-            <!-- <p-button (onClick)="searchReset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
-              label="{{'RESET'|translate}}"> </p-button>&nbsp; -->
           </div>
         </div>
       </div>

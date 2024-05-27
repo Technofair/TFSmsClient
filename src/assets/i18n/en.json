@@ -564,5 +564,7 @@
     "Company Customer":"Company Customer",
     "MobileMessageTemplate":"Mobile Message Template",
     "serviceInitiate":"Service Initiate",
-    "ClientServicePermission":"Client Service Permission"
+    "ClientServicePermission":"Client Service Permission",
+    "SMSStatus":"SMS Status",
+    "SMSRate(TK)":"SMS Rate(TK)"
 }

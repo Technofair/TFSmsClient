@@ -49,8 +49,8 @@ export class EmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.frm = this.fb.group({
       id: new FormControl(0),
-      cmnCompanyTypeId: new FormControl("", [Validators.required]),
-      cmnCompanyId: new FormControl("", Validators.required),
+      cmnCompanyTypeId: new FormControl(null, [Validators.required]),
+      cmnCompanyId: new FormControl(null, Validators.required),
       employeeId: new FormControl("", Validators.required),
       name: new FormControl("", Validators.required),
       mobile: new FormControl(),
@@ -68,25 +68,27 @@ export class EmployeeComponent implements OnInit {
     });
     this.frmsearch();
     this.genderList = [{ 'id': true, "name": 'Male' }, { 'id': false, "name": 'Female' }]
-    this.getEmployee();
+    //this.getEmployee(this.frm.controls["cmnCompanyTypeId"].value,  this.auth.getCompany(), this.auth.getUserLevel());
     this.getCompanyType();
     //this.getCompany();
     this.getDesignation();
   }
+
   search() {
-    var requestBody = this.frmsrc.value;
-    this.gSvc.postdata("api/not/making", JSON.stringify(requestBody)).subscribe(res => {
-    }, err => {
-      
-      this.toastrService.error(err.message);
-            console.log('Exception: (search)' +  err.message);
-      //this.toastrService.error("Error ! Data is not found . ");
-    })
+    
+    var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
+    var cmnCompanyId = this.frmsrc.controls["cmnCompanyId"].value;
+
+    cmnCompanyTypeId = cmnCompanyTypeId ==  0 ? null : cmnCompanyTypeId;
+    cmnCompanyId = cmnCompanyId ==  0 ? null : cmnCompanyId;
+    var userLevel = this.auth.getUserLevel();
+    this.getEmployee(cmnCompanyTypeId, cmnCompanyId, userLevel);
+
   }
   frmsearch() {
     this.frmsrc = this.fb.group({
-      cmnCompanyId: new FormControl(),
-      cmnCompanyTypeId: new FormControl(),
+      cmnCompanyId: new FormControl(null),
+      cmnCompanyTypeId: new FormControl(null),
     })
   }
   clickOnBtnFile() {
@@ -119,10 +121,6 @@ export class EmployeeComponent implements OnInit {
     }
   }
 
-//end
-
-
-
 
   save() {
     debugger
@@ -133,12 +131,6 @@ export class EmployeeComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         if (this.frm.controls['id'].value == 0) {
-          //this.frm.controls['cmnCompanyId'].value
-          //New
-          //this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-          //Old
-          //this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-
           this.frm.controls['createdBy'].setValue(this.auth.getUserId());
           this.frm.controls['createdDate'].setValue(new Date());
         } else if (this.frm.controls['id'].value > 0) {
@@ -149,26 +141,20 @@ export class EmployeeComponent implements OnInit {
          
         this.gSvc.postdata("HRM/Employee/Save", JSON.stringify(this.frm.value)).subscribe(res => {
 
-          //New: Start
           if(res!= 'undefined')
           {
             if(res.success){
               this.UploadPhoto(res.operationId);
               this.frm.reset();
-              this.getEmployee();
+              
+              this.getEmployee(this.frm.controls["cmnCompanyTypeId"].value, this.frm.controls["cmnCompanyId"].value, this.auth.getUserLevel());
               this.toastrService.success(res.message);
             }
             else{
               this.toastrService.warning(res.message);
             }
          }
-          //End
-
-          //old: Commented By Asad
-          // this.frm.reset();
-          // this.getEmployee();
-          // this.toastrService.success("Successful");
-
+         
         }, err => {
           this.toastrService.error("Error! Data Not Saved.");
         })
@@ -199,39 +185,31 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
-  //new 04-05-2024
-  getCompanyByCompanyType() {
-
-   
-
+  getCompanyByCompanyTypeOne() {
     var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
-    
-    //New
+    this.getCompanyByCompanyType(cmnCompanyTypeId);
+  }
+
+  getCompanyByCompanyTypeTwo() {
+    var cmnCompanyTypeId = this.frmsrc.controls["cmnCompanyTypeId"].value;
+    this.getCompanyByCompanyType(cmnCompanyTypeId);
+  }
+
+  getCompanyByCompanyType(cmnCompanyTypeId: any) {
+    //var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
     this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
-    //this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?cmnCompanyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
-    //Old
-    //this.gSvc.postdata("Common/Company/GetSelfAndSucceedingClientByCompanyId?companyId="+this.auth.getCompany(), {}).subscribe(res => {
-      this.companyList = res;
+         this.companyList = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
     })
   }
 
-//old
-  // getCompany() {
-  //   this.gSvc.postdata("Common/Company/GetAll", {}).subscribe(res => {
-  //     this.companyList = res;
-  //   }, err => {
-  //     this.toastrService.error("Company List Not Found");
-  //   })
-  // }
 
-  getEmployee() {
-    //New
-    this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId?companyId=" + this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel(), {}).subscribe(res => {
-    //Old
-    //this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId/" + this.auth.getCompany(), {}).subscribe(res => {
-      this.employeeList = res;
+
+  getEmployee(cmnCompanyTypeId: any, cmnComnayId: any, userLevel: any) {
+    //this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel()
+    this.gSvc.postdata("HRM/Employee/GetEmployeeByAnyKey?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId=" + cmnComnayId + "&userLevel=" + userLevel, {}).subscribe(res => {
+    this.employeeList = res;
     }, err => {
       this.toastrService.error("Employee List Not Found");
     })
@@ -263,7 +241,8 @@ export class EmployeeComponent implements OnInit {
   edit(res: any) {
     this.formId = 1;
     this.frm.patchValue(res);
-    this.getCompanyByCompanyType();
+    var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+    this.getCompanyByCompanyType(cmnCompanyTypeId);
   }
 
   delete() {
