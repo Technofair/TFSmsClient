@@ -12,13 +12,15 @@ import { GeneralService } from 'src/app/services/general.service';
   providers: [ConfirmationService]
 })
 export class ClientSmsBalanceComponent {
-  companyList: any;
+  companyCustomerList: any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
   id: any;
   frm!: FormGroup;  
-  toastrService: any; 
+  toastrService: any;
+  CmnCompanyCustomerId :any;
+  clientSMSBalance:any
 
   constructor(
     private fb: FormBuilder
@@ -32,14 +34,26 @@ export class ClientSmsBalanceComponent {
  }
 
  ngOnInit(): void{
-  this.frm = new FormGroup({
-    id: new FormControl(0),     
-    rate: new FormControl("",[Validators.required]),    
-    balance: new FormControl("",[Validators.required]),  
-    noOfMessage: new FormControl("",[Validators.required]),
-    cmnCompanyCustomerId: new FormControl("",[Validators.required]),
-  });
+  this.initialize() 
+  this.getCompanyCustomer();
   this.getClientSmsBalance();
+ }
+
+
+ initialize(){
+  this.frm = new FormGroup({
+    id: new FormControl(0),  
+    rate: new FormControl([Validators.required]),    
+    balance: new FormControl([Validators.required]),  
+    noOfMessage: new FormControl([Validators.required]),
+    isActive: new FormControl(true,[Validators.required]),
+    CmnCompanyCustomerId: new FormControl([Validators.required]),
+    date: new FormControl(new Date(),[Validators.required]),
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date()),
+    modifiedBy: new FormControl(this.auth.getUserId()),
+    modifiedDate: new FormControl(new Date()),
+  });
  }
 
 
@@ -50,7 +64,6 @@ export class ClientSmsBalanceComponent {
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
     accept: () => {
-
       if (this.frm.controls['id'].value == 0) {
         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
         this.frm.controls['createdDate'].setValue(new Date());
@@ -58,8 +71,10 @@ export class ClientSmsBalanceComponent {
         this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
       }
 
-      this.gSvc.postdata("Common/Company/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-        debugger;
+      console.log(JSON.stringify(this.frm.value))
+      
+      this.gSvc.postdata("api/ClientSMSBalance/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+        
         if (res == undefined) {
           
           this.toastrService.error("Something went wrong");
@@ -81,17 +96,28 @@ export class ClientSmsBalanceComponent {
 
 
  getClientSmsBalance() { 
-  this.gSvc.postdata("api/CmnAppSetting/GetCmnAppSetting", {}).subscribe(res => {
-    this.companyList = res;      
+  this.gSvc.postdata("api/ClientSMSBalance/GetAll", {}).subscribe(res => {
+    this.clientSMSBalance = res;      
   }, err => {      
     this.toastrService.error("List not found");
   })
 }
 
- edit(){
+// for dropdown
+getCompanyCustomer() {
+  this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+    this.companyCustomerList = res;
+    //this.progressStatus=true;
+  }, err => {
+    //this.progressStatus=true;
+    this.toastrService.error("Error! Company list not found ");
+  })
+}
+
+ edit(res :any){
   debugger;    
   this.getClientSmsBalance();
-  //this.frm.patchValue(res);
+  this.frm.patchValue(res);
 
  }
 
@@ -106,6 +132,6 @@ export class ClientSmsBalanceComponent {
  showModalDialog(){
   this.displayModal = true;
   this.reset();
-  //this.viewInfo = res;
+  this.initialize();
  }
 }
