@@ -10,28 +10,34 @@
     <div class="formgrid grid">
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'Company Customer'|translate}}</label>
-            <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
+            <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
+            <p-dropdown [options]="companyCustomerList" [style]="{'width':'100%'}" formControlName="CmnCompanyCustomerId"
              [filter]="true" filterBy="text" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                 optionLabel="name" optionValue="id"></p-dropdown><br>
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'No Of Message'|translate}}</label>
+            <label>{{'No Of Message'|translate}}</label><span class="text-danger"> *</span>
             <input type="number" class="p-2 w-full" formControlName="noOfMessage"
                 pInputText />
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'RATE'|translate}}</label>
+            <label>{{'RATE'|translate}}</label><span class="text-danger"> *</span>
             <input type="number" class="p-2 w-full" formControlName="rate"
                 pInputText />
         </div>
 
-        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'Balance'|translate}}</label>
+        <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+            <label>{{'Balance'|translate}}</label><span class="text-danger"> *</span>
             <input type="number" class="p-2 w-full" formControlName="balance"
                 pInputText />
+        </div> -->
+
+        <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
+            <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
+                formControlName="isActive">
+            <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
         </div>
 
     </div>
@@ -54,7 +60,7 @@
 </p-panel>
 
 
-<p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="clientSMSBalance" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name', 'code','contactNo','email']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
@@ -79,16 +85,17 @@
     <ng-template pTemplate="header">
         <tr>
             <th class="vcenter text-center" style="width: 8%">{{'SL#' | translate}}</th>
-            <th pSortableColumn="name" style="text-align: center">
+            <!-- <th pSortableColumn="name" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'Company Customer' | translate}}
                     <p-sortIcon field="name"></p-sortIcon>
                     <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
                 </div>
-            </th>            
+            </th> -->
             <th class="vcenter text-center">{{'No Of Message' | translate}}</th>
             <th class="vcenter text-center">{{'RATE' | translate}}</th>
-            <th class="vcenter text-center">{{'Balance' | translate}}</th>           
+            <th class="vcenter text-center">{{'Balance' | translate}}</th>
+            <th class="vcenter text-center">{{'Date' | translate}}</th>
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
         </tr>
         <!-- <tr>
@@ -102,13 +109,14 @@
     <ng-template pTemplate="body" let-r | let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.cmnCompanyCustomerId}}</td>            
+            <!-- <td>{{r.CmnCompanyCustomerId}}</td>    -->
             <td>{{r.noOfMessage}}</td>
             <td>{{r.rate}}</td>
-            <td>{{r.balance}}</td>            
+            <td>{{r.balance}}</td>
+            <td class="vcenter text-center">{{r.date | date :'dd-MMM-yyyy HH:mm'}}</td>         
             <td  style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-                    (click)="edit()" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
                 <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
                     (click)="showModalDialog()" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
             </td>
