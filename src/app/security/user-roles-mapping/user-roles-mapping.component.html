@@ -5,6 +5,26 @@
   <form [formGroup]="frm" >
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
+
+
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
+            [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+           (onChange)="getData()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+        
+    </div>
+
+    <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+      <label>{{'Company' | translate}}</label><span class="text-danger"> *</span>
+      <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId" 
+        [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+        optionValue="id"></p-dropdown>
+      <span *ngIf="frm.controls['companyId'].invalid && frm.controls['companyId'].touched " class="text-danger">
+        {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+      </span>
+    </div>
+
       <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Role' | translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="role" 
@@ -14,15 +34,7 @@
           {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
         </span>
       </div>
-      <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Company' | translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId" 
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
-          optionValue="id"></p-dropdown>
-        <span *ngIf="frm.controls['companyId'].invalid && frm.controls['companyId'].touched " class="text-danger">
-          {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
-        </span>
-      </div>
+      
       <div class="field  col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
         <div class="card-footer">
           <div class=" mt-5">

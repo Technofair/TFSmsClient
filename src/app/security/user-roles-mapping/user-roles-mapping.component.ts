@@ -30,6 +30,7 @@ interface roleUser {
 })
 export class UserRolesMappingComponent implements OnInit {
   frm!: FormGroup;
+  companyTypeList:any;
   roles: any;
   users: any[] = [];
   //companyId: any = 1;
@@ -49,6 +50,7 @@ export class UserRolesMappingComponent implements OnInit {
     this.frm = this.fb.group({
       id: new FormControl(0),
       role: new FormControl(0,Validators.required),
+      cmnCompanyTypeId: new FormControl(null),
       companyId:new FormControl(0,Validators.required),
       secUserId: new FormControl(0),
       secRoleId: new FormControl(0),
@@ -58,18 +60,47 @@ export class UserRolesMappingComponent implements OnInit {
       modifiedBy: new FormControl(this.Authser.getUserId()),
       modifiedDate: new FormControl(new Date),
     });
-    this.roleList();
-    //this.userList();
-    this.getCompany();
+
+    this.getCompanyType();
+    //this.roleList();
+
+    //this.getCompany();
   }
-  //new 29-04-2024
-  getCompany() {
-    this.gSvc.postdata("Common/Company/GetSelfAndChildCompanyByCompanyId?companyId="+this.Authser.getCompany(), {}).subscribe(res => {
-      this.companyList = res;
+
+  getCompanyType() {
+    this.gSvc.postdata("Common/Company/GetAllCompanyType", {}).subscribe(res => {
+    this.companyTypeList = res;
+    }, err => {
+      
+      this.toastrService.error(err.message);
+    })
+  }
+
+  //New 28-05-2024
+
+  getData(){
+    this.getCompanyByCompanyType();
+    this.roleList();
+  }
+
+  getCompanyByCompanyType() {
+
+    var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+    this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
+         this.companyList = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
     })
   }
+
+  //Old 28-05-2024
+  // getCompany() {
+  //   this.gSvc.postdata("Common/Company/GetSelfAndChildCompanyByCompanyId?companyId="+this.Authser.getCompany(), {}).subscribe(res => {
+  //     this.companyList = res;
+  //   }, err => {
+  //     this.toastrService.error("Error! Company list not found ");
+  //   })
+  // }
 
   // old
   // getCompany() {
@@ -84,7 +115,11 @@ export class UserRolesMappingComponent implements OnInit {
   }
    //new 29-04-2024
   roleList() {
-      this.gSvc.postdata("Security/Role/GetSecRoleByCompanyId?cmnCompanyId="+this.Authser.getCompany(), {}).subscribe(res => {
+      //New: 28.05.2024
+      var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+      this.gSvc.postdata("Security/Role/GetSecRoleByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe(res => {
+      //Old: 28.05.2024
+      //this.gSvc.postdata("Security/Role/GetSecRoleByCompanyId?cmnCompanyId="+this.Authser.getCompany(), {}).subscribe(res => {
         this.roles = res;
       }, err => {
         this.toastrService.error("error");
