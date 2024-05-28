@@ -566,5 +566,7 @@
     "serviceInitiate":"Service Initiate",
     "ClientServicePermission":"Client Service Permission",
     "SMSStatus":"SMS Status",
-    "SMSRate(TK)":"SMS Rate(TK)"
+    "SMSRate(TK)":"SMS Rate(TK)",
+    "IsAppointedByOtherCompany": "Appointed By Other Company?",
+    "AppointedCompany": "Appointed Company?"
 }

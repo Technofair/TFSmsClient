@@ -33,6 +33,9 @@ export class EmployeeComponent implements OnInit {
   id = 1;
   fileToUpload: any;
   frmsrc! :FormGroup;
+  isAppointedByOtherCompany: boolean = true;
+  appointedCompanyList: any;
+
   constructor(
     private fb: FormBuilder, 
     private router: Router, 
@@ -47,10 +50,24 @@ export class EmployeeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    
+    this.initializeFrm();
+    this.frmsearch();
+    this.genderList = [{ 'id': true, "name": 'Male' }, { 'id': false, "name": 'Female' }]
+    //this.getEmployee(this.frm.controls["cmnCompanyTypeId"].value,  this.auth.getCompany(), this.auth.getUserLevel());
+    this.getCompanyType();
+    //this.getCompany();
+    this.getDesignation();
+    //this.isAppointedByOtherCompany = true;
+  }
+
+  initializeFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
       cmnCompanyTypeId: new FormControl(null, [Validators.required]),
       cmnCompanyId: new FormControl(null, Validators.required),
+      appointedCompanyId: new FormControl(null),
       employeeId: new FormControl("", Validators.required),
       name: new FormControl("", Validators.required),
       mobile: new FormControl(),
@@ -60,18 +77,26 @@ export class EmployeeComponent implements OnInit {
       photoUrl: new FormControl(),
       signatureUrl: new FormControl(),
       isActive: new FormControl(true),
+      isAppointedByOtherCompany: new FormControl(false),
       createdBy: new FormControl(),
       createdDate: new FormControl(),
       modifiedBy: new FormControl(),
-      modifiedDate: new FormControl(),
-
+      modifiedDate: new FormControl()
     });
-    this.frmsearch();
-    this.genderList = [{ 'id': true, "name": 'Male' }, { 'id': false, "name": 'Female' }]
-    //this.getEmployee(this.frm.controls["cmnCompanyTypeId"].value,  this.auth.getCompany(), this.auth.getUserLevel());
-    this.getCompanyType();
-    //this.getCompany();
-    this.getDesignation();
+  }
+
+  appointmentChange(){
+   
+    var isAppointed = this.frm.get('isAppointedByOtherCompany')?.value;
+    if(isAppointed){
+      this.isAppointedByOtherCompany = false;
+      //GetTopNLevelCompany
+      this.getTopNLevelCompany();
+    }
+    else{
+      this.isAppointedByOtherCompany = true;
+      //this.appointedCompanyList = [];
+    }
   }
 
   search() {
@@ -138,6 +163,23 @@ export class EmployeeComponent implements OnInit {
           this.frm.controls['modifiedDate'].setValue(new Date());
         }
 
+
+        //New: Start
+        
+        if(this.isAppointedByOtherCompany == false){
+          var appointedCompanyId = this.frm.get('appointedCompanyId')?.value;
+          if(appointedCompanyId == null || appointedCompanyId == 0 || appointedCompanyId == undefined)
+            {
+              this.toastrService.warning("Please Select Appointed Company");
+              return;
+            }
+        }
+        else{
+          var appointedCompanyId = this.frm.get('cmnCompanyId')?.value;
+        }
+        this.frm.controls['appointedCompanyId'].setValue(appointedCompanyId);
+        //End
+
          
         this.gSvc.postdata("HRM/Employee/Save", JSON.stringify(this.frm.value)).subscribe(res => {
 
@@ -145,10 +187,11 @@ export class EmployeeComponent implements OnInit {
           {
             if(res.success){
               this.UploadPhoto(res.operationId);
-              this.frm.reset();
-              
+              //this.frm.reset();
               this.getEmployee(this.frm.controls["cmnCompanyTypeId"].value, this.frm.controls["cmnCompanyId"].value, this.auth.getUserLevel());
               this.toastrService.success(res.message);
+              this.initializeFrm();
+              this.isAppointedByOtherCompany = true;
             }
             else{
               this.toastrService.warning(res.message);
@@ -204,7 +247,14 @@ export class EmployeeComponent implements OnInit {
     })
   }
 
-
+  getTopNLevelCompany() {
+    //var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+    this.gSvc.postdata("Common/Company/GetTopNLevelCompany?level="+ 2, {}).subscribe(res => {
+         this.appointedCompanyList = res;
+    }, err => {
+      this.toastrService.error("Error! Company list not found ");
+    })
+  }
 
   getEmployee(cmnCompanyTypeId: any, cmnComnayId: any, userLevel: any) {
     //this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel()
