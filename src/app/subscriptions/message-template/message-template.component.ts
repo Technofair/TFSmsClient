@@ -7,6 +7,7 @@ import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
 import { type } from 'os';
+import { time } from 'console';
 
 @Component({
   selector: 'app-stb-assign-test',
@@ -150,9 +151,11 @@ export class MessageTemplateComponent implements OnInit {
         console.log(this.frm.value);
         this.gSvc.postdata("api/MessageTemplate/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           this.toastrService.success("Saved success");
+          this.createMestemFrm();
           this.messageTemplates();
-          this.reset();
+          
         }, err => {
+          
           this.toastrService.error(err.message);
         })
         return true;
