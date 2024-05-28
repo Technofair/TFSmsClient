@@ -714,6 +714,7 @@
     "serviceInitiate":"সেবা শুরু",
     "ClientServicePermission":"ক্লায়েন্ট সার্ভিস পারমিশন",
     "SMSStatus":"এস এম এস স্ট্যাটাস",
-    "SMSRate(TK)":"এস এম এস রেট(৳)"
+    "SMSRate(TK)":"এস এম এস রেট(৳)",
+    "ScpUserDebit":"ইউজার ডেবিট"
 }
 

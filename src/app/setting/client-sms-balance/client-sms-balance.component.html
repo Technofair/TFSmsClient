@@ -60,7 +60,7 @@
 </p-panel>
 
 
-<p-table #dt [value]="clientSMSBalance" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="clientSMSBalanceList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name', 'code','contactNo','email']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"

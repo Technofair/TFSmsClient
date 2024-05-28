@@ -23,7 +23,6 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DirectiveModule } from '../directives/directive.module';
-
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ClientInfoComponent } from './client-info/client-info.component';
 import { ReportViewerModule } from '../reportviewer/reportviewer.module';
@@ -34,11 +33,19 @@ import { TabViewModule } from 'primeng/tabview';
 import { SubscriberManagementRoutingModule } from '../subscriptions/subscription-routing.module';
 import { ClientServicePermissionComponent } from './client-service-permission/client-service-permission.component';
 import { TechnofairRoutingModule } from './technofair-routing.module';
+import { ClientPackageComponent } from './client-package/client-package.component';
+import { CompanyCollectionComponent } from './company-collection/company-collection.component';
+import { CompanyPackageComponent } from './company-package/company-package.component';
+import { ClientPaymentComponent } from './client-payment/client-payment.component';
 
 @NgModule({
   declarations: [
     ClientInfoComponent,
-    ClientServicePermissionComponent
+    ClientServicePermissionComponent,
+    ClientPackageComponent,
+    CompanyCollectionComponent,
+    CompanyPackageComponent,
+    ClientPaymentComponent
   ],
   exports: [
   ],
