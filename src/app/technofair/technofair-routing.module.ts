@@ -5,14 +5,15 @@ import { ClientServicePermissionComponent } from './client-service-permission/cl
 import { ClientPackageComponent } from './client-package/client-package.component';
 import { CompanyCollectionComponent } from './company-collection/company-collection.component';
 import { CompanyPackageComponent } from './company-package/company-package.component';
+import { ClientPaymentComponent } from './client-payment/client-payment.component';
 
 const routes: Routes = [
   { path: 'clientinfo', component: ClientInfoComponent },
   { path: 'client-service-permission', component: ClientServicePermissionComponent },
   { path: 'client-package', component: ClientPackageComponent },
   { path: 'company-package', component: CompanyPackageComponent },
+  { path: 'client-payment', component: ClientPaymentComponent },
   { path: 'company-collection', component: CompanyCollectionComponent },
-  
 ];
 
 @NgModule({

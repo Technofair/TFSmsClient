@@ -36,6 +36,7 @@ import { TechnofairRoutingModule } from './technofair-routing.module';
 import { ClientPackageComponent } from './client-package/client-package.component';
 import { CompanyCollectionComponent } from './company-collection/company-collection.component';
 import { CompanyPackageComponent } from './company-package/company-package.component';
+import { ClientPaymentComponent } from './client-payment/client-payment.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { CompanyPackageComponent } from './company-package/company-package.compo
     ClientServicePermissionComponent,
     ClientPackageComponent,
     CompanyCollectionComponent,
-    CompanyPackageComponent
+    CompanyPackageComponent,
+    ClientPaymentComponent
   ],
   exports: [
   ],
