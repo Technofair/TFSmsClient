@@ -20,7 +20,7 @@ export class ClientSmsBalanceComponent {
   frm!: FormGroup;  
   toastrService: any;
   CmnCompanyCustomerId :any;
-  clientSMSBalance:any
+  clientSMSBalanceList:any
 
   constructor(
     private fb: FormBuilder
@@ -44,11 +44,11 @@ export class ClientSmsBalanceComponent {
   this.frm = new FormGroup({
     id: new FormControl(0),  
     rate: new FormControl([Validators.required]),    
-    balance: new FormControl([Validators.required]),  
+    balance: new FormControl(0,[Validators.required]),  
     noOfMessage: new FormControl([Validators.required]),
     isActive: new FormControl(true,[Validators.required]),
     CmnCompanyCustomerId: new FormControl([Validators.required]),
-    date: new FormControl(new Date(),[Validators.required]),
+    date: new FormControl(new Date()),
     createdBy: new FormControl(this.auth.getUserId()),
     createdDate: new FormControl(new Date()),
     modifiedBy: new FormControl(this.auth.getUserId()),
@@ -94,10 +94,9 @@ export class ClientSmsBalanceComponent {
 
  }
 
-
  getClientSmsBalance() { 
   this.gSvc.postdata("api/ClientSMSBalance/GetAll", {}).subscribe(res => {
-    this.clientSMSBalance = res;      
+    this.clientSMSBalanceList = res;      
   }, err => {      
     this.toastrService.error("List not found");
   })
