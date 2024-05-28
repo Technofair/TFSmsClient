@@ -15,17 +15,12 @@ import { GeneralService } from 'src/app/services/general.service';
 export class AppsettingsComponent {
 activeTabs: any;
   list: any;
-  isAutoSubscriberNumber: boolean = false;
-  isLengthOfSubscriberNumber: boolean = false;
-  isAllowPurchase: boolean = false;
-  isAllowSale: boolean = false;
-  isAutoReceive: boolean = false;
- // viewInfo: any = {};
- // formId = 0;
-  frm!: FormGroup;
-  //organizationList:any;
-  //progressStatus: boolean = true;
-  //billers:any;
+  AllowAutoSubscriberNumber: boolean = false;
+  AllowPurchase: boolean = false;
+  AllowSale: boolean = false; 
+  //formId = 0;
+  frm!: FormGroup;  
+  //progressStatus: boolean = true; 
   constructor(private fb: FormBuilder,
      private router: Router,
      private confirmationService: ConfirmationService,
@@ -36,14 +31,12 @@ activeTabs: any;
   }
   ngOnInit(): void {   
     this.frm = new FormGroup({
-      //id: new FormControl(0, [Validators.required]),
-      //secUserId: new FormControl([Validators.required]),
-      isAutoSubscriberNumber: new FormControl(),
-      isremarLengthOfSubscriberNumberks:new FormControl(), 
-      isAllowPurchase: new FormControl(),
-      isAllowSale: new FormControl(),
-      isAutoReceive: new FormControl(),
-      createdBy: new FormControl(),
+      id: new FormControl(0, [Validators.required]),      
+      AllowAutoSubscriberNumber: new FormControl(true,[Validators.required]),
+      SubscriberNumberLength:new FormControl(Validators.required), 
+      AllowPurchase: new FormControl(true,[Validators.required]),
+      AllowSale: new FormControl(true,[Validators.required]),      
+      createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
     });
     this.getAppSetting();
@@ -90,11 +83,11 @@ activeTabs: any;
     this.frm.patchValue(res);
   }
   
-  // reset() {
-  //   this.frm.reset();
-  //   this.frm.controls['id'].setValue(0);
-  //   this.frm.markAsPristine();
-  // }
+  reset() {
+    this.frm.reset();
+    this.frm.controls['id'].setValue(0);
+    this.frm.markAsPristine();
+  }
 }
 // function getAppSetting() {
 //   throw new Error('Function not implemented.');
