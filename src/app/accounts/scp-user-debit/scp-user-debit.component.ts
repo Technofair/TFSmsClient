@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Table } from 'primeng/table';
 import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
@@ -21,6 +21,7 @@ export class ScpUserDebitComponent {
   viewInfo: any = {};
   formId = 0;
   frm!: FormGroup;
+  secUserId:any;
   organizationList:any;
   progressStatus: boolean = true;
   billers:any;
@@ -28,25 +29,27 @@ export class ScpUserDebitComponent {
      private router: Router,
      private confirmationService: ConfirmationService,
      private gSvc: GeneralService,
+     private route: ActivatedRoute,
      private toastrService: ToastrService,
      private auth: AuthService) {
 
   }
   ngOnInit(): void {
     debugger
-    this.frm = new FormGroup({
-      id: new FormControl(0, [Validators.required]),
-      secUserId: new FormControl([Validators.required]),
-      amount: new FormControl(),
-      remarks:new FormControl(), 
-      createdBy: new FormControl(this.auth.getUserId, [Validators.required]),
-      createdDate: new FormControl(new Date()),
-      isActive: new FormControl(true, [Validators.required])
-    });
+    this.getfrm();
     this.getUserDebit();
     this.getSecUserType();
   }
-
+getfrm(){
+  this.frm = new FormGroup({
+    id: new FormControl(0),
+    secUserId: new FormControl(Validators.required),
+    amount: new FormControl(Validators.required),
+    remarks:new FormControl(""), 
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date()),
+  });
+}
   save() {
    // this.progressStatus = false;
     if (this.frm.invalid) return false;
@@ -62,6 +65,7 @@ export class ScpUserDebitComponent {
           this.getUserDebit();
           //this.progressStatus = true;
           this.toastrService.success("Successful");
+          this.getfrm();
         }, err => {
           //this.progressStatus = true;
           this.toastrService.error("Error! Data Not Saved.");
@@ -87,8 +91,6 @@ export class ScpUserDebitComponent {
     this.getSecUserType();
     this.frm.patchValue(res);
     console.log(res);
-    //this.frm.controls["SecUserId"].setValue(res.secUserId);
-
   }
 
   showModalDialog(res: any) {
@@ -104,10 +106,7 @@ export class ScpUserDebitComponent {
       this.toastrService.error("Error! Data Not Found");
     })
   }
-  reload() {
-    this.formId = 0;
-    this.router.navigateByUrl('/inventory/damagetype')
-  }
+ 
   reset() {
     this.frm.reset();
     this.frm.controls['id'].setValue(0);

@@ -93,7 +93,7 @@ export class CompanyComponent implements OnInit {
       cmnDistrictId: new FormControl("", [Validators.required]),
 
       cmnUpazillaId: new FormControl("", [Validators.required]),
-      secUserTypeId: new FormControl("", [Validators.required]),
+      //secUserTypeId: new FormControl("", [Validators.required]),
       address: new FormControl("", [Validators.required]),
       cmnUnionId: new FormControl(),
       fax: new FormControl(),
@@ -121,6 +121,11 @@ export class CompanyComponent implements OnInit {
     this.getCountry();
     this.getSecUserType();
   }
+
+
+
+
+
   syncAddressAsMSO(){
     this.gSvc.getdata("Common/Company/GetMainServiceOperator").subscribe(res => {
       this.msoInfo = res;     
@@ -154,6 +159,9 @@ export class CompanyComponent implements OnInit {
         } else if (this.frm.controls['id'].value > 0) {
           this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
         }
+
+        var cmnCompanyId = this.frm.controls["cmnCompanyId"].value;
+        this.frm.controls["cmnCompanyId"].setValue(cmnCompanyId);
 
         this.gSvc.postdata("Common/Company/Save", JSON.stringify(this.frm.value)).subscribe(res => {
           debugger;
@@ -192,6 +200,19 @@ export class CompanyComponent implements OnInit {
     this.exportService.exportToExcel(this.companyList, 'client_report', columnsToExport);
   }
 
+  companies: any[] = [];
+  getUpperLevelCompany() {
+
+    var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+   
+    this.gSvc.postdata("Common/Company/GetUpperLevelCompanyByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe((res: any) => {
+      this.companies = res;
+    }, err => {
+      this.toastrService.error(err.message);
+      
+    })
+  }
+
   getCompany() {
     this.progressStatus=false;
 
@@ -212,8 +233,10 @@ export class CompanyComponent implements OnInit {
 
   getCompanyType() {
        
-    
-    this.gSvc.postdata("Common/Company/GetChildCompanyType?companyId=" + this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel(), {}).subscribe(res => {
+    //New: 28.05.2024
+    this.gSvc.postdata("Common/Company/GetSucceedingChildCompanyType?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+    //Old: 28.05.2024
+    //this.gSvc.postdata("Common/Company/GetChildCompanyType?companyId=" + this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel(), {}).subscribe(res => {
     this.companyTypeList = res;
     }, err => {
       this.toastrService.error("Error! Company type list not found");
