@@ -6,6 +6,7 @@ import { ConfirmationService } from 'primeng/api';
 import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from 'src/app/services/general.service';
 
+
 @Component({
   selector: 'app-appsettings',
   templateUrl: './appsettings.component.html',
@@ -15,9 +16,9 @@ import { GeneralService } from 'src/app/services/general.service';
 export class AppsettingsComponent {
 activeTabs: any;
   list: any;
-  AllowAutoSubscriberNumber: boolean = false;
-  AllowPurchase: boolean = false;
-  AllowSale: boolean = false; 
+  AllowAutoSubscriberNumber: boolean = true;
+  AllowPurchase: boolean = true;
+  AllowSale: boolean = true; 
   //formId = 0;
   frm!: FormGroup;  
   //progressStatus: boolean = true; 
@@ -31,16 +32,15 @@ activeTabs: any;
   }
   ngOnInit(): void {   
     this.frm = new FormGroup({
-      id: new FormControl(0, [Validators.required]),      
+      id: new FormControl(),      
       AllowAutoSubscriberNumber: new FormControl(true,[Validators.required]),
-      SubscriberNumberLength:new FormControl(Validators.required), 
+      SubscriberNumberLength:new FormControl(0,[Validators.required]), 
       AllowPurchase: new FormControl(true,[Validators.required]),
       AllowSale: new FormControl(true,[Validators.required]),      
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
     });
     this.getAppSetting();
-    //this.getSecUserType();
   }
   
    saveAppSetting(){
@@ -70,6 +70,7 @@ activeTabs: any;
     return false;
    }
   getAppSetting() { 
+    debugger
     this.gSvc.postdata("api/CmnAppSetting/GetCmnAppSetting", {}).subscribe(res => {
       this.list = res;      
     }, err => {      
@@ -89,7 +90,4 @@ activeTabs: any;
     this.frm.markAsPristine();
   }
 }
-// function getAppSetting() {
-//   throw new Error('Function not implemented.');
-// }
 
