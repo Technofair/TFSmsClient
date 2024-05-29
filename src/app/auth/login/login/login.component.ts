@@ -73,6 +73,8 @@ export class LoginComponent implements OnInit {
             this.auth.setUserId(result.userId);
             this.auth.setUserLevel(result.userLevel);
 
+            this.auth.setIsCompanyUser(result.isCompanyUser);
+
             this.auth.setPhotoUrl(result.photoUrl);
             this.auth.setView(this.isMobile);
             this.auth.setUserName(result.userName);

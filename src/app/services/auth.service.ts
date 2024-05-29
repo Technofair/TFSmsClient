@@ -147,6 +147,16 @@ export class AuthService {
     return status;
   }
 
+  setIsCompanyUser(isCompanyUser: string): void {
+    sessionStorage.setItem('isCompanyUser', isCompanyUser);
+  }
+
+  isCompanyUser() {
+    var user = sessionStorage.getItem('isCompanyUser');
+    var status = user == "Yes" ? true : false;
+    return status;
+  }
+   
   setDistrict(districtId: string): void {
     sessionStorage.setItem('districtId', districtId);
   }
