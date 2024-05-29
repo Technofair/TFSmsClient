@@ -16,7 +16,7 @@ export class AppMenuComponent implements OnInit {
     model: any[] = [];
     model1: any[] = [];
     link: string[] = []
-    //childMenu: any;
+
     log!: FormGroup;
     nullValue:any=null;
     show:any= this.auth.getOldUserName();
@@ -37,12 +37,12 @@ export class AppMenuComponent implements OnInit {
     childMenuArry: any[] = [];
     parentsMenu: any[] = [];
     Module: any[] = [];
-    // parentsMenu={
-    //     label:"",
-    //     items:this.childMenu
-    // }
+    
     isMobile: boolean = false;
     secUser:any
+
+    switchAllow: boolean = false;
+
     constructor(private toastrService: ToastrService,public layoutService: LayoutService,private router: Router,private fb: FormBuilder, private gSvc: GeneralService,private auth: AuthService) {
         this.log= this.fb.group({
             username: new FormControl(),
@@ -55,15 +55,13 @@ export class AppMenuComponent implements OnInit {
         }
         this.getSecUserByLoginId();
      }
-    //     constructor(public layoutService: LayoutService,private gSvc: GeneralService) { }
+
     logout() {
-        //this.router.navigate(["login"]);
         this.auth.logout();
-        // this.router.navigate(['']);
     }
     getSecUserByLoginId() {
        
-        this.gSvc.postdata("Security/User/GetSecUserByLoginId?loginId="+this.auth.getParentEmail(), {}).subscribe(res => {
+        this.gSvc.postdata("Security/User/GetSecUserByLoginId?loginId=" + this.auth.getParentEmail(), {}).subscribe(res => {
           this.secUser= res;
         }, err => {
           this.toastrService.error("Error! Company list not found ");
@@ -71,13 +69,13 @@ export class AppMenuComponent implements OnInit {
       }
     switchToMso(){
         
-        // if(this.secUser!=undefined || this.secUser!=null)
-        // return;
+       
         this.log.patchValue({
-             username:this.secUser.loginID,
+            
+            //Asad Commented On 29.05.2024
+             username: this.secUser.loginID,
              userPassword: this.secUser.password
-           // username:this.auth.getOldUserName(),
-           // userPassword: this.auth.getOldPassword(),
+          
           });
           this.show=false;
            if (this.log.valid) {
@@ -102,23 +100,9 @@ export class AppMenuComponent implements OnInit {
                     this.auth.setDistrict(result.districtId);
                     this.auth.setUpazila(result.upazilaId);
                     this.auth.setUnion(result.unionId);
-                    //New: 11.02.2024 Added By Asad
                     this.auth.setAppSetting(result.cmnAppSetting);
-                    //End
                     this.auth.setlanguage('bn');
-
-                    //OLd Begain---
-                // this.auth.setOldUserName("");
-                // this.auth.setToken(result.token);
-                // this.auth.setRole(result.roleId);
-                // this.auth.setCompany(result.companyId);
-                // this.auth.setUserId(result.userId);
-                // this.auth.setUserName(result.userName);
-                // //New: 12.02.2024 Added By Asad
-                // this.auth.setAppSetting(result.cmnAppSetting);
-                // this.auth.setlanguage('bn');
-                //End
-                this.router.navigate(['/home/dashboard/msodashboard']);
+                    this.router.navigate(['/home/dashboard/msodashboard']);
                 }else{
                   this.toastrService.warning("Incorrect User ID or Password");
                 }
@@ -182,10 +166,15 @@ export class AppMenuComponent implements OnInit {
         })
     }
 
-    //     ngOnInit() {
-    // this.loadMenu(3);}
-
+   
     ngOnInit() {
+
+        //Start: Asad Added for testing
+        //alert('show: ' + this.show);
+        this.switchAllow = (this.auth.getUserLevel() == 2) && (this.show != null) ? true : false;
+        //alert('switchAllow:' + this.switchAllow);       
+        //alert(this.switchAllow);
+        //End: Asad Added for testing
 
         this.loadMenu(this.auth.getRole());
         this.model1 = [
@@ -458,325 +447,3 @@ export class AppMenuComponent implements OnInit {
         ];
     }
 }
-
-
-
-/*
-import { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-import { LayoutService } from './service/app.layout.service';
-
-@Component({
-    selector: 'app-menu',
-    templateUrl: './app.menu.component.html'
-})
-export class AppMenuComponent implements OnInit {
-
-    model: any[] = [];
-
-    constructor(public layoutService: LayoutService) { }
-
-    ngOnInit() {
-        this.model = [
-            {
-                label: 'Home',
-                items: [
-                    { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/home'] }
-                ]
-            },
-            {
-                label: 'Master Setup',
-                items: [
-                    {
-                        label: 'Setting',
-                        //label: 'Organization Setting', icon: 'pi pi-fw pi-bookmark',
-                        items: [
-                            {
-                                label: 'Organization Type',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/organizationType']
-
-                            },
-                            {
-                                label: 'Organization',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/organization']
-
-                            },
-                            {
-                                label: 'Service Type',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/servicetype']
-
-                            },
-                            {
-                                label: 'Party Type',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/partytype']
-
-                            },
-
-                            {
-                                label: 'Add Party',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/partyInfo']
-
-                            },
-
-                            {
-                                label: 'Load Cas Network',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['setting/network']
-
-                            },
-
-
-                        ]
-                    },
-
-                ]
-            },
-            // {
-            //     label: 'Service Type',
-            //      icon: 'pi pi-fw pi-bookmark',
-            //     routerLink: ['setting/servicetype']
-
-            // },
-            // {
-            //     label: 'Party Type',
-            //      icon: 'pi pi-fw pi-bookmark',
-            //     routerLink: ['setting/partytype']
-
-            // }, 
-
-            // {
-            //     label: 'Add Party',
-            //      icon: 'pi pi-fw pi-bookmark',
-            //     routerLink: ['setting/partyInfo']
-
-            // }, 
-
-            // {
-            //     label: 'Load Cas Network',
-            //      icon: 'pi pi-fw pi-bookmark',
-            //     routerLink: ['setting/network']
-
-            // }, 
-
-
-
-
-
-            //]
-            // },
-            {
-                label: 'Inventory',
-                items: [
-
-                    {
-                        label: 'Item Manage', icon: 'pi pi-fw pi-bars',
-                        items: [
-                            {
-                                label: 'Card Type',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/cardtype']
-
-                            },
-                            {
-                                label: 'Item',
-                                icon: 'pi pi-fw pi-bars',
-                                routerLink: ['inventory/item']
-
-                            },
-                            {
-                                label: 'Item Type',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/itemtype']
-
-                            },
-                            {
-                                label: 'Item Brand',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/itembrand']
-
-                            },
-                            {
-                                label: 'Item Model',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/itemmodel']
-
-                            },
-                            {
-                                label: 'Item Receive',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/receive']
-
-                            },
-                            {
-                                label: 'Item Transfer',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/transfer']
-
-                            },
-
-                            {
-                                label: 'Purchased Order',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/purchasedOrder']
-
-                            },
-                            {
-                                label: 'Sales Order',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['inventory/salesOrder']
-
-                            },
-
-
-                        ]
-                    },
-
-
-
-                ]
-            },
-            {
-                label: 'Subscriber Management',
-                items: [
-
-                    {
-
-                        label: 'Subscriber',
-                        items: [
-                            {
-                                label: 'Subscriber',
-                                icon: 'pi pi-fw pi-user-plus',
-                                routerLink: ['subscriber/addSubscriber']
-
-                            },
-                            {
-                                label: 'Subscriber List',
-                                icon: 'pi pi-fw pi-users',
-                                routerLink: ['subscriber/subscribers']
-
-                            },
-                            {
-                                label: 'STB Assign',
-                                icon: 'pi pi-fw pi-bookmark',
-                                routerLink: ['subscriber/stbassign']
-
-                            },
-                            {
-                                label: 'Package Assign',
-                                icon: 'pi pi-fw pi-box',
-                                routerLink: ['subscriber/packageassign']
-
-                            },
-
-
-                        ]
-                    },
-                ]
-            },
-
-            {
-                label: 'Accounts Management',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-
-                    {
-
-                        label: 'Setting',
-                        icon: 'pi pi-fw pi-user',
-                        items: [
-                            {
-                                label: 'Digital Head',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['account/digitalhead']
-                            },
-                            {
-                                label: 'Charge Config',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['account/chargeconfig']
-                            },
-                            {
-                                label: 'Digital Money',
-                                icon: 'pi pi-fw pi-money-bill',
-                                routerLink: ['account/digitalmoney']
-                            },
-                            {
-                                label: 'Transaction Detail',
-                                icon: 'pi pi-fw pi-history',
-                                routerLink: ['account/transdetail']
-                            },
-
-                        ]
-                    },              
-
-                ]
-            },
-            {
-                label: 'User Management',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-
-                    {
-
-                        label: 'Setting',
-                        icon: 'pi pi-fw pi-user',
-                        items: [
-                            {
-                                label: 'User Role',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['user/roles']
-                            },
-                            {
-                                label: 'Add User',
-                                icon: 'pi pi-fw pi-globe',
-                                routerLink: ['user/addUser']
-                            },
-        
-
-                        ]
-                    },
-
-                  
-
-                ]
-            },
-
-            {
-                label: 'Menu Management',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-                   
-                    {
-                        label: 'Menu',
-                        icon: 'pi pi-fw pi-list',
-                        items: [
-                            {
-                                label: 'Modules',
-                                icon: 'pi pi-fw pi-globe',
-                                routerLink: ['menu/appmodules']
-                            },
-                            {
-                                label: 'Add Menu',
-                                icon: 'pi pi-fw pi-user-plus',
-                                routerLink: ['menu/appMenu']
-                            },
-                            {
-                                label: 'Rolebase Menu',
-                                icon: 'pi pi-fw pi-times-circle',
-                                routerLink: ['menu/rolebaseMenu']
-                            },
-
-                        ]
-                    },
-
-
-                ]
-            },
-        ];
-    }
-}
-*/

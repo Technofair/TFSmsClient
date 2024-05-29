@@ -72,8 +72,9 @@ export class QuickDashboardComponent implements OnInit {
 
   getCompany() {
     this.progressStatus=false;
-    var c= this.auth.getCompany();
-    this.gSvc.postdata("Common/Company/GetClientForQuickLoginByCompanyId/"+c, {}).subscribe(res => {
+    var companyId = this.auth.getCompany();
+    var userId = this.auth.getUserId();
+    this.gSvc.postdata("Common/Company/GetClientForQuickLoginByCompanyId?companyId=" + companyId + "&userId=" + userId, {}).subscribe(res => {
       this.companyList = res;
       this.progressStatus=true;
     }, err => {
@@ -120,7 +121,13 @@ export class QuickDashboardComponent implements OnInit {
         //New
         if(result.isAuhentic == true)
           {       
-              this.auth.setParentEmail(this.parentEmail);
+            //New: Asad Added On 29.05.2024
+            this.auth.setParentEmail(this.auth.getUserName()!);
+            //Old: Asad Commented On 29.05.2024
+            //this.auth.setParentEmail(this.parentEmail);
+
+
+
               this.auth.setOldUserName(this.oldUserName);
               this.auth.setOldPassword(this.oldUserPassword);
               this.auth.setToken(result.token);

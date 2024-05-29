@@ -4,6 +4,10 @@
         <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true"></li>
         <li *ngIf="item.separator" class="menu-separator"></li>
     </ng-container>
+
+       <!-- show -->
+       <!-- switchAllow -->
+
     <ng-container *ngIf="show">
         <li class="mt-2 ml-4">
             <a [attr.href]="'#'" (click)="switchToMso()" [ngClass]="'p-ripple p-element'" tabindex="0" pRipple>

@@ -11,6 +11,39 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
   
+  
+  //Begin Storing Json in Local Storage
+
+    // // Example usage
+    // const userData = { username: 'john_doe', email: 'john@example.com' };
+    // // Save data to local storage
+    // this.localStorageService.save('user', userData);
+    // // Retrieve data from local storage
+    // const savedUser = this.localStorageService.get('user');
+
+
+  // Save data to local storage
+  save(key: string, data: any): void {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
+  // Retrieve data from local storage
+  get(key: string): any {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : null;
+  }
+
+  // Remove data from local storage
+  remove(key: string): void {
+    localStorage.removeItem(key);
+  }
+
+  //End
+  
+  
+  
+  
+  
   setParentEmail(parentEmail: string): void {
     sessionStorage.setItem('parentEmail', parentEmail);
   }
