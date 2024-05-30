@@ -64,6 +64,10 @@ export class LoginComponent implements OnInit {
           }
 
           if (result != undefined && result.userId > 0) {
+            
+            this.auth.setLoggedInUserId(result.userName); //Do not use the same switching area
+            this.auth.setIsSwitch('No');
+
             this.auth.setToken(result.token);
             this.auth.setRole(result.roleId);
             

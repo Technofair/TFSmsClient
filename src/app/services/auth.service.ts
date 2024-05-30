@@ -41,8 +41,24 @@ export class AuthService {
   //End
   
   
-  
-  
+  setIsSwitch(isSwitch: string): void {
+    sessionStorage.setItem('isSwitch', isSwitch);
+  }
+    
+  isSwitch() {
+    var user = sessionStorage.getItem('isSwitch');
+    var status = user == "Yes" ? true : false;
+    return status;
+  }
+
+  setLoggedInUserId(loggedInUserId: string): void {
+    sessionStorage.setItem('loggedInUserId', loggedInUserId);
+  }
+    
+  getLoggedInUserId() {
+    var user = sessionStorage.getItem('loggedInUserId');
+    return user;
+  }
   
   setParentEmail(parentEmail: string): void {
     sessionStorage.setItem('parentEmail', parentEmail);

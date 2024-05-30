@@ -120,24 +120,15 @@ export class QuickDashboardComponent implements OnInit {
         
         //New
         if(result.isAuhentic == true)
-          {       
-            //New: Asad Added On 29.05.2024
-            //Start
-            alert(this.auth.isCompanyUser());
-            if(this.auth.isCompanyUser()){
-              this.auth.setParentEmail(this.parentEmail);
-            }
-            else{
+          {    
+
+              //New: Asad Added On 29.05.2024: next time--> full
               this.auth.setParentEmail(this.auth.getUserName()!);
-            }
-            
-            //End
 
-            //Old: Asad Commented On 29.05.2024
-            //this.auth.setParentEmail(this.parentEmail);
+              //Old: Asad Commented On 29.05.2024: temporarily
+              //this.auth.setParentEmail(this.parentEmail);
 
-
-
+              this.auth.setIsSwitch('Yes');
               this.auth.setOldUserName(this.oldUserName);
               this.auth.setOldPassword(this.oldUserPassword);
               this.auth.setToken(result.token);
@@ -146,7 +137,7 @@ export class QuickDashboardComponent implements OnInit {
               this.auth.setCompanyTypeShortName(result.companyTypeShortName);
               this.auth.setUserId(result.userId);
               this.auth.setUserLevel(result.userLevel);
-             // this.auth.setIsCompanyUser(result.isCompanyUser);
+              this.auth.setIsCompanyUser(result.isCompanyUser);
               this.auth.setPhotoUrl(result.photoUrl);
               this.auth.setUserName(result.userName);
               this.auth.setDistrict(result.districtId);

@@ -8,7 +8,7 @@
        <!-- show -->
        <!-- switchAllow -->
 
-    <ng-container *ngIf="show">
+    <ng-container *ngIf="switchAllow">
         <li class="mt-2 ml-4">
             <a [attr.href]="'#'" (click)="switchToMso()" [ngClass]="'p-ripple p-element'" tabindex="0" pRipple>
                 <i [ngClass]="'pi pi-sign-in'" class="layout-menuitem-icon"></i>

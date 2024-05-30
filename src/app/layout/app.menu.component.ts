@@ -72,7 +72,6 @@ export class AppMenuComponent implements OnInit {
        
         this.log.patchValue({
             
-            //Asad Commented On 29.05.2024
              username: this.secUser.loginID,
              userPassword: this.secUser.password
           
@@ -170,13 +169,22 @@ export class AppMenuComponent implements OnInit {
    
     ngOnInit() {
 
-        //Start: Asad Added for testing
-        //alert('show: ' + this.show);
-        this.switchAllow = (this.auth.getUserLevel() == 2) && (this.show != null) ? true : false;
-        //alert('switchAllow:' + this.switchAllow);       
-        //alert(this.switchAllow);
-        //End: Asad Added for testing
+        //Start: Asad Added on 30.05.2024
+        
+        if(this.auth.isMso() || this.auth.getLoggedInUserId() == this.auth.getUserName() || !this.auth.isSwitch()){
 
+            this.switchAllow = false;
+        }
+        else{
+
+            if(this.auth.isCompanyUser() || this.auth.getUserLevel() == 2){
+                this.switchAllow = true;
+            }
+            else{
+                this.switchAllow = false;
+            }
+        }
+               
         this.loadMenu(this.auth.getRole());
         this.model1 = [
             {
