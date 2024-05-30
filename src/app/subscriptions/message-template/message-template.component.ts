@@ -24,7 +24,7 @@ export class MessageTemplateComponent implements OnInit {
   devicesCards: any;
   messageTemplate: any
   messagesList:any;
-  setMessage:any;
+  setMessage:any="";
   list:any;
   //messageType: any = [{ name: 'Simple OSD', id: '1' }, { name: 'Force OSD', id: '2' }, { name: 'Scroll OSD', 'id': '3' }];
   messageType: any;
@@ -38,6 +38,10 @@ export class MessageTemplateComponent implements OnInit {
   longOsd:boolean=true;
   scrollOsd:boolean=true;
   scpFrequency:any;
+  selectedProducts:any;
+  availableProducts:any;
+  draggedProduct: any ="";
+
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private auth: AuthService, private toastrService: ToastrService) {
    
   }
@@ -48,6 +52,21 @@ export class MessageTemplateComponent implements OnInit {
     this.getMessageType();
     this.getOsdType();
     this.  getFrequency();
+    this.selectedProducts = [];
+    this.availableProducts = [
+        {id:'1', name: 'SubscriberName'},
+        {id:'2', name: 'DeviceNumber'},
+        {id:'3', name: 'White Watch'},
+        {id:'4', name: 'Red Watch'},
+        {id:'5', name: 'Black Watch'},
+        {id:'6', name: 'Bamboo Watch'},
+        {id:'1', name: 'SubscriberName'},
+        {id:'2', name: 'DeviceNumber'},
+        {id:'3', name: 'White Watch'},
+        {id:'4', name: 'Red Watch'},
+        {id:'5', name: 'Black Watch'},
+        {id:'6', name: 'Bamboo Watch'}
+      ]
   }
 
   createMestemFrm() {
@@ -215,4 +234,29 @@ export class MessageTemplateComponent implements OnInit {
       this.toastrService.error(err.message);
     })
   }
+  dragStart(product: any) {
+    this.draggedProduct = product;
+}
+
+drop() {
+    if (this.draggedProduct) {
+      this.setMessage +=  "#"+this.draggedProduct.name;
+    }
+}
+
+dragEnd() {
+    this.draggedProduct = null;
+}
+
+findIndex(product: any) {
+    let index = -1;
+    for (let i = 0; i < (this.availableProducts ).length; i++) {
+        if (product.id === (this.availableProducts)[i].id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
 }
