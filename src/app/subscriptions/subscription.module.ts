@@ -43,7 +43,7 @@ import { TransferSubscriberComponent } from './transfer-subscriber/transfer-subs
 import { MessageSetupComponent } from './message-setup/message-setup.component';
 import { MessageTypeComponent } from './message-type/message-type.component';
 import { DirectiveModule } from '../directives/directive.module';
-
+import { DragDropModule } from 'primeng/dragdrop';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { AccordionModule } from 'primeng/accordion';
 import { SubscriptionProfileComponent } from './subscription-profile/subscription-profile.component';
@@ -90,7 +90,7 @@ import { MobileMessageTemplateComponent } from './mobile-message-template/mobile
     InputTextModule, InputTextareaModule, MultiSelectModule, CascadeSelectModule,
     InputNumberModule, InputMaskModule, DropdownModule, AutoCompleteModule, CalendarModule, ChipsModule, TableModule, ConfirmDialogModule,
     MessagesModule, DialogModule, RadioButtonModule,
-    SubscriberManagementRoutingModule, TabViewModule, PanelModule, DirectiveModule,SelectButtonModule,AccordionModule
+    SubscriberManagementRoutingModule, TabViewModule, PanelModule, DirectiveModule,SelectButtonModule,AccordionModule,DragDropModule
   ]
 })
 export class SubscriberManagementModule { }
