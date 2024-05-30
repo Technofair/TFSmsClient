@@ -22,7 +22,7 @@ export class MobileMessageTemplateComponent {
   devicesCards: any;
   messageTemplate: any
   messagesList:any;
-  setMessage:any;
+  setMessage:any="";
   list:any;
   messageType: any;
   frm!: FormGroup;
@@ -35,6 +35,9 @@ export class MobileMessageTemplateComponent {
   //simpleOsd:boolean=true;
   //longOsd:boolean=true;
   //scrollOsd:boolean=true;
+  selectedProducts:any;
+  availableProducts:any;
+  draggedProduct: any ="";
 
   constructor(private fb: FormBuilder,
       private router: Router,
@@ -52,6 +55,21 @@ export class MobileMessageTemplateComponent {
     this.getMessageType();
     //this.getOsdType();
     this.  getFrequency();
+    this.selectedProducts = [];
+    this.availableProducts = [
+        {id:'1', name: 'SubscriberName'},
+        {id:'2', name: 'DeviceNumber'},
+        {id:'3', name: 'White Watch'},
+        {id:'4', name: 'Red Watch'},
+        {id:'5', name: 'Black Watch'},
+        {id:'6', name: 'Bamboo Watch'},
+        {id:'1', name: 'SubscriberName'},
+        {id:'2', name: 'DeviceNumber'},
+        {id:'3', name: 'White Watch'},
+        {id:'4', name: 'Red Watch'},
+        {id:'5', name: 'Black Watch'},
+        {id:'6', name: 'Bamboo Watch'}
+      ]
   }
 
   createMestemFrm() {
@@ -217,5 +235,28 @@ export class MobileMessageTemplateComponent {
       this.toastrService.error(err.message);
     })
   }
+dragStart(product: any) {
+    this.draggedProduct = product;
+}
 
+drop() {
+    if (this.draggedProduct) {
+      this.setMessage +=  "#"+this.draggedProduct.name;
+    }
+}
+
+dragEnd() {
+    this.draggedProduct = null;
+}
+
+findIndex(product: any) {
+    let index = -1;
+    for (let i = 0; i < (this.availableProducts ).length; i++) {
+        if (product.id === (this.availableProducts)[i].id) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
 }
