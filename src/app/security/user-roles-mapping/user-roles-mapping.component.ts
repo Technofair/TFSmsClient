@@ -49,9 +49,9 @@ export class UserRolesMappingComponent implements OnInit {
   ngOnInit() {
     this.frm = this.fb.group({
       id: new FormControl(0),
-      role: new FormControl(0,Validators.required),
-      cmnCompanyTypeId: new FormControl(null),
-      companyId:new FormControl(0,Validators.required),
+      role: new FormControl(null, Validators.required),
+      cmnCompanyTypeId: new FormControl(null, Validators.required),
+      companyId:new FormControl(null, Validators.required),
       secUserId: new FormControl(0),
       secRoleId: new FormControl(0),
       isActive: new FormControl(true),
