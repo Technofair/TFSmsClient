@@ -53,20 +53,7 @@ export class MessageTemplateComponent implements OnInit {
     this.getOsdType();
     this.  getFrequency();
     this.selectedProducts = [];
-    this.availableProducts = [
-        {id:'1', name: 'SubscriberName'},
-        {id:'2', name: 'DeviceNumber'},
-        {id:'3', name: 'White Watch'},
-        {id:'4', name: 'Red Watch'},
-        {id:'5', name: 'Black Watch'},
-        {id:'6', name: 'Bamboo Watch'},
-        {id:'1', name: 'SubscriberName'},
-        {id:'2', name: 'DeviceNumber'},
-        {id:'3', name: 'White Watch'},
-        {id:'4', name: 'Red Watch'},
-        {id:'5', name: 'Black Watch'},
-        {id:'6', name: 'Bamboo Watch'}
-      ]
+    this.getAllMessageParam();
   }
 
   createMestemFrm() {
@@ -258,5 +245,11 @@ findIndex(product: any) {
     }
     return index;
 }
-
+getAllMessageParam(){
+  this.gSvc.getdata("api/CmnMessageParam/GetAllMessageParam").subscribe(res => {
+    this.availableProducts=res;
+  }, err => {
+    this.toastrService.error(err.message);
+  })
+}
 }
