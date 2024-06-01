@@ -57,7 +57,12 @@
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'JOININGDATE'|translate}}</label>
                 <input type="date" class="p-2  w-full" placeholder="" formControlName="joiningDate" dateFormat="dd/mm/yy" pInputText />
-                
+            </div>
+
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                    [defaultChecked]="true" checked formControlName="isProxy">
+                <label class="form-check-label" for="flexCheckDefault"> {{'IsProxy' | translate}} </label>
             </div>
 
             
@@ -76,7 +81,6 @@
                 <input type="file" class="p-2  w-full" placeholder="" formControlName="signatureUrl" pInputText />
                 
             </div>
-
            
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
@@ -84,28 +88,22 @@
                 <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
             </div>
 
-
-
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
                     [defaultChecked]="true" checked formControlName="isAppointedByOtherCompany" (change)="appointmentChange()">
                 <label class="form-check-label" for="flexCheckDefault"> {{'IsAppointedByOtherCompany' | translate}} </label>
-            </div>
+            </div> -->
     
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" [hidden]="isAppointedByOtherCompany">
+            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" [hidden]="isAppointedByOtherCompany">
                 <label>{{'AppointedCompany'|translate}}</label><span class="text-danger"> *</span><br>
                 <p-dropdown [options]="appointedCompanyList" formControlName="appointedCompanyId"
                     placeholder="{{'COMPANY' | translate}}" [showClear]="true" [filter]="true" filterBy="name"
                     [showClear]="true" [style]="{'width':'100%'}" placeholder="{{'SELECT'|translate}}"
                     optionLabel="name" optionValue="id"></p-dropdown>
-            </div>
-
-
+            </div> -->
 
         </div>
-
-        
-        
+     
         <div class="formgrid grid">
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card-footer">
