@@ -29,6 +29,8 @@ export class UserComponent implements OnInit {
   users: any;
   roles:any;
   progressStatus:boolean=true;
+  employeeListPgStatus:boolean=true;
+  companyListPgStatus:boolean=true;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private route: ActivatedRoute, private auth: AuthService) {
 
   }
@@ -37,7 +39,6 @@ export class UserComponent implements OnInit {
     
     this.initializeFrm();
     this.initializeSrcFrm();    
-
     this.getCompanyType();
     this.getCompany();
     this.getAllSecUserType();
@@ -87,11 +88,13 @@ export class UserComponent implements OnInit {
   }
 
   getCompanyByCompanyType(cmnCompanyTypeId: any) {
-    
+    this.companyListPgStatus=false;
     this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
          this.companyList = res;
+    this.companyListPgStatus=true;
     }, err => {
-      this.toastrService.error("Error! Company list not found ");
+    this.companyListPgStatus=true;
+    this.toastrService.error("Error! Company list not found ");
     })
   }
 
@@ -105,6 +108,7 @@ export class UserComponent implements OnInit {
 
   getEmployee() {
     //New
+    this.employeeListPgStatus=false;
     var cmnCompanyId = this.frm.controls["cmnCompanyId"].value;
     
     this.gSvc.postdata("HRM/Employee/GetEmployeeByCompanyId?companyId=" + cmnCompanyId + "&userLevel=" + this.auth.getUserLevel() , {}).subscribe(res => {
@@ -117,7 +121,9 @@ export class UserComponent implements OnInit {
         }
       }
       this.employeeList = res;
+      this.employeeListPgStatus=true;
     }, err => {
+      this.employeeListPgStatus=true;
       this.toastrService.error("Error! Employee not found ");
     })
   }

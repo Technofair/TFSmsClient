@@ -27,6 +27,7 @@ import { InventoryManagementRoutingModule } from '../inventory/inventory-managem
 import { PanelModule } from 'primeng/panel';
 
 import { ReportViewerModule } from '../reportviewer/reportviewer.module';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,7 @@ import { ReportViewerModule } from '../reportviewer/reportviewer.module';
     InventoryManagementRoutingModule,FormsModule,ReactiveFormsModule,
     InputTextModule,InputTextareaModule,MultiSelectModule,CascadeSelectModule,
     InputNumberModule,InputMaskModule,DropdownModule,AutoCompleteModule,CalendarModule,ChipsModule,TableModule,ConfirmDialogModule,
-    MessagesModule,DialogModule,CheckboxModule,PanelModule
+    MessagesModule,DialogModule,CheckboxModule,PanelModule,ProgressSpinnerModule
   ]
 })
 export class HrmModule { }

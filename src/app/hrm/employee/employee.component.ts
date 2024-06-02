@@ -33,6 +33,8 @@ export class EmployeeComponent implements OnInit {
   id = 1;
   fileToUpload: any;
   frmsrc! :FormGroup;
+  companyListPgStatus:boolean=true;
+  employeeListPgStatus:boolean=true;
   //isAppointedByOtherCompany: boolean = true;
   appointedCompanyList: any;
 
@@ -237,10 +239,13 @@ export class EmployeeComponent implements OnInit {
   }
 
   getCompanyByCompanyType(cmnCompanyTypeId: any) {
+    this.companyListPgStatus=false;
     //var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
     this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
          this.companyList = res;
+    this.companyListPgStatus=true;
     }, err => {
+      this.companyListPgStatus=true;
       this.toastrService.error("Error! Company list not found ");
     })
   }
@@ -255,10 +260,13 @@ export class EmployeeComponent implements OnInit {
   // }
 
   getEmployee(cmnCompanyTypeId: any, cmnComnayId: any, userLevel: any) {
+    this.employeeListPgStatus=false;
     //this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel()
     this.gSvc.postdata("HRM/Employee/GetEmployeeByAnyKey?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId=" + cmnComnayId + "&userLevel=" + userLevel, {}).subscribe(res => {
     this.employeeList = res;
+    this.employeeListPgStatus=true;
     }, err => {
+      this.employeeListPgStatus=true;
       this.toastrService.error("Employee List Not Found");
     })
   }
