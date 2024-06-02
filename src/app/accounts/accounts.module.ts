@@ -36,7 +36,8 @@ import { ReceivedVoucherComponent } from './voucher-received/voucher-received.co
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ReportViewerModule } from '../reportviewer/reportviewer.module';
-import { ScpUserDebitComponent } from './scp-user-debit/scp-user-debit.component';
+//import { ScpUserDebitComponent } from './scp-user-recharge/scp-user-debit.component';
+import { ScpUserRechargeComponent } from './scp-user-recharge/scp-user-recharge.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { ScpUserDebitComponent } from './scp-user-debit/scp-user-debit.component
     PaymentVoucherComponent,
     ReceivedVoucherComponent,
     OpeningBalanceComponent,
-    ScpUserDebitComponent
+    ScpUserRechargeComponent
   ],
   imports: [
     ReportViewerModule,

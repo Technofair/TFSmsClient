@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environment';
 import { Console } from 'console';
 
 @Component({
-  selector: 'app-scp-user-debit',
-  templateUrl: './scp-user-debit.component.html',
-  styleUrls: ['./scp-user-debit.component.css'],
+  selector: 'app-scp-user-recharge',
+  templateUrl: './scp-user-recharge.component.html',
+  styleUrls: ['./scp-user-recharge.component.css'],
   providers: [ConfirmationService]
 })
-export class ScpUserDebitComponent {
+export class ScpUserRechargeComponent {
   list: any;
   displayModal: boolean = false;
   viewInfo: any = {};
@@ -63,11 +63,10 @@ getfrm(){
         this.gSvc.postdata("api/ScpUserRecharge/SaveUserRecharge", JSON.stringify(this.frm.value)).subscribe(res => {
           this.frm.reset();
           this.getUserDebit();
-          //this.progressStatus = true;
+        
           this.toastrService.success("Successful");
           this.getfrm();
-        }, err => {
-          //this.progressStatus = true;
+        }, err => {       
           this.toastrService.error("Error! Data Not Saved.");
         })
         return true;

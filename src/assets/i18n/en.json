@@ -568,5 +568,6 @@
     "SMSStatus":"SMS Status",
     "SMSRate(TK)":"SMS Rate(TK)",
     "IsAppointedByOtherCompany": "Appointed By Other Company?",
+    "ScpUserRecharge":"User Recharge",
     "AppointedCompany": "Appointed Company?"
 }

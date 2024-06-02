@@ -715,7 +715,7 @@
     "ClientServicePermission":"ক্লায়েন্ট সার্ভিস পারমিশন",
     "SMSStatus":"এস এম এস স্ট্যাটাস",
     "SMSRate(TK)":"এস এম এস রেট(৳)",
-    "ScpUserDebit":"ইউজার ডেবিট",
+    "ScpUserRecharge":"ইউজার রিচার্জ",
     "IsAppointedByOtherCompany": "অন্য কোম্পানি দ্বারা নিয়োগকৃত?",
     "AppointedCompany": "নিয়োগকৃত কোম্পানি?"
 }

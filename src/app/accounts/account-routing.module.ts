@@ -13,7 +13,7 @@ import { RechargeApprovalComponent } from './recharge-approval/recharge-approval
 import { PaymentVoucherComponent } from './voucher-payment/vouchar-payment.component';
 import { ReceivedVoucherComponent } from './voucher-received/voucher-received.component';
 import { OpeningBalanceComponent } from './opening-balance/opening-balance.component';
-import { ScpUserDebitComponent } from './scp-user-debit/scp-user-debit.component';
+import { ScpUserRechargeComponent } from './scp-user-recharge/scp-user-recharge.component';
 
 const routes: Routes = [
   { path: 'digitalhead', component: DigitalHeadComponent },
@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'voucher-payment', component: PaymentVoucherComponent },
   { path: 'voucher-received', component: ReceivedVoucherComponent },
   { path: 'opening-balance', component: OpeningBalanceComponent },
-  { path: 'scpUserDebit', component: ScpUserDebitComponent }
+  { path: 'scpUserRecharge', component: ScpUserRechargeComponent }
 ];
 
 @NgModule({
