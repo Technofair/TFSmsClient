@@ -18,16 +18,24 @@
     </div>
 
     <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+      <div [hidden]="rolesPgStatus" style="position: absolute; z-index: 10; ">
+        <p-progressSpinner></p-progressSpinner>
+       </div>
       <label>{{'Role' | translate}}</label><span class="text-danger"> *</span>
       <p-dropdown [options]="roles" [style]="{'width':'100%'}" formControlName="role" 
         [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
-        optionValue="id"></p-dropdown>
+        optionValue="id">
+      </p-dropdown>
+        
       <span *ngIf="frm.controls['role'].invalid && frm.controls['role'].touched " class="text-danger">
         {{'ROLE' | translate}} {{'REQUIRED' | translate}} 
       </span>
     </div>
 
     <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
+      <div [hidden]="companyListPgStatus" style="position: absolute; z-index: 10; ">
+        <p-progressSpinner></p-progressSpinner>
+       </div>
       <label>{{'Company' | translate}}</label><span class="text-danger"> *</span>
       <p-dropdown [options]="companyList" [style]="{'width':'100%'}" formControlName="companyId" 
         [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"

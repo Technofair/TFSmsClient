@@ -42,6 +42,8 @@ export class UserRolesMappingComponent implements OnInit {
   activeUserRoles:any []=[];
   inActiveUserRoles:any []=[];
   progressStatus:boolean=true;
+  rolesPgStatus:boolean=true;
+  companyListPgStatus:boolean=true;
   companyList:any;
   authUserId:any=this.Authser.getUserId();
   constructor(private fb: FormBuilder, private gSvc: GeneralService, private toastrService: ToastrService, private router: Router, private confirmationService: ConfirmationService, private Authser: AuthService) {
@@ -79,16 +81,20 @@ export class UserRolesMappingComponent implements OnInit {
   //New 28-05-2024
 
   getData(){
+    
     this.getCompanyByCompanyType();
     this.roleList();
+    
   }
 
   getCompanyByCompanyType() {
-
+    this.companyListPgStatus=false;
     var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
     this.gSvc.postdata("Common/Company/GetCompanyByCompanyTypeId?companyTypeId="+ cmnCompanyTypeId, {}).subscribe(res => {
          this.companyList = res;
+         this.companyListPgStatus=true;
     }, err => {
+      this.companyListPgStatus=true;
       this.toastrService.error("Error! Company list not found ");
     })
   }
@@ -115,14 +121,16 @@ export class UserRolesMappingComponent implements OnInit {
   }
    //new 29-04-2024
   roleList() {
-    
+    this.rolesPgStatus=false;
       //New: 28.05.2024
       var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
       this.gSvc.postdata("Security/Role/GetSecRoleByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe(res => {
       //Old: 28.05.2024
       //this.gSvc.postdata("Security/Role/GetSecRoleByCompanyId?cmnCompanyId="+this.Authser.getCompany(), {}).subscribe(res => {
         this.roles = res;
+        this.rolesPgStatus=true;
       }, err => {
+        this.rolesPgStatus=true;
         this.toastrService.error("error");
       })
     }
