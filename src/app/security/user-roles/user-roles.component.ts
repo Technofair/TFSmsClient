@@ -35,7 +35,7 @@ export class UserRolesComponent implements OnInit {
       id: new FormControl(0),
       name: new FormControl("", Validators.required),
       isActive: new FormControl(true, Validators.required),
-      cmnCompanyTypeId: new FormControl(Validators.required),
+      cmnCompanyTypeId: new FormControl(null,Validators.required),
       createdBy: new FormControl(this.Authser.getUserId),
       modifiedBy: new FormControl(this.Authser.getUserId)
     });
