@@ -386,7 +386,26 @@
             styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
-
+<div class="card">
+    <form [formGroup]="frmSerch">
+        <div class="formgrid grid mb-4">
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                <label>{{'TYPE'|translate}}</label><span class="text-danger"> *</span>
+                <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
+                    [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                     optionLabel="shortName" optionValue="id"></p-dropdown><br>
+                <span *ngIf="frm.controls['cmnCompanyTypeId'].invalid && frm.controls['cmnCompanyTypeId'].touched "
+                    class="text-danger">
+                    {{'TYPE'|translate}} {{'REQUIRED'|translate}}
+                </span>
+            </div>
+            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+              <p-button (click)="getCompany()" styleClass="p-button-primary p-button-sm mt-5"
+                            type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
+            </div>
+        </div>
+    </form>
+</div>
 
 <p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"

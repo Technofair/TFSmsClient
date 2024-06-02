@@ -39,6 +39,7 @@ export class CompanyComponent implements OnInit {
   genderList: any;
   clientViews: any[] = [];
   frm!: FormGroup;
+  frmSerch!:FormGroup;
   hideButton: boolean = true;
   attachmentTypes: any[] = [];
   attachmentList: any[] = [];
@@ -69,6 +70,11 @@ export class CompanyComponent implements OnInit {
     this.genderList = [{ 'id': 1, "name": 'Male' }, { 'id': 2, "name": 'Female' }, { 'id': 3, "name": 'Others' }]
     this.getDivision();
    // console.log(this.msoInfo.cmnCountryId);
+   
+   this.frmSerch = new FormGroup({
+    cmnCompanyTypeId: new FormControl(0, [Validators.required]),
+    companyId:new FormControl(null)
+   });
     this.frm = new FormGroup({
       id: new FormControl(0, [Validators.required]),
       code: new FormControl("0"),
@@ -115,17 +121,23 @@ export class CompanyComponent implements OnInit {
         uploadFile: new FormControl(""),
       }),
     });
-    this.getCompany();
+    
     this.getAttachType();
     this.getCompanyType();
     this.getCountry();
     this.getSecUserType();
+   // this.getCompany();
   }
 
 
-
-
-
+  getCompanyList(){
+    var cmnCompanyTypeId = this.frmSerch.controls["cmnCompanyTypeId"].value;
+    this.gSvc.postdata("Common/Company/GetUpperLevelCompanyByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe((res: any) => {
+      this.companyList = res;
+    }, err => {
+      this.toastrService.error(err.message);
+    })
+  }
   syncAddressAsMSO(){
     this.gSvc.getdata("Common/Company/GetMainServiceOperator").subscribe(res => {
       this.msoInfo = res;     
@@ -215,13 +227,12 @@ export class CompanyComponent implements OnInit {
 
   getCompany() {
     this.progressStatus=false;
-
-    //this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId" + this.auth.getCompany(), {}).subscribe(res => {
-    //New
-    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId?companyId=" + this.auth.getCompany() + '&userLevel=' + this.auth.getUserLevel(), {}).subscribe(res => {
-    //Old: 14.05.2024
-    //this.gSvc.postdata("Common/Company/GetCompanyList", {}).subscribe(res => {
-      
+    var cmnCompanyTypeId,companyId;
+    cmnCompanyTypeId = this.frmSerch.controls["cmnCompanyTypeId"].value;
+    companyId = this.frmSerch.controls["companyId"].value;
+    
+    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId=" + companyId + '&userLevel=' + this.auth.getUserLevel(), {}).subscribe(res => {
+    
       this.companyList = res;
       this.progressStatus=true;
     }, err => {
@@ -353,6 +364,7 @@ export class CompanyComponent implements OnInit {
     this.frm.patchValue(res);
     this.getDistrictByDivisionId();
     this.getUploadList(res);
+    this.getUpperLevelCompany();
   }
 
   getUploadList(model: any) {
