@@ -12,6 +12,9 @@
         <p-dropdown [options]="companyTypeList" [style]="{'width':'100%'}" formControlName="cmnCompanyTypeId"
             [filter]="true" filterBy="shortName" [showClear]="true" placeholder="{{'SELECT'|translate}}"
            (onChange)="getData()" optionLabel="shortName" optionValue="id"></p-dropdown><br>
+        <span *ngIf="frm.controls['cmnCompanyTypeId'].invalid && frm.controls['cmnCompanyTypeId'].touched " class="text-danger">
+            {{'Type' | translate}} {{'REQUIRED' | translate}} 
+          </span>
     </div>
 
     <div class="field col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
@@ -20,7 +23,7 @@
         [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
         optionValue="id"></p-dropdown>
       <span *ngIf="frm.controls['role'].invalid && frm.controls['role'].touched " class="text-danger">
-        {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
+        {{'ROLE' | translate}} {{'REQUIRED' | translate}} 
       </span>
     </div>
 
@@ -33,14 +36,12 @@
         {{'SUBSCRIBER' | translate}} {{'REQUIRED' | translate}}
       </span>
     </div>
-
             
       <div class="field  col-12 sm:col-12 md:col-3 lg:col-3 xl:col-3">
         <div class="card-footer">
           <div class=" mt-5">
             <p-button (click)="userList()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
               icon="pi pi-check" label="{{'Search' | translate}}"></p-button>&nbsp;
-            
           </div>
         </div>
       </div>
@@ -95,9 +96,11 @@
       <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="card-footer">
           <div class="">
-            <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="submit"
+
+            <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
               icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
-            <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
+            
+              <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh" (click)="reset()"
               label="{{'RESET'|translate}}"> </p-button>&nbsp;
           </div>
         </div>

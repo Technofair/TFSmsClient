@@ -49,8 +49,8 @@ export class UserRolesMappingComponent implements OnInit {
   ngOnInit() {
     this.frm = this.fb.group({
       id: new FormControl(0),
-      role: new FormControl(null, Validators.required),
       cmnCompanyTypeId: new FormControl(null, Validators.required),
+      role: new FormControl(null, Validators.required),
       companyId:new FormControl(null, Validators.required),
       secUserId: new FormControl(0),
       secRoleId: new FormControl(0),
@@ -115,6 +115,7 @@ export class UserRolesMappingComponent implements OnInit {
   }
    //new 29-04-2024
   roleList() {
+    
       //New: 28.05.2024
       var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
       this.gSvc.postdata("Security/Role/GetSecRoleByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe(res => {
@@ -134,6 +135,9 @@ export class UserRolesMappingComponent implements OnInit {
   //   })
   // }
   userList() {
+
+   if (this.frm.invalid) return false;
+
     this.progressStatus=false;
     this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.frm.get("companyId")?.value+"&roleId="+ this.frm.get("role")?.value, {})
     .subscribe(res => {     
@@ -151,6 +155,8 @@ export class UserRolesMappingComponent implements OnInit {
       this.progressStatus=true;
       this.toastrService.error("error");
     })
+
+    return true;
   }
 
   userRolelist() {
@@ -187,6 +193,7 @@ export class UserRolesMappingComponent implements OnInit {
       modifiedDate: new Date()
     }));
 
+    
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
