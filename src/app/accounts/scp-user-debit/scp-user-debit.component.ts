@@ -60,7 +60,7 @@ getfrm(){
       accept: () => {
         debugger
         console.log(JSON.stringify(this.frm.value));
-        this.gSvc.postdata("api/ScpUserDebit/SaveScpProduct", JSON.stringify(this.frm.value)).subscribe(res => {
+        this.gSvc.postdata("api/ScpUserRecharge/SaveUserRecharge", JSON.stringify(this.frm.value)).subscribe(res => {
           this.frm.reset();
           this.getUserDebit();
           //this.progressStatus = true;
@@ -78,7 +78,7 @@ getfrm(){
     return false;
   }
   getUserDebit() { 
-    this.gSvc.postdata("api/ScpUserDebit/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/ScpUserRecharge/GetAll", {}).subscribe(res => {
       this.list = res;
       this.progressStatus = true;
     }, err => {
