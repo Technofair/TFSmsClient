@@ -6,7 +6,7 @@
         <input type="hidden" formControlName="id" value="0">
         <div class="formgrid grid order_section mt-2">
             <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4"  >
-                <label>{{'Name'|translate}}</label><span class="text-danger"> </span><br>
+                <label>{{'UserName'|translate}}</label><span class="text-danger"> </span><br>
                 <p-dropdown [options]="users"  [style]="{'width':'100%'}" formControlName="secUserId"
                 [filter]="true" filterBy="loginID" [showClear]="true" placeholder="{{'SELECT'|translate}}"
                 optionLabel="employeeName" optionValue="id"></p-dropdown><br>
