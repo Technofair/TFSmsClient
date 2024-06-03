@@ -26,15 +26,9 @@ export class MobileMessageTemplateComponent {
   list:any;
   messageType: any;
   frm!: FormGroup;
+  mobileMesTemFrm!:FormGroup;
   osdTypes:any;
-  //dvbEncodings: any = [{ 'name': 'ascii' }, { 'name': 'latin1' },{ 'name': 'latin2'},{ 'name': 'latin5' },{ 'name': 'ISO-8859-13' },{ 'name': 'hebrew'},{ 'name': 'greek'},{ 'name': 'ISO-8859-6'},{ 'name': 'utf8' }];
-  //bgColors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'},{name:'Dark Red',id:'15'}];
-  //colors:any=[{name:'Black',id:'0'},{name:'White',id:'1'},{name:'Teal',id:'2'},{name:'Purple',id:'3'},{name:'Blue',id:'4'},{name:'Light Gray',id:'5'},{name:'Dark Gray',id:'6'},{name:'Dark Teal',id:'7'},{name:'Dark Purple',id:'8'},{name:'Dark Blue',id:'9'},{name:'Yellow',id:'10'},{name:'Green',id:'11'},{name:'Dark Yellow',id:'12'},{name:'Dark Green',id:'13'},{name:'Red',id:'14'},{name:'Dark Red',id:'15'}];
-
   scpFrequency:any;
-  //simpleOsd:boolean=true;
-  //longOsd:boolean=true;
-  //scrollOsd:boolean=true;
   selectedProducts:any;
   availableProducts:any;
   draggedProduct: any ="";
@@ -50,13 +44,31 @@ export class MobileMessageTemplateComponent {
   }
 
   ngOnInit(): void {
-    this.createMestemFrm();
+   // this.createMestemFrm();
+    this.createMobileMesTemFrm();
     this.messageTemplates();
     this.getMessageType();
     //this.getOsdType();
     this.  getFrequency();
     this.selectedProducts = [];
     this.getAllMessageParam();
+  }
+  createMobileMesTemFrm(){
+    this.mobileMesTemFrm = this.fb.group({
+      id: new FormControl(0),
+      scpMessageTypeId: new FormControl(null,Validators.required),
+      timeframe:new FormControl(),
+      cmnFrequencyId:new FormControl(null,Validators.required),
+      cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
+      serviceInitiate:new FormControl(""),
+      lang:new FormControl(''),
+      message:new FormControl(''),
+      isActive: new FormControl(true),
+      createdBy: new FormControl(this.auth.getUserId()),
+      createdDate: new FormControl(new Date),
+      modifiedBy: new FormControl(this.auth.getUserId()),
+      modifiedDate: new FormControl(new Date),
+    });
   }
 
   createMestemFrm() {
@@ -144,24 +156,21 @@ export class MobileMessageTemplateComponent {
   // }
   
   save() {
-    if (this.frm.invalid) return false;
+    if (this.mobileMesTemFrm.invalid) return false;
     //console.log(this.frm.value); 
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.frm.controls['id'].value == 0) {
-          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
-          this.frm.controls['createdDate'].setValue(new Date());
+        if (this.mobileMesTemFrm.controls['id'].value == 0) {
+          this.mobileMesTemFrm.controls['createdBy'].setValue(this.auth.getUserId());
+          this.mobileMesTemFrm.controls['createdDate'].setValue(new Date());
         } else if (this.frm.controls['id'].value > 0) {
-          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+          this.mobileMesTemFrm.controls['modifiedBy'].setValue(this.auth.getUserId());
         }
-        //obj.cmnCompanyId=this.auth.getCompany();
-        this.frm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-        debugger
-        console.log(this.frm.value);
-        this.gSvc.postdata("api/MessageTemplate/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+        this.mobileMesTemFrm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+        this.gSvc.postdata("api/CmnMobileMessageTamplate/Add", JSON.stringify(this.mobileMesTemFrm.value)).subscribe(res => {
           this.toastrService.success("Saved success");
           this.messageTemplates();
           this.reset();

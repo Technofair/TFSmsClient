@@ -2,7 +2,7 @@
 <p-panel>
     <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'MobileMessageTemplate' |
             translate}}</span></ng-template>
-    <form [formGroup]="frm" (ngSubmit)="save()">
+    <form [formGroup]="mobileMesTemFrm" (ngSubmit)="save()">
         <input type="hidden" formControlName="id" value="0">
         <div class="grid">
             <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -38,10 +38,6 @@
                 </div>
           </div>
           
-            <!-- <div class=" field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12">
-                <label>{{'Message' | translate}}</label>
-                <textarea rows="2" cols="34" pInputTextarea formControlName="message"  [(ngModel)]="setMessage" readonly></textarea>
-            </div>  -->
             <div class="card flex justify-content-center" style="width:  100% ;">
                 <p-accordion [activeIndex]="0">
                     <p-accordionTab header="{{'Parameters'|translate}}">
@@ -63,15 +59,13 @@
                 </p-accordion>
             </div>
             <div class=" field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12" pDroppable (onDrop)="drop()">
-                
                 <label>{{'Message' | translate}}</label>
                 <textarea rows="2" cols="34" pInputTextarea formControlName="message"  [(ngModel)]="setMessage" ></textarea>
             </div>      
-
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card-footer">
                     <div class="">
-                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                        <p-button (click)="save()" [disabled]="mobileMesTemFrm.invalid" styleClass="p-button-success p-button-sm"
                             type="submit" icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
                         <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
                             (click)="reset()" label="{{'RESET'|translate}}"> </p-button>&nbsp;
