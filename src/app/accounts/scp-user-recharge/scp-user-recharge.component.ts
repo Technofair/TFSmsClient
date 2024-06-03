@@ -24,7 +24,7 @@ export class ScpUserRechargeComponent {
   secUserId:any;
   organizationList:any;
   progressStatus: boolean = true;
-  billers:any;
+  users:any;
   constructor(private fb: FormBuilder,
      private router: Router,
      private confirmationService: ConfirmationService,
@@ -77,7 +77,8 @@ getfrm(){
     return false;
   }
   getUserDebit() { 
-    this.gSvc.postdata("api/ScpUserRecharge/GetAll", {}).subscribe(res => {
+      this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel=3", {}).subscribe(res => {
+      //this.gSvc.postdata("api/ScpUserRecharge/GetAll", {}).subscribe(res => {
       this.list = res;
       this.progressStatus = true;
     }, err => {
@@ -98,9 +99,9 @@ getfrm(){
     this.viewInfo = res;
   }
   getSecUserType() {
-    this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserType?cmnCompanyId=2" + "&secUserTypeId=3", {}).subscribe((res: any) => {
+    this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserLevel?cmnCompanyId=" + this.auth.getCompany() + "&userLevel=3", {}).subscribe((res: any) => {
       
-      this.billers= res;
+      this.users= res;
     }, err => {
       this.toastrService.error("Error! Data Not Found");
     })
