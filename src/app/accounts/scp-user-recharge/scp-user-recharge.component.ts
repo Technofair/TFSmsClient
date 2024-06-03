@@ -6,8 +6,10 @@ import { Table } from 'primeng/table';
 import { GeneralService } from 'src/app/services/general.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
+import { balanceService } from 'src/app/global';
 import { environment } from 'src/environments/environment';
 import { Console } from 'console';
+
 
 @Component({
   selector: 'app-scp-user-recharge',
@@ -31,7 +33,8 @@ export class ScpUserRechargeComponent {
      private gSvc: GeneralService,
      private route: ActivatedRoute,
      private toastrService: ToastrService,
-     private auth: AuthService) {
+     private auth: AuthService,
+     private balService: balanceService) {
 
   }
   ngOnInit(): void {
@@ -58,14 +61,20 @@ getfrm(){
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        debugger
-        console.log(JSON.stringify(this.frm.value));
+
         this.gSvc.postdata("api/ScpUserRecharge/SaveUserRecharge", JSON.stringify(this.frm.value)).subscribe(res => {
-          this.frm.reset();
-          this.getUserDebit();
-        
-          this.toastrService.success("Successful");
-          this.getfrm();
+          
+          if(res.success){
+            this.toastrService.success(res.message);
+            this.balService.updateCurrentBalance(0);
+            this.getUserDebit();
+            this.getfrm();
+          }
+          else{
+            this.toastrService.warning(res.message);
+          }
+                  
+
         }, err => {       
           this.toastrService.error("Error! Data Not Saved.");
         })
@@ -86,6 +95,8 @@ getfrm(){
       this.toastrService.error("List not found");
     })
   }
+
+
   edit(res: any) {
     debugger;    
     this.getSecUserType();
