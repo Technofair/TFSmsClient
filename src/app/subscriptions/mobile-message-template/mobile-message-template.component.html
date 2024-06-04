@@ -2,7 +2,7 @@
 <p-panel>
     <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'MobileMessageTemplate' |
             translate}}</span></ng-template>
-    <form [formGroup]="frm" (ngSubmit)="save()">
+    <form [formGroup]="mobileMesTemFrm" (ngSubmit)="save()">
         <input type="hidden" formControlName="id" value="0">
         <div class="grid">
             <div class=" field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -38,10 +38,6 @@
                 </div>
           </div>
           
-            <!-- <div class=" field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12">
-                <label>{{'Message' | translate}}</label>
-                <textarea rows="2" cols="34" pInputTextarea formControlName="message"  [(ngModel)]="setMessage" readonly></textarea>
-            </div>  -->
             <div class="card flex justify-content-center" style="width:  100% ;">
                 <p-accordion [activeIndex]="0">
                     <p-accordionTab header="{{'Parameters'|translate}}">
@@ -63,15 +59,13 @@
                 </p-accordion>
             </div>
             <div class=" field col-12 sm:col-6 md:col-12 lg:col-12 xl:col-12" pDroppable (onDrop)="drop()">
-                
                 <label>{{'Message' | translate}}</label>
                 <textarea rows="2" cols="34" pInputTextarea formControlName="message"  [(ngModel)]="setMessage" ></textarea>
             </div>      
-
             <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
                 <div class="card-footer">
                     <div class="">
-                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm"
+                        <p-button (click)="save()" [disabled]="mobileMesTemFrm.invalid" styleClass="p-button-success p-button-sm"
                             type="submit" icon="pi pi-check" label="{{'SAVE' | translate}}"></p-button>&nbsp;
                         <p-button (click)="reset()" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
                             (click)="reset()" label="{{'RESET'|translate}}"> </p-button>&nbsp;
@@ -112,15 +106,11 @@
             </th>
             <th pSortableColumn="osdType" style="text-align: center">
                 <div class="vcenter text-center">
-                    {{'StartDate' | translate}}
+                    {{'Timeframe' | translate}}
                 </div>
             </th>
-            <!-- <th pSortableColumn="startTime" style="text-align: center">
-                <div class="vcenter text-center">
-                    {{'EndDate' | translate}}
-                </div>
-            </th> -->
-            <!-- <th class="vcenter text-center">{{'Frequency' | translate}}</th> -->
+            <th class="vcenter text-center">{{'Frequency' | translate}}</th>
+            <th class="vcenter text-center">{{'serviceInitiate' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
     </ng-template>
@@ -128,12 +118,12 @@
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
             <td>{{r.typeName}}</td>
-            <td>{{r.description}}</td>
+            <td>{{r.message}}</td>
             <td>{{r.startDate |date:'short' }}</td>
-            <!-- <td>{{r.endDate |date:'short'}}</td> -->
-            <!-- <td>{{r.frequency}}</td> -->
+            <td>{{r.cmnFrequencyId}}</td>
+            <td>{{r.serviceInitiate}}</td>
             <td class="vcenter text-center">
-                <p-button (onClick)="edit(r.id)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+                <p-button (onClick)="edit(r)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
                 title="{{'Edit' | translate}}"></p-button>
             </td>
         </tr>
