@@ -165,7 +165,7 @@ export class UserComponent implements OnInit {
           }
           
           this.getUsers(this.frm.controls["cmnCompanyTypeId"].value, this.frm.controls["cmnCompanyId"].value, this.auth.getUserLevel());
-          this.frm.reset();
+          //this.frm.reset();
         }, err => {
           this.toastrService.error("Error! Data not Saved.");
         })
