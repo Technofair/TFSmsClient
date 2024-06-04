@@ -106,15 +106,11 @@
             </th>
             <th pSortableColumn="osdType" style="text-align: center">
                 <div class="vcenter text-center">
-                    {{'StartDate' | translate}}
+                    {{'Timeframe' | translate}}
                 </div>
             </th>
-            <!-- <th pSortableColumn="startTime" style="text-align: center">
-                <div class="vcenter text-center">
-                    {{'EndDate' | translate}}
-                </div>
-            </th> -->
-            <!-- <th class="vcenter text-center">{{'Frequency' | translate}}</th> -->
+            <th class="vcenter text-center">{{'Frequency' | translate}}</th>
+            <th class="vcenter text-center">{{'serviceInitiate' | translate}}</th>
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
     </ng-template>
@@ -122,12 +118,12 @@
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
             <td>{{r.typeName}}</td>
-            <td>{{r.description}}</td>
+            <td>{{r.message}}</td>
             <td>{{r.startDate |date:'short' }}</td>
-            <!-- <td>{{r.endDate |date:'short'}}</td> -->
-            <!-- <td>{{r.frequency}}</td> -->
+            <td>{{r.cmnFrequencyId}}</td>
+            <td>{{r.serviceInitiate}}</td>
             <td class="vcenter text-center">
-                <p-button (onClick)="edit(r.id)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
+                <p-button (onClick)="edit(r)" styleClass="p-button-info rounded-0 px-2 py-1 mr-2" type="button" icon="pi pi-pencil"
                 title="{{'Edit' | translate}}"></p-button>
             </td>
         </tr>

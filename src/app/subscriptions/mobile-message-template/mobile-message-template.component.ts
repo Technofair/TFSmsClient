@@ -25,7 +25,6 @@ export class MobileMessageTemplateComponent {
   setMessage:any="";
   list:any;
   messageType: any;
-  frm!: FormGroup;
   mobileMesTemFrm!:FormGroup;
   osdTypes:any;
   scpFrequency:any;
@@ -71,41 +70,6 @@ export class MobileMessageTemplateComponent {
     });
   }
 
-  createMestemFrm() {
-    this.frm = this.fb.group({
-      id: new FormControl(0),
-      scpMessageTypeId: new FormControl(Validators.required),
-      description: new FormControl(),
-      message:new FormControl('',Validators.required),
-      cmnCompanyId: new FormControl(this.auth.getCompany()),
-      startDate: new FormControl(),
-      endDate: new FormControl(),
-      //oSDTypeId: new FormControl(Validators.required),
-      //dVBEncoding: new FormControl('ascii', Validators.required),
-      duration: new FormControl(),
-      timeframe:new FormControl(),
-      cmnFrequencyId:new FormControl(),
-      serviceInitiate:new FormControl(""),
-      recurrent: new FormControl(false),
-      date:new FormControl(),
-      repetition: new FormControl(),
-      interval: new FormControl(),
-      color: new FormControl(),
-      backgroundColor: new FormControl(),
-      scrollSpeed: new FormControl(),
-      forced: new FormControl(false),
-
-      isActive: new FormControl(true),
-      createdBy: new FormControl(),
-      createdDate: new FormControl(),
-      modifiedBy: new FormControl(),
-      modifiedDate: new FormControl(),
-      lang:new FormControl(''),
-
-    });
-  }
-
-
   getMessageType(){
     this.gSvc.postdata("api/MessageType/GetActiveAMessageType", {}).subscribe(res => {
       this.messageType=res;
@@ -115,14 +79,7 @@ export class MobileMessageTemplateComponent {
   }
 
 
-  // getOsdType(){
-  //   this.gSvc.postdata("Common/OSDType/GetAllOSDType", {}).subscribe(res => {
-  //     this.osdTypes=res;
-  //   }, err => {
-  //     this.toastrService.error(err.message);
-  //   })
-  // }
-  
+
   getFrequency() { 
     this.gSvc.postdata("Common/CmnFrequency/CmnFrequencies", {}).subscribe(res => {
       this.scpFrequency = res;      
@@ -132,29 +89,13 @@ export class MobileMessageTemplateComponent {
   }
   
   messageSet(){
-    var messageTypeId= this.frm.get('scpMessageTypeId')?.value;
+    var messageTypeId= this.mobileMesTemFrm.get('scpMessageTypeId')?.value;
     var messages= this.messageType.find((x: { id: any; }) => x.id ===messageTypeId );
     this.setMessage= messages.bodyTemplate;    
   }
 
 
-  // osdTypeChange(){
-  //   var osd= this.frm.get('oSDTypeId')?.value;
-  //   if(osd==1){
-  //      this.simpleOsd=false;
-  //      this.longOsd=true;
-  //      this.scrollOsd=true;
-  //   }else if(osd==2){
-  //      this.longOsd=false;
-  //      this.simpleOsd=true;
-  //      this.scrollOsd=true;
-  //   }else if(osd==3){
-  //     this.simpleOsd=true;
-  //     this.longOsd=true;
-  //     this.scrollOsd=false;
-  //   }
-  // }
-  
+ 
   save() {
     if (this.mobileMesTemFrm.invalid) return false;
     //console.log(this.frm.value); 
@@ -166,14 +107,14 @@ export class MobileMessageTemplateComponent {
         if (this.mobileMesTemFrm.controls['id'].value == 0) {
           this.mobileMesTemFrm.controls['createdBy'].setValue(this.auth.getUserId());
           this.mobileMesTemFrm.controls['createdDate'].setValue(new Date());
-        } else if (this.frm.controls['id'].value > 0) {
+        } else if (this.mobileMesTemFrm.controls['id'].value > 0) {
           this.mobileMesTemFrm.controls['modifiedBy'].setValue(this.auth.getUserId());
         }
         this.mobileMesTemFrm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
         this.gSvc.postdata("api/CmnMobileMessageTamplate/Add", JSON.stringify(this.mobileMesTemFrm.value)).subscribe(res => {
           this.toastrService.success("Saved success");
+          this.createMobileMesTemFrm();
           this.messageTemplates();
-          this.reset();
         }, err => {
           this.toastrService.error(err.message);
         })
@@ -185,8 +126,9 @@ export class MobileMessageTemplateComponent {
     return false;
   }
  messageTemplates(){
-  this.gSvc.postdata("api/MessageTemplate/GetAll", {}).subscribe(res => {
-    this.join(res);
+  this.gSvc.getdata("api/CmnMobileMessageTamplate/GetAllMessageTemp").subscribe(res => {
+    this.list=res;
+    //this.join(res);
   }, err => {
     this.toastrService.error(err.message);
   })
@@ -197,7 +139,8 @@ export class MobileMessageTemplateComponent {
     frequency: any;
     endDate: any;
     startDate: any;
-    scpMessageTypeId: any; id: any;  description:any;
+    scpMessageTypeId: any; id: any; 
+    description:any;
     name:any
   }) => ({
     id: item.id,
@@ -215,22 +158,10 @@ export class MobileMessageTemplateComponent {
     table.clear();
   }
   reset() {
-    this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.markAsPristine();
+    this.createMobileMesTemFrm();
   }
-  edit(id: any) {
-    //this.osdTypes
-    this.messageType;
-    //this.dvbEncodings;
-    this.gSvc.postdata("api/MessageTemplate/GetById/"+id, {}).subscribe(res => {
-       this.frm.controls['oSDTypeId'].setValue(res.osdTypeId);
-       this.frm.controls['dVBEncoding'].setValue(res.dvbEncoding);
-       //this.osdTypeChange()
-      this.frm.patchValue(res);
-    }, err => {
-      this.toastrService.error(err.message);
-    })
+  edit(data: any) {
+    this.mobileMesTemFrm.patchValue(data);
   }
 dragStart(product: any) {
     this.draggedProduct = product;
