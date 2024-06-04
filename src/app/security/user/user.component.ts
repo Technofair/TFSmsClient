@@ -158,13 +158,14 @@ export class UserComponent implements OnInit {
           
           if(res.success){
             this.toastrService.success(res.message);
+            this.initializeFrm();
           }
           else{
             this.toastrService.warning(res.message);
           }
           
           this.getUsers(this.frm.controls["cmnCompanyTypeId"].value, this.frm.controls["cmnCompanyId"].value, this.auth.getUserLevel());
-          this.frm.reset();
+          //this.frm.reset();
         }, err => {
           this.toastrService.error("Error! Data not Saved.");
         })
@@ -224,7 +225,7 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/home/security/addUser')
   }
   reset() {
-    this.frm.reset();
+    this.initializeFrm();
     this.frm.controls['id'].setValue(0);
     this.frm.controls['isActive'].setValue(true);
     this.frm.markAsPristine();

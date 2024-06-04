@@ -316,7 +316,7 @@ export class EmployeeComponent implements OnInit {
     this.router.navigateByUrl('/home/hrm/employee')
   }
   reset() {
-    this.frm.reset();
+    this.initializeFrm();
     this.frm.controls['id'].setValue(0);
     this.frm.markAsPristine();
   }
