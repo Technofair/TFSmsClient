@@ -158,6 +158,7 @@ export class UserComponent implements OnInit {
           
           if(res.success){
             this.toastrService.success(res.message);
+            this.initializeFrm();
           }
           else{
             this.toastrService.warning(res.message);
@@ -224,7 +225,7 @@ export class UserComponent implements OnInit {
     this.router.navigateByUrl('/home/security/addUser')
   }
   reset() {
-    this.frm.reset();
+    this.initializeFrm();
     this.frm.controls['id'].setValue(0);
     this.frm.controls['isActive'].setValue(true);
     this.frm.markAsPristine();
