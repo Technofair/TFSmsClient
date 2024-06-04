@@ -570,5 +570,6 @@
     "IsAppointedByOtherCompany": "Appointed By Other Company?",
     "ScpUserRecharge":"User Recharge",
     "userName":"User Name",
+    "IsFixed": "Fixed",
     "AppointedCompany": "Appointed Company?"
 }
