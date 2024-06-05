@@ -718,6 +718,7 @@
     "ScpUserRecharge":"ইউজার রিচার্জ",
     "userName":"ব্যবহারকারীর নাম",
     "IsAppointedByOtherCompany": "অন্য কোম্পানি দ্বারা নিয়োগকৃত?",
-    "AppointedCompany": "নিয়োগকৃত কোম্পানি?"
+    "AppointedCompany": "নিয়োগকৃত কোম্পানি?",
+    "IsFixed": "সংশোধন করা হয়েছে"
 }
 

@@ -117,9 +117,9 @@
     <ng-template pTemplate="body" let-r let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.typeName}}</td>
+            <td>{{r.scpMessageTypeId}}</td>
             <td>{{r.message}}</td>
-            <td>{{r.startDate |date:'short' }}</td>
+            <td>{{r.timeframe }}</td>
             <td>{{r.cmnFrequencyId}}</td>
             <td>{{r.serviceInitiate}}</td>
             <td class="vcenter text-center">

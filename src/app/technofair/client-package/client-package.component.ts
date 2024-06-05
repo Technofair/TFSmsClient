@@ -14,13 +14,15 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class ClientPackageComponent implements OnInit {
+  [x: string]: any;
 
-   banks: any;
-  selectedCustomers: any;
+  CompanyPackagelist: any;
+  CompanyCustomerlist: any;
+  list:any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
- progressStatus:boolean=true;
+  progressStatus:boolean=true;
   frm!:FormGroup
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
@@ -33,14 +35,17 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(""),
-      shortName: new FormControl(""),
-      address: new FormControl(""),
+      AnFCompanyPackageId: new FormControl(),
+      CmnCompanyCustomerId: new FormControl([Validators.required]),
+      date: new FormControl(new Date(), [Validators.required]),
+      Rate: new FormControl([Validators.required]),
+      Discount: new FormControl(),
+      IsActive:new FormControl(true),
+      IsFixed:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date()),
-      isActive:new FormControl(true)
+      modifiedDate:new FormControl(new Date())
     });
   }
   save() {
@@ -84,7 +89,7 @@ export class ClientPackageComponent implements OnInit {
   getbankas() {
     this.progressStatus=false;
     this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+      //this.banks = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
