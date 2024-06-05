@@ -75,8 +75,9 @@
           <ng-template pTemplate="header">
             <tr>
               <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-              <th>{{'LoginID'|translate}}</th>
               <th>{{'Name'|translate}}</th>
+              <th>{{'LoginID'|translate}}</th>
+              <th>{{'UserType'}}</th>
               <th>{{'Company'|translate}}</th>
             </tr>
             <tr>
@@ -94,8 +95,9 @@
              <!-- <td>
                 <p-tableCheckbox [value]="user.isActive"></p-tableCheckbox>
               </td>-->
-              <td>{{ user.loginID }}</td>
               <td>{{ user.employeeName}}</td>
+              <td>{{ user.loginID }}</td>
+              <td>{{user.secUserTypeName}}</td>
               <td>{{ user.companyName}}</td>
             </tr>
           </ng-template>
