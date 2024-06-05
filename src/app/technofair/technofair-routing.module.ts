@@ -6,6 +6,7 @@ import { ClientPackageComponent } from './client-package/client-package.componen
 import { CompanyCollectionComponent } from './company-collection/company-collection.component';
 import { CompanyPackageComponent } from './company-package/company-package.component';
 import { ClientPaymentComponent } from './client-payment/client-payment.component';
+import { CompanyPackageTypeComponent } from './company-package-type/company-package-type.componet';
 
 const routes: Routes = [
   { path: 'clientinfo', component: ClientInfoComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'company-package', component: CompanyPackageComponent },
   { path: 'client-payment', component: ClientPaymentComponent },
   { path: 'company-collection', component: CompanyCollectionComponent },
+  { path: 'company-package-type', component: CompanyPackageTypeComponent },
 ];
 
 @NgModule({
