@@ -15,27 +15,44 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ClientPaymentComponent implements OnInit {
 
-   banks: any;
+  CompanyPayments: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
  progressStatus:boolean=true;
   frm!:FormGroup
+  financialYear:any
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
   }
 
   ngOnInit(): void {
     this.getFrm();
-    this.getbankas();
+    this.getCompanyPayments();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(""),
-      shortName: new FormControl(""),
-      address: new FormControl(""),
+      refNo: new FormControl(""),
+      cmnFinancialYearId:new FormControl(Validators.required),
+      date: new FormControl(),
+      dueDate: new FormControl(),
+      cmnCompanyCustomerId:new FormControl(),
+      anFClientPackageId:new FormControl(),
+      anFPaymentMethodId:new FormControl(),
+      paidDate:new FormControl(),
+      walletNo:new FormControl(),
+      trxID:new FormControl(),
+      totalAmount:new FormControl(),
+      totalDiscount:new FormControl(),
+      anFVoucherId:new FormControl(),
+      remarks:new FormControl(),
+      isCancelled:new FormControl(),
+      cancelledBy:new FormControl(this.auth.getUserId()),
+      cancelledDate:new FormControl(),
+      cancelReason:new FormControl(),
+      isCollected:new FormControl(),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -50,27 +67,15 @@ export class ClientPaymentComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.getbankas();
-            this.toastrService.success("Bank Information Saved");
+        
+          this.gSvc.postdata("api/CompanyPayment/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+           
+            this.getCompanyPayments();
+            this.toastrService.success("Company Payment Saved");
           }, err => {
             this.toastrService.error("Error! Bank Information Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getbankas();
-            this.toastrService.success("Bank Information Updated");
-
-          }, err => {
-            this.toastrService.error("Error! Bank Information Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -81,10 +86,10 @@ export class ClientPaymentComponent implements OnInit {
     return false;
   }
 
-  getbankas() {
+  getCompanyPayments() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+    this.gSvc.postdata("api/CompanyPayment/GetAll", {}).subscribe(res => {
+      this.CompanyPayments = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
