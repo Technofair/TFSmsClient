@@ -76,8 +76,9 @@
             <tr>
               <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
               <th>{{'Name'|translate}}</th>
-              <th>{{'LoginID'|translate}}</th>
               <th>{{'UserType'}}</th>
+              <th>{{'LoginID'|translate}}</th>
+              
               <th>{{'Company'|translate}}</th>
             </tr>
             <tr>
@@ -96,8 +97,9 @@
                 <p-tableCheckbox [value]="user.isActive"></p-tableCheckbox>
               </td>-->
               <td>{{ user.employeeName}}</td>
-              <td>{{ user.loginID }}</td>
               <td>{{user.secUserTypeName}}</td>
+              <td>{{ user.loginID }}</td>
+             
               <td>{{ user.companyName}}</td>
             </tr>
           </ng-template>
@@ -132,11 +134,13 @@
     <tr>
       <th class="vcenter text-danger" style="text-align: right !important;" [width]="10">{{'SlNo'|translate}}</th>
       
-      <th class="vcenter text-center">{{'LginId' | translate}}</th>
       <th class="vcenter text-center">{{'UserName' | translate}}</th>
-      <th class="vcenter text-center">{{'Company' | translate}}</th>
+      <th class="vcenter text-center">{{'UserType' | translate}}</th>
+      <th class="vcenter text-center">{{'LginId' | translate}}</th>
       
+      <th class="vcenter text-center">{{'Company' | translate}}</th>   
       <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+
     </tr>
     <tr>
       <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
@@ -148,8 +152,10 @@
   <ng-template pTemplate="body" let-r let-rowIndex="rowIndex">
     <tr class="p-selectable-row">
       <td>{{rowIndex+1}}</td>
-      <td>{{r.loginID}}</td>
       <td>{{r.employeeName}}</td>
+      <td>{{r.secUserTypeName}}</td>
+      <td>{{r.loginID}}</td>
+      
       <td>{{r.companyName}}</td>
       <td class="vcenter text-center" *ngIf="r.secUserId != authUserId">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-trash"
