@@ -9,55 +9,39 @@ import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-item-brand',
-  templateUrl: './client-payment.component.html',
-  styleUrls: ['./client-payment.component.css'],
+  templateUrl: './company-package-type.component.html',
+  styleUrls: ['./company-package-type.component.css'],
   providers: [ConfirmationService]
 })
-export class ClientPaymentComponent implements OnInit {
+export class CompanyPackageTypeComponent implements OnInit {
+  [x: string]: any;
 
-  CompanyPayments: any;
-  selectedCustomers: any;
+  companyPackageTypes: any;
+  CompanyCustomerlist: any;
+  list:any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
- progressStatus:boolean=true;
+  progressStatus:boolean=true;
   frm!:FormGroup
-  financialYear:any
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
   }
 
   ngOnInit(): void {
     this.getFrm();
-    this.getCompanyPayments();
+    this.getCompanyPackageTypes();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      refNo: new FormControl(""),
-      cmnFinancialYearId:new FormControl(Validators.required),
-      date: new FormControl(),
-      dueDate: new FormControl(),
-      cmnCompanyCustomerId:new FormControl(),
-      anFClientPackageId:new FormControl(),
-      anFPaymentMethodId:new FormControl(),
-      paidDate:new FormControl(),
-      walletNo:new FormControl(),
-      trxID:new FormControl(),
-      totalAmount:new FormControl(),
-      totalDiscount:new FormControl(),
-      anFVoucherId:new FormControl(),
-      remarks:new FormControl(),
-      isCancelled:new FormControl(),
-      cancelledBy:new FormControl(this.auth.getUserId()),
-      cancelledDate:new FormControl(),
-      cancelReason:new FormControl(),
-      isCollected:new FormControl(),
+      title: new FormControl("",Validators.required),
+      remarks: new FormControl(""),
+      IsActive:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date()),
-      isActive:new FormControl(true)
+      modifiedDate:new FormControl(new Date())
     });
   }
   save() {
@@ -67,15 +51,15 @@ export class ClientPaymentComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        
-          this.gSvc.postdata("api/CompanyPayment/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-           
-            this.getCompanyPayments();
-            this.toastrService.success("Company Payment Saved");
+       
+          this.gSvc.postdata("api/CompanyPackageType/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+            this.getFrm();
+            this.getCompanyPackageTypes();
+            this.toastrService.success("Company Package Type Saved");
           }, err => {
-            this.toastrService.error("Error! Bank Information Not Saved");
+            this.toastrService.error("Error! Company Package Type Not Saved");
           })
-        
+         
         return true;
       },
       reject: () => {
@@ -86,10 +70,10 @@ export class ClientPaymentComponent implements OnInit {
     return false;
   }
 
-  getCompanyPayments() {
+  getCompanyPackageTypes() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/CompanyPayment/GetAll", {}).subscribe(res => {
-      this.CompanyPayments = res;
+    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+      this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
@@ -97,7 +81,6 @@ export class ClientPaymentComponent implements OnInit {
   }
 
   edit(res: any) {
-    this.formId = 1;
     this.frm.patchValue(res);
   }
 

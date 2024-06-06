@@ -15,32 +15,39 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CompanyPackageComponent implements OnInit {
 
-   banks: any;
+  CompanyPackages: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
  progressStatus:boolean=true;
   frm!:FormGroup
+  companyPackageTypes:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
   }
 
   ngOnInit(): void {
     this.getFrm();
-    this.getbankas();
+    this.getCompanyPackages();
+    this.getcompanyPackageTypes();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(""),
-      shortName: new FormControl(""),
-      address: new FormControl(""),
+      refNo: new FormControl(""),
+      anFCompanyPackageTypeId:new FormControl(Validators.required),
+      startDate: new FormControl(),
+      endDate: new FormControl(),
+      rate:new FormControl(),
+      discount:new FormControl(),
+      remarks:new FormControl(),
+      isActive:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date()),
-      isActive:new FormControl(true)
+      modifiedDate:new FormControl(new Date())
+     
     });
   }
   save() {
@@ -50,27 +57,15 @@ export class CompanyPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.getbankas();
-            this.toastrService.success("Bank Information Saved");
+       
+          this.gSvc.postdata("api/CompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+            this.getFrm();
+            this.getCompanyPackages();
+            this.toastrService.success("Company Package Saved");
           }, err => {
-            this.toastrService.error("Error! Bank Information Not Saved");
+            this.toastrService.error("Error! Company Package Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getbankas();
-            this.toastrService.success("Bank Information Updated");
-
-          }, err => {
-            this.toastrService.error("Error! Bank Information Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -80,11 +75,18 @@ export class CompanyPackageComponent implements OnInit {
     })
     return false;
   }
+  getcompanyPackageTypes() {
+    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+      this.companyPackageTypes = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })    
+  }
 
-  getbankas() {
+  getCompanyPackages() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+    this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
+      this.CompanyPackages = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
@@ -92,7 +94,6 @@ export class CompanyPackageComponent implements OnInit {
   }
 
   edit(res: any) {
-    this.formId = 1;
     this.frm.patchValue(res);
   }
 
@@ -110,9 +111,7 @@ export class CompanyPackageComponent implements OnInit {
     this.router.navigateByUrl('/inventory/itembrand')
   }
   reset() {
-    this.frm.reset();
-    this.frm.controls['id'].setValue(0);
-    this.frm.markAsPristine();
+    this.getFrm();
   }
   clear(table: Table) {
     table.clear();

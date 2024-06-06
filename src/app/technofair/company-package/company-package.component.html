@@ -1,6 +1,6 @@
 <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
 <p-panel>
-  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'CompanyPackage' |
+  <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'Company Package' |
           translate}}</span></ng-template>
 <form [formGroup]="frm" (ngSubmit)="save()">
   <input type="hidden" formControlName="id" value="0">
@@ -8,23 +8,44 @@
     <!-- <h5>{{'ITEMBRAND'|translate}}</h5> -->
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'NAME'|translate}}" formControlName="name"
+        <label>{{'RefNo'|translate}}</label><span class="text-danger"> *</span><br>
+        <input type="text" class="p-2  w-full" placeholder="{{'RefNo'|translate}}" formControlName="refNo"
           pInputText /><br>
-        <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
-          {{'NAME'|translate}} {{'REQUIRED'|translate}}
+        <span *ngIf="frm.controls['refNo'].invalid && frm.controls['refNo'].touched " class="text-danger">
+          {{'RefNo'|translate}} {{'REQUIRED'|translate}}
         </span>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'ShortName'|translate}}</label>
-        <input type="text" maxlength="6" class="p-2  w-full" placeholder="{{'ShortName'|translate}}" formControlName="shortName"
+        <label>{{'Client Package Type'|translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
+          [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="title" optionValue="id"></p-dropdown><br>
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'StartDate'|translate}}</label>
+        <input type="date"  class="p-2  w-full"  formControlName="startDate"
           pInputText />
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'ADDRESS'|translate}}</label><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'ADDRESS'|translate}}" formControlName="address"
+        <label>{{'EndDate'|translate}}</label>
+        <input type="date"  class="p-2  w-full"  formControlName="endDate"
           pInputText />
-      </div> 
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'Rate'|translate}}</label>
+        <input type="text"  class="p-2  w-full"  formControlName="rate"
+          pInputText />
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'Discount'|translate}}</label>
+        <input type="text"  class="p-2  w-full"  formControlName="discount"
+          pInputText />
+      </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'Remarks'|translate}}</label>
+        <input type="text"  class="p-2  w-full"  formControlName="remarks"
+          pInputText />
+      </div>
       <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
             formControlName="isActive">
@@ -32,18 +53,13 @@
     </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <div class="">
-          <div class="">
-            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+        <div class="flex justify-center">          
+            <p-button (click)="save()" [disabled]="frm.invalid" 
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
               label="{{'SAVE'|translate}}"></p-button>
-            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
-              styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
-              label="{{'UPDATE'|translate}}"></p-button>&nbsp;
-            <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+            <p-button type="reset"  styleClass="p-button-warning p-button-sm ml-2"
               icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
-          </div>
-        </div>
+          </div>        
       </div>
     </div>
   </div>
@@ -77,7 +93,7 @@
   </ng-template>
 </p-dialog>
 
-<p-table #dt [value]="banks" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="CompanyPackages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
   [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
@@ -98,13 +114,16 @@
     <tr>
       <th pSortableColumn="name" style="text-align: center">
         <div class="vcenter text-center">
-          {{'NAME'|translate}}
-          <p-sortIcon field="name"></p-sortIcon>
-          <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+          {{'RefNo'|translate}}
         </div>
       </th>
-      <!-- <th class="vcenter text-center">{{'CODE'|translate}}</th>
-      <th class="vcenter text-center">{{'REMARKS'|translate}}</th> -->
+      <th class="vcenter text-center">{{'AnFCompanyPackageTypeId'|translate}}</th>
+      <th class="vcenter text-center">{{'StartDate'|translate}}</th>
+      <th class="vcenter text-center">{{'EndDate'|translate}}</th>
+      <th class="vcenter text-center">{{'Rate'|translate}}</th>
+      <th class="vcenter text-center">{{'Discount'|translate}}</th>
+      <th class="vcenter text-center">{{'REMARKS'|translate}}</th>
+      <th class="vcenter text-center">{{'IsActive'|translate}}</th>
       <th class="vcenter text-center">{{'ACTION'|translate}}</th>
     </tr>
     <tr>
@@ -117,12 +136,17 @@
 
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
-      <td>{{r.name}}</td>
-      <!-- <td>{{r.code}}</td>
-      <td>{{r.remarks}}</td> -->
+      <td>{{r.refNo}}</td>
+      <td>{{r.anFCompanyPackageTypeId}}</td>
+      <td>{{r.startDate}}</td>
+      <td>{{r.endDate}}</td>
+      <td>{{r.rate}}</td>
+      <td>{{r.discount}}</td>
+      <td>{{r.remarks}}</td>
+      <td>{{r.isActive}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-          (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
+          (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
         </p-button>
         <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
           (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
