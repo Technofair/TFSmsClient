@@ -723,6 +723,12 @@
     "Company Package": "কোম্পানির প্যাকেজ",
     "Client Package Type": "কোম্পানির প্যাকেজের ধরন",
     "Title": "টাইটেল",
+    "ClientPayment": "ক্লায়েন্ট পেমেন্ট",
+    "FinancialYear": "আর্থিক বছর",
+    "DueDate": "বাকি তারিখ",
+    "PaidDate": "পরিশোধের তারিখ",
+    "TotalDiscount": "মোট ডিসকাউন্ট",
+    "IsCancelled": "বাতিল হয়েছে?",
     "IsFixed": "সংশোধন করা হয়েছে"
 }
 

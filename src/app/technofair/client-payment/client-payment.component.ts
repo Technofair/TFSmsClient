@@ -17,49 +17,58 @@ export class ClientPaymentComponent implements OnInit {
 
   CompanyPayments: any;
   selectedCustomers: any;
+  CompanyCustomerlist: any
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
- progressStatus:boolean=true;
-  frm!:FormGroup
-  financialYear:any
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
-   
+  progressStatus: boolean = true;
+  frm!: FormGroup
+  ClientPackagelist: any
+
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private gSvc: GeneralService,
+    private toastrService: ToastrService,
+    private auth: AuthService) {
   }
 
   ngOnInit(): void {
     this.getFrm();
     this.getCompanyPayments();
+    this.getCompanyCustomer();
   }
-  getFrm(){
+
+  getFrm() {
     this.frm = this.fb.group({
       id: new FormControl(0),
       refNo: new FormControl(""),
-      cmnFinancialYearId:new FormControl(Validators.required),
+      cmnFinancialYearId: new FormControl(Validators.required),
       date: new FormControl(),
       dueDate: new FormControl(),
-      cmnCompanyCustomerId:new FormControl(),
-      anFClientPackageId:new FormControl(),
-      anFPaymentMethodId:new FormControl(),
-      paidDate:new FormControl(),
-      walletNo:new FormControl(),
-      trxID:new FormControl(),
-      totalAmount:new FormControl(),
-      totalDiscount:new FormControl(),
-      anFVoucherId:new FormControl(),
-      remarks:new FormControl(),
-      isCancelled:new FormControl(),
-      cancelledBy:new FormControl(this.auth.getUserId()),
-      cancelledDate:new FormControl(),
-      cancelReason:new FormControl(),
-      isCollected:new FormControl(),
-      createdBy:new FormControl(this.auth.getUserId()),
-      createdDate:new FormControl(new Date()),
-      modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date()),
-      isActive:new FormControl(true)
+      cmnCompanyCustomerId: new FormControl(),
+      anFClientPackageId: new FormControl(),
+      anFPaymentMethodId: new FormControl(),
+      paidDate: new FormControl(),
+      walletNo: new FormControl(),
+      trxID: new FormControl(),
+      totalAmount: new FormControl(),
+      totalDiscount: new FormControl(),
+      anFVoucherId: new FormControl(),
+      remarks: new FormControl(),
+      isCancelled: new FormControl(),
+      cancelledBy: new FormControl(this.auth.getUserId()),
+      cancelledDate: new FormControl(),
+      cancelReason: new FormControl(),
+      isCollected: new FormControl(),
+      createdBy: new FormControl(this.auth.getUserId()),
+      createdDate: new FormControl(new Date()),
+      modifiedBy: new FormControl(this.auth.getUserId()),
+      modifiedDate: new FormControl(new Date()),
+      isActive: new FormControl(true)
     });
   }
+
   save() {
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -67,29 +76,42 @@ export class ClientPaymentComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        
-          this.gSvc.postdata("api/CompanyPayment/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-           
-            this.getCompanyPayments();
-            this.toastrService.success("Company Payment Saved");
-          }, err => {
-            this.toastrService.error("Error! Bank Information Not Saved");
-          })
-        
+        this.gSvc.postdata("api/CompanyPayment/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.getCompanyPayments();
+          this.toastrService.success("Company Payment Saved");
+        }, err => {
+          this.toastrService.error("Error! Bank Information Not Saved");
+        })
         return true;
       },
       reject: () => {
-
       }
-
     })
     return false;
   }
 
   getCompanyPayments() {
-    this.progressStatus=false;
+    this.progressStatus = false;
     this.gSvc.postdata("api/CompanyPayment/GetAll", {}).subscribe(res => {
       this.CompanyPayments = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus = true;
+  }
+
+  getCompanyCustomer() {
+    this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+      this.CompanyCustomerlist = res;
+    }, err => {
+      this.toastrService.error("Error! Company list not found ");
+    })   
+  }
+
+  getClientPackage() {
+    this.progressStatus=false;
+    this.gSvc.postdata("api/ClientPackage/GetAll", {}).subscribe(res => {
+      this.ClientPackagelist = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })

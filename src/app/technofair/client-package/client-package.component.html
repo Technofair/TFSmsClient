@@ -8,39 +8,39 @@
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Company Package'|translate}}</label>
-        <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="AnFCompanyPackageId"
-          [filter]="true" filterBy="CompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
+        <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="anFCompanyPackageId"
+          [filter]="true" filterBy="anFCompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="anFCompanyPackageTypeId" optionValue="id"></p-dropdown><br>
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="CmnCompanyCustomerId"
-          [filter]="true" filterBy="CompanyCustomerId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"></p-dropdown><br>
       </div>
 
       <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
         <label>{{'Date'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="date" class="p-2  w-full" placeholder="" formControlName="Date" dateFormat="YYYY-MM-DD"
+        <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy"
           pInputText />
       </div>
       
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Rate'|translate}}</label><br>
-        <input type="number" class="p-2  w-full" placeholder="{{'Rate'|translate}}" formControlName="Rate"
+        <label>{{'Rate'|translate}}</label><span class="text-danger"> *</span><br>
+        <input type="number" class="p-2  w-full" placeholder="{{'Rate'|translate}}" formControlName="rate"
           pInputText />
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Discount'|translate}}</label>
         <input type="number" maxlength="6" class="p-2  w-full" placeholder="{{'Discount'|translate}}"
-          formControlName="Discount" pInputText />
+          formControlName="discount" pInputText />
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Amount'|translate}}</label><br>
-        <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="Amount"
+        <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
           pInputText />
       </div>
 
@@ -52,7 +52,7 @@
 
       <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
-          formControlName="IsFixed">
+          formControlName="isFixed">
         <label class="form-check-label" for="flexCheckDefault"> {{'IsFixed' | translate}} </label>
       </div>
       
@@ -142,15 +142,15 @@
 
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
-      <td>{{r.AnFCompanyPackageId}}</td>
-      <td>{{r.CmnCompanyCustomerId}}</td>
-      <td>{{r.Date}}</td>
-      <td>{{r.Rate}}</td>
-      <td>{{r.Discount}}</td>
-      <td>{{r.Amount}}</td>
+      <td>{{r.anFCompanyPackageId}}</td>
+      <td>{{r.cmnCompanyCustomerId}}</td>
+      <td>{{r.date}}</td>
+      <td>{{r.rate}}</td>
+      <td>{{r.discount}}</td>
+      <td>{{r.amount}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-          (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
+          (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
         </p-button>
         <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
           (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
