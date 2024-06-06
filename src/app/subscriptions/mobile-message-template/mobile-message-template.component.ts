@@ -157,6 +157,7 @@ export class MobileMessageTemplateComponent {
   clear(table: Table) {
     table.clear();
   }
+  
   reset() {
     this.createMobileMesTemFrm();
   }
