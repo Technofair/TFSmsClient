@@ -164,23 +164,7 @@ export class EmployeeComponent implements OnInit {
           this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
           this.frm.controls['modifiedDate'].setValue(new Date());
         }
-
-        //New: Start
-        // if(this.isAppointedByOtherCompany == false){
-        //   var appointedCompanyId = this.frm.get('appointedCompanyId')?.value;
-        //   if(appointedCompanyId == null || appointedCompanyId == 0 || appointedCompanyId == undefined)
-        //     {
-        //       this.toastrService.warning("Please Select Appointed Company");
-        //       return;
-        //     }
-        // }
-        // else{
-        //   var appointedCompanyId = this.frm.get('cmnCompanyId')?.value;
-        // }
-        // this.frm.controls['appointedCompanyId'].setValue(appointedCompanyId);
-        //End
-
-         
+                
         this.gSvc.postdata("HRM/Employee/Save", JSON.stringify(this.frm.value)).subscribe(res => {
 
           if(res!= 'undefined')
