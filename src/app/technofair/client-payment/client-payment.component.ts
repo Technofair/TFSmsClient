@@ -35,7 +35,7 @@ export class ClientPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
-    this.getCompanyPayments();
+    this.getCompanyPackages();
     this.getCompanyCustomer();
   }
 
@@ -108,14 +108,12 @@ export class ClientPaymentComponent implements OnInit {
     })   
   }
 
-  getClientPackage() {
-    this.progressStatus=false;
-    this.gSvc.postdata("api/ClientPackage/GetAll", {}).subscribe(res => {
+  getCompanyPackages() {
+    this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
       this.ClientPackagelist = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
-    this.progressStatus=true;
   }
 
   edit(res: any) {
