@@ -135,11 +135,15 @@ export class QuickDashboardComponent implements OnInit {
               this.auth.setRole(result.roleId);
               this.auth.setCompany(result.companyId);
               this.auth.setCompanyTypeShortName(result.companyTypeShortName);
-              this.auth.setUserId(result.userId);
+              
+              //Start: Commented For insert/update tracking by Logged in User
+              //this.auth.setUserId(result.userId);
+
+              this.auth.setUserName(result.userName);
               this.auth.setUserLevel(result.userLevel);
               this.auth.setIsCompanyUser(result.isCompanyUser);
               this.auth.setPhotoUrl(result.photoUrl);
-              this.auth.setUserName(result.userName);
+              
               this.auth.setDistrict(result.districtId);
               this.auth.setUpazila(result.upazilaId);
               this.auth.setUnion(result.unionId);
