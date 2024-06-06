@@ -18,8 +18,8 @@
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'CompanyPackageType'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
-          [filter]="true" filterBy="anFCompanyPackageTypeId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
+          [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="title" optionValue="id"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'StartDate'|translate}}</label>
@@ -116,13 +116,16 @@
     <tr>
       <th pSortableColumn="name" style="text-align: center">
         <div class="vcenter text-center">
-          {{'NAME'|translate}}
-          <p-sortIcon field="name"></p-sortIcon>
-          <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
+          {{'RefNo'|translate}}
         </div>
       </th>
-      <!-- <th class="vcenter text-center">{{'CODE'|translate}}</th>
-      <th class="vcenter text-center">{{'REMARKS'|translate}}</th> -->
+      <th class="vcenter text-center">{{'AnFCompanyPackageTypeId'|translate}}</th>
+      <th class="vcenter text-center">{{'StartDate'|translate}}</th>
+      <th class="vcenter text-center">{{'EndDate'|translate}}</th>
+      <th class="vcenter text-center">{{'Rate'|translate}}</th>
+      <th class="vcenter text-center">{{'Discount'|translate}}</th>
+      <th class="vcenter text-center">{{'REMARKS'|translate}}</th>
+      <th class="vcenter text-center">{{'IsActive'|translate}}</th>
       <th class="vcenter text-center">{{'ACTION'|translate}}</th>
     </tr>
     <tr>
@@ -135,12 +138,17 @@
 
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
-      <td>{{r.name}}</td>
-      <!-- <td>{{r.code}}</td>
-      <td>{{r.remarks}}</td> -->
+      <td>{{r.refNo}}</td>
+      <td>{{r.anFCompanyPackageTypeId}}</td>
+      <td>{{r.startDate}}</td>
+      <td>{{r.endDate}}</td>
+      <td>{{r.rate}}</td>
+      <td>{{r.discount}}</td>
+      <td>{{r.remarks}}</td>
+      <td>{{r.isActive}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-          (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
+          (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
         </p-button>
         <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
           (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->

@@ -81,7 +81,6 @@ export class CompanyPackageTypeComponent implements OnInit {
   }
 
   edit(res: any) {
-    this.formId = 1;
     this.frm.patchValue(res);
   }
 
