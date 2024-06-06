@@ -573,5 +573,10 @@
     "IsFixed": "Fixed",
     "ClientPackage": "Client Package",
     "Company Package": "Client Package",
+    "ClientPayment": "Client Payment",
+    "FinancialYear": "Financial Year",
+    "DueDate": "Due Date",
+    "PaidDate": "Paid Date",
+    "TotalDiscount": "Total Discount",
     "AppointedCompany": "Appointed Company?"
 }

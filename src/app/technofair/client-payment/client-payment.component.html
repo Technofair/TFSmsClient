@@ -5,22 +5,20 @@
 <form [formGroup]="frm" (ngSubmit)="save()">
   <input type="hidden" formControlName="id" value="0">
   <div class="card">
-    <!-- <h5>{{'ITEMBRAND'|translate}}</h5> -->
-    <div class="formgrid grid">
+       <div class="formgrid grid">      
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'RefNo'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'RefNo'|translate}}" formControlName="refNo"
-          pInputText /><br>
-        <span *ngIf="frm.controls['refNo'].invalid && frm.controls['refNo'].touched " class="text-danger">
-          {{'RefNo'|translate}} {{'REQUIRED'|translate}}
-        </span>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'FinancialYear'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="financialYear" [style]="{'width':'100%'}" formControlName="cmnFinancialYearId"
+        <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"></p-dropdown><br>
       </div>
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <label>{{'ClientPackage'|translate}}</label><span class="text-danger"> *</span>
+        <p-dropdown [options]="ClientPackagelist" [style]="{'width':'100%'}" formControlName="anFClientPackageId"
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="name" optionValue="id"></p-dropdown><br>
+      </div>
+
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Date'|translate}}</label>
         <input type="date"  class="p-2  w-full"formControlName="date"
@@ -31,50 +29,25 @@
         <input type="date"  class="p-2  w-full"formControlName="dueDate"
           pInputText />
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'CompanyCustomer'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="financialYear" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'ClientPackage'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="financialYear" [style]="{'width':'100%'}" formControlName="anFClientPackageId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'PaymentMethod'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="financialYear" [style]="{'width':'100%'}" formControlName="anFPaymentMethodId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      
+      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'PaidDate'|translate}}</label><br>
         <input type="date" class="p-2  w-full" formControlName="paidDate"
           pInputText />
-      </div> 
+      </div>  -->
+
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'WalletNo'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="text" class="p-2  w-full" placeholder="{{'WalletNo'|translate}}" formControlName="walletNo"
           pInputText /><br>
-        
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'TrxID'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'TrxID'|translate}}" formControlName="trxID"
-          pInputText /><br>
-      </div>
+
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'TotalAmount'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
           pInputText /><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'TotalDiscount'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="number" class="p-2  w-full" placeholder="{{'TotalDiscount'|translate}}" formControlName="totalDiscount"
-          pInputText /><br>
-      </div>
+
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'TotalDiscount'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="number" class="p-2  w-full" placeholder="{{'TotalDiscount'|translate}}" formControlName="totalDiscount"
@@ -82,82 +55,40 @@
       </div>
       
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'AnFVoucherId'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="financialYear" [style]="{'width':'100%'}" formControlName="anFVoucherId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Remarks'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="text" class="p-2  w-full" placeholder="{{'Remarks'|translate}}" formControlName="remarks"
           pInputText /><br>
       </div>
+
       <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="false"
             formControlName="isCancelled">
         <label class="form-check-label" for="flexCheckDefault"> {{'IsCancelled' | translate}} </label>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'CancelReason'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="text" class="p-2  w-full" placeholder="{{'CancelReason'|translate}}" formControlName="cancelReason"
-          pInputText /><br>
-      </div>
-      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
-        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="false"
-            formControlName="isCollected">
-        <label class="form-check-label" for="flexCheckDefault"> {{'IsCollected' | translate}} </label>
-      </div>
-      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
+      
+      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 ">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
             formControlName="isActive">
         <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
       </div>
 
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <div class="">
-          <div class="">
+        <div class="flex justify-center">          
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
               label="{{'SAVE'|translate}}"></p-button>
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
               label="{{'UPDATE'|translate}}"></p-button>&nbsp;
-            <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm"
+            <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm ml-2"
               icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div>  
 </form>
 </p-panel>
 
-<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
-  [resizable]="false">
-  <ng-template pTemplate="header">
-    <h5>{{'ITEMMODEL' | translate}} {{'DETAILS' | translate}}</h5>
-  </ng-template>
-  <div class="modal-body">
-    <div class="formgrid grid">
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'NAME'|translate}} : </label>
-        <p>{{viewInfo.name}}</p>
-      </div>
-      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'CODE'|translate}} : </label>
-        <p>{{viewInfo.code}}</p>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'REMARKS'|translate}} : </label>
-        <p>{{viewInfo.remarks}}</p>
-      </div> -->
-    </div>
-  </div>
-  <ng-template pTemplate="footer">
-    <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
-      styleClass="p-button-text"></p-button>
-  </ng-template>
-</p-dialog>
 
 <p-table #dt [value]="CompanyPayments" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
@@ -180,13 +111,18 @@
     <tr>
       <th pSortableColumn="name" style="text-align: center">
         <div class="vcenter text-center">
-          {{'NAME'|translate}}
+          {{'Company Customer'|translate}}
           <p-sortIcon field="name"></p-sortIcon>
           <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
         </div>
       </th>
-      <!-- <th class="vcenter text-center">{{'CODE'|translate}}</th>
-      <th class="vcenter text-center">{{'REMARKS'|translate}}</th> -->
+      <th class="vcenter text-center">{{'ClientPackage'|translate}}</th>
+      <th class="vcenter text-center">{{'Date'|translate}}</th>
+      <th class="vcenter text-center">{{'DueDate'|translate}}</th>
+      <th class="vcenter text-center">{{'WalletNo'|translate}}</th>
+      <th class="vcenter text-center">{{'TotalAmount'|translate}}</th>
+      <th class="vcenter text-center">{{'TotalDiscount'|translate}}</th>
+      <th class="vcenter text-center">{{'Remarks'|translate}}</th>
       <th class="vcenter text-center">{{'ACTION'|translate}}</th>
     </tr>
     <tr>
@@ -199,15 +135,17 @@
 
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
-      <td>{{r.name}}</td>
-      <!-- <td>{{r.code}}</td>
-      <td>{{r.remarks}}</td> -->
+      <td>{{r.ClientPackage}}</td>
+      <td>{{r.Date}}</td>
+      <td>{{r.DueDate}}</td>
+      <td>{{r.WalletNo}}</td>
+      <td>{{r.TotalAmount}}</td>
+      <td>{{r.TotalDiscount}}</td>
+      <td>{{r.Remarks}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r.id)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
         </p-button>
-        <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-          (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
       </td>
     </tr>
   </ng-template>
@@ -217,6 +155,4 @@
       <td colspan="9">No data found.</td>
     </tr>
   </ng-template>
-
-
 </p-table>
