@@ -36,6 +36,8 @@ export class ClientPackageComponent implements OnInit {
   ngOnInit(): void {
     this.getFrm();
     this.getClientPackage();
+    this.getCompanyPackages();
+    this.getCompanyCustomer();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -65,19 +67,19 @@ export class ClientPackageComponent implements OnInit {
           this.gSvc.postdata("api/ClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
             this.getClientPackage();
-            this.toastrService.success("Bank Information Saved");
+            this.toastrService.success("ClientPackage Saved");
           }, err => {
-            this.toastrService.error("Error! Bank Information Not Saved");
+            this.toastrService.error("Error! ClientPackage Not Saved");
           })
         } else if (this.formId == 1) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/ClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
             this.formId = 0;
             this.getClientPackage();
-            this.toastrService.success("Bank Information Updated");
+            this.toastrService.success("ClientPackage Updated");
 
           }, err => {
-            this.toastrService.error("Error! Bank Information Not updated");
+            this.toastrService.error("Error! ClientPackage Not updated");
           })
         } else {
           this.toastrService.error("System error!");
@@ -94,7 +96,7 @@ export class ClientPackageComponent implements OnInit {
 
   getClientPackage() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/ClientPackage/GetAll", {}).subscribe(res => {
       this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
