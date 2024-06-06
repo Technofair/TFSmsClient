@@ -42,14 +42,14 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      AnFCompanyPackageId: new FormControl(),
-      CmnCompanyCustomerId: new FormControl([Validators.required]),
-      date: new FormControl(new Date(), [Validators.required]),
-      Rate: new FormControl([Validators.required]),
-      Discount: new FormControl(),
-      IsActive:new FormControl(true),
-      IsFixed:new FormControl(true),
-      Amount: new FormControl(),
+      anFCompanyPackageId: new FormControl(),
+      cmnCompanyCustomerId: new FormControl(),
+      date: new FormControl(new Date(), Validators.required),
+      rate: new FormControl(null,Validators.required),
+      discount: new FormControl(null),
+      isActive:new FormControl(true),
+      isFixed:new FormControl(true),
+      amount: new FormControl(null),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -63,27 +63,15 @@ export class ClientPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-          this.gSvc.postdata("api/ClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
+       
+          this.gSvc.postdata("api/TfClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+            this.getFrm();
             this.getClientPackage();
             this.toastrService.success("ClientPackage Saved");
           }, err => {
             this.toastrService.error("Error! ClientPackage Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("api/ClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getClientPackage();
-            this.toastrService.success("ClientPackage Updated");
-
-          }, err => {
-            this.toastrService.error("Error! ClientPackage Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -96,7 +84,7 @@ export class ClientPackageComponent implements OnInit {
 
   getClientPackage() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/ClientPackage/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/TfClientPackage/GetAll", {}).subscribe(res => {
       this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
@@ -105,18 +93,18 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages() {
-    this.progressStatus=false;
     this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
       this.CompanyPackagelist = res;
+     
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
-    this.progressStatus=true;
   }
 
   getCompanyCustomer() {
     this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
       this.CompanyCustomerlist = res;
+      
     }, err => {
       this.toastrService.error("Error! Company list not found ");
     })   
@@ -124,7 +112,6 @@ export class ClientPackageComponent implements OnInit {
 
 
   edit(res: any) {
-    this.formId = 1;
     this.frm.patchValue(res);
   }
 
