@@ -24,13 +24,18 @@ export class ClientPackageComponent implements OnInit {
   formId = 0;
   progressStatus:boolean=true;
   frm!:FormGroup
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
-   
+
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private gSvc: GeneralService,
+    private toastrService: ToastrService,
+    private auth :AuthService) {
   }
 
   ngOnInit(): void {
     this.getFrm();
-    this.getbankas();
+    this.getClientPackage();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -42,6 +47,7 @@ export class ClientPackageComponent implements OnInit {
       Discount: new FormControl(),
       IsActive:new FormControl(true),
       IsFixed:new FormControl(true),
+      Amount: new FormControl(),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -56,9 +62,9 @@ export class ClientPackageComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         if (this.formId == 0) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/ClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getbankas();
+            this.getClientPackage();
             this.toastrService.success("Bank Information Saved");
           }, err => {
             this.toastrService.error("Error! Bank Information Not Saved");
@@ -67,7 +73,7 @@ export class ClientPackageComponent implements OnInit {
           this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
             this.formId = 0;
-            this.getbankas();
+            this.getClientPackage();
             this.toastrService.success("Bank Information Updated");
 
           }, err => {
@@ -86,15 +92,34 @@ export class ClientPackageComponent implements OnInit {
     return false;
   }
 
-  getbankas() {
+  getClientPackage() {
     this.progressStatus=false;
     this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      //this.banks = res;
+      this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
     this.progressStatus=true;
   }
+
+  getCompanyPackages() {
+    this.progressStatus=false;
+    this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
+      this.CompanyPackagelist = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus=true;
+  }
+
+  getCompanyCustomer() {
+    this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+      this.CompanyCustomerlist = res;
+    }, err => {
+      this.toastrService.error("Error! Company list not found ");
+    })   
+  }
+
 
   edit(res: any) {
     this.formId = 1;

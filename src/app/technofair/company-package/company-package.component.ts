@@ -80,8 +80,7 @@ export class CompanyPackageComponent implements OnInit {
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
-    })
-    
+    })    
   }
 
   getCompanyPackages() {
