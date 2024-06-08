@@ -1,40 +1,161 @@
 <div class="grid  mt-2">
-    <div class="col-12 lg:col-4 xl:col-4">
-        <p-card header="Subscriber">
+    <div class="col-12 md:col-12 lg:col-12 xl:col-12 ">
+        <div>
+
+        </div>
+        <div class="">
+
+        </div>
+       
+       
+    </div>
+    <div class="col-12 lg:col-4 xl:col-4 ">
+        <p-card header="Subscriber" class="bg-primary">
             <p class="m-0">
-              Total:700
+                Total: 700
             </p>
             <p class="m-0">
-                Active:700
+                Active: 300
             </p>
             <p class="m-0">
-                InActive:700
+                InActive: 400
             </p>
+            <p>Detais</p>
         </p-card>
+       
     </div>
     <div class="col-12 lg:col-4 xl:col-4">
-        <p-card header="Subscriber">
+        <p-card header="ExpSubscriber">
             <p class="m-0">
-                Lorem ipsum dolor sit amet...
+                Expired: 300
             </p>
+            <p class="m-0">
+                TodayExpired: 400
+            </p>
+            <p class="">Detais</p>
         </p-card>
+       
     </div>
 </div>
 
 <p-accordion [multiple]="true" [activeIndex]="[0]">
-    <p-accordionTab header="Header I">
-        <p>
-            Lorem ipsum dolor sit amet...
-        </p>
+    <p-accordionTab header="Subscriber">
+        <p-table #dt [value]="subscriberList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+  [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email','deviceNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+  [tableStyle]="{'min-width': '70rem'}">
+  <ng-template pTemplate="caption">
+    <div class="flexBox">
+      <span class="p-input-icon-left ml-auto float-right">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Enter Mobile,Email,SubscriberID"/>
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="vcenter text-center" >{{'SL#' | translate}}</th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'CompanyName' | translate}}
+        </div>
+      </th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'TotalSubscriber' | translate}} 
+        </div>
+      </th>
+      <th  style="text-align: center">
+        <div class="vcenter text-center">
+          {{'ActiveSubscriber' | translate}}
+        </div>
+      </th>
+      <th class="vcenter text-center">{{'InactiveSubscriber' | translate}}</th>
+      <th class="vcenter text-center">{{'SLSO' | translate}}</th>
+    </tr>
+    
+  </ng-template>
+
+  <ng-template pTemplate="body" let-r let-i="rowIndex">
+    <tr  class="p-selectable-row">
+      <td>{{i+1}}</td>
+      <td>{{r.companyName}}</td>
+      <td>{{r.totalSubscriber}}</td>
+      <td>{{r.activeSubscriber}}</td>
+      <td>{{r.inactiveSubscriber}}</td>
+      <td>{{r.slso}}</td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="6">No data found.</td>
+    </tr>
+  </ng-template>
+
+</p-table>
     </p-accordionTab>
-    <p-accordionTab header="Header II">
-        <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium...
-        </p>
+    <p-accordionTab header="ExpSubscriber">
+        <p-table #dt [value]="subscriberList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['firstName','lastName','customerNumber','contactNumber','email','deviceNumber']" styleClass="p-datatable-sm p-datatable-gridlines"
+        [tableStyle]="{'min-width': '70rem'}">
+        <ng-template pTemplate="caption">
+          <div class="flexBox">
+            <span class="p-input-icon-left ml-auto float-right">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                placeholder="Enter Mobile,Email,SubscriberID"/>
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="vcenter text-center" >{{'SL#' | translate}}</th>
+            <th  style="text-align: center">
+              <div class="vcenter text-center">
+                {{'CompanyName' | translate}}
+              </div>
+            </th>
+            <th  style="text-align: center">
+              <div class="vcenter text-center">
+                {{'TotalExpired' | translate}} 
+              </div>
+            </th>
+            <th  style="text-align: center">
+              <div class="vcenter text-center">
+                {{'ToDayExp' | translate}}
+              </div>
+            </th>
+            <th class="vcenter text-center">{{'ExpAfter3days' | translate}}</th>
+            <th class="vcenter text-center">{{'SLSO' | translate}}</th>
+          </tr>
+          
+        </ng-template>
+      
+        <ng-template pTemplate="body" let-r let-i="rowIndex">
+          <tr  class="p-selectable-row">
+            <td>{{i+1}}</td>
+            <td>{{r.companyName}}</td>
+            <td>{{r.totalSubscriber}}</td>
+            <td>{{r.activeSubscriber}}</td>
+            <td>{{r.inactiveSubscriber}}</td>
+            <td>{{r.slso}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">No data found.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </p-accordionTab>
-    <p-accordionTab header="Header III">
+    <!-- <p-accordionTab header="Header III">
         <p>
             At vero eos et accusamus et iusto odio dignissimos...
         </p>
-    </p-accordionTab>
+    </p-accordionTab> -->
 </p-accordion>
