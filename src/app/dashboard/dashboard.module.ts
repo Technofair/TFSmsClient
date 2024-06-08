@@ -25,11 +25,16 @@ import { ChartModule } from 'primeng/chart';
 import { SubsDashboardComponent } from './subs-dashboard/subs-dashboard.component';
 import { PanelModule } from 'primeng/panel';
 import { TabViewModule } from 'primeng/tabview';
+import { AccordionModule } from 'primeng/accordion';
+import { CardModule } from 'primeng/card';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 
 @NgModule({
   declarations: [
     MsoDashboardComponent,
-    SubsDashboardComponent
+    SubsDashboardComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +43,7 @@ import { TabViewModule } from 'primeng/tabview';
     FormsModule,ReactiveFormsModule,
     InputTextModule,InputTextareaModule,MultiSelectModule,CascadeSelectModule,
     InputNumberModule,InputMaskModule,DropdownModule,AutoCompleteModule,CalendarModule,ChipsModule,TableModule,ConfirmDialogModule,
-    MessagesModule,DialogModule,CheckboxModule,ChartModule//,
+    MessagesModule,DialogModule,CheckboxModule,ChartModule,AccordionModule,CardModule
 
 
     // , RadioButtonModule
