@@ -24,7 +24,14 @@ export class ClientPaymentComponent implements OnInit {
   progressStatus: boolean = true;
   frm!: FormGroup
   ClientPackagelist: any
-
+  monthList:any = [{
+    month: "january",
+    clientPackage:"ClientPackagelist",
+    quantity:10,
+    rate:40,
+    discount:50,
+    amount:500
+}]
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -37,7 +44,10 @@ export class ClientPaymentComponent implements OnInit {
     this.getFrm();
     this.getCompanyPackages();
     this.getCompanyCustomer();
+    
   }
+
+  
 
   getFrm() {
     this.frm = this.fb.group({
@@ -65,7 +75,9 @@ export class ClientPaymentComponent implements OnInit {
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(this.auth.getUserId()),
       modifiedDate: new FormControl(new Date()),
-      isActive: new FormControl(true)
+      isActive: new FormControl(true),
+      checkbox: new FormControl()
+
     });
   }
 
@@ -114,6 +126,10 @@ export class ClientPaymentComponent implements OnInit {
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
+  }
+
+  selectAll(){
+
   }
 
   edit(res: any) {
