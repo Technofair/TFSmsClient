@@ -78,8 +78,6 @@ export class MobileMessageTemplateComponent {
     })
   }
 
-
-
   getFrequency() { 
     this.gSvc.postdata("Common/CmnFrequency/CmnFrequencies", {}).subscribe(res => {
       this.scpFrequency = res;      
@@ -94,8 +92,6 @@ export class MobileMessageTemplateComponent {
     this.setMessage= messages.bodyTemplate;    
   }
 
-
- 
   save() {
     if (this.mobileMesTemFrm.invalid) return false;
     //console.log(this.frm.value); 
@@ -111,7 +107,7 @@ export class MobileMessageTemplateComponent {
           this.mobileMesTemFrm.controls['modifiedBy'].setValue(this.auth.getUserId());
         }
         this.mobileMesTemFrm.controls['cmnCompanyId'].setValue(this.auth.getCompany());
-        this.gSvc.postdata("api/CmnMobileMessageTamplate/Add", JSON.stringify(this.mobileMesTemFrm.value)).subscribe(res => {
+        this.gSvc.postdata("api/CmnMobileMessageTemplate/Add", JSON.stringify(this.mobileMesTemFrm.value)).subscribe(res => {
           this.toastrService.success("Saved success");
           this.createMobileMesTemFrm();
           this.messageTemplates();
@@ -126,7 +122,7 @@ export class MobileMessageTemplateComponent {
     return false;
   }
  messageTemplates(){
-  this.gSvc.getdata("api/CmnMobileMessageTamplate/GetAllMessageTemp").subscribe(res => {
+  this.gSvc.getdata("api/CmnMobileMessageTemplate/GetAllMessageTemp").subscribe(res => {
     this.list=res;
     //this.join(res);
   }, err => {
