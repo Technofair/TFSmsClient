@@ -39,6 +39,8 @@ export class CompanyPackageComponent implements OnInit {
       anFCompanyPackageTypeId:new FormControl(Validators.required),
       startDate: new FormControl(),
       endDate: new FormControl(),
+      minSubscriber:new FormControl(),
+      maxSubscriber:new FormControl(),
       rate:new FormControl(),
       discount:new FormControl(),
       remarks:new FormControl(),
