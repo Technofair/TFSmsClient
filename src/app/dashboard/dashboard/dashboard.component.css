@@ -1,0 +1,43 @@
+.dashboardcard{
+    height: 200px;
+}
+.bg-red{
+    background-color: red;
+}
+.bg-green{
+    background-color: green;
+}
+.bg-greenyellow{
+    background-color: greenyellow;
+}
+.bg-gold{
+    background-color: gold;
+}
+.bg-goldenrod{
+    background-color: goldenrod;
+}
+.bg-tomato{
+    background-color:Tomato;
+}
+.bg-orange{
+    background-color:Orange;
+}
+.bg-dodgerBlue{
+    background-color:DodgerBlue;
+}
+.bg-mediumSeaGreen{
+    background-color:MediumSeaGreen;
+}
+.bg-Gray{
+    background-color:Gray;
+}
+.bg-Gray{
+    background-color:SlateBlue;
+}
+.bg-LightGray{
+    background-color:LightGray;
+}
+.flex-row-reverse{
+    display: flex;
+     flex-direction: row-reverse;
+}

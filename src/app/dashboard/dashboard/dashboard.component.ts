@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     isTwelveHrFormat: boolean = false;
     test: any;
     toastrService: any;
-
+    activeIn:any;
     isMobile: boolean = false;
 
     constructor(
@@ -183,7 +183,9 @@ export class DashboardComponent implements OnInit {
     //         this.isMobileView = false;
     //     }
     // }
-
+    cloupsOn(){
+        this.activeIn=2;
+    }
     @HostListener('window:resize', [])
     onResize() {
         if (window.screen.width < 541) {
