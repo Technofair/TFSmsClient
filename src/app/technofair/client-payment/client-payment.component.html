@@ -6,28 +6,25 @@
   <input type="hidden" formControlName="id" value="0">
   <div class="card">
        <div class="formgrid grid">      
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"></p-dropdown><br>
       </div>
 
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'IssueDate'|translate}}</label>
         <input type="date"  class="p-2  w-full"formControlName="date"
           pInputText />
       </div>
 
 
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'DueDate'|translate}}</label>
         <input type="date"  class="p-2  w-full"formControlName="dueDate"
           pInputText />
       </div>
-
-     
-        <div class="formgrid grid">
           <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <p-table #dt [value]="monthList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
               [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
@@ -58,16 +55,26 @@
                     <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}" month="isChecked"
                       id="isChecked">
                   </td> 
-                  <td>{{ monthList.month}}</td>
                   <td>
-                    <p-dropdown [options]="ClientPackagelist" [style]="{'width':'100%'}" formControlName="anFClientPackageId"
-                    [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-                    optionLabel="name" optionValue="id"></p-dropdown>
+                    {{ monthList.month}}
+                  </td>
+                  <td>
+                   
+                    {{ monthList.clientPackage}}
                   </td>
                   <!-- <td>{{monthList.clientPackage}}</td> -->
-                  <td>{{ monthList.quantity }}</td>
-                  <td>{{ monthList.rate}}</td>
-                  <td>{{ monthList.discount}}</td>
+                  <td>
+                    <input type="text" [(ngModel)]="monthList.quantity" [ngModelOptions]="{standalone: true}" name="quantity"
+                    >
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="monthList.rate" [ngModelOptions]="{standalone: true}" name="rate"
+                    >
+                  </td>
+                  <td>{{ monthList.discount}}
+                    <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}" name="discount"
+                    >
+                  </td>
                   <td>{{ monthList.amount}}</td>
                 </tr>               
               </ng-template>
@@ -80,7 +87,7 @@
             <hr style="width:100%;text-align:left;margin-left:0; border: solid black;">
             <label>{{'Due'|translate}}</label>
           </div>
-        </div>
+        
 
         <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
           <label>{{'NetAmount'|translate}}</label><span class="text-danger"> *</span><br>
