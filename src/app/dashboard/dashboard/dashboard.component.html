@@ -17,45 +17,27 @@
             <div class="flex-row-reverse">
               <button class="btn btn-success" (onclick)="cloupsOn()" >Details</button>
             </div>
-          </div>
+        </div>
     </div>
-    <div  class="card dashboardcard bg-mediumSeaGreen">
-      <h4>{{'Subscriber'|translate}}</h4>
-        <p class="m-0">
-          <i class="pi pi-users" style="font-size: 1rem; margin-right:5px;"></i>
-          <span style="font-weight: bold;">Total: </span><span> 700</span>
-        </p>
-        <div>
-         <i class="pi pi-check" style="font-size: 1rem; margin-right:5px;"></i>
-        <span style="color: aqua; font-weight: bold;">Active: </span><span> 300</span>
-        </div>
-        <div>
-         <i class="pi pi-times" style="font-size: 1rem; margin-right:5px;"></i>
-         <span style="color: rgb(255, 0, 0); font-weight: bold;">InActive: </span><span> 400</span> 
-        </div>
-        <div class="flex-row-reverse">
-          <button class="btn btn-success" (onclick)="cloupsOn()" >Details</button>
-        </div>
-      </div>
-   </div>
-  </div>
     <div class="col-12 lg:col-4 xl:col-4 ">
-      <div  class="card dashboardcard bg-mediumSeaGreen">
-        <h4>{{'Subscriber'|translate}}</h4>
+      <div  class="card dashboardcard bg-dodgerBlue">
+        <h4>{{'ExpiredSubscriber'|translate}}</h4>
           <p class="m-0">
-            <i class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
-            <span style="color: aqua;">Total:</span>700
+            <i class="pi pi-users" style="font-size: 1rem; margin-right:5px;"></i>
+            <span style="font-weight: bold;">Expired: </span><span> 700</span>
           </p>
           <div>
-          <span style="color: aqua;">Active:</span><span>300</span>
+           <i class="pi pi-check" style="font-size: 1rem; margin-right:5px;"></i>
+          <span style="color: aqua; font-weight: bold;">ToDayExp: </span><span> 300</span>
           </div>
           <div>
-           <span>InActive:</span><span>400</span> 
+           <i class="pi pi-times" style="font-size: 1rem; margin-right:5px;"></i>
+           <span style="color: rgb(255, 0, 0); font-weight: bold;">InActive: </span><span> 400</span> 
           </div>
           <div class="flex-row-reverse">
             <button class="btn btn-success" (onclick)="cloupsOn()" >Details</button>
           </div>
-        </div>
+      </div>
   </div>
 </div>
 
