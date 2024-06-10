@@ -31,7 +31,9 @@ import { UserRolesMappingComponent } from './user-roles-mapping/user-roles-mappi
 import { BackgroundServiceComponent } from './background-service/background-service.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { BackupServiceComponent } from './backup/backup.component';
-
+import { ProgressBarModule } from 'primeng/progressbar';
+// For dynamic progressbar demo
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,7 @@ import { BackupServiceComponent } from './backup/backup.component';
     InputTextModule, InputTextareaModule, MultiSelectModule, CascadeSelectModule,
     InputNumberModule, InputMaskModule, DropdownModule, AutoCompleteModule, CalendarModule, ChipsModule, TableModule,
     UserManagementRoutingModule, ConfirmDialogModule,
-    MessagesModule, DialogModule, CheckboxModule, PanelModule
+    MessagesModule, DialogModule, CheckboxModule, PanelModule,ToastModule,ProgressBarModule
   ]
 })
 export class UserManagementModule { }

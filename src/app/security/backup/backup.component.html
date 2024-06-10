@@ -7,6 +7,10 @@
       <p-button *ngIf="!isOn" (click)="getBackup()" styleClass="p-button-success p-button-lg" type="button"
          label="{{'DB Backup'|translate}}"></p-button>
     </div>
+    
+    <div class="field col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8 pt-5">
+      <p-progressBar mode="indeterminate" [style]="{ height: '6px' }" />
+    </div>
     <!-- <div class="field col-12 sm:col-8 md:col-8 lg:col-8 xl:col-8 p-0">
       <p style="float: right; margin-right: 4px; font-weight: bold; font-size: xx-large;">Service Status: <span class="text-success"
           *ngIf="isOn">Running</span> <span class="text-danger" *ngIf="!isOn">Stopped</span> </p>
