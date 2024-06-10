@@ -24,6 +24,7 @@ export class ClientPaymentComponent implements OnInit {
   progressStatus: boolean = true;
   frm!: FormGroup
   ClientPackagelist: any
+  isCheck :boolean=true;
   monthList:any = [{
     month: "january",
     clientPackage:"ClientPackagelist",
@@ -32,6 +33,7 @@ export class ClientPaymentComponent implements OnInit {
     discount:50,
     amount:500
 }]
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -129,7 +131,14 @@ export class ClientPaymentComponent implements OnInit {
   }
 
   selectAll(){
-
+    if(this.isCheck==true){
+      this.isCheck=false;
+     this.monthList.forEach((x: { isActive: boolean; }) => (x.isActive = true));
+   }else{
+     this.isCheck=true;
+     this.monthList.forEach((x: { isActive: boolean; }) => (x.isActive = false));
+     
+   }
   }
 
   edit(res: any) {

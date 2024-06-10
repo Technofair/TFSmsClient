@@ -51,7 +51,7 @@
               </ng-template>
               <ng-template pTemplate="body" let-monthList let-rowIndex="rowIndex">
                 <tr>
-                   <td>
+                  <td>
                     <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}" month="isChecked"
                       id="isChecked">
                   </td> 
@@ -59,10 +59,9 @@
                     {{ monthList.month}}
                   </td>
                   <td>
-                   
                     {{ monthList.clientPackage}}
                   </td>
-                  <!-- <td>{{monthList.clientPackage}}</td> -->
+                  <!--<td>{{monthList.clientPackage}}</td>-->
                   <td>
                     <input type="text" [(ngModel)]="monthList.quantity" [ngModelOptions]="{standalone: true}" name="quantity"
                     >
@@ -71,11 +70,13 @@
                     <input type="text" [(ngModel)]="monthList.rate" [ngModelOptions]="{standalone: true}" name="rate"
                     >
                   </td>
-                  <td>{{ monthList.discount}}
-                    <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}" name="discount"
+                  <td>
+                   <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}" name="discount"
                     >
                   </td>
-                  <td>{{ monthList.amount}}</td>
+                  <td>
+                    {{ monthList.amount}}
+                  </td>
                 </tr>               
               </ng-template>
             </p-table>                        
@@ -111,9 +112,6 @@
           pInputText /><br>
       </div>
       
-
-      
-
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="flex justify-center">          
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
@@ -130,7 +128,6 @@
     </div>  
 </form>
 </p-panel>
-
 
 <p-table #dt [value]="CompanyPayments" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
