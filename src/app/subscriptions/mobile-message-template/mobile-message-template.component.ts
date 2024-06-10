@@ -56,8 +56,8 @@ export class MobileMessageTemplateComponent {
     this.mobileMesTemFrm = this.fb.group({
       id: new FormControl(0),
       scpMessageTypeId: new FormControl(null,Validators.required),
-      timeframe:new FormControl(),
-      cmnFrequencyId:new FormControl(null,Validators.required),
+      timeframe:new FormControl("",Validators.required),
+      cmnFrequencyId:new FormControl(),
       cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
       serviceInitiate:new FormControl(""),
       lang:new FormControl(''),
