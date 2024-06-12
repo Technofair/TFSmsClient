@@ -3,12 +3,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { Router } from '@angular/router';
 @Component({
-    selector: 'app-mso-dashboard',
+    selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-    name = 'Angular 4';
+    name = 'Angular 14';
     date: any;
     hours: any;
     minutes: any;
