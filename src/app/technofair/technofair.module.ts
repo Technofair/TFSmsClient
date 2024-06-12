@@ -38,6 +38,7 @@ import { CompanyCollectionComponent } from './company-collection/company-collect
 import { CompanyPackageComponent } from './company-package/company-package.component';
 import { ClientPaymentComponent } from './client-payment/client-payment.component';
 import { CompanyPackageTypeComponent } from './company-package-type/company-package-type.componet';
+import { CustomerServerInfoComponent } from './customer-server-info/customer-server-info.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CompanyPackageTypeComponent } from './company-package-type/company-pack
     CompanyCollectionComponent,
     CompanyPackageComponent,
     ClientPaymentComponent,
-    CompanyPackageTypeComponent
+    CompanyPackageTypeComponent,
+    CustomerServerInfoComponent
   ],
   exports: [
   ],

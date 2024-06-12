@@ -730,6 +730,11 @@
     "TotalDiscount": "মোট ডিসকাউন্ট",
     "IsCancelled": "বাতিল হয়েছে?",
     "IssueDate": "প্রদানের তারিখ",
+    "Company Server Info": "কোম্পানি সার্ভার তথ্য",
+    "ServerIP": "সার্ভার আইপি",
+    "PortNo": "পোর্ট নং",
+    "PortNo1": "পোর্ট নং 1",
+    "Device Serial Number": "ডিভাইস সিরিয়াল নম্বর",
     "IsFixed": "সংশোধন করা হয়েছে"
 }
 
