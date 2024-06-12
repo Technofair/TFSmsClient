@@ -2,7 +2,7 @@
 <p-panel>
     <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ClientLogin' |
             translate}}</span></ng-template>
-<p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="100" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['fastName','name', 'code','contactPerson','contactNo','email','address']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
@@ -43,8 +43,13 @@
             </th>
             <!-- <th class="vcenter text-center">{{'CONTACTPERSON' | translate}}</th> -->
             <!-- <th class="vcenter text-center">{{'CONTACTNO' | translate}}</th> -->
+<<<<<<< HEAD
             <th class="vcenter text-center">{{'UserId' | translate}}</th>
             <!-- <th class="vcenter text-center">{{'ADDRESS' | translate}}</th> -->
+=======
+            <th class="vcenter text-center">{{'USERID' | translate}}</th>
+            <th class="vcenter text-center">{{'BALANCE' | translate}}</th>
+>>>>>>> e68cf5f4b58810c25a6d148bdee12891577b1585
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
         <tr>
@@ -62,7 +67,11 @@
             <!-- <td>{{r.contactPerson}}</td> -->
             <!-- <td>{{r.contactNo}}</td> -->
             <td>{{r.loginID}}</td>
+<<<<<<< HEAD
             <!-- <td>{{r.address}}</td> -->
+=======
+            <td class="vcenter text-right">{{r.balance}}</td>
+>>>>>>> e68cf5f4b58810c25a6d148bdee12891577b1585
             <td class="vcenter text-center">
                 <p-button type="button" (click)="showClient(r)"  styleClass="p-button-default p-button-sm px-2 py-1" icon="pi pi-window-maximize"
                     data-toggle="tooltip" title="{{'Go' | translate}}"></p-button>
