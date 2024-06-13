@@ -27,6 +27,9 @@ export class ScpUserRechargeComponent {
   organizationList:any;
   progressStatus: boolean = true;
   users:any;
+
+  companyBalance: any;
+
   constructor(private fb: FormBuilder,
      private router: Router,
      private confirmationService: ConfirmationService,
@@ -42,6 +45,7 @@ export class ScpUserRechargeComponent {
     this.getfrm();
     this.getUserDebit();
     this.getSecUserType();
+    this.getUserRechargeBalance();
   }
 getfrm(){
   this.frm = new FormGroup({
@@ -53,6 +57,19 @@ getfrm(){
     createdDate: new FormControl(new Date()),
   });
 }
+
+
+  getUserRechargeBalance() {
+            this.gSvc.postdata("api/ClientRecharge/GetClientRechargeBalanceByClientId_Asad?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+            if (res != null) {
+                this.companyBalance = res.balance;
+            }
+    }, err => {
+      this.toastrService.error("Error! Data Not Found");
+    })
+  }
+
+
   save() {
    // this.progressStatus = false;
     if (this.frm.invalid) return false;
@@ -86,7 +103,7 @@ getfrm(){
     return false;
   }
   getUserDebit() { 
-      this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel=3", {}).subscribe(res => {
+      this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
       //this.gSvc.postdata("api/ScpUserRecharge/GetAll", {}).subscribe(res => {
       this.list = res;
       this.progressStatus = true;
@@ -110,7 +127,7 @@ getfrm(){
     this.viewInfo = res;
   }
   getSecUserType() {
-    this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserLevel?cmnCompanyId=" + this.auth.getCompany() + "&userLevel=3", {}).subscribe((res: any) => {
+    this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserLevel?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe((res: any) => {
       
       this.users= res;
     }, err => {

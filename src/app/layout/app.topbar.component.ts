@@ -117,10 +117,22 @@ export class AppTopBarComponent {
     }
 
     //@ViewChild('balfff') _bal!: ElementRef;
+
+
+    //New: 13.036.2024
+    // getBalance() {
+    //     this.gSvc.getdata("api/ScpUserRecharge/GetScpUserRechargeBalanceByUserId?secUserId=" + this.auth.getUserId()).subscribe((res: any) => {
+    //         if (res != null) {
+    //             this.comBalance = res;
+    //         }
+    //     }, err => {
+    //       this.toastrService.error("Error! Data Not Found");
+    //     })
+    //   }
+
+    //Old: 13.06.2024
     getBalance() {
-        debugger
-        this.gSvc.postdata("api/ClientRecharge/GetLastRechargeByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
-            debugger
+            this.gSvc.postdata("api/ClientRecharge/GetLastRechargeByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
             if (res != null) {
                 this.comBalance = res.balance;
             }
@@ -128,6 +140,8 @@ export class AppTopBarComponent {
             //this.toastrService.error("Error! Brand not found");
         })
     }
+
+    
     changeLange(obj: any) {
         this.getBalance();
         let len = obj.value
