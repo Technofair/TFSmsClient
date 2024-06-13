@@ -47,19 +47,19 @@ export class CustomerServerInfoComponent {
  initialize(){
   this.frm = new FormGroup({
     id: new FormControl(0),
-    customerName: new FormControl([Validators.required]),
+    customerName: new FormControl(Validators.required),
     serverIP: new FormControl("",[Validators.required]),
-    portNo: new FormControl(),
+    portNo: new FormControl(Validators.required),
     prtNo1: new FormControl(),
     userID: new FormControl("",[Validators.required]),
-    password: new FormControl(""),
+    password: new FormControl("",[Validators.required]),
     token: new FormControl(""),
     deviceId: new FormControl(""),
     deviceSerialNumber: new FormControl(""),
     serverType: new FormControl(""),
     isActive: new FormControl(true,[Validators.required]),
-    createdBy: new FormControl(),
-    createdDate: new FormControl(),
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date()),
     modifiedBy: new FormControl(this.auth.getUserId())
   })
 
