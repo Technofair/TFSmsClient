@@ -3,12 +3,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GeneralService } from 'src/app/services/general.service';
 import { Router } from '@angular/router';
 @Component({
-    selector: 'app-dashboard',
+    selector: 'app-mso-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-    name = 'Angular 14';
+    name = 'Angular 4';
     date: any;
     hours: any;
     minutes: any;
@@ -108,25 +108,6 @@ export class DashboardComponent implements OnInit {
     }
 
 
-    // getSubscriberList() {
-    //     debugger
-    //     var active: any[];
-    //     this.gSvc.postdata("api/Subscriber/GetDeviceStatusByParameter", { companyId: this.auth.getCompany() }).subscribe(
-    //         (res) => {
-    //             this.subscriberList = res;
-    //             //this.activeSubscriber= this.subscriberList.forEach((list: {deviceStatus: string;})=>{list.deviceStatus=='true'});
-    //             //this.inactiveSubscriber= this.subscriberList.forEach((list: {deviceStatus: string;})=>{list.deviceStatus=='false'});
-    //             this.inactiveSubscriber = this.subscriberList.filter(x => x.deviceStatus == false);
-    //             this.activeSubscriber = this.subscriberList.filter(x => x.deviceStatus == true);
-    //             this.totalSubscribers = this.subscriberList.length; // Set the total subscriber count
-    //             this.newSubscriber=[];
-    //         },
-    //         (err) => {
-    //             this.toastrService.error("Error fetching subscriber list");
-    //         }
-    //     );
-    // }
-
     totalSubscriber: any = 0;
     getSubscriberList() {
         debugger
@@ -175,14 +156,7 @@ export class DashboardComponent implements OnInit {
         location.reload();
     }
 
-    // onResize(ev: any) {
-    //     debugger;
-    //     if (window.screen.width < 531) { // 768px portrait
-    //         this.isMobileView = true;
-    //     } else {
-    //         this.isMobileView = false;
-    //     }
-    // }
+    
     cloupsOn(){
         this.activeIn=2;
     }

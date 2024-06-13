@@ -578,5 +578,11 @@
     "DueDate": "Due Date",
     "PaidDate": "Paid Date",
     "TotalDiscount": "Total Discount",
+    "Company Server Info": "Company Server Info",
+    "ServerIP": "ServerIP",
+    "PortNo": "PortNo",
+    "PortNo1": "PortNo1",
+    "Server Type": "Server Type",
+    "Device Serial Number": "Device Serial Number",
     "AppointedCompany": "Appointed Company?"
 }
