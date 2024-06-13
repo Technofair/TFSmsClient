@@ -734,6 +734,7 @@
     "ServerIP": "সার্ভার আইপি",
     "PortNo": "পোর্ট নং",
     "PortNo1": "পোর্ট নং 1",
+    "Server Type": "সার্ভারের ধরন",
     "Device Serial Number": "ডিভাইস সিরিয়াল নম্বর",
     "IsFixed": "সংশোধন করা হয়েছে"
 }

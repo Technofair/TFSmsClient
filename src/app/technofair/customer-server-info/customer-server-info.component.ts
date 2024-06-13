@@ -21,6 +21,10 @@ export class CustomerServerInfoComponent {
   id: any;
   frm!: FormGroup;  
   util: any;
+  serverTypelist:any = [
+    {servername: "Application"},
+    {servername: "DB"}
+  ];
   
   constructor(
     private fb: FormBuilder
@@ -52,6 +56,7 @@ export class CustomerServerInfoComponent {
     token: new FormControl(""),
     deviceId: new FormControl(""),
     deviceSerialNumber: new FormControl(""),
+    serverType: new FormControl(""),
     isActive: new FormControl(true,[Validators.required]),
     createdBy: new FormControl(),
     createdDate: new FormControl(),

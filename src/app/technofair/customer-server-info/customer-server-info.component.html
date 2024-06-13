@@ -39,6 +39,13 @@
                 </div>
 
                 <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Server Type'|translate}}</label><span class="text-danger"> *</span>
+                    <p-dropdown [options]="serverTypelist" [style]="{'width':'100%'}" formControlName="serverType"
+                      [filter]="true" filterBy="tify78uijtle" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+                      optionLabel="servername" optionValue="id" placeholder="Select a Server"></p-dropdown><br>
+                  </div>
+
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                     <label>{{'USERID'|translate}}</label><span class="text-danger"> *</span>
                     <input type="text" formControlName="userID" class="form-control" emailChars />
                 </div>
