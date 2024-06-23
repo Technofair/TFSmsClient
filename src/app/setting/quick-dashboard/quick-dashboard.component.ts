@@ -137,7 +137,7 @@ export class QuickDashboardComponent implements OnInit {
               this.auth.setCompanyTypeShortName(result.companyTypeShortName);
               
               //Start: Commented For insert/update tracking by Logged in User
-              //this.auth.setUserId(result.userId);
+              this.auth.setUserId(result.userId);
 
               this.auth.setUserName(result.userName);
               this.auth.setUserLevel(result.userLevel);

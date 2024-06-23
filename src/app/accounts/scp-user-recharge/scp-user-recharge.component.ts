@@ -19,7 +19,9 @@ import { Console } from 'console';
 })
 export class ScpUserRechargeComponent {
   list: any;
-  displayModal: boolean = false;
+  userRechargeBalance: any;
+  displayUserRecharge: boolean = false;
+  displayUserRechargeRefund: boolean = false;
   viewInfo: any = {};
   formId = 0;
   frm!: FormGroup;
@@ -28,7 +30,8 @@ export class ScpUserRechargeComponent {
   progressStatus: boolean = true;
   users:any;
 
-  companyBalance: any;
+  clientAvailableBalance: any;
+  clientCurrentBalance: any;
 
   constructor(private fb: FormBuilder,
      private router: Router,
@@ -43,10 +46,13 @@ export class ScpUserRechargeComponent {
   ngOnInit(): void {
     debugger
     this.getfrm();
-    this.getUserDebit();
-    this.getSecUserType();
+    //this.getUserRecharge();
+    this.getSecUser();
+    this.getClientAvailableRechargeBalance();
+    this.getClientCurrentRechargeBalance();
     this.getUserRechargeBalance();
   }
+
 getfrm(){
   this.frm = new FormGroup({
     id: new FormControl(0),
@@ -58,16 +64,34 @@ getfrm(){
   });
 }
 
+getSecUser() {
+  this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserLevel?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe((res: any) => {
+    
+    this.users= res;
+  }, err => {
+    this.toastrService.error("Error! Data Not Found");
+  })
+}
 
-  getUserRechargeBalance() {
-            this.gSvc.postdata("api/ClientRecharge/GetClientRechargeBalanceByClientId_Asad?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+getClientAvailableRechargeBalance() {
+            this.gSvc.postdata("api/ClientRecharge/GetScpClientAvailableRechargeBalanceByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
             if (res != null) {
-                this.companyBalance = res.balance;
+                this.clientAvailableBalance = res.balance;
             }
     }, err => {
       this.toastrService.error("Error! Data Not Found");
     })
   }
+
+  getClientCurrentRechargeBalance() {
+            this.gSvc.postdata("api/ClientRecharge/GetLastRechargeByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+            if (res != null) {
+                this.clientCurrentBalance = res.balance;
+            }
+        }, err => {
+            //this.toastrService.error("Error! Brand not found");
+        })
+    }
 
 
   save() {
@@ -84,7 +108,9 @@ getfrm(){
           if(res.success){
             this.toastrService.success(res.message);
             this.balService.updateCurrentBalance(0);
-            this.getUserDebit();
+            this.getClientAvailableRechargeBalance();
+            this.getClientCurrentRechargeBalance();
+            this.getUserRecharge();
             this.getfrm();
           }
           else{
@@ -102,9 +128,20 @@ getfrm(){
     })
     return false;
   }
-  getUserDebit() { 
+
+  
+  getUserRechargeBalance() { 
+    this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeBalanceByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
+    this.userRechargeBalance = res;
+    this.progressStatus = true;
+  }, err => {
+    this.progressStatus = true;
+    this.toastrService.error("List not found");
+  })
+}
+
+  getUserRecharge() { 
       this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
-      //this.gSvc.postdata("api/ScpUserRecharge/GetAll", {}).subscribe(res => {
       this.list = res;
       this.progressStatus = true;
     }, err => {
@@ -113,28 +150,39 @@ getfrm(){
     })
   }
 
+  //Need Working
+  
 
-  edit(res: any) {
-    debugger;    
-    this.getSecUserType();
-    this.frm.patchValue(res);
-    console.log(res);
-  }
+  // edit(res: any) {
+  //   debugger;    
+  //   this.getSecUserType();
+  //   this.frm.patchValue(res);
+  //   console.log(res);
+  // }
 
-  showModalDialog(res: any) {
-    this.displayModal = true;
+  showUserRechargeModalDialog(res: any) {
+    this.displayUserRecharge = true;
+    this.getUserRechargeByUserId(res.secUserId);
     this.reset();
     this.viewInfo = res;
   }
-  getSecUserType() {
-    this.gSvc.postdata("Security/User/GetSecUsersByCompanyAndUserLevel?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe((res: any) => {
-      
-      this.users= res;
-    }, err => {
-      this.toastrService.error("Error! Data Not Found");
-    })
+  showUserRechargeBalanceModalDialog(res: any) {
+    this.displayUserRechargeRefund = true;
+    this.reset();
+    this.viewInfo = res;
   }
- 
+
+  getUserRechargeByUserId(secUserId: any) { 
+    this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeUserId?secUserId=" + secUserId, {}).subscribe(res => {
+    this.list = res;
+    this.progressStatus = true;
+  }, err => {
+    this.progressStatus = true;
+    this.toastrService.error("List not found");
+  })
+}
+
+   
   reset() {
     this.frm.reset();
     this.frm.controls['id'].setValue(0);

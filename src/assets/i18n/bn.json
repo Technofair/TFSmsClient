@@ -112,6 +112,8 @@
   "HEADNAME": "হেড নাম",
   "HEADTYPE": "হেড টাইপ",
   "BALANCE": "ব্যালেন্স",
+  "AvailableBalance": "ব্যবহারযোগ্য ব্যালেন্স",
+  "CurrentBalance": "বর্তমান ব্যালেন্স",
   "DIGITALMONEY": "ডিজিটাল মানি",
   "CHARGECONFIG": "চার্জ কনফিগ",
   "HEAD": "হেড",

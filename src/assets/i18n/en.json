@@ -114,6 +114,8 @@
   "HEADNAME": "Head Name",
   "HEADTYPE": "Head Type",
   "BALANCE": "Balance",
+  "AvailableBalance": "Available Balance",
+  "CurrentBalance": "Current Balance",
   "DIGITALMONEY": "Digital Money",
   "CHARGECONFIG": "Charge Amount",
   "HEAD": "Head",

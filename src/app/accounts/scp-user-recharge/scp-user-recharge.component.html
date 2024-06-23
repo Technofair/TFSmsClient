@@ -6,9 +6,15 @@
         translate}}</span>
 
     <div class="col-10 sm:col-10 md:col-10 lg:col-10 xl:col-10 float_right">
-        <span class="text-primary font-semibold text-xl" >{{'BALANCE' |
-        translate}} :</span>
-        <span class="text-primary font-semibold text-xl"> {{companyBalance}}</span>
+
+
+        <span class="text-primary font-semibold text-xl" >{{'CurrentBalance' |
+            translate}}: </span><pre>&nbsp;</pre>
+        <span class="text-primary font-semibold text-xl"> {{clientCurrentBalance}}</span>
+        <pre>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</pre>
+        <span class="text-primary font-semibold text-xl" >{{'AvailableBalance' |
+        translate}} :</span> <pre>&nbsp;</pre>
+        <span class="text-primary font-semibold text-xl"> {{clientAvailableBalance}}</span>
     </div>
     </ng-template>
 
@@ -52,29 +58,69 @@
     </form>
 </p-panel>
 
-<p-dialog header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+
+<p-table #dt [value]="userRechargeBalance" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'SL#' | translate}}</th>
+            <th class="vcenter text-center">{{'NAME' | translate}}</th>
+            <th class="vcenter text-center">{{'BALANCE' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+        </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r let-index="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{ index + 1}}</td>
+            <td>{{r.employeeName}}</td>
+            <td>{{r.balance}}</td>
+            <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="showUserRechargeBalanceModalDialog(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="showUserRechargeModalDialog(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<p-dialog header="Header" [(visible)]="displayUserRechargeRefund" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'DAMAGETYPE' | translate}} {{'DETAILS' | translate}}</h5>
+        <h5>{{'UserRechargeRefund' | translate}} </h5>
     </ng-template>
+
     <div class="modal-body">
         <div class="formgrid grid">
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'NAME' | translate}} : </label>
-                <p>{{viewInfo.name}}</p>
-            </div>
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'DESCRIPTION' | translate}} : </label>
-                <p>{{viewInfo.description}}</p>
-            </div>
-        </div>
-    </div>
-    <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
-            styleClass="p-button-text"></p-button>
-    </ng-template>
-</p-dialog>
-<p-table #dt [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            
+            <p-table #dt [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
@@ -98,7 +144,7 @@
             <th class="vcenter text-center">{{'NAME' | translate}}</th>
             <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
             <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
-            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
+            <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
         </tr>
         <tr>
             <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
@@ -107,18 +153,16 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-r>
+    <ng-template pTemplate="body" let-r let-index="rowIndex">
         <tr class="p-selectable-row">
-            <td>{{r.id}}</td>
+            <td>{{ index + 1}}</td>
             <td>{{r.employeeName}}</td>
             <td>{{r.amount}}</td>
             <td>{{r.remarks}}</td>
-            <td class="vcenter text-center">
+            <!-- <td class="vcenter text-center">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
-                <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-                    (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
-            </td>
+            </td> -->
         </tr>
     </ng-template>
 
@@ -129,3 +173,84 @@
     </ng-template>
 
 </p-table>
+
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayUserRecharge=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Header" [(visible)]="displayUserRecharge" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'UserRecharge' | translate}} </h5>
+    </ng-template>
+
+    <div class="modal-body">
+        <div class="formgrid grid">
+            
+            <p-table #dt [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [tableStyle]="{'min-width': '50rem'}">
+
+    <ng-template pTemplate="caption">
+        <div class="flex">
+            <!-- <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+                (click)="clear(dt)"></button> -->
+            <span class="p-input-icon-left ml-auto float-right">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                    placeholder="Search keyword" />
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th>{{'SL#' | translate}}</th>
+            <th class="vcenter text-center">{{'NAME' | translate}}</th>
+            <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
+            <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+            <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
+        </tr>
+        <tr>
+            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                <p-progressSpinner></p-progressSpinner>
+            </div>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-r let-index="rowIndex">
+        <tr class="p-selectable-row">
+            <td>{{ index + 1}}</td>
+            <td>{{r.employeeName}}</td>
+            <td>{{r.amount}}</td>
+            <td>{{r.remarks}}</td>
+            <!-- <td class="vcenter text-center">
+                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+            </td> -->
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">No data found.</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+        </div>
+    </div>
+
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="displayUserRecharge=false" label="{{'CLOSE' | translate}}"
+            styleClass="p-button-text"></p-button>
+    </ng-template>
+</p-dialog>
