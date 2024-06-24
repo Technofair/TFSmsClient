@@ -151,6 +151,7 @@ export class PackageRenewComponent implements OnInit {
       value: new FormControl([Validators.required, Validators.min(0)]),
       expDate: new FormControl(),
       isActive: new FormControl(true),
+      rechargeBy: new FormControl(),
       createdBy: new FormControl(),
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(),
@@ -264,6 +265,7 @@ export class PackageRenewComponent implements OnInit {
       return;
     }
 
+    this.frmPackageRenew.controls['rechargeBy'].setValue(this.auth.getUserId());
     this.frmPackageRenew.controls['createdBy'].setValue(this.auth.getUserId());
     this.frmPackageRenew.controls['createdDate'].setValue(new Date());
     this.frmPackageRenew.controls['endDate'].setValue(new Date());

@@ -80,6 +80,7 @@ export class PackageAssignComponent implements OnInit {
       isFree: new FormControl(),
       freeDays: new FormControl(),
       isActive: new FormControl(true),
+      rechargeBy: new FormControl(),
       createdBy: new FormControl(),
       createdDate: new FormControl(),
       modifiedBy: new FormControl(),
@@ -297,6 +298,8 @@ export class PackageAssignComponent implements OnInit {
       accept: () => {
 
         if (this.frm.controls['id'].value == 0) {
+          
+          this.frm.controls['rechargeBy'].setValue(this.auth.getUserId());
           this.frm.controls['createdBy'].setValue(this.auth.getUserId());
           this.frm.controls['createdDate'].setValue(new Date());
         } else if (this.frm.controls['id'].value > 0) {
@@ -320,15 +323,14 @@ export class PackageAssignComponent implements OnInit {
                     this.toastrService.warning("Error! Insufficient balance.");
                   }
                   else if (res.success) {
-                    //this.toastrService.success("Package assign successfully");
+   
                     this.toastrService.success(res.message);
+                    this.balService.updateCurrentBalance(0);
                     this.loadReportIn(res);
-                    //this.getPackage(); 
                     this.getPackageAssignHistory()
                     this.subDetails();
                     this.getDeviceBySubscriberId();
-                    //  this.reset();
-                    //this.reload();
+
                   } else {
                     if (res.operationId == -4) {
                       if (this.anFPaymentMethodId == 5) {
