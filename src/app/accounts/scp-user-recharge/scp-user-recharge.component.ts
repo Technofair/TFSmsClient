@@ -138,14 +138,15 @@ getClientAvailableRechargeBalance() {
     return false;
   }
   saveRefund(){
-    if (this.frm.invalid) return false;
+    console.log(JSON.stringify(this.frmRrfund.value));
+    if (this.frmRrfund.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
-        this.gSvc.postdata("api/ScpUserRecharge/SaveUserRecharge", JSON.stringify(this.frm.value)).subscribe(res => {
+        debugger
+        this.gSvc.postdata("api/ScpUserRechargeRefund/SaveUserRechargeRefund", JSON.stringify(this.frmRrfund.value)).subscribe(res => {
           
         }, err => {       
           this.toastrService.error("Error! Data Not Saved.");
