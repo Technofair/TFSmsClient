@@ -9,8 +9,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { balanceService } from 'src/app/global';
 import { environment } from 'src/environments/environment';
 import { Console } from 'console';
-
-
 @Component({
   selector: 'app-scp-user-recharge',
   templateUrl: './scp-user-recharge.component.html',
@@ -25,11 +23,12 @@ export class ScpUserRechargeComponent {
   viewInfo: any = {};
   formId = 0;
   frm!: FormGroup;
+  frmRrfund!: FormGroup;
+  
   secUserId:any;
   organizationList:any;
   progressStatus: boolean = true;
   users:any;
-
   clientAvailableBalance: any;
   clientCurrentBalance: any;
 
@@ -44,15 +43,25 @@ export class ScpUserRechargeComponent {
 
   }
   ngOnInit(): void {
-    debugger
     this.getfrm();
+    this.getFrmRrfund()
     //this.getUserRecharge();
     this.getSecUser();
     this.getClientAvailableRechargeBalance();
     this.getClientCurrentRechargeBalance();
     this.getUserRechargeBalance();
   }
-
+getFrmRrfund(){
+  this.frmRrfund = new FormGroup({
+    id: new FormControl(0),
+    cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
+    secUserId: new FormControl(Validators.required),
+    amount: new FormControl(Validators.required),
+    remarks:new FormControl(""), 
+    createdBy: new FormControl(this.auth.getUserId()),
+    createdDate: new FormControl(new Date()),
+  });
+}
 getfrm(){
   this.frm = new FormGroup({
     id: new FormControl(0),
@@ -128,7 +137,26 @@ getClientAvailableRechargeBalance() {
     })
     return false;
   }
+  saveRefund(){
+    if (this.frm.invalid) return false;
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
 
+        this.gSvc.postdata("api/ScpUserRecharge/SaveUserRecharge", JSON.stringify(this.frm.value)).subscribe(res => {
+          
+        }, err => {       
+          this.toastrService.error("Error! Data Not Saved.");
+        })
+        return true;
+      },
+      reject: () => {
+      }
+    })
+    return false;
+  }
   
   getUserRechargeBalance() { 
     this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeBalanceByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
@@ -167,6 +195,8 @@ getClientAvailableRechargeBalance() {
     this.viewInfo = res;
   }
   showUserRechargeBalanceModalDialog(res: any) {
+    this.frmRrfund.controls['cmnCompanyId'].setValue(this.auth.getCompany());
+    this.frmRrfund.controls['secUserId'].setValue(res.secUserId);
     this.displayUserRechargeRefund = true;
     this.reset();
     this.viewInfo = res;
