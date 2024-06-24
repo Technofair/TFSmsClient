@@ -15,32 +15,39 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CompanyCollectionComponent implements OnInit {
 
-   banks: any;
+  collection: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
+  CompanyCustomerList:any;
+  ClientPaymentList:any;
+  paymentMethodList:any;
   formId = 0;
- progressStatus:boolean=true;
-  frm!:FormGroup
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
-   
+  progressStatus: boolean = true;
+  frm!: FormGroup
+  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth: AuthService) {
+
   }
 
   ngOnInit(): void {
     this.getFrm();
     this.getbankas();
   }
-  getFrm(){
+  getFrm() {
     this.frm = this.fb.group({
       id: new FormControl(0),
-      name: new FormControl(""),
-      shortName: new FormControl(""),
-      address: new FormControl(""),
-      createdBy:new FormControl(this.auth.getUserId()),
-      createdDate:new FormControl(new Date()),
-      modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date()),
-      isActive:new FormControl(true)
+      date: new FormControl(),
+      walletNo: new FormControl(""),
+      trxID: new FormControl(""),
+      totalAmount: new FormControl(),
+      remarks: new FormControl(""),
+      CmnCompanyCustomerId: new FormControl(),
+      anFClientPaymentId: new FormControl(),
+      anFPaymentMethodId: new FormControl(),
+      createdBy: new FormControl(this.auth.getUserId()),
+      createdDate: new FormControl(new Date()),
+      modifiedBy: new FormControl(this.auth.getUserId()),
+      modifiedDate: new FormControl(new Date())
     });
   }
   save() {
@@ -82,13 +89,13 @@ export class CompanyCollectionComponent implements OnInit {
   }
 
   getbankas() {
-    this.progressStatus=false;
+    this.progressStatus = false;
     this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+      this.collection = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
-    this.progressStatus=true;
+    this.progressStatus = true;
   }
 
   edit(res: any) {
