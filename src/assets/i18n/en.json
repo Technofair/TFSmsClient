@@ -584,6 +584,7 @@
     "ServerIP": "ServerIP",
     "PortNo": "PortNo",
     "PortNo1": "PortNo1",
+    "CompanyCollection": "Company Collection",
     "Server Type": "Server Type",
     "Device Serial Number": "Device Serial Number",
     "AppointedCompany": "Appointed Company?"
