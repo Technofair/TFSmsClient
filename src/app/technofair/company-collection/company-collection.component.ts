@@ -19,20 +19,26 @@ export class CompanyCollectionComponent implements OnInit {
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
-  CompanyCustomerList:any;
-  ClientPaymentList:any;
-  paymentMethodList:any;
+  CompanyCustomerList: any;
+  ClientPaymentList: any;
+  paymentMethodList: any;
   formId = 0;
   progressStatus: boolean = true;
   frm!: FormGroup
-  constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth: AuthService) {
 
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private gSvc: GeneralService,
+    private toastrService: ToastrService,
+    private auth: AuthService) {
   }
 
   ngOnInit(): void {
     this.getFrm();
-    this.getbankas();
+    this.getCollection();
   }
+
   getFrm() {
     this.frm = this.fb.group({
       id: new FormControl(0),
@@ -50,6 +56,7 @@ export class CompanyCollectionComponent implements OnInit {
       modifiedDate: new FormControl(new Date())
     });
   }
+
   save() {
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
@@ -58,22 +65,22 @@ export class CompanyCollectionComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         if (this.formId == 0) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/CompanyCollection/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getbankas();
-            this.toastrService.success("Bank Information Saved");
+            this.getCollection();
+            this.toastrService.success("Company Collection Saved");
           }, err => {
-            this.toastrService.error("Error! Bank Information Not Saved");
+            this.toastrService.error("Error! Company Collection Not Saved");
           })
         } else if (this.formId == 1) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/CompanyCollection/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
             this.formId = 0;
-            this.getbankas();
-            this.toastrService.success("Bank Information Updated");
+            this.getCollection();
+            this.toastrService.success("Company Collection Updated");
 
           }, err => {
-            this.toastrService.error("Error! Bank Information Not updated");
+            this.toastrService.error("Error! Company Collection Not updated");
           })
         } else {
           this.toastrService.error("System error!");
@@ -88,9 +95,9 @@ export class CompanyCollectionComponent implements OnInit {
     return false;
   }
 
-  getbankas() {
+  getCollection() {
     this.progressStatus = false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/CompanyCollection/GetAll", {}).subscribe(res => {
       this.collection = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
@@ -98,20 +105,51 @@ export class CompanyCollectionComponent implements OnInit {
     this.progressStatus = true;
   }
 
+  //company customer
+  getCompany() {    
+    this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+      
+      this.CompanyCustomerList = res;      
+    }, err => {     
+      this.toastrService.error("Error! Company list not found ");
+    })   
+  }
+
+  //clientPayment
+  getCompanyPayments() {
+    this.progressStatus = false;
+    this.gSvc.postdata("api/CompanyPayment/GetAll", {}).subscribe(res => {
+      this.ClientPaymentList = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus = true;
+  }
+
+  //payment method
+  paymentType(){
+    this.gSvc.postdata("api/PaymentMethod/GetActivePaymentMode", {}).subscribe(res => {
+      this.paymentMethodList=res;
+    }, err => {
+      this.toastrService.error("Error ! Data is not Found . ");
+    })
+   }
+
   edit(res: any) {
     this.formId = 1;
     this.frm.patchValue(res);
   }
 
-  showModalDialog(id: any) {
-    this.displayModal = true;
-    this.reset();
-    this.gSvc.postdata("api/ItemBrand/ItemBrand/" + id + "", {}).subscribe((res: any) => {
-      this.viewInfo = res;
-    }, err => {
-      this.toastrService.error("Error! Data Not Found");
-    })
-  }
+  // showModalDialog(id: any) {
+  //   this.displayModal = true;
+  //   this.reset();
+  //   this.gSvc.postdata("api/ItemBrand/ItemBrand/" + id + "", {}).subscribe((res: any) => {
+  //     this.viewInfo = res;
+  //   }, err => {
+  //     this.toastrService.error("Error! Data Not Found");
+  //   })
+  // }
+
   reload() {
     this.formId = 0;
     this.router.navigateByUrl('/inventory/itembrand')
