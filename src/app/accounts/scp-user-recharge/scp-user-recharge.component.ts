@@ -93,7 +93,10 @@ getClientAvailableRechargeBalance() {
   }
 
   getClientCurrentRechargeBalance() {
-            this.gSvc.postdata("api/ClientRecharge/GetLastRechargeByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+            //New: 25.06.2024
+            this.gSvc.postdata("api/ClientRecharge/GetScpClientCurrentRechargeBalanceByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
+            //Old: : 25.06.2024
+            //this.gSvc.postdata("api/ClientRecharge/GetLastRechargeByClientId?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
             if (res != null) {
                 this.clientCurrentBalance = res.balance;
             }
