@@ -65,6 +65,7 @@ getFrmRrfund(){
 getfrm(){
   this.frm = new FormGroup({
     id: new FormControl(0),
+    cmnCompanyId:new FormControl(this.auth.getCompany(),Validators.required),
     secUserId: new FormControl(Validators.required),
     amount: new FormControl(Validators.required),
     remarks:new FormControl(""), 
