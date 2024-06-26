@@ -7,27 +7,27 @@
     <div class="card">
       <div class="formgrid grid">
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-          <label>{{'Company Customer'|translate}}</label>
+          <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
           <p-dropdown [options]="CompanyCustomerList" [style]="{'width':'100%'}" formControlName="CmnCompanyCustomerId"
             [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
             optionValue="id"></p-dropdown><br>
         </div>
         
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-          <label>{{'ClientPayment'|translate}}</label>
+          <label>{{'ClientPayment'|translate}}</label><span class="text-danger"> *</span>
           <p-dropdown [options]="ClientPaymentList" [style]="{'width':'100%'}" formControlName="anFClientPaymentId "
             [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
             optionValue="id"></p-dropdown><br>
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-          <label>{{'PaymentMethod'|translate}}</label>
+          <label>{{'PaymentMethod'|translate}}</label><span class="text-danger"> *</span>
           <p-dropdown [options]="paymentMethodList" [style]="{'width':'100%'}" formControlName="anFPaymentMethodId "
             [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
             optionValue="id"></p-dropdown><br>
         </div>
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-          <label>{{'Date'|translate}}</label><span class="text-danger"> </span><br>
+          <label>{{'Date'|translate}}</label><span class="text-danger"> *</span>
           <input type="datetime" class="p-2  w-full" placeholder="{{'Date'|translate}}" formControlName="date"
             pInputText /><br>
         </div>
@@ -43,7 +43,7 @@
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-          <label>{{'TotalAmount'|translate}}</label><br>
+          <label>{{'TotalAmount'|translate}}</label><span class="text-danger"> *</span>
           <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}"
             formControlName="totalAmount" pInputText />
         </div>
@@ -95,7 +95,7 @@
     <tr>
       <th pSortableColumn="name" style="text-align: center">
         <div class="vcenter text-center">
-          {{'CompanyCustomer'|translate}}
+          {{'Company Customer'|translate}}
           <p-sortIcon field="name"></p-sortIcon>
           <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
         </div>

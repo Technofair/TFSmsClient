@@ -37,6 +37,9 @@ export class CompanyCollectionComponent implements OnInit {
   ngOnInit(): void {
     this.getFrm();
     this.getCollection();
+    this.getCompany();
+    this.getCompanyPayments();
+    this.paymentType();
   }
 
   getFrm() {
@@ -45,11 +48,11 @@ export class CompanyCollectionComponent implements OnInit {
       date: new FormControl(),
       walletNo: new FormControl(""),
       trxID: new FormControl(""),
-      totalAmount: new FormControl(),
+      totalAmount: new FormControl(Validators.required),
       remarks: new FormControl(""),
-      CmnCompanyCustomerId: new FormControl(),
-      anFClientPaymentId: new FormControl(),
-      anFPaymentMethodId: new FormControl(),
+      CmnCompanyCustomerId: new FormControl(Validators.required),
+      anFClientPaymentId: new FormControl(Validators.required),
+      anFPaymentMethodId: new FormControl(Validators.required),
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(this.auth.getUserId()),
@@ -90,7 +93,6 @@ export class CompanyCollectionComponent implements OnInit {
       reject: () => {
 
       }
-
     })
     return false;
   }
@@ -138,17 +140,7 @@ export class CompanyCollectionComponent implements OnInit {
   edit(res: any) {
     this.formId = 1;
     this.frm.patchValue(res);
-  }
-
-  // showModalDialog(id: any) {
-  //   this.displayModal = true;
-  //   this.reset();
-  //   this.gSvc.postdata("api/ItemBrand/ItemBrand/" + id + "", {}).subscribe((res: any) => {
-  //     this.viewInfo = res;
-  //   }, err => {
-  //     this.toastrService.error("Error! Data Not Found");
-  //   })
-  // }
+  }  
 
   reload() {
     this.formId = 0;
