@@ -50,6 +50,7 @@ export class ScpUserRechargeComponent {
     this.getClientAvailableRechargeBalance();
     this.getClientCurrentRechargeBalance();
     this.getUserRechargeBalance();
+    
   }
 getFrmRrfund(){
   this.frmRrfund = new FormGroup({
@@ -123,7 +124,9 @@ getClientAvailableRechargeBalance() {
             this.balService.updateCurrentBalance(0);
             this.getClientAvailableRechargeBalance();
             this.getClientCurrentRechargeBalance();
-            this.getUserRecharge();
+            this.getUserRechargeBalance();
+            
+            //this.getUserRecharge();
             this.getfrm();
           }
           else{
@@ -151,9 +154,14 @@ getClientAvailableRechargeBalance() {
       accept: () => {
         debugger
         this.gSvc.postdata("api/ScpUserRechargeRefund/SaveUserRechargeRefund", JSON.stringify(this.frmRrfund.value)).subscribe(res => {
-          
+          this.toastrService.success(res.message);
+          this.getClientAvailableRechargeBalance();
+          this.getClientCurrentRechargeBalance();
+          this.getUserRechargeBalance();
+          this.balService.updateCurrentBalance(0);
+          this.displayUserRechargeRefund = false;
         }, err => {       
-          this.toastrService.error("Error! Data Not Saved.");
+          this.toastrService.error(err.message);
         })
         return true;
       },
@@ -173,15 +181,15 @@ getClientAvailableRechargeBalance() {
   })
 }
 
-  getUserRecharge() { 
-      this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
-      this.list = res;
-      this.progressStatus = true;
-    }, err => {
-      this.progressStatus = true;
-      this.toastrService.error("List not found");
-    })
-  }
+  // getUserRecharge() { 
+  //     this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
+  //     this.list = res;
+  //     this.progressStatus = true;
+  //   }, err => {
+  //     this.progressStatus = true;
+  //     this.toastrService.error("List not found");
+  //   })
+  // }
 
   //Need Working
   
@@ -216,7 +224,15 @@ getClientAvailableRechargeBalance() {
     this.toastrService.error("List not found");
   })
 }
-
+// getBalance() {
+//   this.gSvc.getdata("api/ScpUserRecharge/GetScpUserRechargeBalanceByUserId?secUserId=" + this.auth.getUserId()).subscribe((res: any) => {
+//       if (res != null) {
+//           this.comBalance = res;
+//       }
+//   }, err => {
+//     this.toastrService.error("Error! Data Not Found");
+//   })
+// }
    
   reset() {
     this.frm.reset();
