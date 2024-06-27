@@ -59,10 +59,10 @@
 </p-panel>
 
 
-<p-table #dt [value]="userRechargeBalance" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<p-table #dt [value]="userRechargeBalance" dataKey="id" [rowHover]="true" [rows]="15" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [globalFilterFields]="['employeeName','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
     [tableStyle]="{'min-width': '50rem'}">
 
     <ng-template pTemplate="caption">
@@ -114,9 +114,15 @@
 <p-dialog header="Header" [(visible)]="displayUserRechargeRefund" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRechargeRefund' | translate}} From {{userName}} </h5>
+        <h5>{{'UserRechargeRefund' | translate}} </h5>
     </ng-template>
-
+    <div class="formgrid grid">
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+            <label>{{'Name' | translate}}</label>
+            <input type="text" class="p-2  w-full" placeholder="{{userName}}"
+            readonly pInputText />
+        </div>
+    </div>
     <div class="modal-body">
         <form [formGroup]="frmRrfund">
             <input type="hidden" formControlName="id" value="0">
@@ -157,10 +163,10 @@
             </div>
         </form>
   <div class="formgrid grid">
-    <p-table #dt [value]="userRechargeRefundList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+    <p-table #dt1 [value]="userRechargeRefundList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
 [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-[globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+[globalFilterFields]="['createdDate','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
 [tableStyle]="{'min-width': '50rem'}">
 
 <ng-template pTemplate="caption">
@@ -169,7 +175,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         (click)="clear(dt)"></button> -->
     <span class="p-input-icon-left ml-auto float-right">
         <i class="pi pi-search"></i>
-        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+        <input pInputText type="text" (input)="dt1.filterGlobal($any($event.target).value, 'contains')"
             placeholder="Search keyword" />
     </span>
 </div>
@@ -179,9 +185,10 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 <tr>
     <th>{{'SL#' | translate}}</th>
     <!-- <th class="vcenter text-center">{{'NAME' | translate}}</th> -->
+    <th class="vcenter text-center">{{'Date' | translate}}</th>
     <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
     <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
-    <th class="vcenter text-center">{{'Date' | translate}}</th>
+   
    
     <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
 </tr>
@@ -196,9 +203,10 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 <tr class="p-selectable-row">
     <td>{{ index + 1}}</td>
     <!-- <td>{{r.employeeName}}</td> -->
+    <td>{{r.createdDate | date:'dd/MM/yyyy hh:mm'}}</td>
     <td>{{r.amount}}</td>
     <td>{{r.remarks}}</td>
-    <td>{{r.createdDate | date:'dd/MM/yyyy'}}</td>
+    
     <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
             (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
@@ -218,7 +226,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
    </div>
 
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="displayUserRecharge=false" label="{{'CLOSE' | translate}}"
+        <p-button icon="pi pi-times" (click)="displayUserRechargeRefund=false" label="{{'CLOSE' | translate}}"
             styleClass="p-button-text"></p-button>
     </ng-template>
 </p-dialog>
@@ -226,16 +234,23 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 <p-dialog header="Header" [(visible)]="displayUserRecharge" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRecharge' | translate}}  From {{userName}} </h5>
+        <h5>{{'UserRecharge' | translate}}  </h5>
     </ng-template>
-
+    <div class="formgrid grid">
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+            <label>{{'Name' | translate}}</label>
+            <input type="text" class="p-2  w-full" placeholder="{{userName}}"
+            readonly pInputText />
+        </div>
+    </div>
+    
     <div class="modal-body">
         <div class="formgrid grid">
             
-            <p-table #dt [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            <p-table #dt2 [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+    [globalFilterFields]="['createdDate','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
     [tableStyle]="{'min-width': '50rem'}">
 
     <ng-template pTemplate="caption">
@@ -244,7 +259,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
                 (click)="clear(dt)"></button> -->
             <span class="p-input-icon-left ml-auto float-right">
                 <i class="pi pi-search"></i>
-                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                <input pInputText type="text" (input)="dt2.filterGlobal($any($event.target).value, 'contains')"
                     placeholder="Search keyword" />
             </span>
         </div>
@@ -253,7 +268,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
     <ng-template pTemplate="header">
         <tr>
             <th>{{'SL#' | translate}}</th>
-            <th class="vcenter text-center">{{'NAME' | translate}}</th>
+            <th class="vcenter text-center">{{'Date' | translate}}</th>
             <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
             <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
             <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
@@ -268,7 +283,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
     <ng-template pTemplate="body" let-r let-index="rowIndex">
         <tr class="p-selectable-row">
             <td>{{ index + 1}}</td>
-            <td>{{r.employeeName}}</td>
+            <td>{{r.createdDate | date:'dd/MM/yyyy hh:mm'}}</td>
             <td>{{r.amount}}</td>
             <td>{{r.remarks}}</td>
             <!-- <td class="vcenter text-center">
