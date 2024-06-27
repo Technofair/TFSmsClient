@@ -134,20 +134,17 @@ export class UserRolesMappingComponent implements OnInit {
         this.toastrService.error("error");
       })
     }
-  //old 29-04-2024
-  // roleList() {
-  //   this.gSvc.postdata("Security/Role/GetAll", {}).subscribe(res => {
-  //     this.roles = res;
-  //   }, err => {
-  //     this.toastrService.error("error");
-  //   })
-  // }
-  userList() {
+
+
+ getUserList() {
 
    if (this.frm.invalid) return false;
-
     this.progressStatus=false;
-    this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + this.frm.get("companyId")?.value+"&roleId="+ this.frm.get("role")?.value, {})
+
+    var companyId = this.frm.get("companyId")?.value;
+    var roleId = this.frm.get("role")?.value;
+
+    this.gSvc.postdata("Security/UserRole/GetUserRolesByCompanyAndRoleId?companyId=" + companyId + "&roleId="+ roleId, {})
     .subscribe(res => {     
       this.users = res;
       this.progressStatus=true;
@@ -167,6 +164,8 @@ export class UserRolesMappingComponent implements OnInit {
     return true;
   }
 
+
+
   userRolelist() {
     this.gSvc.postdata("Security/UserRole/GetByRoleId?roleid=" + this.frm.get('role')?.value, {}).subscribe(res => {
       this.userRoles = res;
@@ -184,17 +183,17 @@ export class UserRolesMappingComponent implements OnInit {
     this.selectedUsers=[];
     
     //New: 20.05.2024:: //this.selectedUsers.concat(this.selectedUsers);
-    this.selectedUsers = this.users;
+    //this.selectedUsers = this.users;
     //Old20.05.2024::
     //this.selectedUsers = this.users.filter(user => user.isActive);
    
     
-    const transformedList = this.selectedUsers.map(item => ({
+    const transformedList = this.users.map(item => ({
 
       id: 0,
       secUserId: item.secUserId,
       secRoleId: this.frm.get("role")?.value,
-      isActive: this.frm.get("isActive")?.value,
+      isActive: item.isActive, //this.frm.get("isActive")?.value,
       createdBy: this.Authser.getUserId(),
       createdDate: new Date(),
       modifiedBy: this.Authser.getUserId(),
@@ -216,7 +215,8 @@ export class UserRolesMappingComponent implements OnInit {
 
         this.gSvc.postdata("Security/UserRole/Save", JSON.stringify(reqestbody)).subscribe(res => {
 
-          this.userList();
+          
+          this.getUserList();
           this.toastrService.success("Saved success");
 
         }, err => {
@@ -239,16 +239,18 @@ export class UserRolesMappingComponent implements OnInit {
       this.toastrService.error("Error ! You can not remove this . ");
       
     }else{          
-    this.gSvc.postdata("Security/UserRole/Delete?Id="+res.id,{}).subscribe(res => {
-      if(res.Success)
+    this.gSvc.postdata("Security/UserRole/Delete?Id="+ res.id,{}).subscribe(res => {
+            
+      if(res.success)
       {
-      this.userList();
-      this.toastrService.success("Saved success");
-      }else{
-        this.toastrService.error("Error ! User role is not saved . ");
+        this.getUserList();
+        this.toastrService.success(res.message);
+      }
+      else{
+        this.toastrService.error(res.message);
       }
     }, err => {
-      this.toastrService.error("Error ! User role is not saved . ");
+      this.toastrService.error('Unable to complete operation, please try again later');
     })
     }
     
