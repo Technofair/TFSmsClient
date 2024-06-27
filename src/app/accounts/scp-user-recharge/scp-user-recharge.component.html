@@ -117,10 +117,16 @@
         <h5>{{'UserRechargeRefund' | translate}} </h5>
     </ng-template>
     <div class="formgrid grid">
-        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'Name' | translate}}</label>
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" style="display: flex;flex-direction: row;">
+            <div class="mt-2 m-1">
+                {{'Name' | translate}}:
+            </div>
+           <div >
+            <!-- {{userName}} -->
             <input type="text" class="p-2  w-full" placeholder="{{userName}}"
             readonly pInputText />
+           </div>
+           
         </div>
     </div>
     <div class="modal-body">
@@ -236,11 +242,19 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
     <ng-template pTemplate="header">
         <h5>{{'UserRecharge' | translate}}  </h5>
     </ng-template>
+    
     <div class="formgrid grid">
-        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'Name' | translate}}</label>
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" style="display: flex;flex-direction: row;">
+            <div class="mt-2 m-1">
+                {{'Name' | translate}}:
+            </div>
+                
+           <div >
+            <!-- {{userName}} -->
             <input type="text" class="p-2  w-full" placeholder="{{userName}}"
             readonly pInputText />
+           </div>
+           
         </div>
     </div>
     
