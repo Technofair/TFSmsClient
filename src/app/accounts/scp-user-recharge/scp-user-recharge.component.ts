@@ -16,7 +16,8 @@ import { Console } from 'console';
   providers: [ConfirmationService]
 })
 export class ScpUserRechargeComponent {
-  list: any;
+  userRechargeRefundList: any;
+  list:any;
   userRechargeBalance: any;
   displayUserRecharge: boolean = false;
   displayUserRechargeRefund: boolean = false;
@@ -31,7 +32,7 @@ export class ScpUserRechargeComponent {
   users:any;
   clientAvailableBalance: any;
   clientCurrentBalance: any;
-
+  userName:any;
   constructor(private fb: FormBuilder,
      private router: Router,
      private confirmationService: ConfirmationService,
@@ -152,7 +153,6 @@ getClientAvailableRechargeBalance() {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        debugger
         this.gSvc.postdata("api/ScpUserRechargeRefund/SaveUserRechargeRefund", JSON.stringify(this.frmRrfund.value)).subscribe(res => {
           this.toastrService.success(res.message);
           this.getClientAvailableRechargeBalance();
@@ -181,19 +181,17 @@ getClientAvailableRechargeBalance() {
   })
 }
 
-  // getUserRecharge() { 
-  //     this.gSvc.postdata("api/ScpUserRecharge/GetUserRechargeByAnyKey?cmnCompanyId=" + this.auth.getCompany() + "&userLevel="+ this.auth.getUserLevel(), {}).subscribe(res => {
-  //     this.list = res;
-  //     this.progressStatus = true;
-  //   }, err => {
-  //     this.progressStatus = true;
-  //     this.toastrService.error("List not found");
-  //   })
-  // }
+  getUserRechargeRefundByUserId(secUserId:any) { 
+      this.gSvc.postdata("api/ScpUserRechargeRefund/GetUserRechargeRefundByUserId?secUserId=" + secUserId, {}).subscribe(res => {
+      this.userRechargeRefundList = res;
+      this.progressStatus = true;
+    }, err => {
+      this.progressStatus = true;
+      this.toastrService.error("List not found");
+    })
+  }
 
   //Need Working
-  
-
   // edit(res: any) {
   //   debugger;    
   //   this.getSecUserType();
@@ -202,12 +200,14 @@ getClientAvailableRechargeBalance() {
   // }
 
   showUserRechargeModalDialog(res: any) {
+    this.userName=res.employeeName;
     this.displayUserRecharge = true;
     this.getUserRechargeByUserId(res.secUserId);
     this.reset();
     this.viewInfo = res;
   }
   showUserRechargeBalanceModalDialog(res: any) {
+    this.userName=res.employeeName;
     this.frmRrfund.controls['cmnCompanyId'].setValue(this.auth.getCompany());
     this.frmRrfund.controls['secUserId'].setValue(res.secUserId);
     this.displayUserRechargeRefund = true;
@@ -233,7 +233,7 @@ getClientAvailableRechargeBalance() {
 //     this.toastrService.error("Error! Data Not Found");
 //   })
 // }
-   
+
   reset() {
     this.frm.reset();
     this.frm.controls['id'].setValue(0);

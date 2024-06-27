@@ -96,7 +96,7 @@
             <td>{{r.balance}}</td>
             <td class="vcenter text-center">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-dollar"
-                    (click)="showUserRechargeBalanceModalDialog(r)" data-toggle="tooltip" title="{{'Refund' | translate}}"></p-button>
+                    (click)="showUserRechargeBalanceModalDialog(r)" (click)="getUserRechargeRefundByUserId(r.secUserId)" data-toggle="tooltip" title="{{'Refund' | translate}}"></p-button>
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-eye"
                     (click)="showUserRechargeModalDialog(r)" data-toggle="tooltip" title="{{'Details' | translate}}"></p-button>
             </td>
@@ -114,7 +114,7 @@
 <p-dialog header="Header" [(visible)]="displayUserRechargeRefund" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRechargeRefund' | translate}} </h5>
+        <h5>{{'UserRechargeRefund' | translate}} From {{userName}} </h5>
     </ng-template>
 
     <div class="modal-body">
@@ -156,64 +156,66 @@
                 </div>
             </div>
         </form>
-<div class="formgrid grid">
-            
-            <p-table #dt [value]="list" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
-    [tableStyle]="{'min-width': '50rem'}">
+  <div class="formgrid grid">
+    <p-table #dt [value]="userRechargeRefundList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+[rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+[globalFilterFields]="['name','remarks']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+[tableStyle]="{'min-width': '50rem'}">
 
-    <ng-template pTemplate="caption">
-        <div class="flex">
-            <!-- <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
-                (click)="clear(dt)"></button> -->
-            <span class="p-input-icon-left ml-auto float-right">
-                <i class="pi pi-search"></i>
-                <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-                    placeholder="Search keyword" />
-            </span>
-        </div>
-    </ng-template>
+<ng-template pTemplate="caption">
+<div class="flex">
+    <!-- <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+        (click)="clear(dt)"></button> -->
+    <span class="p-input-icon-left ml-auto float-right">
+        <i class="pi pi-search"></i>
+        <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Search keyword" />
+    </span>
+</div>
+</ng-template>
 
-    <ng-template pTemplate="header">
-        <tr>
-            <th>{{'SL#' | translate}}</th>
-            <th class="vcenter text-center">{{'NAME' | translate}}</th>
-            <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
-            <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
-            <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
-        </tr>
-        <tr>
-            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
-                <p-progressSpinner></p-progressSpinner>
-            </div>
-        </tr>
-    </ng-template>
+<ng-template pTemplate="header">
+<tr>
+    <th>{{'SL#' | translate}}</th>
+    <!-- <th class="vcenter text-center">{{'NAME' | translate}}</th> -->
+    <th class="vcenter text-center">{{'AMOUNT' | translate}}</th>
+    <th class="vcenter text-center">{{'REMARKS' | translate}}</th>
+    <th class="vcenter text-center">{{'Date' | translate}}</th>
+   
+    <!-- <th class="vcenter text-center">{{'ACTION' | translate}}</th> -->
+</tr>
+<tr>
+    <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
+</tr>
+</ng-template>
 
-    <ng-template pTemplate="body" let-r let-index="rowIndex">
-        <tr class="p-selectable-row">
-            <td>{{ index + 1}}</td>
-            <td>{{r.employeeName}}</td>
-            <td>{{r.amount}}</td>
-            <td>{{r.remarks}}</td>
-            <!-- <td class="vcenter text-center">
-                <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
-                    (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
-            </td> -->
-        </tr>
-    </ng-template>
+<ng-template pTemplate="body" let-r let-index="rowIndex">
+<tr class="p-selectable-row">
+    <td>{{ index + 1}}</td>
+    <!-- <td>{{r.employeeName}}</td> -->
+    <td>{{r.amount}}</td>
+    <td>{{r.remarks}}</td>
+    <td>{{r.createdDate | date:'dd/MM/yyyy'}}</td>
+    <!-- <td class="vcenter text-center">
+        <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
+            (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>
+    </td> -->
+</tr>
+</ng-template>
 
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="5">No data found.</td>
-        </tr>
-    </ng-template>
+<ng-template pTemplate="emptymessage">
+<tr>
+    <td colspan="5">No data found.</td>
+</tr>
+</ng-template>
 
 </p-table>
 
-        </div>
-    </div>
+</div>
+   </div>
 
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" (click)="displayUserRecharge=false" label="{{'CLOSE' | translate}}"
@@ -224,7 +226,7 @@
 <p-dialog header="Header" [(visible)]="displayUserRecharge" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRecharge' | translate}} </h5>
+        <h5>{{'UserRecharge' | translate}}  From {{userName}} </h5>
     </ng-template>
 
     <div class="modal-body">
