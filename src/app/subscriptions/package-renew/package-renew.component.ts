@@ -283,8 +283,8 @@ export class PackageRenewComponent implements OnInit {
             this.balService.updateCurrentBalance(0);
             this.loadReportIn(res);
             this.getRenewableSubscriber();
-            this.reset();
             this.toastrService.success(res.message);
+            this.reset();
             this.displayPackageRenew = false;
           } else {
             //if (res.operationId == -4) {
