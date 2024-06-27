@@ -372,106 +372,97 @@ export class PackageAssignComponent implements OnInit {
     return false;
   }
 
-  inactivePackage() {
-    // this.toastrService.warning("This option is not active for you . ");
-    // return;
-    //if (this.frm.invalid) return false;
-    //console.log(this.frm.value);
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  
 
-        if (this.frm.controls['id'].value == 0) {
-          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
-          this.frm.controls['createdDate'].setValue(new Date());
-        } else if (this.frm.controls['id'].value > 0) {
-          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
-        }
+  // inactivePackage() {
 
-        var frmVal = this.frm.value;
-        //this.anFPaymentMethodId=frmVal.anFPaymentMethodId;
-        frmVal.scpSubscriberId = parseInt(this.frm.controls['scpSubscriberId'].value);
+  //   this.confirmationService.confirm({
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     accept: () => {
 
-              this.gSvc.postdata("api/SubscriberPackage/InActivePackage", JSON.stringify({ obj: frmVal, status: 2 }))
-                .subscribe(res => {
-                   if (res.success) {
+  //       if (this.frm.controls['id'].value == 0) {
+  //         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+  //         this.frm.controls['createdDate'].setValue(new Date());
+  //       } else if (this.frm.controls['id'].value > 0) {
+  //         this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+  //       }
 
-                    this.toastrService.success(res.message);
+  //       var frmVal = this.frm.value;
+
+  //       frmVal.scpSubscriberId = parseInt(this.frm.controls['scpSubscriberId'].value);
+
+  //             this.gSvc.postdata("api/SubscriberPackage/InActivePackage", JSON.stringify({ obj: frmVal, status: 2 }))
+  //               .subscribe(res => {
+  //                  if (res.success) {
+
+  //                   this.toastrService.success(res.message);
                     
-                    this.getSubscriberPackage(); //New: 03.02.2024
-                    this.getPackageAssignHistory();
+  //                   this.getSubscriberPackage(); //New: 03.02.2024
+  //                   this.getPackageAssignHistory();
+  //                 } 
+  //               }, err => {
+  //                 this.toastrService.error(err.message);
+  //                 console.log('Exception: (save)' + err.message);
+  //                 this.getPackageAssignHistory();
+  //               })
 
-                    //this.subDetails();
-                    //this.getDeviceBySubscriberId();
-                    //  this.reset();
-                    //this.reload();
-                  } 
-                }, err => {
-                  this.toastrService.error(err.message);
-                  console.log('Exception: (save)' + err.message);
-                  this.getPackageAssignHistory();
-                })
+  //       return true;
+  //     },
+  //     reject: () => {
 
-        return true;
-      },
-      reject: () => {
+  //     }
 
-      }
-
-    })
-    return false;
-  }
-  activateUnexpiredPackage() {
+  //   })
+  //   return false;
+  // }
+  // activateUnexpiredPackage() {
     
-    this.confirmationService.confirm({
-      message: 'Are you sure that you want to proceed?',
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
+  //   this.confirmationService.confirm({
+  //     message: 'Are you sure that you want to proceed?',
+  //     header: 'Confirmation',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     accept: () => {
          
-        this.frm.controls['anFPaymentMethodId'].setValue(1);
-        if (this.frm.controls['id'].value == 0) {
-          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
-          this.frm.controls['createdDate'].setValue(new Date());
-        } else if (this.frm.controls['id'].value > 0) {
-          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
-        }
+  //       this.frm.controls['anFPaymentMethodId'].setValue(1);
+  //       if (this.frm.controls['id'].value == 0) {
+  //         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+  //         this.frm.controls['createdDate'].setValue(new Date());
+  //       } else if (this.frm.controls['id'].value > 0) {
+  //         this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+  //       }
 
-        var frmVal = this.frm.value;
+  //       var frmVal = this.frm.value;
       
-        //this.anFPaymentMethodId=frmVal.anFPaymentMethodId;
-        frmVal.scpSubscriberId = parseInt(this.frm.controls['scpSubscriberId'].value);
+  //       frmVal.scpSubscriberId = parseInt(this.frm.controls['scpSubscriberId'].value);
 
-              this.gSvc.postdata("api/SubscriberPackage/ActivateUnexpiredPackage", JSON.stringify({ obj: frmVal, status: 1 }))
-                .subscribe(res => {
-                   if (res.success) {
+  //             this.gSvc.postdata("api/SubscriberPackage/ActivateUnexpiredPackage", JSON.stringify({ obj: frmVal, status: 1 }))
+  //               .subscribe(res => {
+  //                  if (res.success) {
 
-                    this.toastrService.success(res.message);
+  //                   this.toastrService.success(res.message);
                     
-                    this.getSubscriberPackage(); //New: 03.02.2024
-                    this.getPackageAssignHistory()
-                    //this.subDetails();
-                    //this.getDeviceBySubscriberId();
-                    //  this.reset();
-                    //this.reload();
-                  } 
-                }, err => {
-                  this.toastrService.error(err.message);
-                  console.log('Exception: (save)' + err.message);
-                  this.getPackageAssignHistory();
-                })
+  //                   this.getSubscriberPackage(); //New: 03.02.2024
+  //                   this.getPackageAssignHistory()
+  //                 } 
+  //               }, err => {
+  //                 this.toastrService.error(err.message);
+  //                 console.log('Exception: (save)' + err.message);
+  //                 this.getPackageAssignHistory();
+  //               })
 
-        return true;
-      },
-      reject: () => {
+  //       return true;
+  //     },
+  //     reject: () => {
 
-      }
+  //     }
 
-    })
-    return false;
-  }
+  //   })
+  //   return false;
+  // }
+
+
   reload() {
     this.route.params.subscribe((params: any) => {
       if (params.id) {
