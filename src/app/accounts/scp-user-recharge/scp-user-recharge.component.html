@@ -114,21 +114,21 @@
 <p-dialog header="Header" [(visible)]="displayUserRechargeRefund" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRechargeRefund' | translate}} </h5>
+        <h5>{{'UserRechargeRefund' | translate}}-{{userName}} </h5>
     </ng-template>
-    <div class="formgrid grid">
+    <!-- <div class="formgrid grid">
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" style="display: flex;flex-direction: row;">
             <div class="mt-2 m-1">
                 {{'Name' | translate}}:
             </div>
            <div >
-            <!-- {{userName}} -->
+           
             <input type="text" class="p-2  w-full" placeholder="{{userName}}"
             readonly pInputText />
            </div>
            
         </div>
-    </div>
+    </div> -->
     <div class="modal-body">
         <form [formGroup]="frmRrfund">
             <input type="hidden" formControlName="id" value="0">
@@ -240,24 +240,24 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 <p-dialog header="Header" [(visible)]="displayUserRecharge" [modal]="true" [style]="{width: '50vw'}" [draggable]="false"
     [resizable]="false">
     <ng-template pTemplate="header">
-        <h5>{{'UserRecharge' | translate}}  </h5>
+        <h5>{{'UserRecharge' | translate}} - {{userName}}  </h5>
     </ng-template>
     
-    <div class="formgrid grid">
+    <!-- <div class="formgrid grid">
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" style="display: flex;flex-direction: row;">
             <div class="mt-2 m-1">
                 {{'Name' | translate}}:
             </div>
                 
            <div >
-            <!-- {{userName}} -->
+            
             <input type="text" class="p-2  w-full" placeholder="{{userName}}"
             readonly pInputText />
            </div>
            
         </div>
     </div>
-    
+     -->
     <div class="modal-body">
         <div class="formgrid grid">
             
