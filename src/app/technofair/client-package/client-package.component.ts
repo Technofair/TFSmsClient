@@ -24,7 +24,7 @@ export class ClientPackageComponent implements OnInit {
   formId = 0;
   progressStatus:boolean=true;
   frm!:FormGroup
-
+  companyPackageTypes:any;
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -38,6 +38,7 @@ export class ClientPackageComponent implements OnInit {
     this.getClientPackage();
     this.getCompanyPackages();
     this.getCompanyCustomer();
+    this. getcompanyPackageTypes();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -109,7 +110,13 @@ export class ClientPackageComponent implements OnInit {
       this.toastrService.error("Error! Company list not found ");
     })   
   }
-
+  getcompanyPackageTypes() {
+    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+      this.companyPackageTypes = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })    
+  }
 
   edit(res: any) {
     this.frm.patchValue(res);

@@ -113,6 +113,32 @@ export class CurrentStockComponent implements OnInit {
     }
   }
 
+  searchTest(reqType: string) {
+    debugger;
+    var frmValue = this.frm.value;
+    var objReq = {
+      SelectedGroup: frmValue.selectedGroup,
+      SelectedSubGroup: [],
+      obj: {
+        companyId: this.auth.getCompany(),
+        cmnFinancialYearId: 1,
+        // dateFrom: frmValue.fromDate,
+        dateTo: frmValue.toDate,
+        cmnStoreId: frmValue.cmnStoreId,
+        prdProductId: frmValue.prdProductId,
+        clientId: frmValue.slsCustomerId,
+        hrmEmployeeId: null,
+        deviceNumber: null
+      }
+    }
+
+    if (reqType == 'rdlc') {
+      this.loadReportInTest(objReq);
+    }else{
+      this.searchData(objReq);
+    }
+  }
+
   currentStockList:any[]=[];
   searchData(obj:any) {
     this.progressStatus=false;
@@ -151,4 +177,19 @@ export class CurrentStockComponent implements OnInit {
     var Models = item;
     this._rptViewer.reportInPage(this._getReportUrl, Models);
   }
+
+  // shakhaoat
+  loadReportInTest(item: any) {
+    debugger;
+    this._getReportUrl = 'Inventory/Report/Report1';
+    this.displayModal = true;
+    var repFile = 'Report1.rdlc';
+    var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Current Stock' };
+    this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
+    var Models = item;
+    this._rptViewer.reportInPage(this._getReportUrl, Models);
+  }
+
+
+
 }
