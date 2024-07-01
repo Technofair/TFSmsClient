@@ -36,21 +36,21 @@ export class ClientPackageComponent implements OnInit {
   ngOnInit(): void {
     this.getFrm();
     this.getClientPackage();
-    this.getCompanyPackages();
     this.getCompanyCustomer();
     this. getcompanyPackageTypes();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
+      anFCompanyPackageTypeId: new FormControl(),
       anFCompanyPackageId: new FormControl(),
       cmnCompanyCustomerId: new FormControl(),
       date: new FormControl(new Date(), Validators.required),
-      rate: new FormControl(null,Validators.required),
+      amount: new FormControl(null,Validators.required),
       discount: new FormControl(null),
       isActive:new FormControl(true),
       isFixed:new FormControl(true),
-      amount: new FormControl(null),
+      totalAmount: new FormControl(null),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -65,6 +65,8 @@ export class ClientPackageComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
        
+          console.log(JSON.stringify(this.frm.value));
+
           this.gSvc.postdata("api/TfClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getClientPackage();
@@ -93,8 +95,8 @@ export class ClientPackageComponent implements OnInit {
     this.progressStatus=true;
   }
 
-  getCompanyPackages() {
-    this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
+  getCompanyPackages(event:any) {
+    this.gSvc.postdata("api/CompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event.value, {}).subscribe(res => {
       this.CompanyPackagelist = res;
      
     }, err => {
@@ -117,7 +119,11 @@ export class ClientPackageComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })    
   }
+  setPrice(event:any){
+    var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id = event.value).price;
+    this.frm.controls['amount'].setValue(price);
 
+  }
   edit(res: any) {
     this.frm.patchValue(res);
   }

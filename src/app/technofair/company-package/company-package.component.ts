@@ -30,26 +30,21 @@ export class CompanyPackageComponent implements OnInit {
   ngOnInit(): void {
     this.getFrm();
     this.getCompanyPackages();
-    this.getcompanyPackageTypes();
+    this.getCompanyPackageTypeByAllowPackage();
   }
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      refNo: new FormControl(""),
       anFCompanyPackageTypeId:new FormControl(Validators.required),
-      startDate: new FormControl(),
-      endDate: new FormControl(),
-      minSubscriber:new FormControl(),
-      maxSubscriber:new FormControl(),
-      rate:new FormControl(),
-      discount:new FormControl(),
+      minSubscriber:new FormControl(Validators.required),
+      maxSubscriber:new FormControl(Validators.required),
+      price:new FormControl(Validators.required),
       remarks:new FormControl(),
       isActive:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
       modifiedDate:new FormControl(new Date())
-     
     });
   }
   save() {
@@ -59,7 +54,7 @@ export class CompanyPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-       
+         console.log(JSON.stringify(this.frm.value));
           this.gSvc.postdata("api/CompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getCompanyPackages();
@@ -77,17 +72,27 @@ export class CompanyPackageComponent implements OnInit {
     })
     return false;
   }
-  getcompanyPackageTypes() {
-    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+  // getcompanyPackageTypes() {
+  //   this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+  //     this.companyPackageTypes = res;
+  //   }, err => {
+  //     this.toastrService.error("Error! Data list Not Found");
+  //   })    
+  // }
+
+
+  getCompanyPackageTypeByAllowPackage(){
+      this.gSvc.postdata("api/CompanyPackageType/GetCompanyPackageTypeByAllowPackage?allowPackage=" + true, {}).subscribe(res => {
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
-    })    
+    }) 
   }
+
 
   getCompanyPackages() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/CompanyPackage/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/CompanyPackage/GetAllCompanyPackage", {}).subscribe(res => {
       this.CompanyPackages = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");

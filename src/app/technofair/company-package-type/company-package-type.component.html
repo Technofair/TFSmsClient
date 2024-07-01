@@ -16,10 +16,14 @@
         <input type="text" class="p-2  w-full" placeholder="{{'Remarks'|translate}}" formControlName="remarks"
           pInputText />
       </div>
-
       <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
-          formControlName="IsActive">
+          formControlName="allowPackage">
+        <label class="form-check-label" for="flexCheckDefault"> {{'AllowPackage' | translate}} </label>
+      </div>
+      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
+        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
+          formControlName="isActive">
         <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
       </div>
 

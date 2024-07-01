@@ -6,28 +6,28 @@
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Customer'|translate}}</label><span class="text-danger"> *</span>
+        <label>{{'CUSTOMER'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Client Package Type'|translate}}</label><span class="text-danger"> *</span>
+        <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="title" optionValue="id"></p-dropdown><br>
+          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages($event)" ></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Package'|translate}}</label>
         <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="anFCompanyPackageId"
           [filter]="true" filterBy="anFCompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="anFCompanyPackageTypeId" optionValue="id"></p-dropdown><br>
+          optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice($event)"></p-dropdown><br>
       </div>
       
       
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Rate'|translate}}</label><span class="text-danger"> *</span><br>
-        <input type="number" class="p-2  w-full" placeholder="{{'Rate'|translate}}" formControlName="rate"
+        <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span><br>
+        <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
           pInputText />
       </div>
 
@@ -38,12 +38,12 @@
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Amount'|translate}}</label><br>
-        <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
+        <label>{{'TotalAmount'|translate}}</label><br>
+        <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
           pInputText />
       </div>
       <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
-        <label>{{'Date'|translate}}</label><span class="text-danger"> *</span><br>
+        <label>{{'ExpairDate'|translate}}</label><span class="text-danger">*</span>
         <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy"
           pInputText />
       </div>
@@ -131,9 +131,9 @@
       </th>
       <th class="vcenter text-center">{{'Company Customer'|translate}}</th>
       <th class="vcenter text-center">{{'Date'|translate}}</th>
-      <th class="vcenter text-center">{{'Rate'|translate}}</th>
-      <th class="vcenter text-center">{{'Discount'|translate}}</th>
       <th class="vcenter text-center">{{'Amount'|translate}}</th>
+      <th class="vcenter text-center">{{'Discount'|translate}}</th>
+      <th class="vcenter text-center">{{'TotalAmount'|translate}}</th>
       <th class="vcenter text-center">{{'ACTION'|translate}}</th>
     </tr>
     <tr>
@@ -148,9 +148,9 @@
       <td>{{r.anFCompanyPackageId}}</td>
       <td>{{r.cmnCompanyCustomerId}}</td>
       <td>{{r.date}}</td>
-      <td>{{r.rate}}</td>
-      <td>{{r.discount}}</td>
       <td>{{r.amount}}</td>
+      <td>{{r.discount}}</td>
+      <td>{{r.totalAmount}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
