@@ -25,6 +25,7 @@ export class ClientPackageComponent implements OnInit {
   progressStatus:boolean=true;
   frm!:FormGroup
   companyPackageTypes:any;
+  
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -42,9 +43,9 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      anFCompanyPackageTypeId: new FormControl(),
+      anFCompanyPackageTypeId: new FormControl(Validators.required),
       anFCompanyPackageId: new FormControl(),
-      cmnCompanyCustomerId: new FormControl(),
+      cmnCompanyCustomerId: new FormControl(Validators.required),
       date: new FormControl(new Date(), Validators.required),
       amount: new FormControl(null,Validators.required),
       discount: new FormControl(null),
