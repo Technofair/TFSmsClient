@@ -34,6 +34,8 @@ import { BackupServiceComponent } from './backup/backup.component';
 import { ProgressBarModule } from 'primeng/progressbar';
 // For dynamic progressbar demo
 import { ToastModule } from 'primeng/toast';
+import { SoftwareInfoComponent } from './software-info/software-info.component';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { ToastModule } from 'primeng/toast';
    // UserRoleMappingComponent,
     UserRolesMappingComponent,
     BackgroundServiceComponent,
-    BackupServiceComponent
+    BackupServiceComponent,
+    SoftwareInfoComponent
   ],
   imports: [
     CommonModule,
