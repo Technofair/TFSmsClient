@@ -25,7 +25,7 @@ export class SoftwareInfoComponent implements OnInit {
   }
   getsoftwareInfo() {
     this.gSvc.postdata("api/SoftwareInfo/GetSoftwareInfo", {}).subscribe(res => {   
-       
+       debugger;
         this.softwareInfo=res;
       this.toastrService.success(res.messages);
     }, err => {

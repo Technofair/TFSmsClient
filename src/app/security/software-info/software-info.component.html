@@ -15,11 +15,29 @@
             </div>
         </div>
         <div class="mb-3 row">
-            <label for="staticEmail" class="col-sm-2 col-form-label">Motherboard Key</label>
+          <label for="staticEmail" class="col-sm-2 col-form-label">Win32_NetworkAdapter Key</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_NetworkAdapterId}}">
+           </div>
+        </div>
+        <div class="mb-3 row"*ngFor=" let net in  softwareInfo.win32_NetworkAdapterlist">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Win32_NetworkAdapter Key {{net}}</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{net}}">
+           </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">BaseBoard Key</label>
             <div class="col-sm-10">
-              <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_ProcessorId}}">
+              <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_BaseBoardId}}">
             </div>
         </div>
+        <div class="mb-3 row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Win32_BIOS Key</label>
+          <div class="col-sm-10">
+            <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_BIOSId}}">
+          </div>
+      </div>
         <div class="mb-3 row">
             <label for="staticEmail" class="col-sm-2 col-form-label">Version</label>
             <div class="col-sm-10">
