@@ -9,11 +9,11 @@ import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-software-info',
-  templateUrl: './software-info.component.html',
-  styleUrls: ['./software-info.component.css'],
+  templateUrl: './server-info.component.html',
+  styleUrls: ['./server-info.component.css'],
   providers: [ConfirmationService]
 })
-export class SoftwareInfoComponent implements OnInit {
+export class ServerInfoComponent implements OnInit {
  softwareInfo:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private Authser: AuthService) {
 
@@ -21,6 +21,8 @@ export class SoftwareInfoComponent implements OnInit {
   ngOnInit(): void {
     
     this.getsoftwareInfo();
+    
+
     
   }
   getsoftwareInfo() {
