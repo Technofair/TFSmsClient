@@ -20,13 +20,13 @@ export class ServerInfoComponent implements OnInit {
   }
   ngOnInit(): void {
     
-    this.getsoftwareInfo();
+    this.getserverInfo();
     
 
-    
+
   }
-  getsoftwareInfo() {
-    this.gSvc.postdata("api/SoftwareInfo/GetSoftwareInfo", {}).subscribe(res => {   
+  getserverInfo() {
+    this.gSvc.postdata("api/ServerInfo/GetServerInfo", {}).subscribe(res => {   
        debugger;
         this.softwareInfo=res;
       this.toastrService.success(res.messages);
