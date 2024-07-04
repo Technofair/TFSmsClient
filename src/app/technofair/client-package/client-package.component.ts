@@ -88,7 +88,8 @@ export class ClientPackageComponent implements OnInit {
 
   getClientPackage() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/TfClientPackage/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/TfClientPackage/GetAllClientPackage", {}).subscribe(res => {
+      console.log(res);
       this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
