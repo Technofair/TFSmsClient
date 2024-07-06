@@ -98,7 +98,8 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages(event:any) {
-    this.gSvc.postdata("api/CompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event.value, {}).subscribe(res => {
+    debugger
+    this.gSvc.postdata("api/CompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
       this.CompanyPackagelist = res;
      
     }, err => {
@@ -126,8 +127,27 @@ export class ClientPackageComponent implements OnInit {
     this.frm.controls['amount'].setValue(price);
 
   }
+
+  setTotalAmount(event:any){    
+    debugger
+    
+    const amount = this.frm.controls['amount'].value;
+    const discount = this.frm.controls['discount'].value;
+
+    const totalAmount = amount - discount;
+    this.frm.controls['totalAmount'].setValue(totalAmount);
+
+  }
+
+
   edit(res: any) {
+    debugger
+    //var package = this.frm.controls['anFCompanyPackageId'].value;
+    this.getCompanyPackages(res.anFCompanyPackageTypeId);
     this.frm.patchValue(res);
+    alert(res.anFCompanyPackageId);
+    //this.frm.controls['anFCompanyPackageId'].setValue(res.anFCompanyPackageId);
+    
   }
 
   showModalDialog(id: any) {

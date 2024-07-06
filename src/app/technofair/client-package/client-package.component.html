@@ -15,7 +15,7 @@
         <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages($event)" ></p-dropdown><br>
+          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages($event.value)" ></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Package'|translate}}</label>
@@ -33,7 +33,7 @@
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Discount'|translate}}</label>
         <input type="number" maxlength="6" class="p-2  w-full" placeholder="{{'Discount'|translate}}"
-          formControlName="discount" pInputText />
+          formControlName="discount" pInputText (change) ="setTotalAmount($event)" />
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -102,7 +102,7 @@
       <th class="vcenter text-center">{{'Amount'|translate}}</th>
       <th class="vcenter text-center">{{'Discount'|translate}}</th>
       <th class="vcenter text-center">{{'TotalAmount'|translate}}</th>
-      <th class="vcenter text-center">{{'ACTION'|translate}}</th>
+      <!-- <th class="vcenter text-center">{{'ACTION'|translate}}</th> -->
     </tr>
     <tr>
       <div [hidden]="progressStatus" style="position: absolute; z-index: 10;">
@@ -120,11 +120,11 @@
       <td>{{r.amount}}</td>
       <td>{{r.discount}}</td>
       <td>{{r.totalAmount}}</td>
-      <td class="vcenter text-center">
+      <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
         </p-button>        
-      </td>
+      </td> -->
     </tr>
   </ng-template>
 
