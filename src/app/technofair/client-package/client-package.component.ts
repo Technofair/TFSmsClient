@@ -122,13 +122,14 @@ export class ClientPackageComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })    
   }
-  setPrice(event:any){
-    var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id = event.value).price;
+  setPrice(id:any){
+    var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==id).price;
     this.frm.controls['amount'].setValue(price);
+    this.setTotalAmount();
 
   }
 
-  setTotalAmount(event:any){    
+  setTotalAmount(){    
     debugger
     
     const amount = this.frm.controls['amount'].value;

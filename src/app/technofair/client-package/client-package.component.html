@@ -21,19 +21,19 @@
         <label>{{'Package'|translate}}</label>
         <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="anFCompanyPackageId"
           [filter]="true" filterBy="anFCompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice($event)"></p-dropdown><br>
+          optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice($event.value)"></p-dropdown><br>
       </div>
       
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
-          pInputText />
+          pInputText (change) ="setTotalAmount()" />
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Discount'|translate}}</label>
         <input type="number" maxlength="6" class="p-2  w-full" placeholder="{{'Discount'|translate}}"
-          formControlName="discount" pInputText (change) ="setTotalAmount($event)" />
+          formControlName="discount" pInputText (change) ="setTotalAmount()" />
       </div>
 
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
@@ -119,7 +119,7 @@
       <td>{{r.date}}</td>
       <td>{{r.amount}}</td>
       <td>{{r.discount}}</td>
-      <td>{{r.totalAmount}}</td>
+      <td>{{r.amount-r.discount}}</td>
       <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
