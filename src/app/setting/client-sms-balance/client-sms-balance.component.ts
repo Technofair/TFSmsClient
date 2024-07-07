@@ -73,7 +73,7 @@ export class ClientSmsBalanceComponent {
 
       console.log(JSON.stringify(this.frm.value))
       
-      this.gSvc.postdata("api/ClientSMSBalance/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+      this.gSvc.postdata("api/TFAClientSMSBalance/Save", JSON.stringify(this.frm.value)).subscribe(res => {
         
         if (res == undefined) {
           
@@ -95,7 +95,7 @@ export class ClientSmsBalanceComponent {
  }
 
  getClientSmsBalance() { 
-  this.gSvc.postdata("api/ClientSMSBalance/GetAll", {}).subscribe(res => {
+  this.gSvc.postdata("api/TFAClientSMSBalance/GetAll", {}).subscribe(res => {
     this.clientSMSBalanceList = res;      
   }, err => {      
     this.toastrService.error("List not found");
@@ -104,7 +104,7 @@ export class ClientSmsBalanceComponent {
 
 // for dropdown
 getCompanyCustomer() {
-  this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+  this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {
     this.companyCustomerList = res;
     //this.progressStatus=true;
   }, err => {
