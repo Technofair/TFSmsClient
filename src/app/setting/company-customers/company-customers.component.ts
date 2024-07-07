@@ -63,7 +63,7 @@ export class CompanyCustomersComponent {
       }     
       
 
-      this.gSvc.postdata("api/CompanyCustomer/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+      this.gSvc.postdata("api/TFACompanyCustomer/Save", JSON.stringify(this.frm.value)).subscribe(res => {
         //this.toastrService.success("save");
         //this.reset();
         if (res.success) {
@@ -92,7 +92,7 @@ getCompany() {
   debugger
   
   //New
-  this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+  this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {
     
     this.companyList = res;
     //this.progressStatus=true;

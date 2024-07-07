@@ -55,7 +55,7 @@ export class CompanyPackageComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
          console.log(JSON.stringify(this.frm.value));
-          this.gSvc.postdata("api/CompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/TFACompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getCompanyPackages();
             this.toastrService.success("Company Package Saved");
@@ -82,7 +82,7 @@ export class CompanyPackageComponent implements OnInit {
 
 
   getCompanyPackageTypeByAllowPackage(){
-      this.gSvc.postdata("api/CompanyPackageType/GetCompanyPackageTypeByAllowPackage?allowPackage=" + true, {}).subscribe(res => {
+      this.gSvc.postdata("api/TFACompanyPackageType/GetCompanyPackageTypeByAllowPackage?allowPackage=" + true, {}).subscribe(res => {
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
@@ -92,7 +92,7 @@ export class CompanyPackageComponent implements OnInit {
 
   getCompanyPackages() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/CompanyPackage/GetAllCompanyPackage", {}).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyPackage/GetAllCompanyPackage", {}).subscribe(res => {
       this.CompanyPackages = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");

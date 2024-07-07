@@ -38,7 +38,7 @@ export class CompanyPackageTypeComponent implements OnInit {
       title: new FormControl("",Validators.required),
       remarks: new FormControl(""),
       isActive:new FormControl(true),
-      allowPackage:new FormControl(),
+      allowPackage:new FormControl(false),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -53,7 +53,10 @@ export class CompanyPackageTypeComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
        
-          this.gSvc.postdata("api/CompanyPackageType/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          //New
+          this.gSvc.postdata("api/TFACompanyPackageType/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+            //Ole
+          //this.gSvc.postdata("api/CompanyPackageType/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getCompanyPackageTypes();
             this.toastrService.success("Company Package Type Saved");
@@ -73,7 +76,7 @@ export class CompanyPackageTypeComponent implements OnInit {
 
   getCompanyPackageTypes() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");

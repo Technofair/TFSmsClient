@@ -68,7 +68,7 @@ export class ClientPackageComponent implements OnInit {
        
           console.log(JSON.stringify(this.frm.value));
 
-          this.gSvc.postdata("api/TfClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/TFAClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getClientPackage();
             this.toastrService.success("ClientPackage Saved");
@@ -88,7 +88,7 @@ export class ClientPackageComponent implements OnInit {
 
   getClientPackage() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/TfClientPackage/GetAllClientPackage", {}).subscribe(res => {
+    this.gSvc.postdata("api/TFAClientPackage/GetAllClientPackage", {}).subscribe(res => {
       console.log(res);
       this.list = res;
     }, err => {
@@ -99,7 +99,7 @@ export class ClientPackageComponent implements OnInit {
 
   getCompanyPackages(event:any) {
     debugger
-    this.gSvc.postdata("api/CompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
       this.CompanyPackagelist = res;
      
     }, err => {
@@ -108,7 +108,7 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyCustomer() {
-    this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {
       this.CompanyCustomerlist = res;
       
     }, err => {
@@ -116,7 +116,7 @@ export class ClientPackageComponent implements OnInit {
     })   
   }
   getcompanyPackageTypes() {
-    this.gSvc.postdata("api/CompanyPackageType/GetAll", {}).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
