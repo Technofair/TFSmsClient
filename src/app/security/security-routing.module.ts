@@ -24,8 +24,7 @@ const routes: Routes = [
   { path: "userrolesmapping", component: UserRolesMappingComponent },
   { path: "bgservice", component: BackgroundServiceComponent },
   { path: "backup", component: BackupServiceComponent },
-  { path: "software-info", component: ServerInfoComponent },
-  
+  { path: "server-info", component: ServerInfoComponent },
 ];
 
 @NgModule({
