@@ -8,6 +8,7 @@ import { CompanyPackageComponent } from './company-package/company-package.compo
 import { ClientPaymentComponent } from './client-payment/client-payment.component';
 import { CompanyPackageTypeComponent } from './company-package-type/company-package-type.componet';
 import { CustomerServerInfoComponent } from './customer-server-info/customer-server-info.component';
+import { ClientServerInfoComponent } from './client-server-info/client-server-info.component';
 
 const routes: Routes = [
   { path: 'clientinfo', component: ClientInfoComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'company-collection', component: CompanyCollectionComponent },
   { path: 'company-package-type', component: CompanyPackageTypeComponent },
   { path: 'customer-server-info-component', component: CustomerServerInfoComponent },
+  { path: 'client-server-info', component: ClientServerInfoComponent }
 ];
 
 @NgModule({
