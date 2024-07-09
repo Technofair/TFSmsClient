@@ -3,19 +3,19 @@
   <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'SoftwareInfo' |
       translate}}</span></ng-template>
       <div class="mb-3 row">
-        <label for="staticEmail" class="col-sm-2 col-form-label">Server Ip</label>
+        <label for="staticEmail" class="col-sm-2 col-form-label">Server IP</label>
         <div class="col-sm-10">
           <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.serverIp.ip}}">
         </div>
         </div>
         <div class="mb-3 row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">BaseBoard Key</label>
+          <label for="staticEmail" class="col-sm-2 col-form-label">MotherBoard ID</label>
           <div class="col-sm-10">
             <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_BaseBoardId}}">
           </div>
         </div>
         <div class="mb-3 row">
-          <label for="staticEmail" class="col-sm-2 col-form-label">Win32_NetworkAdapter Key</label>
+          <label for="staticEmail" class="col-sm-2 col-form-label">Network Adapter </label>
           <div class="col-sm-10">
             <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{softwareInfo.win32_NetworkAdapterId}}">
            </div>
