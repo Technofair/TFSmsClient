@@ -116,8 +116,7 @@ export class ClientPackageComponent implements OnInit {
     debugger
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
       this.CompanyPackagelist = res;
-      this.frm = this.fb.group({
-        //anFCompanyPackageId: new FormControl(),      
+      this.frm = this.fb.group({          
         date: new FormControl(new Date(), Validators.required),
         amount: new FormControl(null,Validators.required),
         discount: new FormControl(null),
@@ -146,19 +145,20 @@ export class ClientPackageComponent implements OnInit {
       this.toastrService.error("Error! Data list Not Found");
     })    
   }
+
+  
   setPrice(id:any){
     var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==id).price;
     this.frm.controls['amount'].setValue(price);
+    
+    this.frm.controls['discount'].setValue(0);
+    this.frm.controls['date'].setValue('');
     this.setTotalAmount();
-
   }
 
-  setTotalAmount(){    
-    debugger
-    
+  setTotalAmount(){  
     const amount = this.frm.controls['amount'].value;
     const discount = this.frm.controls['discount'].value;
-
     const totalAmount = amount - discount;
     this.frm.controls['totalAmount'].setValue(totalAmount);
 
