@@ -86,6 +86,21 @@ export class ClientPackageComponent implements OnInit {
     return false;
   }
 
+
+  resetByCompanyChange(){
+    this.frm = this.fb.group({
+      id: new FormControl(0),
+      anFCompanyPackageTypeId: new FormControl(Validators.required),
+      anFCompanyPackageId: new FormControl(),      
+      date: new FormControl(new Date(), Validators.required),
+      amount: new FormControl(null,Validators.required),
+      discount: new FormControl(null),
+      isActive:new FormControl(true),
+      isFixed:new FormControl(true),
+      totalAmount: new FormControl(null)      
+    });
+  }
+
   getClientPackage() {
     this.progressStatus=false;
     this.gSvc.postdata("api/TFAClientPackage/GetAllClientPackage", {}).subscribe(res => {
@@ -101,6 +116,15 @@ export class ClientPackageComponent implements OnInit {
     debugger
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
       this.CompanyPackagelist = res;
+      this.frm = this.fb.group({
+        //anFCompanyPackageId: new FormControl(),      
+        date: new FormControl(new Date(), Validators.required),
+        amount: new FormControl(null,Validators.required),
+        discount: new FormControl(null),
+        isActive:new FormControl(true),
+        isFixed:new FormControl(true),
+        totalAmount: new FormControl(null)      
+      });
      
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
