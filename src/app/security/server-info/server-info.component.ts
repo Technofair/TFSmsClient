@@ -26,9 +26,21 @@ export class ServerInfoComponent implements OnInit {
 
   }
   getserverInfo() {
-    this.gSvc.postdata("api/ServerInfo/GetServerInfo", {}).subscribe(res => {   
-       debugger;
-        this.softwareInfo=res;
+  this.gSvc.postdata("api/ServerInfo/GetServerInfo", {}).subscribe(res => {   
+  this.softwareInfo=res;
+  fetch('https://ipinfo.io/json')
+  .then(response => response.json())
+  .then(data => {
+    // console.log(data.ip); // Client's IP address
+    // console.log(data.city); // City
+    // console.log(data.region); // Region
+    // console.log(data.country); // Country
+    this.softwareInfo.serverIp=data;
+  })
+  .catch(error => {
+    console.error('Error fetching IP information:', error);
+  });
+      
       this.toastrService.success(res.messages);
     }, err => {
       this.toastrService.error("error");
