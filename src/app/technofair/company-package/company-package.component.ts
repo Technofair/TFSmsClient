@@ -54,7 +54,14 @@ export class CompanyPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-         console.log(JSON.stringify(this.frm.value));
+         
+        if (this.frm.controls['id'].value == 0) {
+          this.frm.controls['createdBy'].setValue(this.auth.getUserId());
+          this.frm.controls['createdDate'].setValue(new Date());
+        } else if (this.frm.controls['id'].value > 0) {
+          this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
+        }
+
           this.gSvc.postdata("api/TFACompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getCompanyPackages();
