@@ -60,7 +60,6 @@ export class ClientPackageComponent implements OnInit {
   }
   save() {
     if (this.frm.invalid) return false;
-
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -82,29 +81,19 @@ export class ClientPackageComponent implements OnInit {
       reject: () => {
 
       }
-
     })
     return false;
   }
 
 
   resetByCompanyChange(){
-    // this.frm = this.fb.group({
-    //   id: new FormControl(0),
-    //   anFCompanyPackageTypeId: new FormControl(Validators.required),
-    //   anFCompanyPackageId: new FormControl(),
-    //   cmnCompanyCustomerId: new FormControl(Validators.required),
-    //   date: new FormControl(new Date(), Validators.required),
-    //   amount: new FormControl(null,Validators.required),
-    //   discount: new FormControl(null),
-    //   isActive:new FormControl(true),
-    //   isFixed:new FormControl(true),
-    //   totalAmount: new FormControl(null),
-    //   createdBy:new FormControl(this.auth.getUserId()),
-    //   createdDate:new FormControl(new Date()),
-    //   modifiedBy:new FormControl(this.auth.getUserId()),
-    //   modifiedDate:new FormControl(new Date())  
-    // });
+    this.frm.controls['anFCompanyPackageTypeId'].setValue(null);
+    this.frm.controls['anFCompanyPackageId'].setValue(null);
+    this.frm.controls['amount'].setValue(null);
+    this.frm.controls['discount'].setValue(null);
+    this.frm.controls['isActive'].setValue(true);
+    this.frm.controls['totalAmount'].setValue(null);
+    this.frm.controls['date'].setValue('');    
   }
 
   getClientPackage() {
@@ -121,16 +110,13 @@ export class ClientPackageComponent implements OnInit {
   getCompanyPackages(event:any) {
     debugger
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
-      this.CompanyPackagelist = res;
-      // this.frm = this.fb.group({          
-      //   date: new FormControl(new Date(), Validators.required),
-      //   amount: new FormControl(null,Validators.required),
-      //   discount: new FormControl(null),
-      //   isActive:new FormControl(true),
-      //   isFixed:new FormControl(true),
-      //   totalAmount: new FormControl(null)      
-      // });
-     
+    this.CompanyPackagelist = res;
+    this.frm.controls['anFCompanyPackageId'].setValue(null);
+    this.frm.controls['amount'].setValue(null);
+    this.frm.controls['discount'].setValue(null);
+    this.frm.controls['isActive'].setValue(true);
+    this.frm.controls['totalAmount'].setValue(null);
+    this.frm.controls['date'].setValue('');  
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
@@ -155,8 +141,7 @@ export class ClientPackageComponent implements OnInit {
   
   setPrice(id:any){
     var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==id).price;
-    this.frm.controls['amount'].setValue(price);
-    
+    this.frm.controls['amount'].setValue(price);    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
     this.setTotalAmount();
