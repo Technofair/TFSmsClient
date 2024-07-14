@@ -15,13 +15,13 @@
         <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages($event.value)" ></p-dropdown><br>
+          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages()" ></p-dropdown><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="allowPackage">
         <label>{{'Package'|translate}}</label>
         <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="anFCompanyPackageId"
           [filter]="true" filterBy="anFCompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice($event.value)"></p-dropdown><br>
+          optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice()"></p-dropdown><br>
       </div>
       
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">

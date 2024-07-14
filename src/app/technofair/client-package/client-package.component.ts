@@ -25,7 +25,7 @@ export class ClientPackageComponent implements OnInit {
   progressStatus:boolean=true;
   frm!:FormGroup
   companyPackageTypes:any;
-  
+  allowPackage:boolean=false;
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -65,9 +65,6 @@ export class ClientPackageComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          debugger
-          console.log(JSON.stringify(this.frm.value));
-
           this.gSvc.postdata("api/TFAClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getClientPackage();
@@ -93,13 +90,13 @@ export class ClientPackageComponent implements OnInit {
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
     this.frm.controls['totalAmount'].setValue(null);
-    this.frm.controls['date'].setValue('');    
+    this.frm.controls['date'].setValue('');   
+    
   }
 
   getClientPackage() {
     this.progressStatus=false;
     this.gSvc.postdata("api/TFAClientPackage/GetAllClientPackage", {}).subscribe(res => {
-      console.log(res);
       this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
@@ -107,18 +104,20 @@ export class ClientPackageComponent implements OnInit {
     this.progressStatus=true;
   }
 
-  getCompanyPackages(event:any) {
-    debugger
-    this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + event, {}).subscribe(res => {
-    this.CompanyPackagelist = res;
+  getCompanyPackages() {
     this.frm.controls['anFCompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
     this.frm.controls['totalAmount'].setValue(null);
-    this.frm.controls['date'].setValue('');  
+    this.frm.controls['date'].setValue(''); 
+    this.CompanyPackagelist='';
+    var anFCompanyPackageTypeId = this.frm.controls['anFCompanyPackageTypeId'].value;
+    this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==anFCompanyPackageTypeId).allowPackage;
+    this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + anFCompanyPackageTypeId, {}).subscribe(res => {
+      this.CompanyPackagelist = res;
     }, err => {
-      this.toastrService.error("Error! Data list Not Found");
+      this.toastrService.error("Package list Not Found");
     })
   }
 
@@ -132,6 +131,7 @@ export class ClientPackageComponent implements OnInit {
   }
   getcompanyPackageTypes() {
     this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
+     
       this.companyPackageTypes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
@@ -139,8 +139,14 @@ export class ClientPackageComponent implements OnInit {
   }
 
   
-  setPrice(id:any){
-    var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==id).price;
+  setPrice(){
+    var value =this.frm.controls['anFCompanyPackageId'].value;
+    this.frm.controls['amount'].setValue('');    
+    this.frm.controls['discount'].setValue(0);
+    this.frm.controls['date'].setValue('');
+    this.frm.controls['totalAmount'].setValue(null);
+    
+    var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==value).price;
     this.frm.controls['amount'].setValue(price);    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
@@ -159,9 +165,9 @@ export class ClientPackageComponent implements OnInit {
   edit(res: any) {
     debugger
     //var package = this.frm.controls['anFCompanyPackageId'].value;
-    this.getCompanyPackages(res.anFCompanyPackageTypeId);
+    this.getCompanyPackages();
     this.frm.patchValue(res);
-    alert(res.anFCompanyPackageId);
+   
     //this.frm.controls['anFCompanyPackageId'].setValue(res.anFCompanyPackageId);
     
   }
