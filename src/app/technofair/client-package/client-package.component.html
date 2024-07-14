@@ -7,20 +7,20 @@
     <div class="formgrid grid">
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'CUSTOMER'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
+        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="tFACompanyCustomerId"
           [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id" (onChange) ="resetByCompanyChange()"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="anFCompanyPackageTypeId"
+        <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="tFACompanyPackageTypeId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="title" optionValue="id" (onChange)="getCompanyPackages()" ></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="allowPackage">
         <label>{{'Package'|translate}}</label>
-        <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="anFCompanyPackageId"
-          [filter]="true" filterBy="anFCompanyPackageId" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+        <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="tFACompanyPackageId"
+          [filter]="true" filterBy="minMaxSubscriber" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice()"></p-dropdown><br>
       </div>
       
@@ -99,10 +99,10 @@
       </th>
       <th class="vcenter text-center">{{'PACKAGETYPE'|translate}}</th>
       <th class="vcenter text-center">{{'CompanyPackage'|translate}}</th>      
-      <th class="vcenter text-center">{{'Date'|translate}}</th>
       <th class="vcenter text-center">{{'Amount'|translate}}</th>
       <th class="vcenter text-center">{{'Discount'|translate}}</th>
       <th class="vcenter text-center">{{'TotalAmount'|translate}}</th>
+      <th class="vcenter text-center">{{'Date'|translate}}</th>
       <!-- <th class="vcenter text-center">{{'ACTION'|translate}}</th> -->
     </tr>
     <tr>
@@ -118,10 +118,10 @@
       <td>{{r.companyCustomerName}}</td>
       <td>{{r.companyPackageTypeName}}</td>
       <td>{{r.minMaxSubscriber}}</td>
-      <td>{{r.date  | date: 'dd-MM-yyyy hh:mm'}}</td>
       <td>{{r.amount}}</td>
       <td>{{r.discount}}</td>
       <td>{{r.amount-r.discount}}</td>
+      <td>{{r.date  | date: 'dd-MM-yyyy hh:mm'}}</td>
       <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">

@@ -35,7 +35,7 @@ export class CompanyPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      anFCompanyPackageTypeId:new FormControl(Validators.required),
+      tfaCompanyPackageTypeId:new FormControl(Validators.required),
       minSubscriber:new FormControl(Validators.required),
       maxSubscriber:new FormControl(Validators.required),
       price:new FormControl(Validators.required),
@@ -65,7 +65,7 @@ export class CompanyPackageComponent implements OnInit {
           this.gSvc.postdata("api/TFACompanyPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getCompanyPackages();
-            this.toastrService.success("Company Package Saved");
+            this.toastrService.success(res.message);
           }, err => {
             this.toastrService.error("Error! Company Package Not Saved");
           })
@@ -91,6 +91,7 @@ export class CompanyPackageComponent implements OnInit {
   getCompanyPackageTypeByAllowPackage(){
       this.gSvc.postdata("api/TFACompanyPackageType/GetCompanyPackageTypeByAllowPackage?allowPackage=" + true, {}).subscribe(res => {
       this.companyPackageTypes = res;
+      
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     }) 
@@ -101,6 +102,7 @@ export class CompanyPackageComponent implements OnInit {
     this.progressStatus=false;
     this.gSvc.postdata("api/TFACompanyPackage/GetAllCompanyPackage", {}).subscribe(res => {
       this.CompanyPackages = res;
+      console.log(res);
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
@@ -108,6 +110,7 @@ export class CompanyPackageComponent implements OnInit {
   }
 
   edit(res: any) {
+    debugger
     this.frm.patchValue(res);
   }
 

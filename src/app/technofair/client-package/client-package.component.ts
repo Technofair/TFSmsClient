@@ -43,9 +43,9 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      anFCompanyPackageTypeId: new FormControl(Validators.required),
-      anFCompanyPackageId: new FormControl(),
-      cmnCompanyCustomerId: new FormControl(Validators.required),
+      tFACompanyPackageTypeId: new FormControl(Validators.required),
+      tFACompanyPackageId: new FormControl(),
+      tFACompanyCustomerId: new FormControl(Validators.required),
       date: new FormControl(new Date(), Validators.required),
       amount: new FormControl(null,Validators.required),
       discount: new FormControl(null),
@@ -68,7 +68,7 @@ export class ClientPackageComponent implements OnInit {
           this.gSvc.postdata("api/TFAClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getClientPackage();
-            this.toastrService.success("ClientPackage Saved");
+            this.toastrService.success(res.message);
           }, err => {
             this.toastrService.error("Error! ClientPackage Not Saved");
           })
@@ -84,8 +84,8 @@ export class ClientPackageComponent implements OnInit {
 
 
   resetByCompanyChange(){
-    this.frm.controls['anFCompanyPackageTypeId'].setValue(null);
-    this.frm.controls['anFCompanyPackageId'].setValue(null);
+    this.frm.controls['tFACompanyPackageTypeId'].setValue(null);
+    this.frm.controls['tFACompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
@@ -105,16 +105,16 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages() {
-    this.frm.controls['anFCompanyPackageId'].setValue(null);
+    this.frm.controls['tFACompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
     this.frm.controls['totalAmount'].setValue(null);
     this.frm.controls['date'].setValue(''); 
     this.CompanyPackagelist='';
-    var anFCompanyPackageTypeId = this.frm.controls['anFCompanyPackageTypeId'].value;
-    this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==anFCompanyPackageTypeId).allowPackage;
-    this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + anFCompanyPackageTypeId, {}).subscribe(res => {
+    var tFACompanyPackageTypeId = this.frm.controls['tFACompanyPackageTypeId'].value;
+    this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==tFACompanyPackageTypeId).allowPackage;
+    this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + tFACompanyPackageTypeId, {}).subscribe(res => {
       this.CompanyPackagelist = res;
     }, err => {
       this.toastrService.error("Package list Not Found");
@@ -140,7 +140,7 @@ export class ClientPackageComponent implements OnInit {
 
   
   setPrice(){
-    var value =this.frm.controls['anFCompanyPackageId'].value;
+    var value =this.frm.controls['tFACompanyPackageId'].value;
     this.frm.controls['amount'].setValue('');    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
@@ -163,13 +163,8 @@ export class ClientPackageComponent implements OnInit {
 
 
   edit(res: any) {
-    debugger
-    //var package = this.frm.controls['anFCompanyPackageId'].value;
     this.getCompanyPackages();
     this.frm.patchValue(res);
-   
-    //this.frm.controls['anFCompanyPackageId'].setValue(res.anFCompanyPackageId);
-    
   }
 
   showModalDialog(id: any) {
