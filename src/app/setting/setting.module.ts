@@ -47,6 +47,7 @@ import { FrequencyComponent } from './frequency/frequency.component';
 import { CompanyCustomersComponent } from './company-customers/company-customers.component';
 import { ClientSmsBalanceComponent } from './client-sms-balance/client-sms-balance.component';
 import { ClientServicePermissionComponent } from './client-service-permission/client-service-permission.component';
+import { DataMigrationComponent } from './data-migration/data-migration.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { ClientServicePermissionComponent } from './client-service-permission/cl
     FrequencyComponent,
     CompanyCustomersComponent,
     ClientSmsBalanceComponent,
-    ClientServicePermissionComponent
+    ClientServicePermissionComponent,
+    DataMigrationComponent
   ],
   exports: [
   ],
