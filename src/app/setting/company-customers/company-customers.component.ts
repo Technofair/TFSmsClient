@@ -44,34 +44,24 @@ export class CompanyCustomersComponent {
 
 
 
- save() {
-  console.log(JSON.stringify(this.frm.value))
-  if (this.frm.invalid) return false;
-  debugger
+ save() {  
+  if (this.frm.invalid) return false;  
   this.confirmationService.confirm({
     message: 'Are you sure that you want to proceed?',
     header: 'Confirmation',
     icon: 'pi pi-exclamation-triangle',
-    accept: () => {
-
-  debugger
+    accept: () => {  
       if (this.frm.controls['id'].value == 0) {
         this.frm.controls['createdBy'].setValue(this.auth.getUserId());
         this.frm.controls['createdDate'].setValue(new Date());
       } else if (this.frm.controls['id'].value > 0) {
         this.frm.controls['modifiedBy'].setValue(this.auth.getUserId());
       }     
-      
-
       this.gSvc.postdata("api/TFACompanyCustomer/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-        //this.toastrService.success("save");
-        //this.reset();
         if (res.success) {
           this.initialize();
           this.getCompany();
-          //this.getFrm();
           this.toastrService.success(res.message);         
-         
         }
         else {
           this.toastrService.warning(res.message);
@@ -88,19 +78,12 @@ export class CompanyCustomersComponent {
 }
 
 
-getCompany() {
-  debugger
-  
-  //New
-  this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {
-    
-    this.companyList = res;
-    //this.progressStatus=true;
-  }, err => {
-    //this.progressStatus=true;
+getCompany() {  
+  this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {    
+    this.companyList = res;    
+  }, err => {   
     this.toastrService.error("Error! Company list not found ");
-  })
- 
+  }) 
 }
 
 //File Upload
@@ -157,16 +140,24 @@ initialize(){
     contactPerson: new FormControl(""),
     contactNo: new FormControl("",[Validators.required]),
     email: new FormControl("",[Validators.required]),
-    web: new FormControl(),
-    code: new FormControl("0"),
+    web: new FormControl(""),
+    code: new FormControl("0",[Validators.required]),
     address: new FormControl("",[Validators.required]),
-    phone: new FormControl(""),
+    contactPersonNo: new FormControl(""),
+    bin: new FormControl(""),
+    shortName: new FormControl(""),
+    cmnCountryId: new FormControl(),
+    cmnCurrencyId: new FormControl(),
+    logo: new FormControl(""),
+    appKey: new FormControl(""),
+    serverIP: new FormControl(""),
+    motherBoardId: new FormControl(""),
+    networkAdapterId: new FormControl(""),
     isActive: new FormControl(true,[Validators.required]),
-    createdBy: new FormControl(),
-    createdDate: new FormControl(),
-    modifiedBy: new FormControl(this.auth.getUserId())
+    createdBy:new FormControl(this.auth.getUserId()),
+    createdDate:new FormControl(new Date()),
+    modifiedBy:new FormControl(this.auth.getUserId()),
+    modifiedDate:new FormControl(new Date())
   })
-
 }
-
 }

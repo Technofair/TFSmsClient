@@ -742,6 +742,10 @@
     "CompanyCollection": "কোম্পানি সংগ্রহ",
     "IsFixed": "সংশোধন করা হয়েছে",
     "ExpairDate": "শেষ তারিখ",
+    "AppKey": "অ্যাপ কী",
+    "MotherBoardId": "মাদারবোর্ড আইডি",
+    "NetworkAdapterId": "নেটওয়ার্ক অ্যাডাপ্টার আইডি",
+    "Company Customer": "কোম্পানির গ্রাহক",
     "UserRechargeRefund":"ইউসার রিচার্জ রিফান্ড"
 }
 

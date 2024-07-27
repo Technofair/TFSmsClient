@@ -565,6 +565,7 @@
     "FREQUENCY":"FREQUENCY",
     "BIN NUMBER":"BIN Number",
     "CompanyCustomer":"Customer",
+    "Company Customer": "Company Customer",
     "MobileMessageTemplate":"Mobile Message Template",
     "serviceInitiate":"Service Initiate",
     "ClientServicePermission":"Client Service Permission",
@@ -588,5 +589,8 @@
     "CompanyCollection": "Company Collection",
     "Server Type": "Server Type",
     "Device Serial Number": "Device Serial Number",
+    "AppKey": "App Key",
+    "MotherBoardId": "MotherBoardId",
+    "NetworkAdapterId": "NetworkAdapterId",
     "AppointedCompany": "Appointed Company?"
 }
