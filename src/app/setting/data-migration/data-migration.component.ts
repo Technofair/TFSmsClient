@@ -15,7 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DataMigrationComponent implements OnInit {
 
-   banks: any;
+   list: any;
   selectedCustomers: any;
   displayModal: boolean = false;
   viewInfo: any = {};
@@ -28,7 +28,7 @@ export class DataMigrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
-    this.getbankas();
+    this.getDataMigrationList();
   }
   getFrm(){
     this.frm = this.fb.group({
@@ -50,27 +50,15 @@ export class DataMigrationComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
+        
           this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.frm.reset();
-            this.getbankas();
+            this.getDataMigrationList();
             this.toastrService.success("Bank Information Saved");
           }, err => {
             this.toastrService.error("Error! Bank Information Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("api/BankInformation/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getbankas();
-            this.toastrService.success("Bank Information Updated");
-
-          }, err => {
-            this.toastrService.error("Error! Bank Information Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
@@ -81,22 +69,23 @@ export class DataMigrationComponent implements OnInit {
     return false;
   }
 
-  getbankas() {
+  getDataMigrationList() {
     this.progressStatus=false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+    this.gSvc.postdata("api/DataMigration/GetMigrationStatistics", {}).subscribe(res => {
+      this.list = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
     this.progressStatus=true;
   }
 
-  migration(res: any) {
+  migration(companyId: any) {
+    debugger
     this.progressStatus=false;
-    this.gSvc.postdata("api/BankInformation/GetAll", {}).subscribe(res => {
-      this.banks = res;
+    this.gSvc.postdata("api/DataMigration/MigrateFormerSmsDbSyncToCas?CompanyId="+companyId, {}).subscribe(res => {
+      this.toastrService.success(res.message);
     }, err => {
-      this.toastrService.error("Error! Data list Not Found");
+      this.toastrService.error("Migration not success");
     })
     this.progressStatus=true;
   }
