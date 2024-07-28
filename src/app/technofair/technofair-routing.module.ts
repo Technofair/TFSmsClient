@@ -9,6 +9,7 @@ import { ClientPaymentComponent } from './client-payment/client-payment.componen
 import { CompanyPackageTypeComponent } from './company-package-type/company-package-type.componet';
 import { CustomerServerInfoComponent } from './customer-server-info/customer-server-info.component';
 import { ClientServerInfoComponent } from './client-server-info/client-server-info.component';
+import { ClientBillGenerationComponent } from './client-bill-generation/client-bill-generation.component';
 
 const routes: Routes = [
   { path: 'clientinfo', component: ClientInfoComponent },
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: 'company-collection', component: CompanyCollectionComponent },
   { path: 'company-package-type', component: CompanyPackageTypeComponent },
   { path: 'customer-server-info-component', component: CustomerServerInfoComponent },
-  { path: 'client-server-info', component: ClientServerInfoComponent }
+  { path: 'client-server-info', component: ClientServerInfoComponent },
+  { path: 'client-bill-generation', component: ClientBillGenerationComponent }
+  
 ];
 
 @NgModule({

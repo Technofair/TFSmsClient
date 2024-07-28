@@ -80,7 +80,6 @@ export class DataMigrationComponent implements OnInit {
   }
 
   migration(companyId: any) {
-    
     this.progressStatus=false;
     this.gSvc.postdata("api/DataMigration/MigrateFormerSmsDbSyncToCas?CompanyId="+companyId, {}).subscribe(res => {
       this.toastrService.success("Migration success");
