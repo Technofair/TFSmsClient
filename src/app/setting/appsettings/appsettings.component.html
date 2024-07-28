@@ -9,14 +9,14 @@
                 <div class="formgrid grid">
                     <div class="flex align-items-center mr-2">
                         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
-                            [defaultChecked]="true" formControlName="AllowAutoSubscriberNumber">
+                            [defaultChecked]="true" formControlName="allowAutoSubscriberNumber">
                         <label class="form-check-label" for="flexCheckDefault"> {{'AllowAutoSubscriberNumber' |
                             translate}} </label>
                     </div>
                     <div class="flex align-items-center ml-3">
-                        <label class="">{{'SubscriberNumberLength'|translate}}</label><span class="text-danger">
+                        <label class="">{{'SubscriberNumberLength'|translate}}</label><span class="text-danger mr-3">
                             *</span>
-                        <input type="text" class="" formControlName="SubscriberNumberLength" pInputText />
+                        <input type="text" class="" formControlName="subscriberNumberLength" pInputText />
                     </div>
                 </div>
             </p-accordionTab>
@@ -24,30 +24,47 @@
                 <div class="formgrid grid">
                     <div class="flex align-items-center mr-2">
                         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
-                            [defaultChecked]="true" formControlName="AllowPurchase">
+                            [defaultChecked]="true" formControlName="allowPurchase">
                         <label class="form-check-label" for="flexCheckDefault"> {{'AllowPurchase' |
                             translate}} </label>
                     </div>
                     <div class="flex align-items-center mr-2">
                         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
-                            [defaultChecked]="true" formControlName="AllowSale">
+                            [defaultChecked]="true" formControlName="allowSale">
                         <label class="form-check-label" for="flexCheckDefault"> {{'AllowSale' |
                             translate}} </label>
                     </div>
                 </div>
             </p-accordionTab>
-            <p-accordionTab header="Integrator">
-                <p>
-                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum
-                    deleniti
-                    atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
-                    similique
-                    sunt in culpa .
-                    qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis
-                    est et
-                    expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit
-                    quo minus.
-                </p>
+            <p-accordionTab header="Environment">
+                <div class="formgrid grid">                    
+                    <div class="flex align-items-center mr-2">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            [defaultChecked]="true" formControlName="allowMigration">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'AllowMigration' |
+                            translate}} </label>
+                    </div>
+                    <div class="flex align-items-center mr-2">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            [defaultChecked]="true" formControlName="isProduction">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'IsProduction' |
+                            translate}} </label>
+                    </div>
+                    <div class="flex align-items-center ml-3">
+                        <label class="mr-3">{{'AppKey'|translate}}</label>
+                        <input type="text" class="" formControlName="appKey" pInputText />
+                    </div>
+                </div>
+            </p-accordionTab>
+            <p-accordionTab header="Subscription">
+                <div class="formgrid grid">
+                    <div class="flex align-items-center mr-2">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            [defaultChecked]="true" formControlName="allowRenewableArrear">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'AllowRenewableArrear' |
+                            translate}} </label>
+                    </div>
+                </div>
             </p-accordionTab>
         </p-accordion>
 
@@ -87,7 +104,7 @@
             <th class="vcenter text-center">{{'LengthOfSubscriberNumber' | translate}}</th>
             <th class="vcenter text-center">{{'AllowPurchase' | translate}}</th>
             <th class="vcenter text-center">{{'AllowSale' | translate}}</th>
-            <th class="vcenter text-center">{{'AutoReceive' | translate}}</th>
+            <!-- <th class="vcenter text-center">{{'AutoReceive' | translate}}</th> -->
             <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>
         <!-- <tr>
@@ -100,11 +117,11 @@
     <ng-template pTemplate="body" let-r>
         <tr class="p-selectable-row">
             <td>{{r.id}}</td>
-            <td>{{r.isAutoSubscriberNumber}}</td>
-            <td>{{r.isLengthOfSubscriberNumber}}</td>
-            <td>{{r.isAllowPurchase}}</td>
-            <td>{{r.isAllowSale}}</td>
-            <td>{{r.isAutoReceive}}</td>
+            <td>{{r.allowAutoSubscriberNumber}}</td>
+            <td>{{r.subscriberNumberLength}}</td>
+            <td>{{r.allowPurchase}}</td>
+            <td>{{r.allowSale}}</td>
+            <!-- <td>{{r.isAutoReceive}}</td> -->
             <td class="vcenter text-center">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>

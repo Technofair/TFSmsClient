@@ -14,37 +14,42 @@ import { GeneralService } from 'src/app/services/general.service';
   providers: [ConfirmationService]
 })
 export class AppsettingsComponent {
-activeTabs: any;
+  activeTabs: any;
   list: any;
   AllowAutoSubscriberNumber: boolean = true;
   AllowPurchase: boolean = true;
-  AllowSale: boolean = true; 
+  AllowSale: boolean = true;
   //formId = 0;
-  frm!: FormGroup;  
+  frm!: FormGroup;
   //progressStatus: boolean = true; 
   constructor(private fb: FormBuilder,
-     private router: Router,
-     private confirmationService: ConfirmationService,
-     private gSvc: GeneralService,
-     private toastrService: ToastrService,
-     private auth: AuthService) {
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private gSvc: GeneralService,
+    private toastrService: ToastrService,
+    private auth: AuthService) {
 
   }
-  ngOnInit(): void {   
+  ngOnInit(): void {
     this.frm = new FormGroup({
-      id: new FormControl(),      
-      AllowAutoSubscriberNumber: new FormControl(true,[Validators.required]),
-      SubscriberNumberLength:new FormControl(0,[Validators.required]), 
-      AllowPurchase: new FormControl(true,[Validators.required]),
-      AllowSale: new FormControl(true,[Validators.required]),      
+      id: new FormControl(0),
+      allowAutoSubscriberNumber: new FormControl(true, [Validators.required]),
+      subscriberNumberLength: new FormControl(0, [Validators.required]),
+      allowPurchase: new FormControl(true, [Validators.required]),
+      allowSale: new FormControl(true, [Validators.required]),
+      allowRenewableArrear: new FormControl(),
+      allowMigration: new FormControl(),
+      isProduction: new FormControl(),
+      appKey: new FormControl(""),
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
+      modifiedBy: new FormControl(this.auth.getUserId()),
+      modifiedDate: new FormControl(new Date())
     });
     this.getAppSetting();
   }
-  
-   saveAppSetting(){
-    //this.progressStatus = false;
+
+  saveAppSetting() {    
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -55,11 +60,9 @@ activeTabs: any;
         debugger
         this.gSvc.postdata("Common/CmnAppSetting/Update", JSON.stringify(this.frm.value)).subscribe(res => {
           this.frm.reset();
-          this.getAppSetting();
-          //this.progressStatus = true;
+          this.getAppSetting();        
           this.toastrService.success("Successful");
-        }, err => {
-          //this.progressStatus = true;
+        }, err => {        
           this.toastrService.error("Error! Data Not Saved.");
         })
         return true;
@@ -68,22 +71,21 @@ activeTabs: any;
       }
     })
     return false;
-   }
-  getAppSetting() { 
-    debugger
-    this.gSvc.postdata("api/CmnAppSetting/GetCmnAppSetting", {}).subscribe(res => {
-      this.list = res;      
-    }, err => {      
+  }
+
+  getAppSetting() {
+    this.gSvc.postdata("Common/CmnAppSetting/GetCmnAppSetting", {}).subscribe(res => {
+      this.list = res;
+    }, err => {
       this.toastrService.error("List not found");
     })
   }
 
   edit(res: any) {
-    debugger;    
     this.getAppSetting();
     this.frm.patchValue(res);
   }
-  
+
   reset() {
     this.frm.reset();
     this.frm.controls['id'].setValue(0);
