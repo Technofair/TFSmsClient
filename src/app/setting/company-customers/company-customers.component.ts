@@ -153,6 +153,7 @@ initialize(){
     serverIP: new FormControl(""),
     motherBoardId: new FormControl(""),
     networkAdapterId: new FormControl(""),
+    domainName: new FormControl(""),
     isActive: new FormControl(true,[Validators.required]),
     createdBy:new FormControl(this.auth.getUserId()),
     createdDate:new FormControl(new Date()),
