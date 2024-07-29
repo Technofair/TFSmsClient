@@ -5,12 +5,12 @@
   <form [formGroup]="frm">
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'Year'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="years" [style]="{'width':'100%'}" formControlName="year"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id" ></p-dropdown><br>
-      </div>
+        <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+            <label>{{'Year'|translate}}</label><span class="text-danger">*</span>
+            <p-dropdown [options]="years" [style]="{'width':'100%'}" formControlName="year"
+          [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
+          optionLabel="title" optionValue="id"  ></p-dropdown><br>
+          </div>
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Months'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="monthes" [style]="{'width':'100%'}" formControlName="monthId"
@@ -18,24 +18,17 @@
           optionLabel="title" optionValue="id"  ></p-dropdown><br>
       </div>
       
-      
-     
-      <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
-        <label>{{'ExpairDate'|translate}}</label><span class="text-danger">*</span>
-        <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy"
-          pInputText />
-      </div>
-      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-2">
+      <!-- <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-2">
         <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
           formControlName="IsActive">
         <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
-      </div>
+      </div> -->
       
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="flex justify-center">          
             <p-button (click)="save()" [disabled]="frm.invalid"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
-              label="{{'SAVE'|translate}}"></p-button>
+              label="{{'GenerateInvoice'|translate}}"></p-button>
             
           </div>
         </div>
