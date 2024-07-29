@@ -14,8 +14,34 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class ClientBillGenerationComponent implements OnInit {
-  years:any;
-  monthes:any;
+  years:any=[
+    {id:2024,name:"2024"},
+    {id:2025,name:"2025"},
+    {id:2026,name:"2026"},
+    {id:2027,name:"2027"},
+    {id:2028,name:"2028"},
+    {id:2029,name:"2029"},
+    {id:2030,name:"2030"},
+    {id:2031,name:"2031"},
+    {id:2032,name:"2032"},
+    {id:2033,name:"2033"},
+    {id:2034,name:"2034"},
+    {id:2035,name:"2035"}
+  ];
+  monthes:any=[
+    {id:1,name:"January"},
+    {id:2,name:"February"},
+    {id:3,name:"March"},
+    {id:4,name:"April"},
+    {id:5,name:"May"},
+    {id:6,name:"June"},
+    {id:7,name:"July"},
+    {id:8,name:"August"},
+    {id:9,name:"September"},
+    {id:10,name:"October"},
+    {id:11,name:"November"},
+    {id:12,name:"December"}
+  ];
   frm!:FormGroup
 
   
@@ -33,29 +59,30 @@ export class ClientBillGenerationComponent implements OnInit {
   }
   getFrm(){
     this.frm = this.fb.group({
-      id: new FormControl(0),
+     // id: new FormControl(0),
       year: new FormControl(Validators.required),
       monthId: new FormControl(),
- 
       createdBy:new FormControl(this.auth.getUserId()),
-      createdDate:new FormControl(new Date()),
-      modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date())
+     // createdDate:new FormControl(new Date()),
+      //modifiedBy:new FormControl(this.auth.getUserId()),
+      //modifiedDate:new FormControl(new Date())
     });
   }
   save() {
     if (this.frm.invalid) return false;
+    var year =this.frm.controls['year'].value;
+    var monthId=this.frm.controls['monthId'].value;
+    var createdBy= this.frm.controls['createdBy'].value;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          this.gSvc.postdata("api/TFAClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
+          this.gSvc.postdata("api/TFACilentBill/ClientBillGeneration?year="+year+"monthId="+monthId+"createdBy="+createdBy, {}).subscribe(res => {
             this.getFrm();
-            
             this.toastrService.success(res.message);
           }, err => {
-            this.toastrService.error("Error! ClientPackage Not Saved");
+            this.toastrService.error(err.message);
           })
         
         return true;
@@ -69,13 +96,11 @@ export class ClientBillGenerationComponent implements OnInit {
 
   getcompanyPackageTypes() {
     this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
-      this.monthes = res;
+    //  this.monthes = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })    
   }
-
-
   edit(res: any) {
     
     this.frm.patchValue(res);
