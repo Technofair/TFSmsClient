@@ -746,6 +746,7 @@
     "MotherBoardId": "মাদারবোর্ড আইডি",
     "NetworkAdapterId": "নেটওয়ার্ক অ্যাডাপ্টার আইডি",
     "Company Customer": "কোম্পানির গ্রাহক",
+    "SmsApiBaseUrl": "বেইজ ইউআরএল",
     "UserRechargeRefund":"ইউসার রিচার্জ রিফান্ড"
 }
 

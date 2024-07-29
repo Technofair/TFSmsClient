@@ -16,12 +16,14 @@ import { GeneralService } from 'src/app/services/general.service';
 export class AppsettingsComponent {
   activeTabs: any;
   list: any;
-  AllowAutoSubscriberNumber: boolean = true;
-  AllowPurchase: boolean = true;
-  AllowSale: boolean = true;
-  //formId = 0;
-  frm!: FormGroup;
-  //progressStatus: boolean = true; 
+  allowAutoSubscriberNumber: boolean = false;
+  allowPurchase: boolean = false;
+  allowSale: boolean = false;
+  allowRenewableArrear: boolean = false;
+  allowMigration: boolean = false;
+  isProduction: boolean = false;
+  frm!: FormGroup; 
+
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -32,15 +34,15 @@ export class AppsettingsComponent {
   }
   ngOnInit(): void {
     this.frm = new FormGroup({
-      id: new FormControl(0),
-      allowAutoSubscriberNumber: new FormControl(true, [Validators.required]),
-      subscriberNumberLength: new FormControl(0, [Validators.required]),
-      allowPurchase: new FormControl(true, [Validators.required]),
-      allowSale: new FormControl(true, [Validators.required]),
+      id: new FormControl(),
+      allowAutoSubscriberNumber: new FormControl(false,Validators.required),
+      subscriberNumberLength: new FormControl(0),
+      allowPurchase: new FormControl(false,Validators.required),
+      allowSale: new FormControl(false,Validators.required),
       allowRenewableArrear: new FormControl(),
       allowMigration: new FormControl(),
       isProduction: new FormControl(),
-      appKey: new FormControl(""),
+      appKey: new FormControl(""),     
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(this.auth.getUserId()),
@@ -61,7 +63,7 @@ export class AppsettingsComponent {
         this.gSvc.postdata("Common/CmnAppSetting/Update", JSON.stringify(this.frm.value)).subscribe(res => {
           this.frm.reset();
           this.getAppSetting();        
-          this.toastrService.success("Successful");
+          this.toastrService.success("Successful Update");
         }, err => {        
           this.toastrService.error("Error! Data Not Saved.");
         })
@@ -81,7 +83,7 @@ export class AppsettingsComponent {
     })
   }
 
-  edit(res: any) {
+  edit(res: any): void {
     this.getAppSetting();
     this.frm.patchValue(res);
   }

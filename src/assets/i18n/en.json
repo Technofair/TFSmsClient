@@ -592,5 +592,6 @@
     "AppKey": "App Key",
     "MotherBoardId": "MotherBoardId",
     "NetworkAdapterId": "NetworkAdapterId",
+    "SmsApiBaseUrl": "Sms Base Url",
     "AppointedCompany": "Appointed Company?"
 }
