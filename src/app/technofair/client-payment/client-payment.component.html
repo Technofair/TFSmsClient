@@ -19,12 +19,13 @@
           pInputText />
       </div>
 
+      <!-- search -->
 
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+      <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'DueDate'|translate}}</label>
         <input type="date"  class="p-2  w-full"formControlName="dueDate"
           pInputText />
-      </div>
+      </div> -->
           <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <p-table #dt [value]="monthList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
               [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
@@ -36,12 +37,15 @@
               <ng-template pTemplate="header">
                 <tr>
                   <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                  <th>{{'Month'|translate}}</th>
-                  <th>{{'ClientPackage' | translate}}</th>
+                  <th>{{'Month Of Bill'|translate}}</th>
+                  <th>{{'Package Type' | translate}}</th>
+                  <th>{{'Package' | translate}}</th>
                   <th>{{'Quantity'|translate}}</th>
-                  <th>{{'Rate'|translate}}</th>
-                  <th>{{'Discount'|translate}}</th>
                   <th>{{'Amount'|translate}}</th>
+                  <th>{{'Discount'|translate}}</th>
+                  <th>{{'TotalAmount'|translate}}</th>
+                  <th>{{'ExpireDate'|translate}}</th>
+                  <th>{{'Report'|translate}}</th>
                 </tr>
                 <tr>
                   <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
@@ -82,35 +86,35 @@
             </p-table>                        
           </div>
 
-          <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <!-- <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <hr style="width:100%;text-align:left;margin-left:0; border: 10px; border: solid black;">
             <label>{{'Payable'|translate}}</label>
             <hr style="width:100%;text-align:left;margin-left:0; border: solid black;">
             <label>{{'Due'|translate}}</label>
-          </div>
+          </div> -->
         
 
-        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
           <label>{{'NetAmount'|translate}}</label><span class="text-danger"> *</span><br>
           <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
             pInputText /><br>
-        </div> 
-        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        </div>  -->
+        <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
           <label>{{'TotalDiscount'|translate}}</label><span class="text-danger"> *</span><br>
           <input type="number" class="p-2  w-full" placeholder="{{'TotalDiscount'|translate}}" formControlName="totalDiscount"
             pInputText /><br>
-        </div>
-        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        </div> -->
+        <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
           <label>{{'TotalAmount'|translate}}</label><span class="text-danger"> *</span><br>
           <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
             pInputText /><br>
-        </div>
+        </div> -->
 
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Remarks'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="text" class="p-2  w-full" placeholder="{{'Remarks'|translate}}" formControlName="remarks"
           pInputText /><br>
-      </div>
+      </div> -->
       
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="flex justify-center">          
