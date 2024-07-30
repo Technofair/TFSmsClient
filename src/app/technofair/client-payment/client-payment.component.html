@@ -1,98 +1,109 @@
 <p-confirmDialog [baseZIndex]="10000"></p-confirmDialog>
 <p-panel>
   <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">{{'ClientPayment' |
-          translate}}</span></ng-template>
-<form [formGroup]="frm" (ngSubmit)="save()">
-  <input type="hidden" formControlName="id" value="0">
-  <div class="card">
-       <div class="formgrid grid">      
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-        <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
-        <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id"></p-dropdown><br>
-      </div>
+      translate}}</span></ng-template>
+  <form [formGroup]="frm" (ngSubmit)="save()">
+    <input type="hidden" formControlName="id" value="0">
+    <div class="card">
+      <div class="formgrid grid">
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+          <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
+          <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
+            [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+            optionValue="id"></p-dropdown><br>
+        </div>
 
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-        <label>{{'IssueDate'|translate}}</label>
-        <input type="date"  class="p-2  w-full"formControlName="date"
-          pInputText />
-      </div>
+        <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+          <label>{{'IssueDate'|translate}}</label>
+          <input type="date" class="p-2  w-full" formControlName="date" pInputText />
+        </div>
 
-      <!-- search -->
+        <!-- search -->
 
-      <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+        <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'DueDate'|translate}}</label>
         <input type="date"  class="p-2  w-full"formControlName="dueDate"
           pInputText />
       </div> -->
-          <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-            <p-table #dt [value]="monthList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-              [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
-              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-              [globalFilterFields]="['loginID','employeeName','companyName']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
-              [tableStyle]="{'min-width': '50rem'}">
-    
-              
-              <ng-template pTemplate="header">
-                <tr>
-                  <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
-                  <th>{{'Month Of Bill'|translate}}</th>
-                  <th>{{'Package Type' | translate}}</th>
-                  <th>{{'Package' | translate}}</th>
-                  <th>{{'Quantity'|translate}}</th>
-                  <th>{{'Amount'|translate}}</th>
-                  <th>{{'Discount'|translate}}</th>
-                  <th>{{'TotalAmount'|translate}}</th>
-                  <th>{{'ExpireDate'|translate}}</th>
-                  <th>{{'Report'|translate}}</th>
-                </tr>
-                <tr>
-                  <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
-                   <p-progressSpinner></p-progressSpinner>
-                  </div>
-               </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-monthList let-rowIndex="rowIndex">
-                <tr>
-                  <td>
-                    <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}" month="isChecked"
-                      id="isChecked">
-                  </td> 
-                  <td>
-                    {{ monthList.month}}
-                  </td>
-                  <td>
-                    {{ monthList.clientPackage}}
-                  </td>
-                  <!--<td>{{monthList.clientPackage}}</td>-->
-                  <td>
-                    <input type="text" [(ngModel)]="monthList.quantity" [ngModelOptions]="{standalone: true}" name="quantity"
-                    >
-                  </td>
-                  <td>
-                    <input type="text" [(ngModel)]="monthList.rate" [ngModelOptions]="{standalone: true}" name="rate"
-                    >
-                  </td>
-                  <td>
-                   <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}" name="discount"
-                    >
-                  </td>
-                  <td>
-                    {{ monthList.amount}}
-                  </td>
-                </tr>               
-              </ng-template>
-            </p-table>                        
-          </div>
+        <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <p-table #dt [value]="monthList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['loginID','employeeName','companyName']"
+            styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
 
-          <!-- <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th (click)="selectAll()"><p-tableHeaderCheckbox></p-tableHeaderCheckbox></th>
+                <th>{{'Month Of Bill'|translate}}</th>
+                <th>{{'Package Type' | translate}}</th>
+                <th>{{'Package' | translate}}</th>
+                <th>{{'Quantity'|translate}}</th>
+                <th>{{'Amount'|translate}}</th>
+                <th>{{'Discount'|translate}}</th>
+                <th>{{'TotalAmount'|translate}}</th>
+                <th>{{'ExpireDate'|translate}}</th>
+                <th>{{'Report'|translate}}</th>
+              </tr>
+              <tr>
+                <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
+                  <p-progressSpinner></p-progressSpinner>
+                </div>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-monthList let-rowIndex="rowIndex">
+              <tr>
+                <td>
+                  <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}"
+                    month="isChecked" id="isChecked">
+                </td>
+                <td>
+                  {{ monthList.month}}
+                </td>
+                <td>
+                  {{ monthList.clientPackageType}}
+                </td>
+                <td>
+                  {{ monthList.clientPackage}}
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="monthList.quantity" [ngModelOptions]="{standalone: true}"
+                    name="quantity">
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="monthList.rate" [ngModelOptions]="{standalone: true}" name="rate">
+                </td>
+                <td>
+                  <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}"
+                    name="discount">
+                </td>
+                <td>
+                  {{ monthList.amount}}
+                </td>
+                <td>
+                  {{ monthList.expireDate}}
+                </td>
+                <td>
+                  <p-button (click)="Report()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="button" icon="pi-receipt"
+                    label="{{'Invoice'|translate}}"></p-button>
+
+                    <!-- <p-button (click)="searchTest('rdlc'); reportModal.maximized = true" [disabled]="frm.invalid"
+                            styleClass="p-button-danger p-button-sm mr-2" type="button"
+                            icon="pi pi-file-pdf" label="{{'PDF'|translate}}"></p-button> -->
+                 </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <!-- <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
             <hr style="width:100%;text-align:left;margin-left:0; border: 10px; border: solid black;">
             <label>{{'Payable'|translate}}</label>
             <hr style="width:100%;text-align:left;margin-left:0; border: solid black;">
             <label>{{'Due'|translate}}</label>
           </div> -->
-        
+
 
         <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
           <label>{{'NetAmount'|translate}}</label><span class="text-danger"> *</span><br>
@@ -110,14 +121,14 @@
             pInputText /><br>
         </div> -->
 
-      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+        <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Remarks'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="text" class="p-2  w-full" placeholder="{{'Remarks'|translate}}" formControlName="remarks"
           pInputText /><br>
       </div> -->
-      
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <div class="flex justify-center">          
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <div class="flex justify-center">
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
               label="{{'SAVE'|translate}}"></p-button>
@@ -128,15 +139,23 @@
               icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
           </div>
         </div>
+
+        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+          <p-button [disabled]="frm.invalid" *ngIf="formId==0"
+              styleClass="p-button-danger p-button-sm" type="submit" icon="pi-dollar"
+              label="{{'PAYMENT'|translate}}"></p-button>
+        </div>
+
       </div>
-    </div>  
-</form>
+    </div>
+  </form>
 </p-panel>
 
 <p-table #dt [value]="CompanyPayments" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-  [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+  [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
+  [tableStyle]="{'min-width': '50rem'}">
 
   <ng-template pTemplate="caption">
     <div class="flex">
@@ -171,10 +190,10 @@
 
     <tr>
       <div [hidden]="progressStatus" style="position: absolute; z-index: 10;">
-       <p-progressSpinner></p-progressSpinner>
+        <p-progressSpinner></p-progressSpinner>
       </div>
-   </tr>
-   
+    </tr>
+
   </ng-template>
 
   <ng-template pTemplate="body" let-r>

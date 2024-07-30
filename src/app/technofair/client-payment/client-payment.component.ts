@@ -115,7 +115,7 @@ export class ClientPaymentComponent implements OnInit {
   }
 
   getCompanyCustomer() {
-    this.gSvc.postdata("api/CompanyCustomer/GetAll", {} ).subscribe(res => {
+    this.gSvc.postdata("api/TFACompanyCustomer/GetAll", {} ).subscribe(res => {
       this.CompanyCustomerlist = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
@@ -145,6 +145,13 @@ export class ClientPaymentComponent implements OnInit {
     this.formId = 1;
     this.frm.patchValue(res);
   }
+
+
+  Report(){
+    debugger
+    this.router.navigate(['/current-stock']);
+  }
+
 
   showModalDialog(id: any) {
     this.displayModal = true;
