@@ -10,7 +10,7 @@
           <label>{{'Company Customer'|translate}}</label><span class="text-danger"> *</span>
           <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="cmnCompanyCustomerId"
             [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
-            optionValue="id"></p-dropdown><br>
+            optionValue="id" (onChange)="getClientInvoice($event.value);"></p-dropdown><br>
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
@@ -26,8 +26,8 @@
           pInputText />
       </div> -->
         <div class="field  col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-          <p-table #dt [value]="monthList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
+          <p-table #dt [value]="clientInvoices" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50,100]" [paginator]="false"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
             [globalFilterFields]="['loginID','employeeName','companyName']"
             styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
@@ -55,8 +55,7 @@
             <ng-template pTemplate="body" let-monthList let-rowIndex="rowIndex">
               <tr>
                 <td>
-                  <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}"
-                    month="isChecked" id="isChecked">
+                  {{monthList.isActive}}
                 </td>
                 <td>
                   {{ monthList.month}}
@@ -68,15 +67,16 @@
                   {{ monthList.clientPackage}}
                 </td>
                 <td>
-                  <input type="text" [(ngModel)]="monthList.quantity" [ngModelOptions]="{standalone: true}"
-                    name="quantity">
+                  {{monthList.quantity}}
+                  
                 </td>
                 <td>
-                  <input type="text" [(ngModel)]="monthList.rate" [ngModelOptions]="{standalone: true}" name="rate">
+                  {{monthList.rate}}
+                 
                 </td>
                 <td>
-                  <input type="text" [(ngModel)]="monthList.discount" [ngModelOptions]="{standalone: true}"
-                    name="discount">
+                  {{monthList.discount}}
+                  
                 </td>
                 <td>
                   {{ monthList.amount}}
@@ -85,12 +85,12 @@
                   {{ monthList.expireDate}}
                 </td>
                 <td>
-                  <p-button (click)="Report()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="button" icon="pi-receipt"
-                    label="{{'Invoice'|translate}}"></p-button>
-
-                    <!-- <p-button (click)="searchTest('rdlc'); reportModal.maximized = true" [disabled]="frm.invalid"
+                  <p-button (click)="loadReportIn(monthList); reportModal.maximized = true" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="button" icon="pi pi-file"
+                    title="{{'Invoice'|translate}}"></p-button>
+                  <!-- <p-button (click)="search('rdlc',monthList); reportModal.maximized = true"
                             styleClass="p-button-danger p-button-sm mr-2" type="button"
                             icon="pi pi-file-pdf" label="{{'PDF'|translate}}"></p-button> -->
+                      
                  </td>
               </tr>
             </ng-template>
@@ -218,4 +218,19 @@
       <td colspan="9">No data found.</td>
     </tr>
   </ng-template>
+  <!-- Report Modal -->
+<p-dialog #reportModal header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '250vw'}"
+[style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
+<ng-template pTemplate="header">
+    <h5>{{'REPORT' | translate}}</h5>
+</ng-template>
+<div class="modal-body">
+    <reportviewer></reportviewer>
+</div>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-times" (click)="displayModal=false" label="{{'CLOSE' | translate}}"
+        styleClass="p-button-text"></p-button>
+</ng-template>
+</p-dialog>
+
 </p-table>
