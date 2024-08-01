@@ -89,11 +89,13 @@ export class ClientPaymentComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.gSvc.postdata("api//Save", this.monthList).subscribe(res => {
+
+      debugger
+        this.gSvc.postdata("api/TFAClientBill/Save", this.clientInvoices).subscribe(res => {
           this.getCompanyPayments();
           this.toastrService.success("Company Payment Saved");
         }, err => {
-          this.toastrService.error("Error! Bank Information Not Saved");
+          this.toastrService.error(err.message);
         })
         return true;
       },
@@ -138,13 +140,14 @@ export class ClientPaymentComponent implements OnInit {
   selectAll(){
     if(this.isCheck==true){
       this.isCheck=false;
-     this.monthList.forEach((x: { isActive: boolean; }) => (x.isActive = true));
+     this.clientInvoices.forEach((x: { isActive: boolean; }) => (x.isActive = true));
    }else{
      this.isCheck=true;
-     this.monthList.forEach((x: { isActive: boolean; }) => (x.isActive = false));
+     this.clientInvoices.forEach((x: { isActive: boolean; }) => (x.isActive = false));
      
    }
   }
+  
 
   edit(res: any) {
     this.formId = 1;

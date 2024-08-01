@@ -128,7 +128,7 @@
           pInputText /><br>
       </div> -->
 
-        <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <!-- <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
           <div class="flex justify-center">
             <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
@@ -139,10 +139,10 @@
             <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm ml-2"
               icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
           </div>
-        </div>
+        </div> -->
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-          <p-button [disabled]="frm.invalid" *ngIf="formId==0"
+          <p-button [disabled]="frm.invalid" (click)="save()" 
               styleClass="p-button-danger p-button-sm" type="submit" icon="pi-dollar"
               label="{{'PAYMENT'|translate}}"></p-button>
         </div>
