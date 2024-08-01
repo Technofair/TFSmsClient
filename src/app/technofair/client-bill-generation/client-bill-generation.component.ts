@@ -60,8 +60,8 @@ export class ClientBillGenerationComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
      // id: new FormControl(0),
-      year: new FormControl(Validators.required),
-      monthId: new FormControl(),
+      year: new FormControl(null,Validators.required),
+      monthId: new FormControl(null,Validators.required),
       createdBy:new FormControl(this.auth.getUserId()),
      // createdDate:new FormControl(new Date()),
       //modifiedBy:new FormControl(this.auth.getUserId()),
@@ -69,6 +69,7 @@ export class ClientBillGenerationComponent implements OnInit {
     });
   }
   save() {
+    debugger;
     if (this.frm.invalid) return false;
     var year =this.frm.controls['year'].value;
     var monthId=this.frm.controls['monthId'].value;
@@ -78,7 +79,8 @@ export class ClientBillGenerationComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-          this.gSvc.postdata("api/TFACilentBill/ClientBillGeneration?year="+year+"monthId="+monthId+"createdBy="+createdBy, {}).subscribe(res => {
+          // this.gSvc.postdata("api/TFAClientBill/GenerationClientBill?year="+year+"monthId="+monthId+"createdBy="+createdBy, {}).subscribe(res => {
+             this.gSvc.postdata("api/TFAClientBill/GenerationClientBill", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.toastrService.success(res.message);
           }, err => {
