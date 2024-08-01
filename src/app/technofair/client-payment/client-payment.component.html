@@ -55,7 +55,8 @@
             <ng-template pTemplate="body" let-monthList let-rowIndex="rowIndex">
               <tr>
                 <td>
-                  {{monthList.isActive}}
+                  <input type="checkbox" [(ngModel)]="monthList.isActive" [ngModelOptions]="{standalone: true}"
+                  month="isChecked" id="isChecked">
                 </td>
                 <td>
                   {{ monthList.month}}
