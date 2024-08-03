@@ -195,6 +195,9 @@ export class AuthService {
 
   setAppSetting(appSetting: any): void{
 
+    sessionStorage.setItem('applicationId', appSetting.applicationId);
+
+    
     if(appSetting.allowAutoSubscriberNumber){
       sessionStorage.setItem('allowAutoSubscriberNumber', 'YES');
     }
@@ -217,6 +220,12 @@ export class AuthService {
     else{
       sessionStorage.setItem('allowSale', 'NO');
     }
+
+  }
+
+  //sessionStorage.setItem('applicationId', appSetting.applicationId);
+  getApplicationId(): string | null{
+    return sessionStorage.getItem('applicationId');
   }
 
   allowAutoSubscriberNumber(): boolean{

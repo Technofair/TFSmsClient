@@ -93,7 +93,12 @@ export class LoginComponent implements OnInit {
             this.auth.setlanguage('bn');           
 
             // new
+            if(this.auth.getApplicationId() == '1'){
             this.router.navigate(['/home/dashboard/tfdashboard']);
+            }
+            else{
+              this.router.navigate(['/home/dashboard/msodashboard']);
+            }
 
             // old
             // this.router.navigate(['/home/dashboard/msodashboard']);
