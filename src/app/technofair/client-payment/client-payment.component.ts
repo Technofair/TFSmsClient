@@ -27,16 +27,17 @@ export class ClientPaymentComponent implements OnInit {
   formId = 0;
   progressStatus: boolean = true;
   frm!: FormGroup
-  ClientPackagelist: any
+  ClientPackagelist: any;
+  companyPackageTypes: any;
   isCheck :boolean=true;
-  monthList:any = [{
-    month: "january",
-    clientPackage:"ClientPackagelist",
-    quantity:10,
-    rate:40,
-    discount:50,
-    amount:500
-}]
+//   monthList:any = [{
+//     month: "january",
+//     clientPackage:"ClientPackagelist",
+//     quantity:10,
+//     rate:40,
+//     discount:50,
+//     amount:500
+// }]
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -89,7 +90,7 @@ export class ClientPaymentComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-
+        console.log(JSON.stringify(this.frm.value));
       debugger
         this.gSvc.postdata("api/TFAClientBill/Save", this.clientInvoices).subscribe(res => {
           this.getCompanyPayments();
@@ -135,6 +136,16 @@ export class ClientPaymentComponent implements OnInit {
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
+  }
+
+  getCompanyPackageTypes() {
+    this.progressStatus=false;
+    this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
+      this.companyPackageTypes = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus=true;
   }
 
   selectAll(){
