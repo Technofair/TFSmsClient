@@ -593,5 +593,12 @@
     "MotherBoardId": "MotherBoardId",
     "NetworkAdapterId": "NetworkAdapterId",
     "SmsApiBaseUrl": "Sms Base Url",
+    "ClientBillGeneration": "Client Bill Generation",
+    "Year": "Year",
+    "Months": "Months",
+    "GenerateInvoice": "GenerateInvoice",
+    "Month Of Bill": "Month Of Bill",
+    "ExpireDate": "Expire Date",
+    "Report": "Report",
     "AppointedCompany": "Appointed Company?"
 }
