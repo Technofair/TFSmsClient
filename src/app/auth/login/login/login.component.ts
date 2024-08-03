@@ -90,8 +90,14 @@ export class LoginComponent implements OnInit {
             this.auth.setAppSetting(result.cmnAppSetting);
             //End
 
-            this.auth.setlanguage('bn');
-            this.router.navigate(['/home/dashboard/msodashboard']);
+            this.auth.setlanguage('bn');           
+
+            // new
+            this.router.navigate(['/home/dashboard/tfdashboard']);
+
+            // old
+            // this.router.navigate(['/home/dashboard/msodashboard']);
+
           } else {
             this.toastrService.warning("Incorrect User ID or Password");
           //  this.toastrService.warning(result.message);

@@ -28,13 +28,15 @@ import { TabViewModule } from 'primeng/tabview';
 import { AccordionModule } from 'primeng/accordion';
 import { CardModule } from 'primeng/card';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TfDashboardComponent } from './tf-dashboard/tf-dashboard.component';
 
 
 @NgModule({
   declarations: [
     MsoDashboardComponent,
     SubsDashboardComponent,
-    DashboardComponent
+    DashboardComponent,
+    TfDashboardComponent
   ],
   imports: [
     CommonModule,
