@@ -41,7 +41,7 @@
                 <th>{{'Package' | translate}}</th>
                 <th>{{'Quantity'|translate}}</th>
                 <th>{{'Amount'|translate}}</th>
-                <th>{{'Discount'|translate}}</th>
+                <!-- <th>{{'Discount'|translate}}</th> -->
                 <th>{{'TotalAmount'|translate}}</th>
                 <th>{{'ExpireDate'|translate}}</th>
                 <th>{{'Report'|translate}}</th>
@@ -59,28 +59,25 @@
                   month="isChecked" id="isChecked">
                 </td>
                 <td>
-                  {{ monthList.month}}
+                  {{ monthList.monthOfBill}}
                 </td>
                 <td>
-                  {{ monthList.clientPackageType}}
+                  {{ monthList.packageType}}
                 </td>
                 <td>
-                  {{ monthList.clientPackage}}
+                  {{ monthList.packageName}}
                 </td>
                 <td>
-                  {{monthList.quantity}}
-                  
+                  {{monthList.quantity}}                  
                 </td>
                 <td>
-                  {{monthList.rate}}
-                 
+                  {{monthList.amount}}                 
                 </td>
+                <!-- <td>
+                  {{monthList.discount}}                  
+                </td> -->
                 <td>
-                  {{monthList.discount}}
-                  
-                </td>
-                <td>
-                  {{ monthList.amount}}
+                  {{ monthList.totalAmount}}
                 </td>
                 <td>
                   {{ monthList.expireDate}}
