@@ -56,43 +56,47 @@ export class ClientPaymentComponent implements OnInit {
   getFrm() {
     this.frm = this.fb.group({
       id: new FormControl(0),
-      refNo: new FormControl(""),
-      cmnFinancialYearId: new FormControl(Validators.required),
-      date: new FormControl(),
-      dueDate: new FormControl(),
       cmnCompanyCustomerId: new FormControl(),
-      anFClientPackageId: new FormControl(),
-      anFPaymentMethodId: new FormControl(),
-      paidDate: new FormControl(),
-      walletNo: new FormControl(),
-      trxID: new FormControl(),
-      totalAmount: new FormControl(),
-      totalDiscount: new FormControl(),
-      anFVoucherId: new FormControl(),
-      remarks: new FormControl(),
-      isCancelled: new FormControl(),
-      cancelledBy: new FormControl(this.auth.getUserId()),
-      cancelledDate: new FormControl(),
-      cancelReason: new FormControl(),
-      isCollected: new FormControl(),
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(this.auth.getUserId()),
       modifiedDate: new FormControl(new Date()),
       isActive: new FormControl(true),
-      checkbox: new FormControl()
     });
   }
-
   save() {
+    const transformedList = this.clientInvoices.map((item: {
+      totalAmount: any;
+      amount: any;
+      quantity: any;
+      packageName: any;
+      packageType: any; monthOfBill: any; isActive: any; 
+}) => ({
+      id: 0,
+      monthOfBill: item.monthOfBill,
+      packageType: item.packageType,
+      packageName: item.packageName,
+      isActive: item.isActive, 
+      quantity:item.quantity,
+      amount: item.amount,
+      totalAmount:item.totalAmount,
+      
+      createdBy: this.auth.getUserId(),
+      createdDate: new Date(),
+      modifiedBy: this.auth.getUserId(),
+      modifiedDate: new Date()
+    }));
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        console.log(JSON.stringify(this.frm.value));
-      debugger
-        this.gSvc.postdata("api/TFAClientBill/Save", this.clientInvoices).subscribe(res => {
+        let reqestbody = {
+          list: transformedList,
+          roleId: this.frm.get("cmnCompanyCustomerId")?.value,
+        }
+        
+        this.gSvc.postdata("api/TFAClientBill/Save",  JSON.stringify(reqestbody)).subscribe(res => {
           this.getCompanyPayments();
           this.toastrService.success("Company Payment Saved");
         }, err => {
