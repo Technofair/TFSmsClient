@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { ToastrService } from 'ngx-toastr';
 import { GeneralService } from 'src/app/services/general.service';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'web-chield-tecptr',
@@ -13,19 +14,30 @@ import { environment } from 'src/environments/environment';
   styles: []
 })
 export class ChieldTecptrComponent implements OnInit  {
-  constructor(private router:Router, public layoutService: LayoutService,private toastrService: ToastrService,private gSvc: GeneralService,) 
-  { }
+
+  @Input() isSms: any; // Define an input property to receive data
+
+  constructor(private router:Router, public layoutService: LayoutService,private toastrService: ToastrService,private gSvc: GeneralService, private auth: AuthService) 
+  {
+    
+   }
   productGalleryList:any
   url:any=environment.baseurl;
   gridValue: any=1;
   chields_product:any=[{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',},{name:'product 1', image: 'assets/img/stb/stb1.png', price: '300',}];
   responsiveOptions:any
-  ngOnInit(): void {
+  appSetting: any;
+  //isSms:any;
+  ngOnInit(): void {  
+     if(this.isSms){
      this.getProductGalleryList();
      this.view()
+     }
   };
+  
   // JavaScript Document
   getProductGalleryList(){
+    alert('asad');
     this.gSvc.postdata("Common/CmnProductGallery/GetAll",{}).subscribe(res => {
       this.productGalleryList=res;
     }, err => {

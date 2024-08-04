@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
@@ -14,12 +14,15 @@ import { GeneralService } from 'src/app/services/general.service';
   styles: []
 })
 export class ChieldPackagesComponent implements OnInit  {
+  @Input() isSms: any; // Define an input property to receive data
   constructor(private router:Router, public layoutService: LayoutService,private toastrService: ToastrService,private gSvc: GeneralService ) 
   { }
   packages:any;
   //packages: any = [{ title: 'Gold', image: 'assets/img/package/1.png', price: '300', description: '',channels:'200' }, { title: 'Silver', image: 'assets/img/package/2.png', price: '200', description: '',channels:'200' },{ title: 'Platinum', image: 'assets/img/package/4.png', price: '200', description: '',channels:'200' },{ title: 'Silver', image: 'assets/img/package/3.png', price: '200', description: '',channels:'200' }]
   ngOnInit(): void {
+   if(this.isSms){
    this.getPackages();
+   }
   };
   
   getPackages(){

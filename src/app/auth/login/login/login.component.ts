@@ -44,13 +44,12 @@ export class LoginComponent implements OnInit {
     }
 
   ngOnInit(): void {
-
+    
     this.genCaptcha = this._util.CaptchaNumeric();
   };
 
   onSubmit(): void {
-    //this.router.navigate(['/admin']);
-    // this.toastrService.success("successfull");
+                
     if (this.loginForm.valid && this._util.ValidCaptcha(this.genCaptcha, this.inCaptcha)) {
       this.auth.login(this.loginForm.value).subscribe(
         (result: any) => {

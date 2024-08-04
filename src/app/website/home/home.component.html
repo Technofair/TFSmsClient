@@ -1,6 +1,6 @@
 <app-topnavbar></app-topnavbar>
 <main style="background: #fff;">
-  <div id="myCarousel" class="carousel slide mb-3" data-bs-ride="carousel" >
+  <div id="myCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
         aria-label="Slide 1"></button>
@@ -30,27 +30,21 @@
     </button>
 </div>
 
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
   <div id="scroll-container">
-    <!-- <div id="scroll-text">{{info.name}}</div> -->
-    
     <div id="scroll-text">{{info.welcomeNote}}</div>
-    <!-- <div id="scroll-text">{{'মাতবর ক্যাবল নেটওয়ার্ক - এ আপনাকে স্বাগতম !!'}}</div> -->
-    <!-- নড়াইল ভিশন -->
-    
   </div>
   
-  <div class="container marketing">
+  <div class="container marketing" *ngIf="isSms">
     <br>
-    <!--Three columns of text below the carousel-->
-    <web-chield-packages></web-chield-packages>
-    <!-- START THE FEATURETTES -->
-   <web-chield-products></web-chield-products>
-  </div> <!--/.container-->
-  <web-chield-tecptr></web-chield-tecptr>
-  <web-chield-paywith></web-chield-paywith>
+    <web-chield-packages [isSms]="isSms"></web-chield-packages>
+    <web-chield-products [isSms]="isSms"></web-chield-products>
+  </div> 
+
+  <div>
+      <web-chield-tecptr [isSms]="isSms"></web-chield-tecptr>
+      <web-chield-paywith *ngIf="isSms"></web-chield-paywith>
+  </div>
+
 </main>
 <web-app-footer></web-app-footer>
 

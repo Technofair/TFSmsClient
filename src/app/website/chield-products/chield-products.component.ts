@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
@@ -12,6 +12,7 @@ import { GeneralService } from 'src/app/services/general.service';
   styles: []
 })
 export class ChieldProductComponent implements OnInit  {
+  @Input() isSms: any;
   constructor(private router:Router, public layoutService: LayoutService,private toastrService: ToastrService,private gSvc: GeneralService) 
   { }
   chields_stbs: any[] = [
@@ -24,6 +25,7 @@ export class ChieldProductComponent implements OnInit  {
    this.getProductGalleryList();
   };
   getProductGalleryList(){
+    
     this.gSvc.postdata("Common/CmnProductGallery/GetAll",{}).subscribe(res => {
       this.chields_stbs=res;
     }, err => {

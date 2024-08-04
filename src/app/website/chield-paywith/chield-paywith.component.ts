@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
@@ -11,9 +11,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./chield-paywith.component.css'],
   styles: []
 })
-export class ChieldPaywithComponent implements OnInit  {
+export class ChieldPaywithComponent implements OnInit   {
+ 
   constructor(private router:Router, public layoutService: LayoutService,private toastrService: ToastrService) 
   { }
+  
   ngOnInit(): void {
    
   };
