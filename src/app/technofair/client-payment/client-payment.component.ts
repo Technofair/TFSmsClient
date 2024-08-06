@@ -49,9 +49,7 @@ export class ClientPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
-    this.getCompanyPackages();
     this.getCompanyCustomer();
-   
   }
   getFrm() {
     this.frm = this.fb.group({
