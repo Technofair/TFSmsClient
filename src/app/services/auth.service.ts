@@ -228,6 +228,11 @@ export class AuthService {
     return sessionStorage.getItem('applicationId');
   }
 
+  isSms(): boolean{
+    var result = sessionStorage.getItem('applicationId') === '2' ? true : false;
+    return result;
+  }
+
   allowAutoSubscriberNumber(): boolean{
     var allowAutoSubscriberNumber = sessionStorage.getItem('allowAutoSubscriberNumber');
     return allowAutoSubscriberNumber == 'YES' ? true : false;
