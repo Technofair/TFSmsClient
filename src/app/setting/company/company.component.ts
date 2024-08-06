@@ -214,24 +214,31 @@ export class CompanyComponent implements OnInit {
 
   companies: any[] = [];
   getUpperLevelCompany() {
-
-    var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
-   
-    this.gSvc.postdata("Common/Company/GetUpperLevelCompanyByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe((res: any) => {
-      this.companies = res;
-    }, err => {
-      this.toastrService.error(err.message);
-      
-    })
+    if(this.auth.isSms()){
+      var cmnCompanyTypeId = this.frm.controls["cmnCompanyTypeId"].value;
+      this.gSvc.postdata("Common/Company/GetUpperLevelCompanyByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe((res: any) => {
+        this.companies = res;
+      }, err => {
+        this.toastrService.error(err.message);
+      })
+    }
   }
 
   getCompany() {
     this.progressStatus=false;
+    
     var cmnCompanyTypeId,companyId;
     cmnCompanyTypeId = this.frmSerch.controls["cmnCompanyTypeId"].value;
     companyId = this.frmSerch.controls["companyId"].value;
     
-    this.gSvc.postdata("Common/Company/GetChildCompanyByParentCompanyId?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId=" + companyId + '&userLevel=' + this.auth.getUserLevel(), {}).subscribe(res => {
+    var url = '';
+    if(this.auth.isSms()){
+      url = "Common/Company/GetChildCompanyByParentCompanyId?cmnCompanyTypeId=" + cmnCompanyTypeId + "&companyId=" + companyId + '&userLevel=' + this.auth.getUserLevel();
+    }
+    else{
+      url = "Common/Company/getAll";
+    }
+    this.gSvc.postdata(url, {}).subscribe(res => {
     
       this.companyList = res;
       this.progressStatus=true;
@@ -242,13 +249,16 @@ export class CompanyComponent implements OnInit {
    
   }
 
-  getCompanyType() {
-       
-    //New: 28.05.2024
-    this.gSvc.postdata("Common/Company/GetSucceedingChildCompanyType?companyId=" + this.auth.getCompany(), {}).subscribe(res => {
-    //Old: 28.05.2024
-    //this.gSvc.postdata("Common/Company/GetChildCompanyType?companyId=" + this.auth.getCompany() + "&userLevel=" + this.auth.getUserLevel(), {}).subscribe(res => {
-    this.companyTypeList = res;
+  getCompanyType() {  
+      var url = '';
+      if(this.auth.isSms()){
+        url = "Common/Company/GetSucceedingChildCompanyType?companyId=" + this.auth.getCompany();
+      }
+      else{
+        url = "Common/Company/getAllCompanyType";
+      }
+      this.gSvc.postdata(url, {}).subscribe(res => {
+        this.companyTypeList = res;
     }, err => {
       this.toastrService.error("Error! Company type list not found");
     })
