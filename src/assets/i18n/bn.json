@@ -759,6 +759,7 @@
     "MinSubscriber": "সর্বনিম্ন গ্রাহক",
     "MaxSubscriber": "সর্বোচ্চ গ্রাহক",
     "AllowPackage": "প্যাকেজ অনুমতি দিন",
+    "CompanyPackageType": "প্যাকেজ টাইপ",
     "UserRechargeRefund":"ইউসার রিচার্জ রিফান্ড"
 }
 

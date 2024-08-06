@@ -20,7 +20,7 @@ export class CompanyPackageComponent implements OnInit {
   displayModal: boolean = false;
   viewInfo: any = {};
   formId = 0;
- progressStatus:boolean=true;
+  progressStatus:boolean=true;
   frm!:FormGroup
   companyPackageTypes:any;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
@@ -35,12 +35,12 @@ export class CompanyPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      tfaCompanyPackageTypeId:new FormControl(Validators.required),
-      minSubscriber:new FormControl(Validators.required),
-      maxSubscriber:new FormControl(Validators.required),
-      price:new FormControl(Validators.required),
+      tfaCompanyPackageTypeId:new FormControl(null,Validators.required),
+      minSubscriber:new FormControl(null,Validators.required),
+      maxSubscriber:new FormControl(null,Validators.required),
+      price:new FormControl(null,Validators.required),
       remarks:new FormControl(),
-      isActive:new FormControl(true),
+      isActive:new FormControl("yes"),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
