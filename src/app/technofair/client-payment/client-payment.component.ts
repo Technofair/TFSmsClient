@@ -53,8 +53,8 @@ export class ClientPaymentComponent implements OnInit {
   }
   getFrm() {
     this.frm = this.fb.group({
-      id: new FormControl(0),
-      cmnCompanyCustomerId: new FormControl(),
+      id: new FormControl(),
+      cmnCompanyCustomerId: new FormControl(null,Validators.required),
       createdBy: new FormControl(this.auth.getUserId()),
       createdDate: new FormControl(new Date()),
       modifiedBy: new FormControl(this.auth.getUserId()),
@@ -64,25 +64,26 @@ export class ClientPaymentComponent implements OnInit {
   }
   save() {
     const transformedList = this.clientInvoices.map((item: {
+      id: any;
       totalAmount: any;
       amount: any;
       quantity: any;
       packageName: any;
-      packageType: any; monthOfBill: any; isActive: any; 
+      packageType: any; 
+      monthOfBill: any;
+      expireDate:any;
+      isCollected: any; 
 }) => ({
-      id: 0,
+      id: item.id,
       monthOfBill: item.monthOfBill,
       packageType: item.packageType,
       packageName: item.packageName,
-      isActive: item.isActive, 
       quantity:item.quantity,
       amount: item.amount,
       totalAmount:item.totalAmount,
+      expireDate:item.expireDate,
+      isCollected: item.isCollected, 
       
-      createdBy: this.auth.getUserId(),
-      createdDate: new Date(),
-      modifiedBy: this.auth.getUserId(),
-      modifiedDate: new Date()
     }));
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
@@ -90,10 +91,12 @@ export class ClientPaymentComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         let reqestbody = {
+          paidBy:this.auth.getUserId(),
+          cmnCompanyCustomerId: this.frm.get("cmnCompanyCustomerId")?.value,
           list: transformedList,
-          roleId: this.frm.get("cmnCompanyCustomerId")?.value,
         }
-        
+        debugger;
+        console.log(JSON.stringify(reqestbody));
         this.gSvc.postdata("api/TFAClientBill/Save",  JSON.stringify(reqestbody)).subscribe(res => {
           this.getCompanyPayments();
           this.toastrService.success("Company Payment Saved");
@@ -107,7 +110,7 @@ export class ClientPaymentComponent implements OnInit {
     })
     return false;
   }
-
+  
   getCompanyPayments() {
     this.progressStatus = false;
     this.gSvc.postdata("api/CompanyPayment/GetAll", {}).subscribe(res => {
@@ -153,15 +156,13 @@ export class ClientPaymentComponent implements OnInit {
   selectAll(){
     if(this.isCheck==true){
       this.isCheck=false;
-     this.clientInvoices.forEach((x: { isActive: boolean; }) => (x.isActive = true));
+     this.clientInvoices.forEach((x: { isCollected: boolean; }) => (x.isCollected = true));
    }else{
      this.isCheck=true;
-     this.clientInvoices.forEach((x: { isActive: boolean; }) => (x.isActive = false));
-     
+     this.clientInvoices.forEach((x: { isCollected: boolean; }) => (x.isCollected = false));
    }
   }
   
-
   edit(res: any) {
     this.formId = 1;
     this.frm.patchValue(res);
