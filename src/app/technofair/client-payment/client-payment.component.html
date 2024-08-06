@@ -137,7 +137,7 @@
 
         <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
           <p-button [disabled]="frm.invalid" (click)="save()" 
-              styleClass="p-button-danger p-button-sm" type="submit" icon="pi-dollar"
+              styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-dollar"
               label="{{'PAYMENT'|translate}}"></p-button>
         </div>
 
@@ -146,7 +146,7 @@
   </form>
 </p-panel>
 
-<p-table #dt [value]="CompanyPayments" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+<!-- <p-table #dt [value]="CompanyPayments" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
   [globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
@@ -213,7 +213,11 @@
       <td colspan="9">No data found.</td>
     </tr>
   </ng-template>
-  <!-- Report Modal -->
+ 
+
+
+</p-table> -->
+
 <p-dialog #reportModal header="Header" [(visible)]="displayModal" [modal]="true" [style]="{width: '250vw'}"
 [style]="{height:'150vw'}" [draggable]="true" [resizable]="true" [maximizable]="true">
 <ng-template pTemplate="header">
@@ -227,5 +231,3 @@
         styleClass="p-button-text"></p-button>
 </ng-template>
 </p-dialog>
-
-</p-table>
