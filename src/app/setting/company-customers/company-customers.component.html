@@ -140,7 +140,7 @@
 
 
 <p-table #dt [value]="companyList" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+    [rowsPerPageOptions]="[15,25,50,100]" [paginator]="false"
     currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
     [globalFilterFields]="['name', 'code','contactNo','email']" styleClass="p-datatable-sm p-datatable-gridlines pt-3"
     [tableStyle]="{'min-width': '70rem'}">
@@ -173,9 +173,9 @@
             </th>            
             <th class="vcenter text-center">{{'CONTACTPERSON' | translate}}</th>
             <th class="vcenter text-center">{{'CONTACTNO' | translate}}</th>
-            <th class="vcenter text-center">{{'ACTIVE' | translate}}</th>
             <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTIVE' | translate}}</th>
         </tr>        
          
     </ng-template>
@@ -186,9 +186,8 @@
             <td>{{r.name}}</td>            
             <td>{{r.contactPerson}}</td>
             <td>{{r.contactNo}}</td>
-            <td>{{r.isActive ? 'Yes' : 'No'}}</td>
             <td>{{r.address}}</td>
-            <!-- <td>{{r.contactPersonNo}}</td>-->
+            <td class="vcenter text-center">{{r.isActive ? 'Yes' : 'No'}}</td>
             <td  style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
