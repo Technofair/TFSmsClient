@@ -39,8 +39,8 @@ export class CompanyPackageComponent implements OnInit {
       tfaCompanyPackageTypeId:new FormControl(null,Validators.required),
       minSubscriber:new FormControl(null,Validators.required),
       maxSubscriber:new FormControl(null,Validators.required),
-      rate:new FormControl(null,this.rateshow ? Validators.required:null),
-      price:new FormControl(null,this.rateshow ? null:Validators.required),
+      rate:new FormControl(),
+      price:new FormControl(),
       remarks:new FormControl(),
       isActive:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
@@ -101,11 +101,15 @@ export class CompanyPackageComponent implements OnInit {
   getRatePrice(id:any){
    if(id==2){
     this.rateshow=true;
+    this.frm.controls["rate"].setValidators(this.rateshow ? Validators.required:null);
+    this.frm.controls["price"].setValidators(null);
    }else{
     this.rateshow=false;
+    this.frm.controls["rate"].setValidators(null);
+    this.frm.controls["price"].setValidators(this.rateshow?null:Validators.required);
    }
-   this.frm.controls["rate"].setValidators(this.rateshow ? Validators.required:null);
-   this.frm.controls["price"].setValidators(this.rateshow?null:Validators.required);
+   
+  
   }
   getCompanyPackages() {
     this.progressStatus=false;
