@@ -134,6 +134,7 @@ export class CompanyComponent implements OnInit {
     var cmnCompanyTypeId = this.frmSerch.controls["cmnCompanyTypeId"].value;
     this.gSvc.postdata("Common/Company/GetUpperLevelCompanyByCompanyTypeId?cmnCompanyTypeId=" + cmnCompanyTypeId, {}).subscribe((res: any) => {
       this.companyList = res;
+      
     }, err => {
       this.toastrService.error(err.message);
     })
