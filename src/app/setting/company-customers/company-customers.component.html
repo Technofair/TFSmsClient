@@ -175,7 +175,7 @@
             <th class="vcenter text-center">{{'CONTACTNO' | translate}}</th>
             <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
-            <th class="vcenter text-center">{{'ACTIVE' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTION' | translate}}</th>
         </tr>        
          
     </ng-template>
@@ -185,14 +185,12 @@
             <td>{{i+1}}</td>
             <td>{{r.name}}</td>            
             <td>{{r.contactPerson}}</td>
-            <td>{{r.contactNo}}</td>
+            <td class="vcenter text-center">{{r.contactNo}}</td>
             <td>{{r.address}}</td>
             <td class="vcenter text-center">{{r.isActive ? 'Yes' : 'No'}}</td>
-            <td  style="width: 150px;">
+            <td class="vcenter text-center" style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
-                <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-                    (click)="showModalDialog(r)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button>
             </td>
         </tr>
     </ng-template>
