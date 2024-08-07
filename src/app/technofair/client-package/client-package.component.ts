@@ -26,6 +26,7 @@ export class ClientPackageComponent implements OnInit {
   frm!:FormGroup
   companyPackageTypes:any;
   allowPackage:boolean=false;
+  rateshow:boolean=false;
   constructor(private fb: FormBuilder,
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -47,7 +48,8 @@ export class ClientPackageComponent implements OnInit {
       tFACompanyPackageId: new FormControl(),
       tFACompanyCustomerId: new FormControl(Validators.required),
       date: new FormControl(new Date(), Validators.required),
-      amount: new FormControl(null,Validators.required),
+      rate: new FormControl(),
+      amount: new FormControl(),
       discount: new FormControl(null),
       isActive:new FormControl(true),
       isFixed:new FormControl(true),
@@ -57,6 +59,17 @@ export class ClientPackageComponent implements OnInit {
       modifiedBy:new FormControl(this.auth.getUserId()),
       modifiedDate:new FormControl(new Date())
     });
+  }
+  getRatePrice(id:any){
+    if(id==2){
+     this.rateshow=true;
+     this.frm.controls["rate"].setValidators(this.rateshow ? Validators.required:null);
+     this.frm.controls["amount"].setValidators(null);
+    }else{
+     this.rateshow=false;
+     this.frm.controls["rate"].setValidators(null);
+     this.frm.controls["amount"].setValidators(this.rateshow?null:Validators.required);
+    }
   }
   save() {
     if (this.frm.invalid) return false;

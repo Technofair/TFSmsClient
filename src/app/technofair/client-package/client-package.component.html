@@ -15,7 +15,7 @@
         <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="tFACompanyPackageTypeId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="title"
-          optionValue="id" (onChange)="getCompanyPackages()"></p-dropdown><br>
+          optionValue="id" (onChange)="getCompanyPackages()" (onChange)="getRatePrice($event.value)"></p-dropdown><br>
       </div>
       <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" *ngIf="allowPackage">
         <label>{{'Package'|translate}}</label>
@@ -23,8 +23,13 @@
           [filter]="true" filterBy="minMaxSubscriber" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice()"></p-dropdown><br>
       </div>
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4"*ngIf="rateshow">
+        <label>{{'Rate'|translate}}</label><span class="text-danger"> *</span><br>
+        <input type="number" class="p-2  w-full" placeholder="{{'Rate'|translate}}" formControlName="rate"
+          pInputText />
+      </div>
 
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4"*ngIf="!rateshow">
         <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
           pInputText (change)="setTotalAmount()" />
@@ -36,16 +41,16 @@
           formControlName="discount" pInputText (change)="setTotalAmount()" />
       </div>
 
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4"*ngIf="!rateshow">
         <label>{{'TotalAmount'|translate}}</label><br>
         <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
           pInputText readonly />
       </div>
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
+      <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'ExpairDate'|translate}}</label><span class="text-danger">*</span>
         <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy" pInputText />
-      </div>
-      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4 ml-3">
+      </div> -->
+      <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 ml-3">
         <!-- <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-2"> -->
           <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
             formControlName="IsActive">
@@ -122,7 +127,7 @@
       <td>{{r.amount}}</td>
       <td>{{r.discount}}</td>
       <td>{{r.amount-r.discount}}</td>
-      <td>{{r.date | date: 'dd-MM-yyyy hh:mm'}}</td>
+      <td>{{r.date | date: 'dd-MM-yyyy'}}</td>
       <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
