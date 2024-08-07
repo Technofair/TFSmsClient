@@ -15,14 +15,7 @@
                     {{'NAME'|translate}} {{'REQUIRED'|translate}}
                 </span>
             </div>
-            <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'Prefix'|translate}}</label><span class="text-danger"> *</span>
-                <input type="text" class="p-2  w-full"
-                    formControlName="prefix" pInputText />
-                    <span *ngIf="frm.controls['prefix'].invalid && frm.controls['prefix'].touched " class="text-danger">
-                        {{'Prefix'|translate}} {{'REQUIRED'|translate}}
-                    </span>
-            </div> -->
+           
 
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> </span>
@@ -180,7 +173,7 @@
             </th>            
             <th class="vcenter text-center">{{'CONTACTPERSON' | translate}}</th>
             <th class="vcenter text-center">{{'CONTACTNO' | translate}}</th>
-            <th class="vcenter text-center">{{'EMAIL' | translate}}</th>
+            <th class="vcenter text-center">{{'ACTIVE' | translate}}</th>
             <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
         </tr>        
@@ -193,7 +186,7 @@
             <td>{{r.name}}</td>            
             <td>{{r.contactPerson}}</td>
             <td>{{r.contactNo}}</td>
-            <td>{{r.email}}</td>
+            <td>{{r.isActive ? 'Yes' : 'No'}}</td>
             <td>{{r.address}}</td>
             <!-- <td>{{r.contactPersonNo}}</td>-->
             <td  style="width: 150px;">
