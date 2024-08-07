@@ -5,66 +5,67 @@
   <form [formGroup]="frm">
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'CUSTOMER'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="CompanyCustomerlist" [style]="{'width':'100%'}" formControlName="tFACompanyCustomerId"
-          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="name" optionValue="id" (onChange) ="resetByCompanyChange()"></p-dropdown><br>
+          [filter]="true" filterBy="name" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="name"
+          optionValue="id" (onChange)="resetByCompanyChange()"></p-dropdown><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'PACKAGETYPE'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="companyPackageTypes" [style]="{'width':'100%'}" formControlName="tFACompanyPackageTypeId"
-          [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
-          optionLabel="title" optionValue="id" (onChange)="getCompanyPackages()" ></p-dropdown><br>
+          [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}" optionLabel="title"
+          optionValue="id" (onChange)="getCompanyPackages()"></p-dropdown><br>
       </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3" *ngIf="allowPackage">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4" *ngIf="allowPackage">
         <label>{{'Package'|translate}}</label>
         <p-dropdown [options]="CompanyPackagelist" [style]="{'width':'100%'}" formControlName="tFACompanyPackageId"
           [filter]="true" filterBy="minMaxSubscriber" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="minMaxSubscriber" optionValue="id" (onChange)="setPrice()"></p-dropdown><br>
       </div>
-      
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'Amount'|translate}}</label><span class="text-danger"> *</span><br>
         <input type="number" class="p-2  w-full" placeholder="{{'Amount'|translate}}" formControlName="amount"
-          pInputText (change) ="setTotalAmount()" />
+          pInputText (change)="setTotalAmount()" />
       </div>
 
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'Discount'|translate}}</label>
         <input type="number" maxlength="6" class="p-2  w-full" placeholder="{{'Discount'|translate}}"
-          formControlName="discount" pInputText (change) ="setTotalAmount()" />
+          formControlName="discount" pInputText (change)="setTotalAmount()" />
       </div>
 
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'TotalAmount'|translate}}</label><br>
         <input type="number" class="p-2  w-full" placeholder="{{'TotalAmount'|translate}}" formControlName="totalAmount"
-          pInputText readonly /> 
+          pInputText readonly />
       </div>
-      <div class="field col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2">
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
         <label>{{'ExpairDate'|translate}}</label><span class="text-danger">*</span>
-        <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy"
-          pInputText />
+        <input type="date" class="p-2  w-full" placeholder="" formControlName="date" dateFormat="dd-mm-yy" pInputText />
       </div>
-      <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-2">
-        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
-          formControlName="IsActive">
-        <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
-      </div>
-      
-      <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
-        <div class="flex justify-center">          
-            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
-              styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
-              label="{{'SAVE'|translate}}"></p-button>
-            <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
-              styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
-              label="{{'UPDATE'|translate}}"></p-button>&nbsp;
-            <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm ml-"
-              icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
-          </div>
+      <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4 ml-3">
+        <!-- <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-2"> -->
+          <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
+            formControlName="IsActive">
+          <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
         </div>
-      </div>   
+      
+
+      <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
+        <div class="flex justify-center">
+          <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==0"
+            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+            label="{{'SAVE'|translate}}"></p-button>
+          <p-button (click)="save()" [disabled]="frm.invalid" *ngIf="formId==1"
+            styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
+            label="{{'UPDATE'|translate}}"></p-button>&nbsp;
+          <p-button type="reset" *ngIf="formId==0||formId==1" styleClass="p-button-warning p-button-sm ml-"
+            icon="pi pi-refresh" (click)="reset()" label="{{'RESET'|translate}}"></p-button>
+        </div>
+      </div>
+    </div>
   </form>
 </p-panel>
 
@@ -92,13 +93,13 @@
       <th class="vcenter text-center" style="width: 8%">{{'SL#' | translate}}</th>
       <th pSortableColumn="name" style="text-align: center">
         <div class="vcenter text-center">
-          {{'Company Customer'|translate}}         
+          {{'Company Customer'|translate}}
           <p-sortIcon field="name"></p-sortIcon>
           <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
         </div>
       </th>
       <th class="vcenter text-center">{{'PACKAGETYPE'|translate}}</th>
-      <th class="vcenter text-center">{{'CompanyPackage'|translate}}</th>      
+      <th class="vcenter text-center">{{'CompanyPackage'|translate}}</th>
       <th class="vcenter text-center">{{'Amount'|translate}}</th>
       <th class="vcenter text-center">{{'Discount'|translate}}</th>
       <th class="vcenter text-center">{{'TotalAmount'|translate}}</th>
@@ -121,7 +122,7 @@
       <td>{{r.amount}}</td>
       <td>{{r.discount}}</td>
       <td>{{r.amount-r.discount}}</td>
-      <td>{{r.date  | date: 'dd-MM-yyyy hh:mm'}}</td>
+      <td>{{r.date | date: 'dd-MM-yyyy hh:mm'}}</td>
       <!-- <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
