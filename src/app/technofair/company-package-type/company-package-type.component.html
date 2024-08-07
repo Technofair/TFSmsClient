@@ -55,15 +55,7 @@
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'NAME'|translate}} : </label>
         <p>{{viewInfo.name}}</p>
-      </div>
-      <!-- <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'CODE'|translate}} : </label>
-        <p>{{viewInfo.code}}</p>
-      </div>
-      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-        <label>{{'REMARKS'|translate}} : </label>
-        <p>{{viewInfo.remarks}}</p>
-      </div> -->
+      </div>     
     </div>
   </div>
   <ng-template pTemplate="footer">
@@ -99,8 +91,8 @@
           <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
         </div>
       </th>
-      <!-- <th class="vcenter text-center">{{'CODE'|translate}}</th>
-      <th class="vcenter text-center">{{'REMARKS'|translate}}</th> -->
+      <th class="vcenter text-center">{{'PACKAGE'|translate}}</th>
+      <th class="vcenter text-center">{{'REMARKS'|translate}}</th>
       <th class="vcenter text-center">{{'ACTION'|translate}}</th>
     </tr>
     <tr>
@@ -114,14 +106,12 @@
   <ng-template pTemplate="body" let-r>
     <tr class="p-selectable-row">
       <td>{{r.title}}</td>
-      <!-- <td>{{r.code}}</td>
-      <td>{{r.remarks}}</td> -->
+      <td class="text-center">{{r.allowPackage? 'Yes' : 'No'}}</td>
+      <td>{{r.remarks}}</td>
       <td class="vcenter text-center">
         <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
           (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}">
-        </p-button>
-        <!-- <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
-          (click)="showModalDialog(r.id)" data-toggle="tooltip" title="{{'VIEW' | translate}}"></p-button> -->
+        </p-button>        
       </td>
     </tr>
   </ng-template>

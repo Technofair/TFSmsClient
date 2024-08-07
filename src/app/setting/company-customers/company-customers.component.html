@@ -1,133 +1,133 @@
 <p-confirmDialog class="xl:w-15rem lg:w-15rem md:w-15rem sm:w-15rem" [baseZIndex]="10000"></p-confirmDialog>
-<p-panel>   
+
+
+<p-panel>
     <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl ">{{'Company Customer' |
-                translate}}</span>
+            translate}}</span>
     </ng-template>
 
     <form [formGroup]="frm">
         <input type="hidden" formControlName="id" value=0>
-        <div class="formgrid grid">
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
-                <input type="text" class="p-2  w-full" formControlName="name"
-                    pInputText />
-                <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
-                    {{'NAME'|translate}} {{'REQUIRED'|translate}}
-                </span>
-            </div>
-           
+        <div class="order_section">
+            <div class="formgrid grid">
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'NAME'|translate}}</label><span class="text-danger"> *</span><br>
+                    <input type="text" class="p-2  w-full" formControlName="name" pInputText />
+                    <span *ngIf="frm.controls['name'].invalid && frm.controls['name'].touched " class="text-danger">
+                        {{'NAME'|translate}} {{'REQUIRED'|translate}}
+                    </span>
+                </div>
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> </span>
-                <input type="text" class="p-2 w-full"
-                    formControlName="contactPerson" pInputText />
-                <span *ngIf="frm.controls['contactPerson'].invalid && frm.controls['contactPerson'].touched "
-                    class="text-danger">
-                    {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
-                </span>
-            </div>
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'CONTACTNO'|translate}}</label><span class="text-danger">*</span>
-                <input type="text" class="p-2 w-full"
-                    formControlName="contactNo" phoneChars />
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'CONTACTPERSON'|translate}}</label><span class="text-danger"> </span>
+                    <input type="text" class="p-2 w-full" formControlName="contactPerson" pInputText />
+                    <span *ngIf="frm.controls['contactPerson'].invalid && frm.controls['contactPerson'].touched "
+                        class="text-danger">
+                        {{'CONTACTPERSON'|translate}} {{'REQUIRED'|translate}}
+                    </span>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'CONTACTNO'|translate}}</label><span class="text-danger">*</span>
+                    <input type="text" class="p-2 w-full" formControlName="contactNo" phoneChars />
 
-                <span *ngIf="frm.controls['contactNo'].invalid && frm.controls['contactNo'].touched "
-                    class="text-danger">
-                    {{'CONTACTNO'|translate}} {{'REQUIRED'|translate}}
-                </span>
-            </div>
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'EMAIL'|translate}}</label><span class="text-danger"> *</span>
-                <input type="text" formControlName="email" class="form-control" emailChars />
-                        
-                <span *ngIf="frm.controls['email'].invalid && frm.controls['email'].touched " class="text-danger">
-                    {{'EMAIL'|translate}} {{'REQUIRED'|translate}}
-                </span> 
-            </div>
+                    <span *ngIf="frm.controls['contactNo'].invalid && frm.controls['contactNo'].touched "
+                        class="text-danger">
+                        {{'CONTACTNO'|translate}} {{'REQUIRED'|translate}}
+                    </span>
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'EMAIL'|translate}}</label><span class="text-danger"> *</span>
+                    <input type="text" formControlName="email" class="form-control" emailChars />
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'WEB'|translate}}</label>
-                <input type="text" class="p-2  w-full" formControlName="web" webChars pInputText />
-            </div>                      
-            
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'ADDRESS'|translate}}</label><span class="text-danger"> *</span>
-                <textarea type="text" class="p-2 w-full h-3rem" formControlName="address"
-                    pInputTextarea> </textarea>
-                <span *ngIf="frm.controls['address'].invalid && frm.controls['address'].touched " class="text-danger">
-                    {{'ADDRESS'|translate}} {{'REQUIRED'|translate}}
-                </span>
-            </div>
+                    <span *ngIf="frm.controls['email'].invalid && frm.controls['email'].touched " class="text-danger">
+                        {{'EMAIL'|translate}} {{'REQUIRED'|translate}}
+                    </span>
+                </div>
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'Phone'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="contactPersonNo"
-                    pInputText />
-            </div>           
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'BIN NUMBER'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="bin"
-                    pInputText />
-            </div>
-            
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'AppKey'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="appKey"
-                    pInputText />
-            </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'WEB'|translate}}</label>
+                    <input type="text" class="p-2  w-full" formControlName="web" webChars pInputText />
+                </div>
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'ServerIP'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="serverIP"
-                    pInputText />
-            </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'ADDRESS'|translate}}</label><span class="text-danger"> *</span>
+                    <textarea type="text" class="p-2 w-full h-3rem" formControlName="address"
+                        pInputTextarea> </textarea>
+                    <span *ngIf="frm.controls['address'].invalid && frm.controls['address'].touched "
+                        class="text-danger">
+                        {{'ADDRESS'|translate}} {{'REQUIRED'|translate}}
+                    </span>
+                </div>
 
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'MotherBoardId'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="motherBoardId"
-                    pInputText />
-            </div>
-
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'NetworkAdapterId'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="networkAdapterId"
-                    pInputText />
-            </div>
-
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'SmsApiBaseUrl'|translate}}</label>
-                <input type="text" class="p-2 w-full" formControlName="smsApiBaseUrl"
-                    pInputText />
-            </div>
-            
-
-            <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
-                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
-                    formControlName="isActive">
-                <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
-            </div>
-            
-
-            <!-- Asad Added -->
-            <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
-                <label>{{'LOGO' | translate}}</label>
-                
-                <input hidden id="attachedSingleFile" (change)="onFileChange()" #fileInput type="file">
-                <div>
-                <img [src]="fileSrc || '../../../assets/img/default-user.jpg'" alt="Please click to upload file"
-                    (click)="clickOnBtnFile()" alt="image" class="msr-3 h-25 w-25" width="50%">
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'Phone'|translate}}</label>
+                    <input type="text" class="p-2 w-full" formControlName="contactPersonNo" pInputText />
+                </div>
+                <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                    <label>{{'BIN NUMBER'|translate}}</label>
+                    <input type="text" class="p-2 w-full" formControlName="bin" pInputText />
                 </div>
             </div>
-        </div>       
-       
+        </div>
+            <div class="order_section my-3">
+                <div class="formgrid grid">
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'AppKey'|translate}}</label>
+                        <input type="text" class="p-2 w-full" formControlName="appKey" pInputText />
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'ServerIP'|translate}}</label>
+                        <input type="text" class="p-2 w-full" formControlName="serverIP" pInputText />
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'MotherBoardId'|translate}}</label>
+                        <input type="text" class="p-2 w-full" formControlName="motherBoardId" pInputText />
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'NetworkAdapterId'|translate}}</label>
+                        <input type="text" class="p-2 w-full" formControlName="networkAdapterId" pInputText />
+                    </div>
+
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'SmsApiBaseUrl'|translate}}</label>
+                        <input type="text" class="p-2 w-full" formControlName="smsApiBaseUrl" pInputText />
+                    </div>
+
+
+                    <div
+                        class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
+                        <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault"
+                            [defaultChecked]="true" formControlName="isActive">
+                        <label class="form-check-label" for="flexCheckDefault"> {{'ISACTIVE' | translate}} </label>
+                    </div>
+
+
+                    <!-- Asad Added -->
+                    <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+                        <label>{{'LOGO' | translate}}</label>
+
+                        <input hidden id="attachedSingleFile" (change)="onFileChange()" #fileInput type="file">
+                        <div>
+                            <img [src]="fileSrc || '../../../assets/img/default-user.jpg'"
+                                alt="Please click to upload file" (click)="clickOnBtnFile()" alt="image"
+                                class="msr-3 h-25 w-25" width="50%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
     </form>
     <ng-template pTemplate="footer">
         <div class="formgrid grid">
             <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
                 <div class="card-footer">
                     <div class="flex justify-center">
-                        <p-button (click)="save()" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm mr-2"
-                            type="submit" icon="pi pi-check" label="{{'SAVE'|translate}}"></p-button>&nbsp;
+                        <p-button (click)="save()" [disabled]="frm.invalid"
+                            styleClass="p-button-success p-button-sm mr-2" type="submit" icon="pi pi-check"
+                            label="{{'SAVE'|translate}}"></p-button>&nbsp;
                         <p-button type="reset" styleClass="p-button-warning p-button-sm" icon="pi pi-refresh"
                             (click)="initialize()" label="{{'RESET'|translate}}"></p-button>
                     </div>
@@ -150,7 +150,7 @@
         <div class="flexBox">
             <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
                 (click)="clear()"></button>
-                <!-- <div class="ml-3">
+            <!-- <div class="ml-3">
                   <button pButton type="button" label="Export to Excel" (click)="exportToExcel()" class="export-button"></button>
                 </div> -->
             <span class="p-input-icon-left ml-auto float-right">
@@ -170,25 +170,25 @@
                     <p-sortIcon field="name"></p-sortIcon>
                     <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
                 </div>
-            </th>            
+            </th>
             <th class="vcenter text-center">{{'CONTACTPERSON' | translate}}</th>
             <th class="vcenter text-center">{{'CONTACTNO' | translate}}</th>
             <th class="vcenter text-center">{{'ADDRESS' | translate}}</th>
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
             <th class="vcenter text-center">{{'ACTIVE' | translate}}</th>
-        </tr>        
-         
+        </tr>
+
     </ng-template>
 
     <ng-template pTemplate="body" let-r | let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <td>{{r.name}}</td>            
+            <td>{{r.name}}</td>
             <td>{{r.contactPerson}}</td>
             <td>{{r.contactNo}}</td>
             <td>{{r.address}}</td>
             <td class="vcenter text-center">{{r.isActive ? 'Yes' : 'No'}}</td>
-            <td  style="width: 150px;">
+            <td style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
                 <p-button type="button" styleClass="p-button-primary p-button-sm px-2 py-1" icon="pi pi-eye"
@@ -204,8 +204,3 @@
     </ng-template>
 
 </p-table>
-
-
-
-
-
