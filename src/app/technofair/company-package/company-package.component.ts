@@ -23,6 +23,7 @@ export class CompanyPackageComponent implements OnInit {
   progressStatus:boolean=true;
   frm!:FormGroup
   companyPackageTypes:any;
+  rateshow:boolean=false;
   constructor(private fb: FormBuilder, private router: Router, private confirmationService: ConfirmationService, private gSvc: GeneralService, private toastrService: ToastrService, private auth :AuthService) {
    
   }
@@ -38,9 +39,10 @@ export class CompanyPackageComponent implements OnInit {
       tfaCompanyPackageTypeId:new FormControl(null,Validators.required),
       minSubscriber:new FormControl(null,Validators.required),
       maxSubscriber:new FormControl(null,Validators.required),
-      price:new FormControl(null,Validators.required),
+      rate:new FormControl(null,this.rateshow ? Validators.required:null),
+      price:new FormControl(null,this.rateshow ? null:Validators.required),
       remarks:new FormControl(),
-      isActive:new FormControl("yes"),
+      isActive:new FormControl(true),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -91,18 +93,24 @@ export class CompanyPackageComponent implements OnInit {
   getCompanyPackageTypeByAllowPackage(){
       this.gSvc.postdata("api/TFACompanyPackageType/GetCompanyPackageTypeByAllowPackage?allowPackage=" + true, {}).subscribe(res => {
       this.companyPackageTypes = res;
-      
+      console.log(this.companyPackageTypes);
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     }) 
   }
-
-
+  getRatePrice(id:any){
+   if(id==2){
+    this.rateshow=true;
+   }else{
+    this.rateshow=false;
+   }
+   this.frm.controls["rate"].setValidators(this.rateshow ? Validators.required:null);
+   this.frm.controls["price"].setValidators(this.rateshow?null:Validators.required);
+  }
   getCompanyPackages() {
     this.progressStatus=false;
     this.gSvc.postdata("api/TFACompanyPackage/GetAllCompanyPackage", {}).subscribe(res => {
-      this.CompanyPackages = res;
-      console.log(res);
+    this.CompanyPackages = res;
     }, err => {
       this.toastrService.error("Error! Data list Not Found");
     })
@@ -110,8 +118,9 @@ export class CompanyPackageComponent implements OnInit {
   }
 
   edit(res: any) {
-    debugger
+    
     this.frm.patchValue(res);
+    this.getRatePrice(this.frm.controls['tfaCompanyPackageTypeId'].value);
   }
 
   showModalDialog(id: any) {
