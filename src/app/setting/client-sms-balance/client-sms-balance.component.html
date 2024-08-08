@@ -18,22 +18,16 @@
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
             <label>{{'No Of Message'|translate}}</label><span class="text-danger"> *</span>
-            <input type="number" class="p-2 w-full" formControlName="noOfMessage"
+            <input type="number" class="p-2 w-full" formControlName="noOfMessage" placeholder="{{'No Of Message'|translate}}"
                 pInputText />
         </div>
 
         <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
             <label>{{'RATE'|translate}}</label><span class="text-danger"> *</span>
-            <input type="number" class="p-2 w-full" formControlName="rate"
+            <input type="number" class="p-2 w-full" formControlName="rate" placeholder="{{'RATE'|translate}}"
                 pInputText />
         </div>
-
-        <!-- <div class="field col-12 sm:col-6 md:col-4 lg:col-4 xl:col-4">
-            <label>{{'Balance'|translate}}</label><span class="text-danger"> *</span>
-            <input type="number" class="p-2 w-full" formControlName="balance"
-                pInputText />
-        </div> -->
-
+        
         <div class="form-check col-12 sm:col-6 md:col-2 lg:col-2 xl:col-2 xl:mt-5 lg:mt-5 md:mt-5 sm:mt-5 m-5">
             <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault" [defaultChecked]="true"
                 formControlName="isActive">
@@ -70,10 +64,7 @@
 
         <div class="flexBox">
             <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
-                (click)="clear()"></button>
-                <!-- <div class="ml-3">
-                  <button pButton type="button" label="Export to Excel" (click)="exportToExcel()" class="export-button"></button>
-                </div> -->
+                (click)="clear()"></button>                
             <span class="p-input-icon-left ml-auto float-right">
                 <i class="pi pi-search"></i>
                 <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
@@ -85,35 +76,29 @@
     <ng-template pTemplate="header">
         <tr>
             <th class="vcenter text-center" style="width: 8%">{{'SL#' | translate}}</th>
-            <!-- <th pSortableColumn="name" style="text-align: center">
+            <th pSortableColumn="name" style="text-align: center">
                 <div class="vcenter text-center">
                     {{'Company Customer' | translate}}
                     <p-sortIcon field="name"></p-sortIcon>
                     <p-columnFilter type="text" field="name" display="menu" class="ml-auto"></p-columnFilter>
                 </div>
-            </th> -->
-            <th class="vcenter text-center">{{'No Of Message' | translate}}</th>
-            <th class="vcenter text-center">{{'RATE' | translate}}</th>
-            <th class="vcenter text-center">{{'Balance' | translate}}</th>
-            <th class="vcenter text-center">{{'Date' | translate}}</th>
+            </th>
+            <!-- <th class="vcenter text-center">{{'No Of Message' | translate}}</th>
+            <th class="vcenter text-center">{{'RATE' | translate}}</th> -->
+            <th class="vcenter text-center">{{'Balance' | translate}}</th>            
             <th class="vcenter text-center" style="width: 150px;">{{'ACTION' | translate}}</th>
         </tr>
-        <!-- <tr>
-            <div [hidden]="progressStatus" style="position: absolute; z-index: 10; ">
-             <p-progressSpinner></p-progressSpinner>
-            </div>
-         </tr> -->
+       
          
     </ng-template>
 
     <ng-template pTemplate="body" let-r | let-i="rowIndex">
         <tr class="p-selectable-row">
             <td>{{i+1}}</td>
-            <!-- <td>{{r.CmnCompanyCustomerId}}</td>    -->
-            <td>{{r.noOfMessage}}</td>
-            <td>{{r.rate}}</td>
-            <td>{{r.balance}}</td>
-            <td class="vcenter text-center">{{r.date | date :'dd-MMM-yyyy HH:mm'}}</td>         
+            <td>{{r.CmnCompanyCustomerId}}</td>   
+            <!-- <td>{{r.noOfMessage}}</td>
+            <td>{{r.rate}}</td> -->
+            <td>{{r.balance}}</td>             
             <td  style="width: 150px;">
                 <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-pencil"
                     (click)="edit(r)" data-toggle="tooltip" title="{{'EDIT' | translate}}"></p-button>&nbsp;
@@ -128,5 +113,4 @@
             <td colspan="9">No data found.</td>
         </tr>
     </ng-template>
-
 </p-table>
