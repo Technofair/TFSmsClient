@@ -760,6 +760,7 @@
     "MaxSubscriber": "সর্বোচ্চ গ্রাহক",
     "AllowPackage": "প্যাকেজ অনুমতি দিন",
     "CompanyPackageType": "প্যাকেজ টাইপ",
-    "UserRechargeRefund":"ইউসার রিচার্জ রিফান্ড"
+    "UserRechargeRefund":"ইউসার রিচার্জ রিফান্ড",
+    "CompanyPackage":"কোম্পানির প্যাকেজ"	
 }
 

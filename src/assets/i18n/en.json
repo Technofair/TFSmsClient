@@ -600,5 +600,6 @@
     "Month Of Bill": "Month Of Bill",
     "ExpireDate": "Expire Date",
     "Report": "Report",
-    "AppointedCompany": "Appointed Company?"
+    "AppointedCompany": "Appointed Company?",
+    "CompanyPackage":"Company Package"	
 }
