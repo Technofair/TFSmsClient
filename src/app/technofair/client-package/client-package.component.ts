@@ -44,9 +44,9 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      tFACompanyPackageTypeId: new FormControl(Validators.required),
-      tFACompanyPackageId: new FormControl(),
-      tFACompanyCustomerId: new FormControl(Validators.required),
+      tfaCompanyPackageTypeId: new FormControl(Validators.required),
+      tfaCompanyPackageId: new FormControl(),
+      tfaCompanyCustomerId: new FormControl(Validators.required),
       date: new FormControl(),
       rate: new FormControl(),
       amount: new FormControl(),
@@ -97,8 +97,8 @@ export class ClientPackageComponent implements OnInit {
 
 
   resetByCompanyChange(){
-    this.frm.controls['tFACompanyPackageTypeId'].setValue(null);
-    this.frm.controls['tFACompanyPackageId'].setValue(null);
+    this.frm.controls['tfaCompanyPackageTypeId'].setValue(null);
+    this.frm.controls['tfaCompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
@@ -125,7 +125,7 @@ export class ClientPackageComponent implements OnInit {
     this.frm.controls['totalAmount'].setValue(null);
     this.frm.controls['date'].setValue(''); 
     this.CompanyPackagelist='';
-    var tFACompanyPackageTypeId = this.frm.controls['tFACompanyPackageTypeId'].value;
+    var tFACompanyPackageTypeId = this.frm.controls['tfaCompanyPackageTypeId'].value;
     this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==tFACompanyPackageTypeId).allowPackage;
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + tFACompanyPackageTypeId, {}).subscribe(res => {
       this.CompanyPackagelist = res;
@@ -153,7 +153,7 @@ export class ClientPackageComponent implements OnInit {
 
   
   setPrice(){
-    var value =this.frm.controls['tFACompanyPackageId'].value;
+    var value =this.frm.controls['tfaCompanyPackageId'].value;
     this.frm.controls['amount'].setValue('');    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
@@ -174,10 +174,12 @@ export class ClientPackageComponent implements OnInit {
 
   }
 
-
   edit(res: any) {
-    this.getCompanyPackages();
-    this.frm.patchValue(res);
+   this.frm.patchValue(res);
+   var companyPackageType= this.frm.controls['tfaCompanyPackageTypeId'].value;
+   this.getRatePrice(companyPackageType);
+   this.getCompanyPackages();
+   this.setPrice();
   }
 
   showModalDialog(id: any) {
