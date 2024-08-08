@@ -43,11 +43,11 @@ export class ClientSmsBalanceComponent {
  initialize(){
   this.frm = new FormGroup({
     id: new FormControl(0),  
-    rate: new FormControl([Validators.required]),    
+    rate: new FormControl(null,[Validators.required]),    
     balance: new FormControl(0,[Validators.required]),  
-    noOfMessage: new FormControl([Validators.required]),
+    noOfMessage: new FormControl([null,Validators.required]),
     isActive: new FormControl(true,[Validators.required]),
-    CmnCompanyCustomerId: new FormControl([Validators.required]),
+    tFACompanyCustomerId: new FormControl(null,[Validators.required]),
     date: new FormControl(new Date()),
     createdBy: new FormControl(this.auth.getUserId()),
     createdDate: new FormControl(new Date()),
@@ -74,7 +74,8 @@ export class ClientSmsBalanceComponent {
       console.log(JSON.stringify(this.frm.value))
       
       this.gSvc.postdata("api/TFAClientSMSBalance/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-        
+        this.getClientSmsBalance();
+        this.reset();
         if (res == undefined) {
           
           this.toastrService.error("Something went wrong");
@@ -121,7 +122,7 @@ getCompanyCustomer() {
  }
 
  reset(){
-
+  this.initialize();
  }
 
  clear(){
