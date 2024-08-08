@@ -47,7 +47,7 @@ export class ClientPackageComponent implements OnInit {
       tFACompanyPackageTypeId: new FormControl(Validators.required),
       tFACompanyPackageId: new FormControl(),
       tFACompanyCustomerId: new FormControl(Validators.required),
-      date: new FormControl(new Date(), Validators.required),
+      date: new FormControl(),
       rate: new FormControl(),
       amount: new FormControl(),
       discount: new FormControl(null),
