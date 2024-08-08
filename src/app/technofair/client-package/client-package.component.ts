@@ -44,10 +44,10 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      tFACompanyPackageTypeId: new FormControl(Validators.required),
-      tFACompanyPackageId: new FormControl(),
-      tFACompanyCustomerId: new FormControl(Validators.required),
-      date: new FormControl(new Date(), Validators.required),
+      tfaCompanyPackageTypeId: new FormControl(Validators.required),
+      tfaCompanyPackageId: new FormControl(),
+      tfaCompanyCustomerId: new FormControl(Validators.required),
+      date: new FormControl(),
       rate: new FormControl(),
       amount: new FormControl(),
       discount: new FormControl(null),
@@ -97,8 +97,8 @@ export class ClientPackageComponent implements OnInit {
 
 
   resetByCompanyChange(){
-    this.frm.controls['tFACompanyPackageTypeId'].setValue(null);
-    this.frm.controls['tFACompanyPackageId'].setValue(null);
+    this.frm.controls['tfaCompanyPackageTypeId'].setValue(null);
+    this.frm.controls['tfaCompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
@@ -118,17 +118,18 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages() {
-    this.frm.controls['tFACompanyPackageId'].setValue(null);
-    this.frm.controls['amount'].setValue(null);
-    this.frm.controls['discount'].setValue(null);
-    this.frm.controls['isActive'].setValue(true);
-    this.frm.controls['totalAmount'].setValue(null);
-    this.frm.controls['date'].setValue(''); 
+    // this.frm.controls['tfaCompanyPackageId'].setValue(null);
+    // this.frm.controls['amount'].setValue(null);
+    // this.frm.controls['discount'].setValue(null);
+    // this.frm.controls['isActive'].setValue(true);
+    // this.frm.controls['totalAmount'].setValue(null);
+    // this.frm.controls['date'].setValue(''); 
     this.CompanyPackagelist='';
-    var tFACompanyPackageTypeId = this.frm.controls['tFACompanyPackageTypeId'].value;
+    var tFACompanyPackageTypeId = this.frm.controls['tfaCompanyPackageTypeId'].value;
     this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==tFACompanyPackageTypeId).allowPackage;
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + tFACompanyPackageTypeId, {}).subscribe(res => {
-      this.CompanyPackagelist = res;
+    this.CompanyPackagelist = res;
+    
     }, err => {
       this.toastrService.error("Package list Not Found");
     })
@@ -153,7 +154,7 @@ export class ClientPackageComponent implements OnInit {
 
   
   setPrice(){
-    var value =this.frm.controls['tFACompanyPackageId'].value;
+    var value =this.frm.controls['tfaCompanyPackageId'].value;
     this.frm.controls['amount'].setValue('');    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
@@ -171,20 +172,25 @@ export class ClientPackageComponent implements OnInit {
     const discount = this.frm.controls['discount'].value;
     const totalAmount = amount - discount;
     this.frm.controls['totalAmount'].setValue(totalAmount);
-
   }
 
-
   edit(res: any) {
-    this.getCompanyPackages();
-    this.frm.patchValue(res);
+   this.frm.patchValue(res);
+   var companyPackageType= this.frm.controls['tfaCompanyPackageTypeId'].value;
+   this.getRatePrice(companyPackageType);
+   this.getCompanyPackages();
+   this.frm.controls['amount'].setValue(res.amount);
+   this.frm.controls['rate'].setValue(res.rate);
+   this.frm.controls['discount'].setValue(res.discount);
+   this.frm.controls['totalAmount'].setValue(res.amount-res.discount);
+   this.frm.controls['tfaCompanyPackageId'].setValue(res.tfaCompanyPackageId);
   }
 
   showModalDialog(id: any) {
     this.displayModal = true;
     this.reset();
     this.gSvc.postdata("api/ItemBrand/ItemBrand/" + id + "", {}).subscribe((res: any) => {
-      this.viewInfo = res;
+    this.viewInfo = res;
     }, err => {
       this.toastrService.error("Error! Data Not Found");
     })
