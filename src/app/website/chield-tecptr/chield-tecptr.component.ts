@@ -37,7 +37,6 @@ export class ChieldTecptrComponent implements OnInit  {
   
   // JavaScript Document
   getProductGalleryList(){
-    alert('asad');
     this.gSvc.postdata("Common/CmnProductGallery/GetAll",{}).subscribe(res => {
       this.productGalleryList=res;
     }, err => {

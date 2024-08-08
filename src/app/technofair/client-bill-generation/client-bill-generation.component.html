@@ -5,28 +5,96 @@
   <form [formGroup]="frm">
     <input type="hidden" formControlName="id" value="0">
     <div class="formgrid grid">
+
       <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
         <label>{{'Months'|translate}}</label><span class="text-danger"> *</span>
         <p-dropdown [options]="monthes" [style]="{'width':'100%'}" formControlName="monthId"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"  ></p-dropdown><br>
       </div>   
-        <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
             <label>{{'Year'|translate}}</label><span class="text-danger">*</span>
             <p-dropdown [options]="years" [style]="{'width':'100%'}" formControlName="year"
           [filter]="true" filterBy="title" [showClear]="true" placeholder="{{'SELECT'|translate}}"
           optionLabel="name" optionValue="id"  ></p-dropdown><br>
-          </div>
+      </div>
+
+      <div class="field col-12 sm:col-6 md:col-3 lg:col-3 xl:col-3">
+          <p-button (click)="getBillInfo()" styleClass="p-button-primary p-button-sm mt-5"
+                            type="submit" icon="pi pi-search" label="{{'Search' | translate}}"></p-button>&nbsp;
+      </div>
         
      
       <div class="field col-12 sm:col-12 md:col-12 lg:col-12 xl:col-12">
         <div class="flex justify-center">          
-            <p-button (click)="save()" [disabled]="frm.invalid"
+            <p-button (click)="generateClientBill()" [disabled]="frm.invalid"
               styleClass="p-button-success p-button-sm" type="submit" icon="pi pi-check"
               label="{{'GenerateInvoice'|translate}}"></p-button>
             
           </div>
         </div>
       </div>   
-  </form>
+
+
+<p-table #dt [value]="companyCustomerWithClientPackages" dataKey="id" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+[rowsPerPageOptions]="[15,25,50,100]" [paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+[globalFilterFields]="['name']" styleClass="p-datatable-sm p-datatable-gridlines pt-3" [tableStyle]="{'min-width': '50rem'}">
+
+<ng-template pTemplate="caption">
+  <div class="flex">
+    <button pButton label="Clear" class="p-button-outlined p-button-sm" icon="pi pi-filter-slash"
+      (click)="clear(dt)"></button>
+    <span class="p-input-icon-left ml-auto float-right">
+      <i class="pi pi-search"></i>
+      <input pInputText type="text" (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+        placeholder="Search keyword" />
+    </span>
+  </div>
+</ng-template>
+
+<ng-template pTemplate="header">
+  <tr>      
+    <th class="vcenter text-center">{{'CompanyCustomerName'|translate}}</th>
+    <th class="vcenter text-center">{{'CompanyCustomerAddress'|translate}}</th>
+    <th class="vcenter text-center">{{'CompanyPackageTypeName'|translate}}</th>     
+    <th class="vcenter text-center">{{'BillGenerated'|translate}}</th>  
+    <th class="vcenter text-center">Action</th>     
+  </tr>
+  <tr>
+    <div [hidden]="progressStatus" style="position: absolute; z-index: 10;">
+     <p-progressSpinner></p-progressSpinner>
+    </div>
+ </tr>
+</ng-template>
+
+
+<ng-template pTemplate="body" let-r>
+  <tr class="p-selectable-row">    
+    <td>{{r.companyCustomerName}}</td>
+    <td>{{r.companyCustomerAddress}}</td>
+    <td>{{r.companyPackageTypeName}}</td>
+    <td>{{r.billExists == true ? 'Generated' : 'Not Generated'}}</td>
+    
+    <td class="vcenter text-center">
+
+    <button pButton pRipple type="button" class="p-button-rounded p-button-success" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-check"
+      *ngIf="r.billExists"></button>
+    <button pButton pRipple type="button" class="p-button-rounded p-button-warning" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-receipt"
+    (click)="generateSingleBill(r)" *ngIf="!r.billExists"></button>
+
+      <!-- <p-button type="button" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-receipt"
+        (click)="generateSingleBill(r)" data-toggle="tooltip" title="{{'Generate' | translate}}">
+      </p-button> -->
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template pTemplate="emptymessage">
+  <tr>
+    <td colspan="9">No data found.</td>
+  </tr>
+</ng-template>
+</p-table>
+</form>
 </p-panel>

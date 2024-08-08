@@ -14,7 +14,11 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class ClientBillGenerationComponent implements OnInit {
+  companyCustomerWithClientPackages: any;
+  progressStatus:boolean = true;
+
   years:any=[
+    {id:'',name:"Select"},
     {id:2024,name:"2024"},
     {id:2025,name:"2025"},
     {id:2026,name:"2026"},
@@ -29,6 +33,7 @@ export class ClientBillGenerationComponent implements OnInit {
     {id:2035,name:"2035"}
   ];
   monthes:any=[
+    {id:'',name:"Select"},
     {id:1,name:"January"},
     {id:2,name:"February"},
     {id:3,name:"March"},
@@ -55,24 +60,34 @@ export class ClientBillGenerationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
-    this. getcompanyPackageTypes();
+    //this.getCompanyCustomerWithClientPackages();
+    //this. getcompanyPackageTypes();
   }
+
   getFrm(){
     this.frm = this.fb.group({
-     // id: new FormControl(0),
-      year: new FormControl(null,Validators.required),
-      monthId: new FormControl(null,Validators.required),
+
+      year: new FormControl('', Validators.required),
+      monthId: new FormControl('', Validators.required),
       createdBy:new FormControl(this.auth.getUserId()),
+      tfaCompanyCustomerId: new FormControl(null)
+      
      // createdDate:new FormControl(new Date()),
       //modifiedBy:new FormControl(this.auth.getUserId()),
       //modifiedDate:new FormControl(new Date())
     });
   }
-  save() {
+
+
+
+  generateClientBill() {
+
     if (this.frm.invalid) return false;
-    var year =this.frm.controls['year'].value;
-    var monthId=this.frm.controls['monthId'].value;
-    var createdBy= this.frm.controls['createdBy'].value;
+
+    var year = this.frm.controls['year'].value;
+    var monthId= this.frm.controls['monthId'].value;
+    var createdBy = this.frm.controls['createdBy'].value;
+
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -94,19 +109,46 @@ export class ClientBillGenerationComponent implements OnInit {
     return false;
   }
 
-  getcompanyPackageTypes() {
-    this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
-    //  this.monthes = res;
-    }, err => {
-      this.toastrService.error("Error! Data list Not Found");
-    })    
-  }
-  edit(res: any) {
-    
-    this.frm.patchValue(res);
+
+  getBillInfo(){
+
+    var year = this.frm.controls['year'].value;
+    var monthId= this.frm.controls['monthId'].value;
+    this.getCompanyCustomerWithClientPackages(monthId, year);
   }
 
+  getCompanyCustomerWithClientPackages(monthId: any, year: any) {
+    var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
+
+    this.progressStatus = false;
+    this.gSvc.postdata(url, {}).subscribe(res => {
+    this.companyCustomerWithClientPackages = res;
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus=true;
+  }
+
+
   
+
+  generateSingleBill(row: any) {  
+    
+    this.frm.controls['tfaCompanyCustomerId'].setValue(row.tfaCompanyCustomerId);
+    console.log(JSON.stringify(row));
+    console.log(row.tFACompanyCustomerId);
+    //return;
+    this.generateClientBill();
+  }
+
+  // getcompanyPackageTypes() {
+  //   this.gSvc.postdata("api/TFACompanyPackageType/GetAll", {}).subscribe(res => {
+  //   //  this.monthes = res;
+  //   }, err => {
+  //     this.toastrService.error("Error! Data list Not Found");
+  //   })    
+  // } 
+
   reload() {
    
     this.router.navigateByUrl('/inventory/itembrand')
