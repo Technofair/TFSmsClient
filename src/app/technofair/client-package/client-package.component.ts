@@ -118,7 +118,7 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages() {
-    this.frm.controls['tFACompanyPackageId'].setValue(null);
+    this.frm.controls['tfaCompanyPackageId'].setValue(null);
     this.frm.controls['amount'].setValue(null);
     this.frm.controls['discount'].setValue(null);
     this.frm.controls['isActive'].setValue(true);
@@ -128,7 +128,8 @@ export class ClientPackageComponent implements OnInit {
     var tFACompanyPackageTypeId = this.frm.controls['tfaCompanyPackageTypeId'].value;
     this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==tFACompanyPackageTypeId).allowPackage;
     this.gSvc.postdata("api/TFACompanyPackage/GetCompanyPackageByPackageType?anFCompanyPackageTypeId=" + tFACompanyPackageTypeId, {}).subscribe(res => {
-      this.CompanyPackagelist = res;
+    this.CompanyPackagelist = res;
+    
     }, err => {
       this.toastrService.error("Package list Not Found");
     })
@@ -171,7 +172,6 @@ export class ClientPackageComponent implements OnInit {
     const discount = this.frm.controls['discount'].value;
     const totalAmount = amount - discount;
     this.frm.controls['totalAmount'].setValue(totalAmount);
-
   }
 
   edit(res: any) {
@@ -179,14 +179,18 @@ export class ClientPackageComponent implements OnInit {
    var companyPackageType= this.frm.controls['tfaCompanyPackageTypeId'].value;
    this.getRatePrice(companyPackageType);
    this.getCompanyPackages();
-   this.setPrice();
+   this.frm.controls['amount'].setValue(res.amount);
+   this.frm.controls['rate'].setValue(res.rate);
+   this.frm.controls['discount'].setValue(res.discount);
+   this.frm.controls['totalAmount'].setValue(res.amount-res.discount);
+   this.frm.controls['tfaCompanyPackageId'].setValue(res.tfaCompanyPackageId);
   }
 
   showModalDialog(id: any) {
     this.displayModal = true;
     this.reset();
     this.gSvc.postdata("api/ItemBrand/ItemBrand/" + id + "", {}).subscribe((res: any) => {
-      this.viewInfo = res;
+    this.viewInfo = res;
     }, err => {
       this.toastrService.error("Error! Data Not Found");
     })
