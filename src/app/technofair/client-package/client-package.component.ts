@@ -118,12 +118,12 @@ export class ClientPackageComponent implements OnInit {
   }
 
   getCompanyPackages() {
-    this.frm.controls['tfaCompanyPackageId'].setValue(null);
-    this.frm.controls['amount'].setValue(null);
-    this.frm.controls['discount'].setValue(null);
-    this.frm.controls['isActive'].setValue(true);
-    this.frm.controls['totalAmount'].setValue(null);
-    this.frm.controls['date'].setValue(''); 
+    // this.frm.controls['tfaCompanyPackageId'].setValue(null);
+    // this.frm.controls['amount'].setValue(null);
+    // this.frm.controls['discount'].setValue(null);
+    // this.frm.controls['isActive'].setValue(true);
+    // this.frm.controls['totalAmount'].setValue(null);
+    // this.frm.controls['date'].setValue(''); 
     this.CompanyPackagelist='';
     var tFACompanyPackageTypeId = this.frm.controls['tfaCompanyPackageTypeId'].value;
     this.allowPackage=this.companyPackageTypes.find((x: { id: any; })=>x.id==tFACompanyPackageTypeId).allowPackage;
