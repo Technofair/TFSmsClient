@@ -180,38 +180,37 @@ export class ClientPaymentComponent implements OnInit {
   clear(table: Table) {
     table.clear();
   }
-  search(reqType: string,data:any) {
-    debugger;
+  getReportIn(tfaCompanyCustomerId:any,invoiceId:any) {
+   
     var frmValue = this.frm.value;
     var objReq = {
       SelectedGroup: frmValue.selectedGroup,
       SelectedSubGroup: [],
       obj: {
-        companyId: this.auth.getCompany(),
-        cmnFinancialYearId: 1,
-        // dateFrom: frmValue.fromDate,
-        dateTo: new Date(),
-        cmnStoreId: 1,
-        prdProductId: 1,
-        clientId: 1,
-        hrmEmployeeId: null,
-        deviceNumber: null
+        tfaCompanyCustomerId: tfaCompanyCustomerId,
+        invoiceId: invoiceId,
       }
     }
 
-    if (reqType == 'rdlc') {
       this.loadReportIn(objReq);
-    }
+    
   }
 
  // Report Execution
   public displayModal: boolean = false;
-  public _getReportUrl: string = 'Inventory/Report/CurrentStockForRDLC';
-  loadReportIn(item: any) {
+  public _getReportUrl: string = 'api/TFAClientPayment/GetClientPaymentInvoice';
+  loadReportIn(item:any) {
     
+    // this.displayModal = true;
+    // var repFile = 'TFAClientPaymentInvoice.rdlc';
+    // var rmodel = { reportPath: '/reportfile/TFAClientPaymentInvoice/' + repFile, reportName: 'Client Payment Invoice' };
+    // this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
+    // var Models=list;
+    // this._rptViewer.reportInPage(this._getReportUrl, Models);
+    // debugger;
     this.displayModal = true;
-    var repFile = 'rptCurrentStock.rdlc';
-    var rmodel = { reportPath: '/reportfile/report/' + repFile, reportName: 'Current Stock' };
+    var repFile = 'TFAClientPaymentInvoice.rdlc';
+    var rmodel = { reportPath: '/reportfile/TFAClientPaymentInvoice/' + repFile, reportName: 'Current Stock' };
     this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
     var Models = item;
     this._rptViewer.reportInPage(this._getReportUrl, Models);
