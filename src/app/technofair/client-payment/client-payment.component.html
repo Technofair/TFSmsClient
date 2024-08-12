@@ -80,7 +80,7 @@
                   {{ monthList.expireDate}}
                 </td>
                 <td>
-                  <p-button (click)="loadReportIn(monthList); reportModal.maximized = true" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="button" icon="pi pi-file"
+                  <p-button (click)="getReportIn(this.frm.controls['cmnCompanyCustomerId'].value, monthList.id); reportModal.maximized = true" [disabled]="frm.invalid" styleClass="p-button-success p-button-sm" type="button" icon="pi pi-file"
                     title="{{'Invoice'|translate}}"></p-button>
                   <!-- <p-button (click)="search('rdlc',monthList); reportModal.maximized = true"
                             styleClass="p-button-danger p-button-sm mr-2" type="button"
