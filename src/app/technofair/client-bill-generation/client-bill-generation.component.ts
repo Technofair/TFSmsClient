@@ -118,7 +118,8 @@ export class ClientBillGenerationComponent implements OnInit {
   }
 
   getCompanyCustomerWithClientPackages(monthId: any, year: any) {
-    var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
+   // var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
+var url = "api/TFACompanyCustomer/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
 
     this.progressStatus = false;
     this.gSvc.postdata(url, {}).subscribe(res => {
