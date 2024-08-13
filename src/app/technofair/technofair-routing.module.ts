@@ -10,6 +10,7 @@ import { CompanyPackageTypeComponent } from './company-package-type/company-pack
 import { CustomerServerInfoComponent } from './customer-server-info/customer-server-info.component';
 import { ClientServerInfoComponent } from './client-server-info/client-server-info.component';
 import { ClientBillGenerationComponent } from './client-bill-generation/client-bill-generation.component';
+import { BillGenPermssionComponent } from './bill-gen-permssion/bill-gen-permssion.component';
 
 const routes: Routes = [
   { path: 'clientinfo', component: ClientInfoComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'company-package-type', component: CompanyPackageTypeComponent },
   { path: 'customer-server-info-component', component: CustomerServerInfoComponent },
   { path: 'client-server-info', component: ClientServerInfoComponent },
-  { path: 'client-bill-generation', component: ClientBillGenerationComponent }
+  { path: 'client-bill-generation', component: ClientBillGenerationComponent },
+  { path: 'bill-gen-permssion', component: BillGenPermssionComponent }
   
 ];
 
