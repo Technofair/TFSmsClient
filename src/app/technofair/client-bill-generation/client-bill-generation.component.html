@@ -58,7 +58,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
     <th class="vcenter text-center">{{'CompanyCustomerName'|translate}}</th>
     <th class="vcenter text-center">{{'CompanyCustomerAddress'|translate}}</th>
     <th class="vcenter text-center">{{'CompanyPackageTypeName'|translate}}</th>     
-    <th class="vcenter text-center">{{'BillGenerated'|translate}}</th>  
+    <th class="vcenter text-center">{{'BillGen?'|translate}}</th> 
+    <th class="vcenter text-center">{{'Approved'|translate}}</th> 
     <th class="vcenter text-center">Action</th>     
   </tr>
   <tr>
@@ -74,12 +75,24 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
     <td>{{r.companyCustomerName}}</td>
     <td>{{r.companyCustomerAddress}}</td>
     <td>{{r.companyPackageTypeName}}</td>
-    <td>{{r.billExists == true ? 'Generated' : 'Not Generated'}}</td>
     
     <td class="vcenter text-center">
-
-    <button pButton pRipple type="button" class="p-button-rounded p-button-success" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-check"
+      {{r.billExists == true ? 'Yes' : 'No'}}
+      <!-- <button pButton pRipple type="button" class="p-button-rounded p-button-success" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-check"
       *ngIf="r.billExists"></button>
+      <button pButton pRipple type="button" class="p-button-rounded p-button-warning" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-times"
+      *ngIf="!r.billExists"></button> -->
+    </td>
+
+    <td>
+      <!-- {{r.isApproved == true ? 'Approved' : 'Not Approved' }} -->
+      <button pButton pRipple type="button" class="p-button-rounded p-button-success" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-check"
+      *ngIf="r.isApproved"></button>
+      <button pButton pRipple type="button" class="p-button-rounded p-button-warning" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-times"
+      (click)="displayApproveModal(r)" *ngIf="!r.isApproved"></button>
+    </td>
+    
+    <td class="vcenter text-center">
     <button pButton pRipple type="button" class="p-button-rounded p-button-warning" styleClass="p-button-success p-button-sm mr-2 px-2 py-1" icon="pi pi-receipt"
     (click)="generateSingleBill(r)" *ngIf="!r.billExists"></button>
 
@@ -98,3 +111,81 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 </p-table>
 </form>
 </p-panel>
+
+<p-dialog header="Header" [(visible)]="approveModal" [modal]="true" [style]="{width: '60vw'}" [draggable]="false"
+    [resizable]="false">
+    <ng-template pTemplate="header">
+        <h5>{{'Approve' | translate}}</h5>
+    </ng-template>
+
+
+    <form [formGroup]="frmApprove">
+      <div class="modal-body">
+          <div class="formgrid grid">
+
+              <!-- <input type="number" class="p-2  w-full" formControlName="id" pInputText hidden /> -->
+
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
+                    <label>{{'Client'|translate}}</label><span class="text-danger">*</span>
+                    <input type="text" class="p-2  w-full" formControlName="companyCustomerName" pInputText readonly />
+              </div>
+
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
+                <label>{{'CompanyPackageTypeName'|translate}}</label><span class="text-danger">*</span>
+                <input type="text" class="p-2  w-full" formControlName="companyPackageTypeName" pInputText readonly />
+             </div>
+
+             <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
+              <label>{{'PackageName'|translate}}</label><span class="text-danger">*</span>
+              <input type="text" class="p-2  w-full" formControlName="packageName" pInputText readonly />
+             </div>
+
+             <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
+              <label>{{'numberOfAssignDevice'|translate}}</label><span class="text-danger">*</span>
+              <input type="text" class="p-2  w-full" formControlName="numberOfAssignedDevice" pInputText readonly />
+             </div>
+
+             <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
+              <label>{{'NumberOfActivePackage'|translate}}</label><span class="text-danger">*</span>
+              <input type="text" class="p-2  w-full" formControlName="numberOfLivePackage" pInputText readonly />
+             </div>
+                                                                   
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
+                  <label>{{'Rate' | translate}}</label><span class="text-danger">*</span>
+                  <input type="text" class="p-2  w-full" formControlName="rate" pInputText readonly />
+              </div>
+
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
+                  <label>{{'Amount' | translate}}</label><span class="text-danger">*</span>
+                  <input type="number" class="p-2  w-full" formControlName="amount" pInputText readonly />
+              </div>
+
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
+                <label>{{'Discount' | translate}}</label><span class="text-danger">*</span>
+                <input type="number" class="p-2  w-full" formControlName="discount" pInputText readonly />
+              </div>
+
+              <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
+                <label>{{'TotalAmount' | translate}}</label><span class="text-danger">*</span>
+                <input type="number" class="p-2  w-full" formControlName="totalAmount" pInputText readonly />
+              </div>
+  
+              
+              <div class="field col-12 lg:col-12 xl:col-12 md:col-12 sm:col-12">
+                  <div class="card-footer">
+                      <div class="flex justify-center">
+                          <p-button styleClass="p-button-success p-button-sm" type="button" icon="pi pi-check"
+                              label="{{'Approve'|translate}}"></p-button>&nbsp;
+                      </div>
+                      <!-- <div [hidden]="packageRenewStatus" style="position: absolute; z-index: 10; ">
+                          <p-progressSpinner></p-progressSpinner>
+                      </div> -->
+                  </div>
+              </div>
+
+
+          </div>
+      </div>
+  </form>
+    
+</p-dialog>

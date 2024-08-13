@@ -16,6 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ClientBillGenerationComponent implements OnInit {
   companyCustomerWithClientPackages: any;
   progressStatus:boolean = true;
+  approveModal: boolean = false;
 
   years:any=[
     {id:'',name:"Select"},
@@ -47,7 +48,9 @@ export class ClientBillGenerationComponent implements OnInit {
     {id:11,name:"November"},
     {id:12,name:"December"}
   ];
+
   frm!:FormGroup
+  frmApprove!:FormGroup
 
   
   constructor(private fb: FormBuilder,
@@ -60,6 +63,7 @@ export class ClientBillGenerationComponent implements OnInit {
 
   ngOnInit(): void {
     this.getFrm();
+    this.getApproveFrm();
     //this.getCompanyCustomerWithClientPackages();
     //this. getcompanyPackageTypes();
   }
@@ -78,6 +82,26 @@ export class ClientBillGenerationComponent implements OnInit {
     });
   }
 
+  getApproveFrm(){
+    this.frmApprove = this.fb.group({
+           
+      companyCustomerName: new FormControl('', Validators.required),
+      companyPackageTypeName: new FormControl(''),
+      packageName: new FormControl(''),
+
+      numberOfAssignedDevice: new FormControl(''),
+      numberOfLivePackage: new FormControl(''),
+
+      rate: new FormControl(''),
+      amount: new FormControl(''),
+      discount: new FormControl(''),
+      createdBy:new FormControl(this.auth.getUserId())
+
+    });
+  }
+
+  
+
 
 
   generateClientBill() {
@@ -94,7 +118,8 @@ export class ClientBillGenerationComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
             this.gSvc.postdata("api/TFAClientBill/GenerateClientBill", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.getFrm();
+            this.getBillInfo();
+              //this.getFrm();
             this.toastrService.success(res.message);
           }, err => {
             this.toastrService.error(err.message);
@@ -117,9 +142,9 @@ export class ClientBillGenerationComponent implements OnInit {
     this.getCompanyCustomerWithClientPackages(monthId, year);
   }
 
-  getCompanyCustomerWithClientPackages(monthId: any, year: any) {
-   // var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
-var url = "api/TFACompanyCustomer/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
+    getCompanyCustomerWithClientPackages(monthId: any, year: any) {
+    // var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
+    var url = "api/TFACompanyCustomer/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
 
     this.progressStatus = false;
     this.gSvc.postdata(url, {}).subscribe(res => {
@@ -131,7 +156,26 @@ var url = "api/TFACompanyCustomer/GetActiveCompanyCustomerWithClientPackage?mont
   }
 
 
-  
+  displayApproveModal(row: any) {  
+    this.approveModal = true;
+    //alert(row.companyCustomerName);
+    this.frmApprove.controls['companyCustomerName'].setValue(row.companyCustomerName);
+    this.frmApprove.controls['companyPackageTypeName'].setValue(row.companyPackageTypeName);
+    this.frmApprove.controls['packageName'].setValue(row.packageName);
+    
+    this.frmApprove.controls['numberOfAssignedDevice'].setValue(row.numberOfAssignedDevice);
+    this.frmApprove.controls['numberOfLivePackage'].setValue(row.numberOfLivePackage);
+    this.frmApprove.controls['rate'].setValue(row.discount);
+
+    this.frmApprove.controls['amount'].setValue(row.amount);
+    this.frmApprove.controls['discount'].setValue(row.discount);
+    this.frmApprove.controls['totalAmount'].setValue(row.totalAmount);
+
+  //   console.log(JSON.stringify(row));
+  //   console.log(row.tFACompanyCustomerId);
+  //   //return;
+  //   this.generateClientBill();
+  }
 
   generateSingleBill(row: any) {  
     
