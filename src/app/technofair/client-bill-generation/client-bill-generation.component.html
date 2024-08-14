@@ -123,7 +123,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
       <div class="modal-body">
           <div class="formgrid grid">
 
-              <!-- <input type="number" class="p-2  w-full" formControlName="id" pInputText hidden /> -->
+              <input type="number" class="p-2  w-full" formControlName="tfaClientPaymentDetailId" pInputText hidden /> 
 
               <div class="field col-12 lg:col-4 xl:col-4 md:col-3 sm:col-4">
                     <label>{{'Client'|translate}}</label><span class="text-danger">*</span>
@@ -174,7 +174,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
               <div class="field col-12 lg:col-12 xl:col-12 md:col-12 sm:col-12">
                   <div class="card-footer">
                       <div class="flex justify-center">
-                          <p-button styleClass="p-button-success p-button-sm" type="button" icon="pi pi-check"
+                          <p-button styleClass="p-button-success p-button-sm" type="button" icon="pi pi-check" (click)="approve()"
                               label="{{'Approve'|translate}}"></p-button>&nbsp;
                       </div>
                       <!-- <div [hidden]="packageRenewStatus" style="position: absolute; z-index: 10; ">
