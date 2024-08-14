@@ -210,7 +210,7 @@ export class ClientPaymentComponent implements OnInit {
     // debugger;
     this.displayModal = true;
     var repFile = 'TFAClientPaymentInvoice.rdlc';
-    var rmodel = { reportPath: '/reportfile/TFAClientPaymentInvoice/' + repFile, reportName: 'Current Stock' };
+    var rmodel = { reportPath: '/reportfile/TFAdmin/' + repFile, reportName: 'Current Stock' };
     this._rptViewer.rptModel = new ReportModel(rmodel.reportPath, rmodel.reportName, 800, 1);
     var Models = item;
     this._rptViewer.reportInPage(this._getReportUrl, Models);

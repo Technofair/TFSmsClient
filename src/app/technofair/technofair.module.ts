@@ -41,6 +41,7 @@ import { CompanyPackageTypeComponent } from './company-package-type/company-pack
 import { CustomerServerInfoComponent } from './customer-server-info/customer-server-info.component';
 import { ClientServerInfoComponent } from './client-server-info/client-server-info.component';
 import { ClientBillGenerationComponent } from './client-bill-generation/client-bill-generation.component';
+import { BillGenPermssionComponent } from './bill-gen-permssion/bill-gen-permssion.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { ClientBillGenerationComponent } from './client-bill-generation/client-b
     CompanyPackageTypeComponent,
     CustomerServerInfoComponent,
     ClientServerInfoComponent,
-    ClientBillGenerationComponent
+    ClientBillGenerationComponent,
+    BillGenPermssionComponent
   ],
   exports: [
   ],
