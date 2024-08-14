@@ -157,18 +157,23 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
 
               <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
                   <label>{{'Amount' | translate}}</label><span class="text-danger">*</span>
-                  <input type="number" class="p-2  w-full" formControlName="amount" pInputText readonly />
+                  <input type="text" class="p-2  w-full" formControlName="amount" pInputText readonly />
               </div>
 
               <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
                 <label>{{'Discount' | translate}}</label><span class="text-danger">*</span>
-                <input type="number" class="p-2  w-full" formControlName="discount" pInputText readonly />
+                <input type="text" class="p-2  w-full" formControlName="discount" pInputText readonly />
               </div>
 
               <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
                 <label>{{'TotalAmount' | translate}}</label><span class="text-danger">*</span>
-                <input type="number" class="p-2  w-full" formControlName="totalAmount" pInputText readonly />
+                <input type="text" class="p-2  w-full" formControlName="totalAmount" pInputText readonly />
               </div>
+
+              <!-- <div class="field col-12 lg:col-4 xl:col-4 md:col-4 sm:col-4">
+                <label>{{'TotalAmount' | translate}}</label><span class="text-danger"></span>
+                <input type="text" class="p-2  w-full" formControlName="totalAmount" pInputText readonly />
+              </div> -->
   
               
               <div class="field col-12 lg:col-12 xl:col-12 md:col-12 sm:col-12">

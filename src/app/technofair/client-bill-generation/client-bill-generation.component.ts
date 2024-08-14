@@ -14,7 +14,9 @@ import { AuthService } from 'src/app/services/auth.service';
   providers: [ConfirmationService]
 })
 export class ClientBillGenerationComponent implements OnInit {
+
   companyCustomerWithClientPackages: any;
+  clientBill: any;
   progressStatus:boolean = true;
   approveModal: boolean = false;
 
@@ -88,13 +90,13 @@ export class ClientBillGenerationComponent implements OnInit {
       companyCustomerName: new FormControl('', Validators.required),
       companyPackageTypeName: new FormControl(''),
       packageName: new FormControl(''),
-
+      tfaClientPaymentDetailId: new FormControl(),
       numberOfAssignedDevice: new FormControl(''),
       numberOfLivePackage: new FormControl(''),
-
       rate: new FormControl(''),
       amount: new FormControl(''),
       discount: new FormControl(''),
+      totalAmount: new FormControl(''),
       createdBy:new FormControl(this.auth.getUserId())
 
     });
@@ -137,8 +139,8 @@ export class ClientBillGenerationComponent implements OnInit {
   approve()
   {
     debugger
-    var id=this.frmApprove.controls['tfaCompanyCustomerId'].value;
-    this.gSvc.postdata("api/TFAClientBill/ApproveClientBill?di="+id+"aprovedBy="+this.auth.getUserId(),{} ).subscribe(res => {
+    var id = this.frmApprove.controls['tfaClientPaymentDetailId'].value;
+    this.gSvc.postdata("api/TFAClientBill/ApproveClientBill?id=" + id + "&approveBy=" + this.auth.getUserId(),{} ).subscribe(res => {
       this.toastrService.success(res.message);
     }, err => {
       this.toastrService.error(err.message);
@@ -153,9 +155,7 @@ export class ClientBillGenerationComponent implements OnInit {
   }
 
     getCompanyCustomerWithClientPackages(monthId: any, year: any) {
-    // var url = "api/TFAClientBill/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
     var url = "api/TFACompanyCustomer/GetActiveCompanyCustomerWithClientPackage?monthId=" + monthId + "&year=" + year;
-
     this.progressStatus = false;
     this.gSvc.postdata(url, {}).subscribe(res => {
     this.companyCustomerWithClientPackages = res;
@@ -168,25 +168,38 @@ export class ClientBillGenerationComponent implements OnInit {
 
   displayApproveModal(row: any) {  
     this.approveModal = true;
-    //alert(row.companyCustomerName);
-    //alert(row.tfaClientPaymentDetailId);
-    this.frmApprove.controls['companyCustomerName'].setValue(row.companyCustomerName);
-    this.frmApprove.controls['companyPackageTypeName'].setValue(row.companyPackageTypeName);
-    this.frmApprove.controls['packageName'].setValue(row.packageName);
     
-    this.frmApprove.controls['numberOfAssignedDevice'].setValue(row.numberOfAssignedDevice);
-    this.frmApprove.controls['numberOfLivePackage'].setValue(row.numberOfLivePackage);
-    this.frmApprove.controls['rate'].setValue(row.discount);
+    this.frmApprove.controls['tfaClientPaymentDetailId'].setValue(row.tfaClientPaymentDetailId);
+    
+    alert(row.tfaClientPaymentDetailId);
 
-    this.frmApprove.controls['amount'].setValue(row.amount);
-    this.frmApprove.controls['discount'].setValue(row.discount);
-    this.frmApprove.controls['totalAmount'].setValue(row.totalAmount);
-
-  //   console.log(JSON.stringify(row));
-  //   console.log(row.tFACompanyCustomerId);
-  //   //return;
-  //   this.generateClientBill();
+    this.getClientBillByClientPaymentDetailId(row.tfaClientPaymentDetailId);
+    
   }
+
+  getClientBillByClientPaymentDetailId(tfaClientPaymentDetailId: any) {
+    var url = "api/TFAClientPaymentDetail/GetClientBillByClientPaymentDetailId?tfaClientPaymentDetailId=" + tfaClientPaymentDetailId;
+    this.progressStatus = false;
+    this.gSvc.postdata(url, {}).subscribe(res => {
+      
+    this.frmApprove.controls['companyCustomerName'].setValue(res.companyCustomerName);
+    this.frmApprove.controls['companyPackageTypeName'].setValue(res.companyPackageTypeName);
+    this.frmApprove.controls['packageName'].setValue(res.packageName);
+    
+    this.frmApprove.controls['numberOfAssignedDevice'].setValue(res.numberOfAssignedDevice);
+    this.frmApprove.controls['numberOfLivePackage'].setValue(res.numberOfLivePackage);
+    this.frmApprove.controls['rate'].setValue(res.rate);
+    this.frmApprove.controls['amount'].setValue(res.amount);
+    this.frmApprove.controls['discount'].setValue(res.discount);
+    this.frmApprove.controls['totalAmount'].setValue(res.totalAmount);
+
+    }, err => {
+      this.toastrService.error("Error! Data list Not Found");
+    })
+    this.progressStatus=true;
+  }
+
+
 
   generateSingleBill(row: any) {  
     
