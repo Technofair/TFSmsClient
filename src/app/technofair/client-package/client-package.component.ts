@@ -44,10 +44,9 @@ export class ClientPackageComponent implements OnInit {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      tfaCompanyPackageTypeId: new FormControl(Validators.required),
+      tfaCompanyPackageTypeId: new FormControl(null,[Validators.required]),
       tfaCompanyPackageId: new FormControl(),
-      tfaCompanyCustomerId: new FormControl(Validators.required),
-      date: new FormControl(),
+      tfaCompanyCustomerId: new FormControl(null,Validators.required),
       rate: new FormControl(),
       amount: new FormControl(),
       discount: new FormControl(null),
@@ -57,7 +56,8 @@ export class ClientPackageComponent implements OnInit {
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
-      modifiedDate:new FormControl(new Date())
+      modifiedDate:new FormControl(new Date()),
+      expDate: new FormControl(new Date())
     });
   }
   getRatePrice(id:any){
@@ -72,12 +72,14 @@ export class ClientPackageComponent implements OnInit {
     }
   }
   save() {
+    debugger;
     if (this.frm.invalid) return false;
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
+        console.log(JSON.stringify(this.frm.value));
           this.gSvc.postdata("api/TFAClientPackage/Save", JSON.stringify(this.frm.value)).subscribe(res => {
             this.getFrm();
             this.getClientPackage();
@@ -154,20 +156,22 @@ export class ClientPackageComponent implements OnInit {
 
   
   setPrice(){
-    var value =this.frm.controls['tfaCompanyPackageId'].value;
-    this.frm.controls['amount'].setValue('');    
-    this.frm.controls['discount'].setValue(0);
-    this.frm.controls['date'].setValue('');
-    this.frm.controls['totalAmount'].setValue(null);
-    
+     var value =this.frm.controls['tfaCompanyPackageId'].value;
+    // this.frm.controls['amount'].setValue('');    
+    // this.frm.controls['discount'].setValue(0);
+    // this.frm.controls['date'].setValue('');
+    // this.frm.controls['totalAmount'].setValue(null);
+    debugger;
     var price = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==value).price;
-    this.frm.controls['amount'].setValue(price);    
+    var data = this.CompanyPackagelist.find((x: { id: any; }) => x.id ==value);
+    this.frm.controls['rate'].setValue(data.rate);
+    this.frm.controls['amount'].setValue(data.price);    
     this.frm.controls['discount'].setValue(0);
     this.frm.controls['date'].setValue('');
     this.setTotalAmount();
   }
 
-  setTotalAmount(){  
+  setTotalAmount(){ 
     const amount = this.frm.controls['amount'].value;
     const discount = this.frm.controls['discount'].value;
     const totalAmount = amount - discount;
@@ -176,8 +180,9 @@ export class ClientPackageComponent implements OnInit {
 
   edit(res: any) {
    this.frm.patchValue(res);
-   var companyPackageType= this.frm.controls['tfaCompanyPackageTypeId'].value;
-   this.getRatePrice(companyPackageType);
+  //  var companyPackageType= this.frm.controls['tfaCompanyPackageTypeId'].value;
+  //  this.getRatePrice(companyPackageType);
+  this.getRatePrice(res.tfaCompanyPackageTypeId);
    this.getCompanyPackages();
    this.frm.controls['amount'].setValue(res.amount);
    this.frm.controls['rate'].setValue(res.rate);

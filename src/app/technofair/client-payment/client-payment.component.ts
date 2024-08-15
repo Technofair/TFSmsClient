@@ -98,7 +98,7 @@ export class ClientPaymentComponent implements OnInit {
         debugger;
         console.log(JSON.stringify(reqestbody));
         this.gSvc.postdata("api/TFAClientBill/Save",  JSON.stringify(reqestbody)).subscribe(res => {
-          this.getCompanyPayments();
+         // this.getCompanyPayments();
           this.toastrService.success("Company Payment Saved");
         }, err => {
           this.toastrService.error(err.message);
