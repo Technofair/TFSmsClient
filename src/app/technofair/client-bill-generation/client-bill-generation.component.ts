@@ -138,10 +138,12 @@ export class ClientBillGenerationComponent implements OnInit {
 
   approve()
   {
-    debugger
+    
     var id = this.frmApprove.controls['tfaClientPaymentDetailId'].value;
     this.gSvc.postdata("api/TFAClientBill/ApproveClientBill?id=" + id + "&approveBy=" + this.auth.getUserId(),{} ).subscribe(res => {
+      this.getBillInfo();
       this.toastrService.success(res.message);
+      this.approveModal=false;
     }, err => {
       this.toastrService.error(err.message);
     })
@@ -171,7 +173,6 @@ export class ClientBillGenerationComponent implements OnInit {
     
     this.frmApprove.controls['tfaClientPaymentDetailId'].setValue(row.tfaClientPaymentDetailId);
     
-    alert(row.tfaClientPaymentDetailId);
 
     this.getClientBillByClientPaymentDetailId(row.tfaClientPaymentDetailId);
     
