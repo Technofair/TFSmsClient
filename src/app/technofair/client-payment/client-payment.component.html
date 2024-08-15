@@ -39,7 +39,8 @@
                 <th>{{'Month Of Bill'|translate}}</th>
                 <th>{{'Package Type' | translate}}</th>
                 <th>{{'Package' | translate}}</th>
-                <th>{{'Quantity'|translate}}</th>
+                <th>{{'Device Qty'|translate}}</th>
+                <th>{{'Pkg Qty'|translate}}</th>
                 <th>{{'Amount'|translate}}</th>
                 <th>{{'TotalAmount'|translate}}</th>
                 <th>{{'ExpireDate'|translate}}</th>
@@ -67,7 +68,10 @@
                   {{ monthList.packageName}}
                 </td>
                 <td>
-                  {{monthList.quantity}}                  
+                  {{monthList.numberOfAssignDevice}}                  
+                </td>
+                <td>
+                  {{monthList.numberOfLivePackage}}                  
                 </td>
                 <td>
                   {{monthList.amount}}                 

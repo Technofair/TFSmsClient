@@ -128,8 +128,8 @@ export class ClientPaymentComponent implements OnInit {
       this.toastrService.error("Error! Company list not found ");
     })   
   }
-  getClientInvoice(TFACompanyCustomerId:any) {
-    this.gSvc.postdata("api/TFAClientBill/GetClientInvoice?TFACompanyCustomerId="+TFACompanyCustomerId, {} ).subscribe(res => {
+  getClientInvoice(companyCustomerId:any) {
+    this.gSvc.postdata("api/TFAClientBill/GetClientInvoice?TFACompanyCustomerId=" + companyCustomerId, {} ).subscribe(res => {
       this.clientInvoices = res;
     }, err => {
       this.toastrService.error("Error! Company list not found ");
