@@ -10,7 +10,7 @@ export const environment = {
    //baseurl: "http://103.183.116.14:2351/" //Prod:NV
    //baseurl: "http://103.183.116.14:2371/" //Prod:SUN
   //baseurl: "http://103.183.116.14:2301/" //Prod:Dev
-  baseurl: "http://103.183.116.14:2210/" //Dev:TFAdmin
+ baseurl: "http://103.183.116.14:2210/" //Dev:TFAdmin
 };
 
 /*
