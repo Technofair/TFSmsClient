@@ -68,10 +68,11 @@ export class BillGenPermssionComponent {
   getFrm(){
     this.frm = this.fb.group({
       id: new FormControl(0),
-      tFAMonthId: new FormControl(),
-      year: new FormControl([Validators.required]),      
-      isLocked:new FormControl(true),
-      lockDate:new FormControl(null,[Validators.required]),
+      tfaMonthId: new FormControl(null,[Validators.required]),
+      year: new FormControl(null,[Validators.required]),      
+      isClose:new FormControl(true),
+      closeBy:new FormControl(this.auth.getUserId()),
+      closeDate:new FormControl(new Date()),
       createdBy:new FormControl(this.auth.getUserId()),
       createdDate:new FormControl(new Date()),
       modifiedBy:new FormControl(this.auth.getUserId()),
@@ -87,33 +88,20 @@ export class BillGenPermssionComponent {
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        if (this.formId == 0) {
-          this.gSvc.postdata("api/TFABillGenPermssion/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
+        console.log(JSON.stringify(this.frm.value))
+          this.gSvc.postdata("api/TFABillGenPermssion/SaveBillGenPermission", JSON.stringify(this.frm.value)).subscribe(res => {
+            // this.getFrm();
             this.getbillgenerationpermission();
-            this.toastrService.success("BillGenerationPermssion Information Saved");
+            this.toastrService.success(res.message);
           }, err => {
-            this.toastrService.error("Error! BillGenerationPermssion Information Not Saved");
+            this.toastrService.error("Error! BillGenPermssion Not Saved");
           })
-        } else if (this.formId == 1) {
-          this.gSvc.postdata("api/TFABillGenPermssion/Save", JSON.stringify(this.frm.value)).subscribe(res => {
-            this.frm.reset();
-            this.formId = 0;
-            this.getbillgenerationpermission();
-            this.toastrService.success("BillGenerationPermssion Information Updated");
-
-          }, err => {
-            this.toastrService.error("Error! BillGenerationPermssion Information Not updated");
-          })
-        } else {
-          this.toastrService.error("System error!");
-        }
+        
         return true;
       },
       reject: () => {
 
       }
-
     })
     return false;
   }
